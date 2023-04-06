@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import GeneralLoading from "../../components/loading/GeneralLoading";
@@ -7,6 +7,7 @@ import { ButtonGroup, IconButton } from "@mui/material";
 import {
     AccountCircle,
     AutoGraph,
+    Edit,
     FormatListNumbered,
     Textsms,
 } from "@mui/icons-material";
@@ -16,6 +17,7 @@ import { db } from "../../utils/db/firebaseConfig";
 import { connect } from "react-redux";
 
 import { setBusiness } from "../../redux/actions/businessProfileActions";
+import AvailableTwilioNumbers from "../../components/user/AvailableTwilioNumbers";
 
 const SpecificBusinessPage = ({ setBusiness }) => {
     const { businessId } = useParams();
@@ -29,6 +31,23 @@ const SpecificBusinessPage = ({ setBusiness }) => {
         setBusiness(business.data());
     }
 
+    // handle menu choice click from icons
+    const handleClick = (menuChoice) => {
+        setMenuChoice(menuChoice);
+    };
+    // menu selection state
+    const [menuChoice, setMenuChoice] = useState();
+
+    const showSelectionWindow = () => {
+        switch (menuChoice) {
+            case "msgLog":
+                return <MessageLog />;
+            case "stats":
+                return <Stats />;
+            default:
+                return <Profile />;
+        }
+    };
     return (
         <Suspense fallback={<GeneralLoading />}>
             <Header />
@@ -45,19 +64,19 @@ const SpecificBusinessPage = ({ setBusiness }) => {
                             </IconButton>
                             <p>Live SMS </p>
                         </IconContainer>
-                        <IconContainer tabindex="0">
+                        <IconContainer onClick={() => handleClick("msgLog")}>
                             <IconButton>
                                 <FormatListNumbered />
                             </IconButton>
                             <p>Msg Log</p>
                         </IconContainer>
-                        <IconContainer tabindex="1">
+                        <IconContainer onClick={() => handleClick("stats")}>
                             <IconButton>
                                 <AutoGraph />
                             </IconButton>
                             <p>Stats</p>
                         </IconContainer>
-                        <IconContainer>
+                        <IconContainer onClick={() => handleClick("profile")}>
                             <IconButton>
                                 <AccountCircle />
                             </IconButton>
@@ -65,10 +84,7 @@ const SpecificBusinessPage = ({ setBusiness }) => {
                         </IconContainer>
                     </HeaderIcons>
 
-                    <h1>Choose an account</h1>
-                    <h3>to continue to your admin panel</h3>
-
-                    <Box></Box>
+                    <Box>{showSelectionWindow()}</Box>
                 </Inner>
             </Container>
         </Suspense>
@@ -97,25 +113,6 @@ const HeaderIcons = styled.div`
     width: 100%;
     padding: 0.5rem 2rem 0.5rem;
     background: whitesmoke;
-`;
-
-const CardContainer = styled.div`
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.6rem;
-    align-items: center;
-    margin-top: 0.4rem;
-    width: 100%;
-
-    > h2 {
-        line-height: 1.5rem;
-        padding: 1rem;
-        background: whitesmoke;
-        border-radius: 0.8rem;
-    }
-    @media (min-width: 380px) {
-        width: 35rem;
-    }
 `;
 
 const Box = styled.div`
@@ -151,4 +148,101 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+`;
+
+const MessageLog = () => {
+    return <div>Message Log</div>;
+};
+
+const Stats = () => {
+    return <div>Stats</div>;
+};
+
+const Profile = () => {
+    const { businessId } = useParams();
+
+    const [business, loading, error] = useDocument(
+        doc(db, "businesses", businessId)
+    );
+
+    if (loading) return <GeneralLoading />;
+    if (error) return <div>"error: " {error}</div>;
+
+    console.log("business at profile: ", business.data());
+    return (
+        <Content>
+            <h2>Profile</h2>
+            <div>
+                <span>Business Name: </span>
+                <span>
+                    {business.data().businessName}{" "}
+                    <span>
+                        <Edit />
+                    </span>
+                </span>
+            </div>
+            <div>
+                <span>Website: </span>
+                <span>
+                    {business.data().website}{" "}
+                    <span>
+                        <Edit />
+                    </span>
+                </span>
+            </div>
+            <div>
+                <span>Business Cell Phone: </span>
+                <span>
+                    {business.data().businessCell}{" "}
+                    <span>
+                        <Edit />
+                    </span>
+                </span>
+            </div>
+            <div>
+                <span>Back Button Color: </span>
+                <span>
+                    {business.data().backBtnColor}{" "}
+                    <span>
+                        <Edit />
+                    </span>
+                </span>
+            </div>
+            <div>
+                <span>Nav Bar Color: </span>
+                <span>
+                    {business.data().navBarColor}{" "}
+                    <span>
+                        <Edit />
+                    </span>
+                </span>
+            </div>
+            <div>
+                <span>Logo Url: </span>
+                <span>
+                    {business.data().logoUrl}{" "}
+                    <span>
+                        <Edit />
+                    </span>
+                </span>
+            </div>
+            <div>
+                <span>Twilio Number: </span>
+                {business.data().twilioNumber ? (
+                    <span>
+                        {business.data().twilioNumber}{" "}
+                        <span>
+                            <Edit />
+                        </span>
+                    </span>
+                ) : (
+                    <AvailableTwilioNumbers />
+                )}
+            </div>
+        </Content>
+    );
+};
+
+const Content = styled.div`
+    margin: 3rem 0;
 `;

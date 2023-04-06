@@ -15,6 +15,8 @@ import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
+import AvailableTwilioNumbers from "./AvailableTwilioNumbers";
+
 import { db } from "../../utils/db/firebaseConfig";
 import {
     arrayUnion,
@@ -27,17 +29,8 @@ import styled from "styled-components";
 import { Button } from "@mui/material";
 import { connect } from "react-redux";
 
-import axios from "axios";
-
 function AddBusiness() {
     const { userId } = useParams();
-
-    const { path, url } = useRouteMatch();
-
-    useEffect(() => {
-       
-        
-    }, [])
 
     const [newClientInfo, setNewClientInfo] = useState({
         backBtnColor: "",
@@ -46,6 +39,7 @@ function AddBusiness() {
         logoUrl: "",
         navBarColor: "",
         website: "",
+        twilioNumber: "",
     });
 
     const [disableSubmit, setDisableSubmit] = useState(false);
@@ -74,6 +68,7 @@ function AddBusiness() {
 
     const handleSubmit = async () => {
         if (
+            
             newClientInfo.backBtnColor &&
             newClientInfo.businessCell &&
             newClientInfo.businessName &&
@@ -135,13 +130,14 @@ function AddBusiness() {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
 
-    console.log("newClientInfo: ", newClientInfo);
-    console.log("User Id: ", userId);
-
     return (
         <Container>
             <h2>Add New Business</h2>
             <Divider />
+            <AvailableTwilioNumbers
+                newClientInfo={newClientInfo}
+                setNewClientInfo={setNewClientInfo}
+            />
             <InputWrapper>
                 <TextField
                     className="input"

@@ -332,10 +332,10 @@ app2.post("/lookup-number", async (request, response) => {
         .phoneNumbers(cellPhone)
         .fetch({ fields: "line_type_intelligence" })
         .then((phone_number) => {
-            response.status(200).send(phone_number.lineTypeIntelligence);
+            response.status(200).json(phone_number.lineTypeIntelligence);
         })
         .catch((error) => {
-            response.status(400).send(JSON.stringify({ error: error }));
+            response.status(400).json({ error: error });
         });
 });
 
@@ -350,10 +350,52 @@ app2.post("/available-numbers", (request, response) => {
             voiceEnabled: true,
             limit: 20,
         })
-        .then((local) => response.status(200).send(local))
-
+        .then((local) => response.status(200).json(local))
         .catch((error) => {
-            response.status(400).send(JSON.stringify({ error: error }));
+            response.status(400).json({ error: error });
+        });
+});
+
+app2.post("/create-subaccount", (request, response) => {
+    const { businessId } = request.body;
+
+    client.api.v2010.accounts
+        .create({ friendlyName: businessId })
+        .then((account) =>
+            response.status(200).json({
+                subaccount_sid: account.sid,
+                subaccount_authToken: account.auth_token,
+            })
+        )
+        .catch((error) => {
+            response.status(400).json({ error: error });
+        });
+});
+
+app2.post("/provision-twilio-number", (request, response) => {
+    const { twilioNumber, subAccountSid } = request.body;
+
+    // Provision the number under Main account first because its hard to
+    // dyamically change Twilio credentials to buy/provision outright under subaccount
+    client.incomingPhoneNumbers
+        .create({ phoneNumber: twilioNumber })
+        .then((incoming_phone_number) => {
+            // Number has been provisioned under My Main Twilio Account
+            console.log(incoming_phone_number.sid);
+            // Now transfer it to the subaccount whose SID is being based in the body
+            client
+                .incomingPhoneNumbers(incoming_phone_number.sid)
+                .update({ accountSid: subAccountSid })
+                // This should kick out the businessId of the subAccount
+                .then((incoming_phone_number) =>
+                    response.status(200).json({
+                        subAccount_businessId:
+                            incoming_phone_number.friendlyName,
+                    })
+                );
+        })
+        .catch((error) => {
+            response.status(400).json({ error: error });
         });
 });
 
