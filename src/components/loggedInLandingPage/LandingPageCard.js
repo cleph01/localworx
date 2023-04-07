@@ -1,11 +1,12 @@
 import { doc } from "firebase/firestore";
-import React from "react";
+import { useHistory } from "react-router-dom";
 import { useDocument } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
 import { db } from "../../utils/db/firebaseConfig";
 import GeneralLoading from "../loading/GeneralLoading";
 
-const LandingPageCard = ({ businessId, handleRedirect }) => {
+const LandingPageCard = ({ businessId, setBusinessId }) => {
+    const history = useHistory();
     const [business, loading, error] = useDocument(
         doc(db, "businesses", businessId)
     );
@@ -13,8 +14,13 @@ const LandingPageCard = ({ businessId, handleRedirect }) => {
     if (loading) return <GeneralLoading />;
     if (error) return <div>"error: " {error}</div>;
 
+    const handleRedirect = () => {
+        setBusinessId(businessId);
+        history.push(`/business/${businessId}`);
+    };
+
     return (
-        <Container onClick={() => handleRedirect(businessId)}>
+        <Container onClick={() => handleRedirect()}>
             <ImageWrapper>
                 <img src={business?.data().logoUrl} alt="logo" />
             </ImageWrapper>

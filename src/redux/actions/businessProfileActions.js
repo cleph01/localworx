@@ -53,7 +53,9 @@ export const createTwilioSubAccount = (businessId) => (dispatch) => {
                     type: CREATE_TWILIO_SUB_ACCOUNT_FAILED,
                 });
             });
-    } catch (error) {}
+    } catch (error) {
+        console.log("Error Creating Twilio Sub acct: ", error);
+    }
 };
 
 export const setBusinessId = (businessId) => {

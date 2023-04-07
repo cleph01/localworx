@@ -50,9 +50,6 @@ const ClientList = lazy(() => import("../pages/sales/ClientList"));
 // User Profile Page
 const UserProfilePage = lazy(() => import("../pages/user/UserProfilePage"));
 
-// User List of Businesses
-const UserBusinessList = lazy(() => import("../components/user/BusinessList"));
-
 // Not Found Page
 const NotFound = lazy(() => import("../pages/NotFound"));
 
@@ -69,6 +66,5 @@ export {
     AddBusiness,
     ClientList,
     UserProfilePage,
-    UserBusinessList,
     NotFound,
 };

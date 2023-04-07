@@ -391,6 +391,10 @@ app2.post("/provision-twilio-number", (request, response) => {
             // Number has been provisioned under My Main Twilio Account
             console.log(incoming_phone_number.sid);
             // Now transfer the twilioNumber to the subaccount whose SID is being passed in the body
+
+            // TODO: Have to rethink this; maybe using a try/catch, because if aubAccountSid doesn't come
+            // over the wire, then update simply continues and sets the DB while in twilio the MAIN ACCOUNT
+            // holds onto the twilio number
             client
                 .incomingPhoneNumbers(incoming_phone_number.sid)
                 .update({ accountSid: subAccountSid })

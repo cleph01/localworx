@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import GeneralLoading from "../../components/loading/GeneralLoading";
 import styled from "styled-components";
@@ -12,26 +12,45 @@ import { connect } from "react-redux";
 import { setFullUser } from "../../redux/actions/authActions";
 import { IconButton } from "@mui/material";
 import {
+    AccountCircle,
     Add,
     AddAPhoto,
     AutoGraph,
+    Edit,
     FormatListNumbered,
     ListAlt,
     PlusOne,
 } from "@mui/icons-material";
-import PrivateRoute from "../../routing/PrivateRoute";
 
-import * as ROUTES from "../../routing/routes";
-import * as COMPONENTS from "../../routing/routeComponents";
+import AddBusiness from "../../components/user/AddBusiness";
 
 const UserProfilePage = ({ user }) => {
     const { userId } = useParams();
     const history = useHistory();
+    // menu selection state from icon clicks; determines which component we show below icon bar
+    const [menuChoice, setMenuChoice] = useState();
+
+    // handle menu choice click from icons
+    const handleMenuIconClick = (menuChoice) => {
+        setMenuChoice(menuChoice);
+    };
 
     const [userDoc, loading, error] = useDocument(doc(db, "users", user.id));
 
     if (loading) return <GeneralLoading />;
     if (error) return <div>"error: " {error}</div>;
+
+    const showSelectionWindow = (user) => {
+        switch (menuChoice) {
+            case "addBusiness":
+                return <AddBusiness />;
+            case "stats":
+                return <Stats />;
+
+            default:
+                return <Profile user={user} />;
+        }
+    };
 
     return (
         <>
@@ -46,43 +65,31 @@ const UserProfilePage = ({ user }) => {
                             <p>Profile Photo</p>
                         </IconContainer>
                         <IconContainer
-                            onClick={() =>
-                                history.push(`/user/${userId}/business/add`)
-                            }
+                            onClick={() => handleMenuIconClick("addBusiness")}
                         >
                             <IconButton>
                                 <Add />
                             </IconButton>
                             <p>Add Business</p>
                         </IconContainer>
-                        <IconContainer tabindex="1">
-                            <IconButton>
-                                <AutoGraph />
-                            </IconButton>
-                            <p>Stats</p>
-                        </IconContainer>
+
                         <IconContainer onClick={() => history.push("/hub")}>
                             <IconButton>
-                                <ListAlt />
+                                <FormatListNumbered />
                             </IconButton>
                             <p>Businesses</p>
                         </IconContainer>
+                        <IconContainer
+                            onClick={() => handleMenuIconClick("profile")}
+                        >
+                            <IconButton>
+                                <AccountCircle />
+                            </IconButton>
+                            <p>Profile</p>
+                        </IconContainer>
                     </HeaderIcons>
 
-                    <Box>
-                        <PrivateRoute
-                            path={ROUTES.USER_ADD_BUSINESS}
-                            authUser={user}
-                        >
-                            <COMPONENTS.AddBusiness />
-                        </PrivateRoute>
-                        <PrivateRoute
-                            path={ROUTES.USER_BUSINESS_LIST}
-                            authUser={user}
-                        >
-                            <COMPONENTS.UserBusinessList />
-                        </PrivateRoute>
-                    </Box>
+                    <Box>{showSelectionWindow(user)}</Box>
                 </Inner>
             </Container>
         </>
@@ -171,4 +178,55 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+`;
+
+//
+// Sub Components
+//
+
+const MessageLog = () => {
+    return <div>Message Log</div>;
+};
+
+const Stats = () => {
+    return <div>Stats</div>;
+};
+
+const Profile = ({ user }) => {
+    return (
+        <Content>
+            <h2>Profile</h2>
+            <div>
+                <span>Display Name: </span>
+                <span>
+                    {user.displayName}
+                    <span>
+                        <Edit />
+                    </span>
+                </span>
+            </div>
+            <div>
+                <span>Pofile Pic Url: </span>
+                <span>
+                    {user.photoUrl}
+                    <span>
+                        <Edit />
+                    </span>
+                </span>
+            </div>
+            <div>
+                <span>Cell Phone: </span>
+                <span>
+                    {user.cellPhone}
+                    <span>
+                        <Edit />
+                    </span>
+                </span>
+            </div>
+        </Content>
+    );
+};
+
+const Content = styled.div`
+    margin: 3rem 0;
 `;

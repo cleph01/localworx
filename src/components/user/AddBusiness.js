@@ -29,7 +29,9 @@ import styled from "styled-components";
 import { Button } from "@mui/material";
 import { connect } from "react-redux";
 
-function AddBusiness() {
+import { createTwilioSubAccount } from "../../redux/actions/businessProfileActions";
+
+function AddBusiness({ createTwilioSubAccount }) {
     const { userId } = useParams();
 
     const [newClientInfo, setNewClientInfo] = useState({
@@ -39,7 +41,6 @@ function AddBusiness() {
         logoUrl: "",
         navBarColor: "",
         website: "",
-        twilioNumber: "",
     });
 
     const [disableSubmit, setDisableSubmit] = useState(false);
@@ -68,7 +69,6 @@ function AddBusiness() {
 
     const handleSubmit = async () => {
         if (
-            
             newClientInfo.backBtnColor &&
             newClientInfo.businessCell &&
             newClientInfo.businessName &&
@@ -89,8 +89,12 @@ function AddBusiness() {
                 batch.set(businessRef, {
                     timestamp: serverTimestamp(),
                     ...newClientInfo,
+                    id: businessRef.id,
                     blocked: false,
-                    textPageUrl: `https://local-worx.web.app/${businessRef.id}`,
+                    textPageUrl: `${window.location.href.slice(
+                        0,
+                        window.location.href.lastIndexOf("/") - 5
+                    )}/contact/${businessRef.id}`,
                 });
 
                 // Now we need to update user with the business Id in businesses arr
@@ -102,6 +106,9 @@ function AddBusiness() {
 
                 // Commit the batch
                 await batch.commit();
+
+                // Finally, we create the Twilio Sub account
+                createTwilioSubAccount(businessRef.id);
 
                 setAlertMsg({
                     message: "Successfully Created New Business",
@@ -134,10 +141,7 @@ function AddBusiness() {
         <Container>
             <h2>Add New Business</h2>
             <Divider />
-            <AvailableTwilioNumbers
-                newClientInfo={newClientInfo}
-                setNewClientInfo={setNewClientInfo}
-            />
+
             <InputWrapper>
                 <TextField
                     className="input"
@@ -275,7 +279,9 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {})(AddBusiness);
+export default connect(mapStateToProps, { createTwilioSubAccount })(
+    AddBusiness
+);
 
 const SubmitButton = styled(Button)`
     width: 100%;

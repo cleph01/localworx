@@ -1,16 +1,10 @@
-import { useHistory } from "react-router-dom";
+
 import styled from "styled-components";
 import LandingPageCard from "./LandingPageCard";
 import { connect } from "react-redux";
 import { setBusinessId } from "../../redux/actions/businessProfileActions";
 
 const BusinessesContainer = ({ businesses, setBusinessId }) => {
-    const history = useHistory();
-
-    const handleRedirect = (businessId) => {
-        setBusinessId(businessId);
-        history.push(`/business/${businessId}`);
-    };
     return (
         <CardContainer>
             <h2>Your Businesses</h2>
@@ -18,7 +12,7 @@ const BusinessesContainer = ({ businesses, setBusinessId }) => {
                 <LandingPageCard
                     key={businessId}
                     businessId={businessId}
-                    handleRedirect={handleRedirect}
+                    setBusinessId={setBusinessId}
                 />
             ))}
         </CardContainer>

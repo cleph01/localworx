@@ -13,7 +13,8 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-const AvailableTwilioNumbers = ({ newClientInfo, setNewClientInfo }) => {
+const AvailableTwilioNumbers = ({ business }) => {
+    console.log("business at available numbers: ", business.data());
     const [areaCode, setAreaCode] = useState("");
     const [twilioNumbers, setTwilioNumbers] = useState("");
     const [selectedNumber, setSelectedNumber] = useState("");
@@ -57,15 +58,17 @@ const AvailableTwilioNumbers = ({ newClientInfo, setNewClientInfo }) => {
 
             axios
                 .post(
-                    "https://us-central1-local-worx.cloudfunctions.net/handleTwilioRequests/available-numbers",
+                    "https://us-central1-local-worx.cloudfunctions.net/handleTwilioRequests/provision-twilio-number",
                     {
+                        businessId: business.data().id,
                         twilioNumber: selectedNumber,
+                        subAccountSid: business.data().twilioAccountSid,
                     }
                 )
                 .then((response) => {
                     console.log("twilio numbers: ", response.data);
 
-                    setTwilioNumbers(response.data);
+                    console.log("Provision Number response: ", response.data);
 
                     setLoading(false);
                 })
@@ -79,6 +82,7 @@ const AvailableTwilioNumbers = ({ newClientInfo, setNewClientInfo }) => {
         }
     };
 
+    console.log("selected Number: ", selectedNumber);
     return (
         <Container>
             <InputWrapper>
@@ -94,7 +98,7 @@ const AvailableTwilioNumbers = ({ newClientInfo, setNewClientInfo }) => {
                     onChange={(e) => setAreaCode(e.target.value)}
                 />
             </InputWrapper>
-            <Button onClick={handleNumberSearch}>
+            <Button onClick={handleNumberSearch} disabled={loading}>
                 Search Numbers{" "}
                 {loading && (
                     <CircularProgress
@@ -131,6 +135,20 @@ const AvailableTwilioNumbers = ({ newClientInfo, setNewClientInfo }) => {
                             ))}
                         </Select>
                     </FormControl>
+                    {selectedNumber && (
+                        <Button onClick={saveTwilioNumber} disabled={loading}>
+                            Reserve {selectedNumber}
+                            {loading && (
+                                <CircularProgress
+                                    style={{
+                                        marginLeft: "10px",
+                                        width: "20px",
+                                        height: "auto",
+                                    }}
+                                />
+                            )}
+                        </Button>
+                    )}
                 </Box>
             )}
         </Container>

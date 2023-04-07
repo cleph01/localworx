@@ -46,8 +46,10 @@ const LoggedInLandingPage = ({ authUser, setFullUser }) => {
                         <h3>to continue to your admin panel</h3>
 
                         <Box>
+                            {/* Admin Component */}
                             {user?.data().admin && <AdminContainer />}
 
+                            {/* List of Business User has access to */}
                             {user?.data().businesses && (
                                 <BusinessesContainer
                                     businesses={user.data().businesses}
@@ -61,7 +63,7 @@ const LoggedInLandingPage = ({ authUser, setFullUser }) => {
                                     <Button
                                         onClick={() => {
                                             history.push(
-                                                `/user/${authUser.uid}/business/add`
+                                                `/user/${authUser.uid}/`
                                             );
                                         }}
                                         sx={{
@@ -72,6 +74,8 @@ const LoggedInLandingPage = ({ authUser, setFullUser }) => {
                                         Click to Add Your First Business
                                     </Button>
                                 )}
+
+                            {/* List of Sales Clients user has */}
                             {user?.data().sales && (
                                 <SalesContainer sales={user.data().sales} />
                             )}

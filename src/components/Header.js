@@ -49,7 +49,9 @@ const Header = ({ user }) => {
                     "aria-labelledby": "menu-button",
                 }}
             >
-                <MenuItem onClick={() => history.push()}>Profile</MenuItem>
+                <MenuItem onClick={() => history.push(`/user/${user.id}`)}>
+                    Profile
+                </MenuItem>
                 <MenuItem onClick={() => history.push("/hub")}>
                     My account
                 </MenuItem>

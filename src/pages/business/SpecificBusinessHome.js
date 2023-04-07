@@ -9,6 +9,7 @@ import {
     AutoGraph,
     Edit,
     FormatListNumbered,
+    Storefront,
     Textsms,
 } from "@mui/icons-material";
 import { doc } from "firebase/firestore";
@@ -32,10 +33,11 @@ const SpecificBusinessPage = ({ setBusiness }) => {
     }
 
     // handle menu choice click from icons
-    const handleClick = (menuChoice) => {
+    const handleMenuIconClick = (menuChoice) => {
         setMenuChoice(menuChoice);
     };
-    // menu selection state
+
+    // menu selection state from icon clicks; determines which component we show below icon bar
     const [menuChoice, setMenuChoice] = useState();
 
     const showSelectionWindow = () => {
@@ -45,7 +47,7 @@ const SpecificBusinessPage = ({ setBusiness }) => {
             case "stats":
                 return <Stats />;
             default:
-                return <Profile />;
+                return <Account />;
         }
     };
     return (
@@ -55,32 +57,42 @@ const SpecificBusinessPage = ({ setBusiness }) => {
                 <Inner>
                     <HeaderIcons>
                         <IconContainer
-                            onClick={() =>
-                                history.push(`/business/${businessId}/chat`)
-                            }
+                            onClick={() => {
+                                business.data().twilioNumber
+                                    ? history.push(
+                                          `/business/${businessId}/chat`
+                                      )
+                                    : alert("Select a Number Below to Enable");
+                            }}
                         >
                             <IconButton>
                                 <Textsms />
                             </IconButton>
                             <p>Live SMS </p>
                         </IconContainer>
-                        <IconContainer onClick={() => handleClick("msgLog")}>
+                        <IconContainer
+                            onClick={() => handleMenuIconClick("msgLog")}
+                        >
                             <IconButton>
                                 <FormatListNumbered />
                             </IconButton>
                             <p>Msg Log</p>
                         </IconContainer>
-                        <IconContainer onClick={() => handleClick("stats")}>
+                        <IconContainer
+                            onClick={() => handleMenuIconClick("stats")}
+                        >
                             <IconButton>
                                 <AutoGraph />
                             </IconButton>
                             <p>Stats</p>
                         </IconContainer>
-                        <IconContainer onClick={() => handleClick("profile")}>
+                        <IconContainer
+                            onClick={() => handleMenuIconClick("account")}
+                        >
                             <IconButton>
-                                <AccountCircle />
+                                <Storefront />
                             </IconButton>
-                            <p>Profile</p>
+                            <p>Account</p>
                         </IconContainer>
                     </HeaderIcons>
 
@@ -158,7 +170,7 @@ const Stats = () => {
     return <div>Stats</div>;
 };
 
-const Profile = () => {
+const Account = () => {
     const { businessId } = useParams();
 
     const [business, loading, error] = useDocument(
@@ -171,7 +183,7 @@ const Profile = () => {
     console.log("business at profile: ", business.data());
     return (
         <Content>
-            <h2>Profile</h2>
+            <h2>Account</h2>
             <div>
                 <span>Business Name: </span>
                 <span>
@@ -227,6 +239,19 @@ const Profile = () => {
                 </span>
             </div>
             <div>
+                <span>Contact Form Link: </span>
+                <span>
+                    {`${window.location.href.slice(
+                        0,
+                        window.location.href.lastIndexOf("/") - 9
+                    )}/contact/${businessId}`}
+                    <span>
+                        {/* TODO: Add the copy btn */}
+                        {"  "}[Copy Button]
+                    </span>
+                </span>
+            </div>
+            <div>
                 <span>Twilio Number: </span>
                 {business.data().twilioNumber ? (
                     <span>
@@ -236,7 +261,7 @@ const Profile = () => {
                         </span>
                     </span>
                 ) : (
-                    <AvailableTwilioNumbers />
+                    <AvailableTwilioNumbers business={business} /> //Passing in the whole businessObj
                 )}
             </div>
         </Content>
