@@ -344,7 +344,7 @@ app2.post("/available-numbers", (request, response) => {
 
     client
         .availablePhoneNumbers("US")
-        .mobile.list({
+        .local.list({
             areaCode: areaCode,
             smsEnabled: true,
             voiceEnabled: true,
