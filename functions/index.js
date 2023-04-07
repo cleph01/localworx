@@ -361,19 +361,26 @@ app2.post("/create-subaccount", (request, response) => {
 
     client.api.v2010.accounts
         .create({ friendlyName: businessId })
-        .then((account) =>
+        .then(async (account) => {
+            await admin
+                .firestore()
+                .collection("businesses")
+                .doc(businessId)
+                .set({ twilioAccountSid: account.sid }, { merge: true });
+
             response.status(200).json({
                 subaccount_sid: account.sid,
                 subaccount_authToken: account.auth_token,
-            })
-        )
+                friendlyName: account.friendly_name,
+            });
+        })
         .catch((error) => {
             response.status(400).json({ error: error });
         });
 });
 
 app2.post("/provision-twilio-number", (request, response) => {
-    const { twilioNumber, subAccountSid } = request.body;
+    const { businessId, twilioNumber, subAccountSid } = request.body;
 
     // Provision the number under Main account first because its hard to
     // dyamically change Twilio credentials to buy/provision outright under subaccount
@@ -382,20 +389,34 @@ app2.post("/provision-twilio-number", (request, response) => {
         .then((incoming_phone_number) => {
             // Number has been provisioned under My Main Twilio Account
             console.log(incoming_phone_number.sid);
-            // Now transfer it to the subaccount whose SID is being based in the body
+            // Now transfer the twilioNumber to the subaccount whose SID is being passed in the body
             client
                 .incomingPhoneNumbers(incoming_phone_number.sid)
                 .update({ accountSid: subAccountSid })
                 // This should kick out the businessId of the subAccount
-                .then((incoming_phone_number) =>
+                .then(async (incoming_phone_number) => {
+                    await admin
+                        .firestore()
+                        .collection("businesses")
+                        .doc(businessId)
+                        .set(
+                            {
+                                twilioPhoneNumberSid: incoming_phone_number.sid,
+                                twilioNumber: twilioNumber,
+                            },
+                            { merge: true }
+                        );
+
                     response.status(200).json({
                         subAccount_businessId:
                             incoming_phone_number.friendlyName,
-                    })
-                );
+                        twilioNumber: twilioNumber,
+                    });
+                });
         })
         .catch((error) => {
-            response.status(400).json({ error: error });
+            console.log("Error provisioning Number: ", error);
+            response.status(400).json({ "error provisioning number": error });
         });
 });
 

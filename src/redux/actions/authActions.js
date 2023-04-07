@@ -66,6 +66,8 @@ export const signupPaymentSuccessful = (userId) => async (dispatch) => {
         dispatch({
             type: SIGNUP_PAYMENT_SUCCESSFUL,
         });
+
+        
     } catch (error) {
         console.log("error seting signup pmnt success: ", error);
     }

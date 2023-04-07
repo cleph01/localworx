@@ -2,6 +2,7 @@ import {
     SET_BUSINESS_ID,
     FETCH_BUSINESS_INFO_INITIATED,
     FETCH_BUSINESS_INFO_SUCCESS,
+    CREATE_TWILIO_SUB_ACCOUNT_SUCCESSFUL,
 } from "../actions/businessProfileActions";
 
 const initialState = {
@@ -25,6 +26,15 @@ const businessProfileReducer = (state = initialState, action) => {
                 ...state,
                 business: action.payload,
                 isLoading: false,
+            };
+
+        case CREATE_TWILIO_SUB_ACCOUNT_SUCCESSFUL:
+            return {
+                ...state,
+                business: {
+                    ...state.business,
+                    ...action.payload,
+                },
             };
 
         default:
