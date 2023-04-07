@@ -1,5 +1,5 @@
 import { useEffect, Suspense } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import * as ROUTES from "./routing/routes";
 import * as COMPONENTS from "./routing/routeComponents";
 import IsUserLoggedIn from "./routing/IsUserLoggedIn";
@@ -13,7 +13,14 @@ import { db } from "./utils/db/firebaseConfig";
 import { connect } from "react-redux";
 import { loginSuccess } from "./redux/actions/authActions";
 
+import queryString from "query-string";
+
 function App({ loginSuccess }) {
+    const { search } = useLocation();
+    const queryStringValue = queryString.parse(search);
+
+    console.log("QueryStringValue at app: ", queryStringValue.sid);
+
     const { authUser } = useAuthListener();
 
     useEffect(() => {
@@ -48,7 +55,13 @@ function App({ loginSuccess }) {
                     <IsUserLoggedIn
                         authUser={authUser}
                         path={ROUTES.LOGIN}
-                        loggedInPath={ROUTES.LOGGED_IN_LANDING_PAGE}
+                        // Checing if Login Url sent with SalesPerson Id
+                        // in order to push to hub with sid and tie salesperson to user
+                        loggedInPath={
+                            !!queryStringValue.sid
+                                ? `/hub/?sid=${queryStringValue.sid}`
+                                : "/hub"
+                        }
                     >
                         <COMPONENTS.Login />
                     </IsUserLoggedIn>
@@ -95,6 +108,7 @@ function App({ loginSuccess }) {
                     />
 
                     {/* Default Homepage, since not a webpage we enforce login */}
+                    {/* TODO: Make Public?*/}
                     <IsUserLoggedIn
                         exact
                         authUser={authUser}

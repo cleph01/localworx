@@ -1,24 +1,19 @@
 import { useState } from "react";
 
 import { useParams, useHistory } from "react-router-dom";
-import { ArrowBackIosNew, AttachFile, MoreVert } from "@mui/icons-material";
+import { ArrowBackIosNew, MoreVert } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 
 import styled from "styled-components";
-import { doc } from "firebase/firestore";
-import { db } from "../../utils/db/firebaseConfig";
 
-import { useDocument } from "react-firebase-hooks/firestore";
 import Recipient from "./Recipient";
+import { connect } from "react-redux";
 
-const Header = ({ openChatScreen, setOpenChatScreen }) => {
-    const { businessId, chatId } = useParams();
+const Header = ({ openChatScreen, setOpenChatScreen, user }) => {
+    const { chatId } = useParams();
 
     const history = useHistory();
 
-    const handleRedirect = (path) => {
-        history.push(path);
-    };
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleMenuClick = (event) => {
@@ -52,15 +47,26 @@ const Header = ({ openChatScreen, setOpenChatScreen }) => {
                     "aria-labelledby": "menu-button",
                 }}
             >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={() => history.push(`/user/${user.id}`)}>
+                    Profile
+                </MenuItem>
+                <MenuItem onClick={() => history.push("/hub")}>
+                    My account
+                </MenuItem>
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
             </Menu>
         </HeaderContainer>
     );
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth.user,
+        message: state.message.message,
+    };
+};
+
+export default connect(mapStateToProps, {})(Header);
 
 const HeaderIcons = styled.div`
     > .MuiButtonBase-root > .MuiSvgIcon-root {

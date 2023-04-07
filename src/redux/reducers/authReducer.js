@@ -6,6 +6,7 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     SET_FULL_USER,
+    SET_SALESPERSON_TO_USER_SUCCESS,
     FETCH_USER_SUCCESS,
     UPDATE_USER_WITH_SUBSCRIPTION_STATUS,
 } from "../actions/authActions";
@@ -38,6 +39,12 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: { ...state.user, businesses: [] },
+            };
+
+        case SET_SALESPERSON_TO_USER_SUCCESS:
+            return {
+                ...state,
+                user: action.payload,
             };
         case REGISTER_SUCCESS:
             return {

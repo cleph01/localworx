@@ -184,90 +184,119 @@ const Account = () => {
     return (
         <Content>
             <h2>Account</h2>
-            <div>
-                <span>Business Name: </span>
-                <span>
-                    {business.data().businessName}{" "}
-                    <span>
+            <ItemWrapper>
+                <Title>Business Name: </Title>
+                <TextInput>
+                    <div>{business.data().businessName}</div>
+                    <div>
                         <Edit />
-                    </span>
-                </span>
-            </div>
-            <div>
-                <span>Website: </span>
-                <span>
-                    {business.data().website}{" "}
-                    <span>
+                    </div>
+                </TextInput>
+            </ItemWrapper>
+            <ItemWrapper>
+                <Title>Website: </Title>
+                <TextInput>
+                    <div>{business.data().website} </div>
+                    <div>
                         <Edit />
-                    </span>
-                </span>
-            </div>
-            <div>
-                <span>Business Cell Phone: </span>
-                <span>
-                    {business.data().businessCell}{" "}
-                    <span>
+                    </div>
+                </TextInput>
+            </ItemWrapper>
+            <ItemWrapper>
+                <Title>Business Cell Phone: </Title>
+                <TextInput>
+                    <div>{business.data().businessCell} </div>
+                    <div>
                         <Edit />
-                    </span>
-                </span>
-            </div>
-            <div>
-                <span>Back Button Color: </span>
-                <span>
-                    {business.data().backBtnColor}{" "}
-                    <span>
+                    </div>
+                </TextInput>
+            </ItemWrapper>
+            <ItemWrapper>
+                <Title>Back Button Color: </Title>
+                <TextInput>
+                    <div>{business.data().backBtnColor} </div>
+                    <div>
                         <Edit />
-                    </span>
-                </span>
-            </div>
-            <div>
-                <span>Nav Bar Color: </span>
-                <span>
-                    {business.data().navBarColor}{" "}
-                    <span>
+                    </div>
+                </TextInput>
+            </ItemWrapper>
+            <ItemWrapper>
+                <Title>Nav Bar Color: </Title>
+                <TextInput>
+                    <div>{business.data().navBarColor} </div>
+                    <div>
                         <Edit />
-                    </span>
-                </span>
-            </div>
-            <div>
-                <span>Logo Url: </span>
-                <span>
-                    {business.data().logoUrl}{" "}
-                    <span>
+                    </div>
+                </TextInput>
+            </ItemWrapper>
+            <ItemWrapper>
+                <Title>Logo Url: </Title>
+                <TextInput>
+                    <div>
+                        {business.data().logoUrl.length > 25
+                            ? business.data().logoUrl.slice(0, 25) + "..."
+                            : business.data().logoUrl}{" "}
+                    </div>
+                    <div>
                         <Edit />
-                    </span>
-                </span>
-            </div>
-            <div>
-                <span>Contact Form Link: </span>
-                <span>
+                    </div>
+                </TextInput>
+            </ItemWrapper>
+            <ItemWrapper>
+                <Title>Contact Form Link: </Title>
+                <div>
                     {`${window.location.href.slice(
                         0,
                         window.location.href.lastIndexOf("/") - 9
-                    )}/contact/${businessId}`}
-                    <span>
-                        {/* TODO: Add the copy btn */}
-                        {"  "}[Copy Button]
-                    </span>
-                </span>
-            </div>
-            <div>
-                <span>Twilio Number: </span>
+                    )}/contact/${businessId}`.length > 10
+                        ? `${window.location.href.slice(
+                              0,
+                              window.location.href.lastIndexOf("/") - 9
+                          )}/contact/${businessId}`.slice(0, 10) + "..."
+                        : `${window.location.href.slice(
+                              0,
+                              window.location.href.lastIndexOf("/") - 9
+                          )}/contact/${businessId}`}
+                </div>
+                <div>
+                    {/* TODO: Add the copy btn */}
+                    {"  "}[Copy Button]
+                </div>
+            </ItemWrapper>
+            <ItemWrapper>
+                <Title>Twilio Number: </Title>
                 {business.data().twilioNumber ? (
-                    <span>
-                        {business.data().twilioNumber}{" "}
-                        <span>
-                            <Edit />
-                        </span>
-                    </span>
+                    <div>{business.data().twilioNumber} </div>
                 ) : (
                     <AvailableTwilioNumbers business={business} /> //Passing in the whole businessObj
                 )}
-            </div>
+            </ItemWrapper>
         </Content>
     );
 };
 
+const TextInput = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    padding-left: 0.5rem;
+`;
+
+const Title = styled.div`
+    background: whitesmoke;
+    padding: 0.8rem;
+    border-radius: 0.8rem;
+`;
+
+const ItemWrapper = styled.div`
+    display: flex;
+    align-items: center;
+
+    font-size: var(--p-font);
+    margin: 0 0.5rem 1rem;
+`;
+
 const Content = styled.div`
-    margin: 3rem 0;
+    padding: 1rem 1rem;
 `;

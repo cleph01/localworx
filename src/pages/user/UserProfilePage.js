@@ -196,37 +196,63 @@ const Profile = ({ user }) => {
     return (
         <Content>
             <h2>Profile</h2>
-            <div>
-                <span>Display Name: </span>
-                <span>
-                    {user.displayName}
-                    <span>
+            <ItemWrapper>
+                <Title>Display Name: </Title>
+                <TextInput>
+                    <div>{user.displayName}</div>
+                    <div>
                         <Edit />
-                    </span>
-                </span>
-            </div>
-            <div>
-                <span>Pofile Pic Url: </span>
-                <span>
-                    {user.photoUrl}
-                    <span>
+                    </div>
+                </TextInput>
+            </ItemWrapper>
+            <ItemWrapper>
+                <Title>Pofile Pic Url: </Title>
+                <TextInput>
+                    <div>
+                        {user?.photoURL?.length > 25
+                            ? user.photoURL.slice(0, 25) + "..."
+                            : user.photoURL}
+                    </div>
+                    <div>
                         <Edit />
-                    </span>
-                </span>
-            </div>
-            <div>
-                <span>Cell Phone: </span>
-                <span>
-                    {user.cellPhone}
-                    <span>
+                    </div>
+                </TextInput>
+            </ItemWrapper>
+            <ItemWrapper>
+                <Title>Cell Phone: </Title>
+                <TextInput>
+                    <div>{user.cellPhone}</div>
+                    <div>
                         <Edit />
-                    </span>
-                </span>
-            </div>
+                    </div>
+                </TextInput>
+            </ItemWrapper>
         </Content>
     );
 };
 
+const TextInput = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    padding-left: 0.5rem;
+`;
+
+const Title = styled.div`
+    background: whitesmoke;
+    padding: 0.8rem;
+    border-radius: 0.8rem;
+`;
+
+const ItemWrapper = styled.div`
+    display: flex;
+    align-items: center;
+
+    font-size: var(--p-font);
+    margin: 0 0.5rem 1rem;
+`;
+
 const Content = styled.div`
-    margin: 3rem 0;
+    padding: 1rem 1rem;
 `;

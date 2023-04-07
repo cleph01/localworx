@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import GeneralLoading from "../components/loading/GeneralLoading";
 import styled from "styled-components";
@@ -11,24 +11,47 @@ import { useDocument } from "react-firebase-hooks/firestore";
 import BusinessesContainer from "../components/loggedInLandingPage/BusinessesContainer";
 import SalesContainer from "../components/loggedInLandingPage/SalesContainer";
 import { connect } from "react-redux";
-import { setFullUser } from "../redux/actions/authActions";
+import {
+    setFullUser,
+    setSalesPersonToUser,
+} from "../redux/actions/authActions";
 import SignUp from "../components/loggedInLandingPage/SignUp";
 import { Button } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import queryString from "query-string";
 
-const LoggedInLandingPage = ({ authUser, setFullUser }) => {
+const LoggedInLandingPage = ({
+    authUser,
+    setFullUser,
+    setSalesPersonToUser,
+}) => {
     const history = useHistory();
+
+    const { search } = useLocation();
+    const queryStringValue = queryString.parse(search);
+    // console.log("QueryStringValue: ", queryStringValue);
+
     const [user, loading, error] = useDocument(doc(db, "users", authUser.uid));
 
     if (loading) return <GeneralLoading />;
     if (error) return <div>"error: " {error}</div>;
 
-    // Dispatch Update of full user to redux store
-    setFullUser({ id: user.id, ...user.data() });
+    // Need to parse query-string to see if salesperson exists
+    if (!!queryStringValue.sid) {
+        setSalesPersonToUser({
+            id: user?.id,
+            salesPersonId: queryStringValue.sid,
+            ...user?.data(),
+        });
+    } else {
+        // Dispatch Update of full user to redux store
+        setFullUser({ id: user?.id, ...user?.data() });
+    }
 
     return (
         <>
             <Header />
+
             <Container>
                 {/* If the user IS NOT an Admin, Salesperson, AND HAS NOT PURCHASED
                 our inital signup of $300.00 then show the Buy Now Page  */}
@@ -87,7 +110,9 @@ const LoggedInLandingPage = ({ authUser, setFullUser }) => {
     );
 };
 
-export default connect(null, { setFullUser })(LoggedInLandingPage);
+export default connect(null, { setFullUser, setSalesPersonToUser })(
+    LoggedInLandingPage
+);
 
 const CardContainer = styled.div`
     display: grid;

@@ -31,6 +31,12 @@ export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 
 export const SET_FULL_USER = "SET_FULL_USER";
 
+export const SET_SALESPERSON_TO_USER_INITIATED =
+    "SET_SALESPERSON_TO_USER_INITIATED";
+export const SET_SALESPERSON_TO_USER_SUCCESS =
+    "SET_SALESPERSON_TO_USER_SUCCESS";
+export const SET_SALESPERSON_TO_USER_FAILED = "SET_SALESPERSON_TO_USER_FAILED";
+
 export const FETCH_USER_INITIATED = "FETCH_USER_INITIATED";
 export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
 
@@ -66,10 +72,41 @@ export const signupPaymentSuccessful = (userId) => async (dispatch) => {
         dispatch({
             type: SIGNUP_PAYMENT_SUCCESSFUL,
         });
-
-        
     } catch (error) {
         console.log("error seting signup pmnt success: ", error);
+    }
+};
+
+export const setSalesPersonToUser = (userObj) => async (dispatch) => {
+    try {
+        dispatch({
+            type: SET_SALESPERSON_TO_USER_INITIATED,
+        });
+
+        const userRef = doc(db, "users", userObj.id);
+        await setDoc(
+            userRef,
+            { salesPersonId: userObj.salesPersonId },
+            { merge: true }
+        );
+
+        dispatch({
+            type: SET_SALESPERSON_TO_USER_SUCCESS,
+            payload: userObj,
+        });
+    } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const message = `${errorCode}: ${errorMessage}`;
+
+        dispatch({
+            type: SET_SALESPERSON_TO_USER_FAILED,
+        });
+
+        dispatch({
+            type: SET_MESSAGE,
+            payload: message,
+        });
     }
 };
 
