@@ -344,7 +344,7 @@ app2.post("/available-numbers", (request, response) => {
 
     client
         .availablePhoneNumbers("US")
-        .local.list({
+        .mobile.list({
             areaCode: areaCode,
             smsEnabled: true,
             voiceEnabled: true,
@@ -362,6 +362,7 @@ app2.post("/create-subaccount", (request, response) => {
     client.api.v2010.accounts
         .create({ friendlyName: businessId })
         .then(async (account) => {
+            // Saves the subaccount
             await admin
                 .firestore()
                 .collection("businesses")
@@ -395,6 +396,7 @@ app2.post("/provision-twilio-number", (request, response) => {
                 .update({ accountSid: subAccountSid })
                 // This should kick out the businessId of the subAccount
                 .then(async (incoming_phone_number) => {
+                    // Saves the phone SID and the twilio number to the business record in the db
                     await admin
                         .firestore()
                         .collection("businesses")
