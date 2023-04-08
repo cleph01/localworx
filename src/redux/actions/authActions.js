@@ -6,6 +6,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../../utils/db/firebaseConfig";
 import {
+    arrayUnion,
     collection,
     doc,
     getDoc,
@@ -14,6 +15,7 @@ import {
     QuerySnapshot,
     setDoc,
     where,
+    writeBatch,
 } from "firebase/firestore";
 
 import { SET_MESSAGE } from "./messageActions";
@@ -83,12 +85,30 @@ export const setSalesPersonToUser = (userObj) => async (dispatch) => {
             type: SET_SALESPERSON_TO_USER_INITIATED,
         });
 
+        // Create a batch write to tie salesperson to user
+        // and include the user in the salesperson records
+        const batch = writeBatch(db);
+
+        // Tying salesperson to user
         const userRef = doc(db, "users", userObj.id);
-        await setDoc(
+        batch.set(
             userRef,
             { salesPersonId: userObj.salesPersonId },
             { merge: true }
         );
+
+        // Tying salesperson to user
+        const salesPersonRef = doc(db, "users", userObj.salesPersonId);
+        batch.update(
+            salesPersonRef,
+            {
+                sales: arrayUnion(userObj.id),
+            },
+            { merge: true }
+        );
+
+        // Commit the batch
+        await batch.commit();
 
         dispatch({
             type: SET_SALESPERSON_TO_USER_SUCCESS,

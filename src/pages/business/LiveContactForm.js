@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Redirect } from "react-router-dom";
 
 import NavBar from "../../components/NavBar";
@@ -6,14 +6,15 @@ import Blocked from "./Blocked";
 
 import { db } from "../../utils/db/firebaseConfig";
 
-import Skeleton from "@mui/material/Skeleton";
 import TextField from "@mui/material/TextField";
 
 import styled from "styled-components";
+import { useDocument } from "react-firebase-hooks/firestore";
+import { addDoc, collection, doc } from "firebase/firestore";
+import GeneralLoading from "../../components/loading/GeneralLoading";
 
-
-
-
+import "../../utils/lib/css/landingPage.css";
+import { CircularProgress } from "@mui/material";
 
 function LandingPage() {
     const { businessId } = useParams();
@@ -25,7 +26,6 @@ function LandingPage() {
         message: {
             customerCell: "",
             customerName: "",
-            rooferCell: "",
             body: "",
         },
         submitting: false,
@@ -41,105 +41,15 @@ function LandingPage() {
         }));
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        setMessage({ ...message, submitting: true });
+    const [business, loading, error] = useDocument(
+        doc(db, "businesses", businessId)
+    );
 
-        const twilioPayload = {
-            to: message.message.rooferCell,
-            body: `New Message from Contact Form: Customer Name: ${message.message.customerName} - ${message.message.body} - Call them @ : ${message.message.customerCell}`,
-            businessId: businessId,
-            businessName: businessInfo.businessName,
-        };
+    if (loading) return <GeneralLoading />;
 
-        const chat = document.getElementsByClassName("chat")[0];
+    if (error) return <div>"error: " {error}</div>;
 
-        chat.innerHTML +=
-            "<div class='yours messages'><div class='message last'>" +
-            message.message.body +
-            "</div></div><div id='sending' class='mine messages'><div class='message last'>Sending Your Message...</div></div>";
-
-        db.collection("textMessages")
-            .add(twilioPayload)
-            .then((docRef) => {
-                setMessage({ ...message, submitting: false, success: true });
-                const sendingEl = document.getElementById("sending");
-
-                sendingEl.remove();
-
-                chat.innerHTML +=
-                    "<div class='mine messages'><div class='message last'>Your message has successfully been sent!! 🙌  Someone will be in touch with you shortly. 💯</div></div>";
-
-                // Reset Message Fields, Keeping Roofer # intact
-                setMessage((prevState) => ({
-                    ...prevState,
-                    message: {
-                        ...prevState.message,
-                        customerCell: "",
-                        customerName: "",
-                        body: "",
-                    },
-                }));
-            })
-            .catch((error) => {
-                console.log("Error Creating New text message: ", error);
-
-                setMessage({ ...message, submitting: false, error: true });
-
-                chat.innerHTML +=
-                    "<div class='mine messages'><div class='message last'>There was an error sending your message !! 😟 Please Call us at " +
-                    businessInfo.businessCell +
-                    "</div></div>";
-            });
-    };
-
-    useEffect(() => {
-        if (businessId) {
-            db.collection("businesses")
-                .doc(businessId)
-                .get()
-                .then((doc) => {
-                    setBusinessExists(doc.exists);
-
-                    setBusinessInfo({
-                        businessId: businessId,
-                        ...doc.data(),
-                    });
-
-                    setMessage((prevState) => ({
-                        ...prevState,
-                        message: {
-                            ...prevState.message,
-                            rooferCell: doc.data()
-                                ? doc.data().businessCell
-                                : "",
-                        },
-                    }));
-                })
-                .catch((error) => {
-                    console.log("error geting business info: ", error);
-                });
-        }
-
-        return () => setBusinessExists(false);
-    }, []);
-
-    if (!businessInfo) {
-        return (
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: "10px",
-                }}
-            >
-                <Skeleton variant="rectangular" width={350} height={218} />
-            </div>
-        );
-    }
-
-    if (!businessExists) {
+    if (!loading && !error && !business) {
         return <Redirect to="/page-not-found/404" />;
     }
 
@@ -147,14 +57,97 @@ function LandingPage() {
         return <Blocked />;
     }
 
+    // Using in the copyright footer to get fullYear
+    const today = new Date();
+
+    console.log("business at laive contact form: ", business.data());
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (message.message.body !== "") {
+            setMessage({ ...message, submitting: true });
+
+            const twilioPayload = {
+                to: business?.data().businessCell,
+                from: business?.data().twilioNumber,
+                body: `New Message from Contact Form: Customer Name: ${message.message.customerName} - ${message.message.body} - Call them @ : ${message.message.customerCell}`,
+                businessId: businessId,
+                businessName: business?.data().businessName,
+            };
+
+            // grab chat dom element
+            const chat = document.getElementsByClassName("chat")[0];
+            // append the "sending message"
+            chat.innerHTML +=
+                "<div class='yours messages'><div class='message last'>" +
+                message.message.body +
+                "</div></div><div id='sending' class='mine messages'><div class='message last'>Sending Your Message...</div></div>";
+
+            // attempt to add message to Twilio Collection
+            try {
+                // Add a new document with a generated id.
+                const docRef = await addDoc(
+                    collection(db, "textMessages"),
+                    twilioPayload
+                );
+
+                // If twilio message successfully added/sent
+                if (docRef.id) {
+                    // set Success Message
+                    setMessage({
+                        ...message,
+                        submitting: false,
+                        success: true,
+                    });
+
+                    // Grab recently appended "sending" message
+                    const sendingEl = document.getElementById("sending");
+                    // remove the "sending" message
+                    sendingEl.remove();
+                    // append "successfully sent" message
+                    chat.innerHTML +=
+                        "<div class='mine messages'><div class='message last'>Your message has successfully been sent!! Someone will be in touch with you shortly. ✅ </div></div>";
+
+                    // Reset Message Fields,
+                    setMessage((prevState) => ({
+                        ...prevState,
+                        message: {
+                            ...prevState.message,
+                            customerCell: "",
+                            customerName: "",
+                            body: "",
+                        },
+                    }));
+                }
+            } catch (error) {
+                console.log("Error Creating New text message: ", error);
+
+                // set error flag to true
+                setMessage({ ...message, submitting: false, error: true });
+                // append error message in chat windowm
+                chat.innerHTML +=
+                    "<div class='mine messages'><div class='message last'>There was an error sending your message !! 😟 Please Call us at " +
+                    business?.data().businessCell +
+                    "</div></div>";
+            }
+        } else {
+            alert("Message cannot be empty");
+        }
+    };
+
     return (
         <>
-            <NavBar businessInfo={businessInfo} />
+            <NavBar business={business.data()} />
             <Container>
                 <div id="response_div"></div>
                 <div className="chat-container">
                     <header>
-                        <h2>Text Message Contact Form</h2>
+                        <h2>
+                            Text Message
+                            <br />
+                            Contact Form
+                        </h2>
 
                         <InputWrapper>
                             <TextField
@@ -194,19 +187,30 @@ function LandingPage() {
                                 multiline
                             />
                         </InputWrapper>
-                        <div
+                        <button
+                            disabled={message.submitting}
                             className="send-button"
                             id="twilio-contact-form-submit"
                             onClick={handleSubmit}
                         >
-                            Send
-                        </div>
+                            {message.submitting ? "Sending..." : "Send"}
+                            {message.submitting && (
+                                <CircularProgress
+                                    style={{
+                                        width: "20px",
+                                        height: "20px",
+                                        color: "#fff",
+                                        marginLeft: "15px",
+                                    }}
+                                />
+                            )}
+                        </button>
                     </header>
                     <div className="chat">
                         <div className="mine messages">
                             <div className="message">
-                                Welcome to {businessInfo.businessName}! Send us
-                                a text message below and we will get in touch
+                                Welcome to {business?.data().businessName}! Send
+                                us a text message below and we will get in touch
                                 with you shortly.
                             </div>
                             <div className="message last">
@@ -217,8 +221,13 @@ function LandingPage() {
                     <div className="msg-input-container"></div>
 
                     <Footer>
-                        <p>Powered by SmartSeed Technologies</p>
-                        <p>Copyright &copy; 2021</p>
+                        <p>
+                            Powered by{" "}
+                            <span style={{ color: "blue" }}>Local</span>
+                            <span style={{ color: "gray" }}>Worx</span>
+                            <br />
+                            Copyright &copy; {today.getFullYear()}
+                        </p>
                     </Footer>
                 </div>
             </Container>
@@ -237,6 +246,7 @@ const Footer = styled.div`
         "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     font-size: small;
     color: #979595;
+    margin-top: 0.8rem;
 `;
 
 const Message = styled.div`
@@ -349,4 +359,5 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     margin: 95px 0px;
+    font-size: var(--p-font);
 `;

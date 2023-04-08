@@ -3,10 +3,11 @@ import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import GeneralLoading from "../../components/loading/GeneralLoading";
 import Header from "../../components/Header";
-import { ButtonGroup, IconButton } from "@mui/material";
+import { ButtonGroup, IconButton, TextField } from "@mui/material";
 import {
     AccountCircle,
     AutoGraph,
+    ContentCopy,
     Edit,
     FormatListNumbered,
     Storefront,
@@ -19,6 +20,8 @@ import { connect } from "react-redux";
 
 import { setBusiness } from "../../redux/actions/businessProfileActions";
 import AvailableTwilioNumbers from "../../components/user/AvailableTwilioNumbers";
+import ToolTip from "../../components/ToolTip";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 const SpecificBusinessPage = ({ setBusiness }) => {
     const { businessId } = useParams();
@@ -244,23 +247,53 @@ const Account = () => {
             </ItemWrapper>
             <ItemWrapper>
                 <Title>Contact Form Link: </Title>
-                <div>
-                    {`${window.location.href.slice(
-                        0,
-                        window.location.href.lastIndexOf("/") - 9
-                    )}/contact/${businessId}`.length > 10
-                        ? `${window.location.href.slice(
-                              0,
-                              window.location.href.lastIndexOf("/") - 9
-                          )}/contact/${businessId}`.slice(0, 10) + "..."
-                        : `${window.location.href.slice(
-                              0,
-                              window.location.href.lastIndexOf("/") - 9
-                          )}/contact/${businessId}`}
-                </div>
-                <div>
-                    {/* TODO: Add the copy btn */}
-                    {"  "}[Copy Button]
+
+                {/* copy btn */}
+                <div style={{ width: "100%" }}>
+                    <CopyToClipboard
+                        text={`${window.location.href.slice(
+                            0,
+                            window.location.href.lastIndexOf("/") - 9
+                        )}/contact/${businessId}`}
+                    >
+                        <CopyInner
+                            sx={{
+                                display: "flex",
+                                alignItems: "flex-end",
+
+                                mt: 2,
+                            }}
+                        >
+                            <div>
+                                {`${window.location.href.slice(
+                                    0,
+                                    window.location.href.lastIndexOf("/") - 9
+                                )}/contact/${businessId}`.length > 25
+                                    ? `${window.location.href.slice(
+                                          0,
+                                          window.location.href.lastIndexOf(
+                                              "/"
+                                          ) - 9
+                                      )}/contact/${businessId}`.slice(0, 25) +
+                                      "..."
+                                    : `${window.location.href.slice(
+                                          0,
+                                          window.location.href.lastIndexOf(
+                                              "/"
+                                          ) - 9
+                                      )}/contact/${businessId}`}
+                            </div>
+                            <ToolTip content="Copied!" direction="top">
+                                <ContentCopy
+                                    sx={{
+                                        color: "action.active",
+                                        mr: 1,
+                                        my: 0.5,
+                                    }}
+                                />
+                            </ToolTip>
+                        </CopyInner>
+                    </CopyToClipboard>
                 </div>
             </ItemWrapper>
             <ItemWrapper>
@@ -274,6 +307,12 @@ const Account = () => {
         </Content>
     );
 };
+
+const CopyInner = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
 
 const TextInput = styled.div`
     display: flex;

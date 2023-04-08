@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import LandingPageCard from "./LandingPageCard";
+import LandingPageSalesCard from "./LandingPageSalesCard";
 import { connect } from "react-redux";
 import { setBusinessId } from "../../redux/actions/businessProfileActions";
 
@@ -14,10 +14,10 @@ const SalesContainer = ({ sales, setBusinessId }) => {
     return (
         <CardContainer>
             <h2>Sales Clients</h2>
-            {sales.map((businessId, idx) => (
-                <LandingPageCard
-                    key={businessId}
-                    businessId={businessId}
+            {sales.map((userId, idx) => (
+                <LandingPageSalesCard
+                    key={userId}
+                    userId={userId}
                     handleRedirect={handleRedirect}
                 />
             ))}

@@ -1,23 +1,23 @@
 import styled from "styled-components";
 
-function NavBar({ businessInfo }) {
+function NavBar({ business }) {
     return (
-        <Container style={{ backgroundColor: businessInfo.navBarColor }}>
+        <Container style={{ backgroundColor: business.navBarColor }}>
             <LogoWrapper>
-                <Logo src={businessInfo.logoUrl} alt="logo" />
+                <Logo src={business.logoUrl} alt="logo" />
             </LogoWrapper>
             <NavbarBody>
-                <div className="nav__btn">
+                <NavButton className="nav__btn">
                     <a
-                        href={businessInfo.website}
+                        href={business.website}
                         style={{
-                            color: businessInfo.backBtnColor,
+                            color: business.backBtnColor,
                             fontWeight: "700",
                         }}
                     >
                         Go Back
                     </a>
-                </div>
+                </NavButton>
             </NavbarBody>
         </Container>
     );
@@ -25,10 +25,19 @@ function NavBar({ businessInfo }) {
 
 export default NavBar;
 
-const Logo = styled.img`
-    width: 75px;
-    height: auto;
+const Logo = styled.img``;
+
+const NavButton = styled.div`
+    margin-right: 0;
+    padding: 0px 5px;
+    cursor: pointer;
+
+    > a {
+        text-decoration: none;
+        font-size: var(--p-font);
+    }
 `;
+
 const NavbarBody = styled.div`
     display: flex;
     justify-content: space-between;
@@ -39,10 +48,15 @@ const LogoWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    > img {
+        width: 75px;
+        height: auto;
+    }
 `;
 
 const Container = styled.div`
-    z-index: 1;
+    z-index: 100;
     width: 100%;
     height: 75px;
     color: #ffffff;

@@ -48,16 +48,22 @@ const LoggedInLandingPage = ({
         setFullUser({ id: user?.id, ...user?.data() });
     }
 
-    return (
+    /* If the user IS NOT an Admin, Salesperson, AND HAS NOT PURCHASED
+                our inital signup of $300.00 then show the Buy Now Page  */
+    return !!!user?.data().businesses &&
+        !!!user?.data().sales &&
+        !!!user?.data().admin ? (
+        <SignUp />
+    ) : (
         <>
             <Header />
 
             <Container>
                 {/* If the user IS NOT an Admin, Salesperson, AND HAS NOT PURCHASED
                 our inital signup of $300.00 then show the Buy Now Page  */}
-                {!!!user?.data().businesses &&
+                {/* {!!!user?.data().businesses &&
                     !!!user?.data().sales &&
-                    !!!user?.data().admin && <SignUp />}
+                    !!!user?.data().admin && <SignUp />} */}
 
                 {/* If the user IS an Admin, Salesperson, OR HAS PURCHASED
                 our inital signup of $300.00 then show the Account Container  */}

@@ -20,6 +20,7 @@ function ToolTip(props) {
 
     //     setActive(false);
     // };
+    console.log("tooltip active: ", active);
 
     return (
         <Container
@@ -53,7 +54,7 @@ const TooltipTip = styled.div`
     position: absolute;
     border-radius: 4px;
     left: 0%;
-    transform: translateX(-10%);
+    transform: translateX(-35%); // controls where tooltip pops up
     padding: 6px;
     color: #fcfefb;
     background: #37434f;
@@ -62,6 +63,7 @@ const TooltipTip = styled.div`
     line-height: 1;
     z-index: 100;
     white-space: nowrap;
+    top: 3px * -1;
 
     ::before {
         content: " ";
@@ -72,9 +74,7 @@ const TooltipTip = styled.div`
         position: absolute;
         pointer-events: none;
         border-width: 6px;
-        margin-left: 6px * -1;
-
-        top: 30px * -1;
+        margin-left: 10px * -1;
 
         /* top: 100%; */
         border-top-color: #37434f;
