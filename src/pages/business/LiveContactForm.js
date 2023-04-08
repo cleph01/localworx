@@ -71,7 +71,7 @@ function LandingPage() {
             const twilioPayload = {
                 to: business?.data().businessCell,
                 from: business?.data().twilioNumber,
-                body: `New Message from Contact Form: Customer Name: ${message.message.customerName} - ${message.message.body} - Call them @ : ${message.message.customerCell}`,
+                body: `New Message from LocalWorx Form: Customer Name: ${message.message.customerName} - ${message.message.body} - Call them @ : ${message.message.customerCell}`,
                 businessId: businessId,
                 businessName: business?.data().businessName,
             };
