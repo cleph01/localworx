@@ -57,50 +57,44 @@ const SpecificBusinessPage = ({ setBusiness }) => {
         <Suspense fallback={<GeneralLoading />}>
             <Header />
             <Container>
-                <Inner>
-                    <HeaderIcons>
-                        <IconContainer
-                            onClick={() => {
-                                business.data().twilioNumber
-                                    ? history.push(
-                                          `/business/${businessId}/chat`
-                                      )
-                                    : alert("Select a Number Below to Enable");
-                            }}
-                        >
-                            <IconButton>
-                                <Textsms />
-                            </IconButton>
-                            <p>Live SMS </p>
-                        </IconContainer>
-                        <IconContainer
-                            onClick={() => handleMenuIconClick("msgLog")}
-                        >
-                            <IconButton>
-                                <FormatListNumbered />
-                            </IconButton>
-                            <p>Msg Log</p>
-                        </IconContainer>
-                        <IconContainer
-                            onClick={() => handleMenuIconClick("stats")}
-                        >
-                            <IconButton>
-                                <AutoGraph />
-                            </IconButton>
-                            <p>Stats</p>
-                        </IconContainer>
-                        <IconContainer
-                            onClick={() => handleMenuIconClick("account")}
-                        >
-                            <IconButton>
-                                <Storefront />
-                            </IconButton>
-                            <p>Account</p>
-                        </IconContainer>
-                    </HeaderIcons>
+                <HeaderIcons>
+                    <IconContainer
+                        onClick={() => {
+                            business.data().twilioNumber
+                                ? history.push(`/business/${businessId}/chat`)
+                                : alert("Select a Number Below to Enable");
+                        }}
+                    >
+                        <IconButton>
+                            <Textsms />
+                        </IconButton>
+                        <p>Live SMS </p>
+                    </IconContainer>
+                    <IconContainer
+                        onClick={() => handleMenuIconClick("msgLog")}
+                    >
+                        <IconButton>
+                            <FormatListNumbered />
+                        </IconButton>
+                        <p>Msg Log</p>
+                    </IconContainer>
+                    <IconContainer onClick={() => handleMenuIconClick("stats")}>
+                        <IconButton>
+                            <AutoGraph />
+                        </IconButton>
+                        <p>Stats</p>
+                    </IconContainer>
+                    <IconContainer
+                        onClick={() => handleMenuIconClick("account")}
+                    >
+                        <IconButton>
+                            <Storefront />
+                        </IconButton>
+                        <p>Account</p>
+                    </IconContainer>
+                </HeaderIcons>
 
-                    <Box>{showSelectionWindow()}</Box>
-                </Inner>
+                <Box>{showSelectionWindow()}</Box>
             </Container>
         </Suspense>
     );
@@ -141,28 +135,13 @@ const Box = styled.div`
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 `;
-const Inner = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #ccc;
-    margin: 2rem 8% 2rem;
-    padding: 1rem 2% 1rem;
-    border-radius: 0.8rem;
-    box-shadow: 5px 5px 20px rgba(68, 68, 68, 0.6);
-    width: 35rem;
-    height: calc(var(--vh, 1vh) * 80);
-    max-height: calc(var(--vh, 1vh) * 80);
-
-    > h3 {
-        color: var(--second-color);
-    }
-`;
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: calc(var(--vh, 1vh) * 85);
+    padding: 0 1rem;
 `;
 
 const MessageLog = () => {
@@ -249,21 +228,14 @@ const Account = () => {
                 <Title>Contact Form Link: </Title>
 
                 {/* copy btn */}
-                <div style={{ width: "100%" }}>
+                <TextInput>
                     <CopyToClipboard
                         text={`${window.location.href.slice(
                             0,
                             window.location.href.lastIndexOf("/") - 9
                         )}/contact/${businessId}`}
                     >
-                        <CopyInner
-                            sx={{
-                                display: "flex",
-                                alignItems: "flex-end",
-
-                                mt: 2,
-                            }}
-                        >
+                        <CopyInner>
                             <div>
                                 {`${window.location.href.slice(
                                     0,
@@ -287,23 +259,43 @@ const Account = () => {
                                 <ContentCopy
                                     sx={{
                                         color: "action.active",
-                                        mr: 1,
-                                        my: 0.5,
                                     }}
                                 />
                             </ToolTip>
                         </CopyInner>
                     </CopyToClipboard>
-                </div>
+                </TextInput>
             </ItemWrapper>
             <ItemWrapper>
-                <Title>Twilio Number: </Title>
+                <Title>Text Number: </Title>
                 {business.data().twilioNumber ? (
-                    <div>{business.data().twilioNumber} </div>
+                    <TextInput>
+                        <CopyToClipboard text={business.data().twilioNumber}>
+                            <CopyInner>
+                                <div>{business.data().twilioNumber}</div>
+                                <ToolTip content="Copied!" direction="top">
+                                    <ContentCopy
+                                        sx={{
+                                            color: "action.active",
+                                        }}
+                                    />
+                                </ToolTip>
+                            </CopyInner>
+                        </CopyToClipboard>
+                    </TextInput>
                 ) : (
-                    <AvailableTwilioNumbers business={business} /> //Passing in the whole businessObj
+                    <TextInput>
+                        {business.data().twilioNumber
+                            ? business.data().twilioNumber
+                            : "Select a Phone Number Below"}{" "}
+                    </TextInput>
                 )}
             </ItemWrapper>
+            {!business.data().twilioNumber && (
+                <ItemWrapper>
+                    <AvailableTwilioNumbers business={business} />
+                </ItemWrapper>
+            )}
         </Content>
     );
 };
@@ -312,6 +304,7 @@ const CopyInner = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex: 1;
 `;
 
 const TextInput = styled.div`
@@ -319,13 +312,14 @@ const TextInput = styled.div`
     justify-content: space-between;
     align-items: center;
     flex: 1;
-    padding-left: 0.5rem;
+    padding-left: 1rem;
 `;
 
 const Title = styled.div`
     background: whitesmoke;
     padding: 0.8rem;
     border-radius: 0.8rem;
+    flex: 0.4;
 `;
 
 const ItemWrapper = styled.div`
@@ -334,6 +328,7 @@ const ItemWrapper = styled.div`
 
     font-size: var(--p-font);
     margin: 0 0.5rem 1rem;
+    border-bottom: 1px solid #ccc;
 `;
 
 const Content = styled.div`

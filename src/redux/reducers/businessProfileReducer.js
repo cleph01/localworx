@@ -3,6 +3,7 @@ import {
     FETCH_BUSINESS_INFO_INITIATED,
     FETCH_BUSINESS_INFO_SUCCESS,
     CREATE_TWILIO_SUB_ACCOUNT_SUCCESSFUL,
+    SET_REMAINING_MESSAGES_COUNT,
 } from "../actions/businessProfileActions";
 
 const initialState = {
@@ -36,7 +37,14 @@ const businessProfileReducer = (state = initialState, action) => {
                     ...action.payload,
                 },
             };
-
+        case SET_REMAINING_MESSAGES_COUNT:
+            return {
+                ...state,
+                business: {
+                    ...state.business,
+                    remainingMessagesCount: action.payload,
+                },
+            };
         default:
             return state;
     }

@@ -83,6 +83,7 @@ const ChatScreen = ({ user, business, openChatScreen, setOpenChatScreen }) => {
                 message: chatMessage,
                 user: user.cellPhone,
                 recipient: chatId,
+                twilioNumber: business.twilioNumber,
             });
 
             await batch.commit();

@@ -186,5 +186,4 @@ const InputWrapper = styled.div`
 const Container = styled.div`
     display: flex;
     align-items: center;
-    width: 100%;
 `;

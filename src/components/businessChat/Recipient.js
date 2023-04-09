@@ -8,7 +8,7 @@ import { auth, db } from "../../utils/db/firebaseConfig";
 import { getRecipientCellPhone } from "../../utils/lib/chatModel";
 
 const Recipient = ({ chatId }) => {
-    const [user] = useAuthState(auth);
+    
     // Get recipient snapshot in order to populate header
     const recipientQuery = query(
         collection(db, "users"),

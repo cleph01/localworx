@@ -282,6 +282,7 @@ app.post("/", async (request, response) => {
                     message: Body,
                     direction: "in",
                     timestamp: admin.firestore.Timestamp.fromDate(new Date()),
+                    twilioNumber: To,
                 };
 
                 console.log("businesId: ", businessId);
@@ -309,7 +310,7 @@ app.post("/", async (request, response) => {
                 // twiml.message("Message Saved");
                 console.log("message Saved");
             } catch (error) {
-                twiml.message("Error Creating Conversation Record: " + error);
+                twiml.message("Error Creating Conversation: " + error);
             }
     }
 

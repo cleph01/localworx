@@ -13,6 +13,16 @@ export const CREATE_TWILIO_SUB_ACCOUNT_SUCCESSFUL =
 export const CREATE_TWILIO_SUB_ACCOUNT_FAILED =
     "CREATE_TWILIO_SUB_ACCOUNT_FAILED";
 
+export const SET_REMAINING_MESSAGES_COUNT = "SET_REMAINING_MESSAGES_COUNT"
+
+export const setRemainingMessagesCount = (remainingMessagesCount) => {
+
+    return {
+        type: SET_BUSINESS_ID,
+        payload: remainingMessagesCount,
+    };
+}
+
 export const createTwilioSubAccount = (businessId) => (dispatch) => {
     try {
         dispatch({

@@ -70,7 +70,7 @@ const LoggedInLandingPage = ({
                 {(!!user?.data().businesses ||
                     !!user?.data().sales ||
                     !!user?.data().admin) && (
-                    <Inner>
+                    <>
                         <h1>Choose an account</h1>
                         <h3>to continue to your admin panel</h3>
 
@@ -109,7 +109,7 @@ const LoggedInLandingPage = ({
                                 <SalesContainer sales={user.data().sales} />
                             )}
                         </Box>
-                    </Inner>
+                    </>
                 )}
             </Container>
         </>
@@ -140,8 +140,9 @@ const CardContainer = styled.div`
 `;
 
 const Box = styled.div`
-    width: 100%;
+    width: 35rem;
     height: 100%;
+    padding: 0 1rem;
     overflow: scroll;
 
     ::-webkit-scrollbar {
@@ -150,28 +151,14 @@ const Box = styled.div`
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 `;
-const Inner = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #ccc;
-    margin: 2rem 8% 2rem;
-    padding: 1rem 2% 1rem;
-    border-radius: 0.8rem;
-    box-shadow: 5px 5px 20px rgba(68, 68, 68, 0.6);
-    width: 35rem;
-    height: calc(var(--vh, 1vh) * 80);
-    max-height: calc(var(--vh, 1vh) * 80);
 
-    > h3 {
-        color: var(--second-color);
-    }
-`;
+const Inner = styled.div``;
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: calc(var(--vh, 1vh) * 85);
 `;
 
 const AdminContainer = ({ businesses }) => {

@@ -17,7 +17,7 @@ const SalesContainer = ({ sales, setBusinessId }) => {
             {sales.map((userId, idx) => (
                 <LandingPageSalesCard
                     key={userId}
-                    userId={userId}
+                    salesClientId={userId}
                     handleRedirect={handleRedirect}
                 />
             ))}

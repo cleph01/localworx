@@ -56,41 +56,39 @@ const UserProfilePage = ({ user }) => {
         <>
             <Header />
             <Container>
-                <Inner>
-                    <HeaderIcons>
-                        <IconContainer>
-                            <IconButton>
-                                <AddAPhoto />
-                            </IconButton>
-                            <p>Profile Photo</p>
-                        </IconContainer>
-                        <IconContainer
-                            onClick={() => handleMenuIconClick("addBusiness")}
-                        >
-                            <IconButton>
-                                <Add />
-                            </IconButton>
-                            <p>Add Business</p>
-                        </IconContainer>
+                <HeaderIcons>
+                    <IconContainer>
+                        <IconButton>
+                            <AddAPhoto />
+                        </IconButton>
+                        <p>Profile Photo</p>
+                    </IconContainer>
+                    <IconContainer
+                        onClick={() => handleMenuIconClick("addBusiness")}
+                    >
+                        <IconButton>
+                            <Add />
+                        </IconButton>
+                        <p>Add Business</p>
+                    </IconContainer>
 
-                        <IconContainer onClick={() => history.push("/hub")}>
-                            <IconButton>
-                                <FormatListNumbered />
-                            </IconButton>
-                            <p>Businesses</p>
-                        </IconContainer>
-                        <IconContainer
-                            onClick={() => handleMenuIconClick("profile")}
-                        >
-                            <IconButton>
-                                <AccountCircle />
-                            </IconButton>
-                            <p>Profile</p>
-                        </IconContainer>
-                    </HeaderIcons>
+                    <IconContainer onClick={() => history.push("/hub")}>
+                        <IconButton>
+                            <FormatListNumbered />
+                        </IconButton>
+                        <p>Businesses</p>
+                    </IconContainer>
+                    <IconContainer
+                        onClick={() => handleMenuIconClick("profile")}
+                    >
+                        <IconButton>
+                            <AccountCircle />
+                        </IconButton>
+                        <p>Profile</p>
+                    </IconContainer>
+                </HeaderIcons>
 
-                    <Box>{showSelectionWindow(user)}</Box>
-                </Inner>
+                <Box>{showSelectionWindow(user)}</Box>
             </Container>
         </>
     );
@@ -156,28 +154,13 @@ const Box = styled.div`
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 `;
-const Inner = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #ccc;
-    margin: 2rem 8% 2rem;
-    padding: 1rem 2% 1rem;
-    border-radius: 0.8rem;
-    box-shadow: 5px 5px 20px rgba(68, 68, 68, 0.6);
-    width: 35rem;
-    height: calc(var(--vh, 1vh) * 80);
-    max-height: calc(var(--vh, 1vh) * 80);
-
-    > h3 {
-        color: var(--second-color);
-    }
-`;
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: calc(var(--vh, 1vh) * 85);
+    padding: 0 1rem;
 `;
 
 //
@@ -243,14 +226,15 @@ const Title = styled.div`
     background: whitesmoke;
     padding: 0.8rem;
     border-radius: 0.8rem;
+    flex: 0.4;
 `;
 
 const ItemWrapper = styled.div`
     display: flex;
     align-items: center;
-
     font-size: var(--p-font);
     margin: 0 0.5rem 1rem;
+    border-bottom: 1px solid #ccc;
 `;
 
 const Content = styled.div`

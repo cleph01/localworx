@@ -20,7 +20,7 @@ const LOGGED_IN_LANDING_PAGE = "/hub";
 const SIGNUP_SUCCESSFUL_PAGE = "/signup-successful";
 
 // Display Sales Home page
-const SALES_HOME = "/sales";
+const SALES_HOME = "/sales/:userId";
 
 // Display Business_Client Home page
 const SPECIFIC_BUSINESS_HOME = "/business/:businessId";

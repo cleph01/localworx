@@ -330,6 +330,12 @@ const InputWrapper = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 10px;
+
+    > .MuiFormControl-root {
+        > .MuiInputBase-root {
+            font-size: 16px;
+        }
+    }
 `;
 
 const Header = styled.div`

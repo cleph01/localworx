@@ -19,14 +19,16 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import Message from "./Message";
 import { useParams, useHistory } from "react-router-dom";
 import { formatPhoneNumber } from "../../utils/lib/formatPhoneNumber";
+import { connect } from "react-redux";
+import TwilioBalance from "./TwilioBalance";
 
-const Sidebar = ({ setOpenChatScreen, openChatScreen }) => {
+const Sidebar = ({ user, setOpenChatScreen, openChatScreen }) => {
     const history = useHistory();
 
     const { businessId } = useParams();
 
     // get user from firebase Auth
-    const [user] = useAuthState(auth);
+    // const [user] = useAuthState(auth);
 
     // create query with collection ref inside
     const chatsCollRef = collection(db, `businesses/${businessId}/chats`);
@@ -133,11 +135,13 @@ const Sidebar = ({ setOpenChatScreen, openChatScreen }) => {
                     onClick={() => auth.signOut()}
                     referrerPolicy="no-referrer"
                 />
+
                 <IconsContainer>
                     <IconButton onClick={handleMenuClick}>
                         <MoreVert />
                     </IconButton>
                 </IconsContainer>
+
                 {/* MUI Menu */}
                 <Menu
                     id="basic-menu"
@@ -167,6 +171,9 @@ const Sidebar = ({ setOpenChatScreen, openChatScreen }) => {
             </SearchContainer>
             <SidebarButton onClick={createChat}>START A NEW CHAT</SidebarButton>
 
+            {/* SMS Message Counter */}
+            <TwilioBalance businessId={businessId} />
+
             {/* List of Chats  */}
             {chatsSnapshot?.docs.map((chat) => (
                 <Message
@@ -179,7 +186,14 @@ const Sidebar = ({ setOpenChatScreen, openChatScreen }) => {
     );
 };
 
-export default Sidebar;
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth.user,
+        message: state.message.message,
+    };
+};
+
+export default connect(mapStateToProps, {})(Sidebar);
 
 const SidebarButton = styled(Button)`
     width: 100%;

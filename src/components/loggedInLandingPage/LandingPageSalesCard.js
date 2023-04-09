@@ -4,23 +4,26 @@ import { useDocument } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
 import { db } from "../../utils/db/firebaseConfig";
 import GeneralLoading from "../loading/GeneralLoading";
+import { connect } from "react-redux";
+import { Avatar } from "@mui/material";
 
-const LandingPageCard = ({ userId, setBusinessId }) => {
+const LandingPageSalesCard = ({ salesClientId, user }) => {
     const history = useHistory();
-    const [user, loading, error] = useDocument(doc(db, "users", userId));
+    const [salesClient, loading, error] = useDocument(
+        doc(db, "users", salesClientId)
+    );
 
     if (loading) return <GeneralLoading />;
     if (error) return <div>"error: " {error}</div>;
 
     const handleRedirect = () => {
-        // setBusinessId(businessId);
-        // history.push(`/business/${businessId}`);
+        history.push(`/sales/${user.id}`);
     };
 
     return (
         <Container onClick={() => handleRedirect()}>
             <ImageWrapper>
-                <img src={user?.data().photoURL} alt="avatar" />
+                <Avatar src={salesClient?.data().photoURL} />
             </ImageWrapper>
             <Content>
                 <ContentRow>
@@ -29,11 +32,11 @@ const LandingPageCard = ({ userId, setBusinessId }) => {
                     <ContentHeader>Listings</ContentHeader>
                 </ContentRow>
                 <ContentRow>
-                    <div>{user?.data().displayName}</div>
-                    <div>{user?.data().cellPhone}</div>
+                    <div>{salesClient?.data().displayName}</div>
+                    <div>{salesClient?.data().cellPhone}</div>
                     <div>
-                        {user?.data().businesses?.length
-                            ? user?.data().businesses.length
+                        {salesClient?.data().businesses?.length
+                            ? salesClient?.data().businesses.length
                             : "0"}
                     </div>
                 </ContentRow>
@@ -42,7 +45,14 @@ const LandingPageCard = ({ userId, setBusinessId }) => {
     );
 };
 
-export default LandingPageCard;
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth.user,
+        message: state.message.message,
+    };
+};
+
+export default connect(mapStateToProps, {})(LandingPageSalesCard);
 
 const RegisteredBusinesses = styled.div``;
 
@@ -78,6 +88,7 @@ const ImageWrapper = styled.div`
     width: 2.5rem;
     height: auto;
     text-align: center;
+    margin-right: 1rem;
 
     > img {
         width: 100%;

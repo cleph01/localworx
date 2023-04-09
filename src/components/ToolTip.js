@@ -46,7 +46,7 @@ export default ToolTip;
 
 /* Wrapping */
 const Container = styled.div`
-    display: inline-block;
+    display: inline-flex;
     position: relative;
 `;
 /* Absolute positioning */

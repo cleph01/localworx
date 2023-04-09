@@ -10,10 +10,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 70%;
+    width: 85%;
     border-radius: 5px;
     background-color: #fff;
     padding: 20px;
+
+    /* @media (min-width: 400px) {
+        width: 30%;
+    } */
 }
 .chat-container header {
     display: flex;
