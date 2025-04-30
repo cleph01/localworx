@@ -49,12 +49,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Head>
-          <meta
-            property="og:image"
-            content="https://localworx.io/localworx-logo.jpg"
-          />
-        </Head>
         {children}
       </body>
     </html>
