@@ -52,7 +52,7 @@ export default function Home() {
 
       {/* Under Construction Note */}
       <p className="mt-6 text-sm text-red-500 italic">
-        This site is under active construction. Join the journey early.
+        This site is under active construction. <br /> Join the journey early.
       </p>
     </main>
   );
