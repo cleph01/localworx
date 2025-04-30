@@ -1,5 +1,5 @@
 <p align="center">
-   <img  width="150" height="auto" src="https://github.com/user-attachments/assets/6d0025ea-fb8f-48ab-848c-c7ec0fcb0ddf" />
+   <img  width="150" height="auto" src="https://github.com/user-attachments/assets/623f6cfa-9cd0-4feb-a219-ebe593a58d3c" />
 </p>
 
 # 🌍 LocalWorx.io — Empowering Local Economies Through Decentralized Promotion
