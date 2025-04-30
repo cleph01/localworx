@@ -10,7 +10,7 @@ export default function Home() {
 
       {/* Hero Image */}
       <Image
-        src="https://github.com/user-attachments/assets/623f6cfa-9cd0-4feb-a219-ebe593a58d3c"
+        src="/localworx-logo.jpg"
         alt="LocalWorx Logo"
         className="w-48 h-auto mb-6 rounded-lg shadow-lg"
       />
