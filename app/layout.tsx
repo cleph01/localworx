@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "https://localworx.io/localworx-logo-192x192.png",
-        width: 192,
-        height: 192,
+        width: 64,
+        height: 64,
         alt: "LocalWorx Logo",
         type: "image/png",
       },
