@@ -19,7 +19,7 @@ export default function Home() {
       <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
         LocalWorx.io
       </h1>
-      <p className="text-lg text-gray-300 text-center max-w-xl mb-8">
+      <p className="text-lg text-gray-300 text-center capitalize max-w-xl mb-8">
         A peer-powered platform to grow small businesses, reward local promoters
         with Bitcoin, and build resilient communities.
       </p>
@@ -27,13 +27,13 @@ export default function Home() {
       {/* Vision / Mission */}
       <section className="text-center max-w-2xl space-y-4">
         <h2 className="text-2xl font-semibold">🚀 Our Vision</h2>
-        <p className="text-gray-400">
+        <p className="text-gray-400 capitalize">
           To revitalize local economies and defend digital sovereignty by
           enabling trust-based, peer-to-peer promotion networks.
         </p>
 
         <h2 className="text-2xl font-semibold mt-6">🔍 Our Mission</h2>
-        <ul className="text-gray-400 list-disc list-inside">
+        <ul className="text-gray-400 capitalize list-disc list-inside">
           <li>Empower small businesses with transparent promotion tools</li>
           <li>Enable locals to earn by supporting their community</li>
           <li>Operate without centralized gatekeepers or ad algorithms</li>
@@ -51,7 +51,7 @@ export default function Home() {
       </a>
 
       {/* Under Construction Note */}
-      <p className="mt-6 text-sm text-gray-500 italic">
+      <p className="mt-6 text-sm text-red-500 italic">
         This site is under active construction. Join the journey early.
       </p>
     </main>
