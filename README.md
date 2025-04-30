@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+   <img  width="150" height="auto" src="https://github.com/user-attachments/assets/6d0025ea-fb8f-48ab-848c-c7ec0fcb0ddf" />
+</p>
 
-## Getting Started
+# 🌍 LocalWorx.io — Empowering Local Economies Through Decentralized Promotion
 
-First, run the development server:
+**LocalWorx.io** is a peer-to-peer, Bitcoin-enabled platform designed to connect local businesses, professionals, and community influencers in a vibrant ecosystem of collaboration, visibility, and mutual growth. Built as an offshoot of the [John Connor Project](https://johnconnorproject.org), LocalWorx reimagines how local economies can thrive—without the gatekeepers.
+
+> 💡 Think Craigslist meets Fiverr meets Nostr—with a Zap-powered twist.
+
+---
+
+## 🔥 Our Mission
+
+To **empower local communities** by enabling direct, decentralized value exchange between service providers, promoters, and residents—boosting visibility, economic resilience, and sovereignty in the digital age.
+
+---
+
+## ✨ Core Features
+
+- ⚡ **Bitcoin Zaps Integration** – Direct peer-to-peer tipping & compensation using Lightning Network.
+- 🛠️ **Service Directory** – Searchable listings of local services, skill-sharers, and small businesses.
+- 📢 **Promoter Marketplace** – Businesses can post promotional opportunities; community members can earn Bitcoin by promoting.
+- 🔁 **Resale Deals** – Promoters can resell or redeem discounted service packages they’ve earned.
+- 🧠 **Community-Powered Reviews** – Public ratings build trust & accountability across the ecosystem.
+- 🔄 **Role Switching** – Toggle between Business, Promoter, or Member modes on your profile.
+- 📍 **Event Calendar** – Local meetups, pop-ups, trainings, and community sessions.
+
+---
+
+## 👥 Who This Is For
+
+- **🧑‍🔧 Local Professionals** – Plumbers, designers, tutors, developers, etc.
+- **🏪 Small Business Owners** – Brick-and-mortar or online, looking to grow locally.
+- **📣 Promoters & Influencers** – Want to earn Bitcoin for helping businesses grow.
+- **🤝 Community Members** – Want to support, discover, or contribute to local success.
+
+---
+
+## 🧱 Built With
+
+- **Frontend:** Next.js (with SSR + Static Site Generation)
+- **Database:** PostgreSQL
+- **Hosting:** Vercel
+- **Payments:** Bitcoin Zaps via Nostr-compatible tools (e.g., Alby)
+- **Auth:** OAuth + optional 2FA
+- **Design:** Clean, modern UI with mobile-first principles and rich community aesthetics
+
+---
+
+## 🤝 How to Get Involved
+
+We’re looking for contributors, testers, writers, and promoters who believe in **local-first, peer-powered ecosystems**.
+
+### Ways to contribute:
+
+- 👨‍💻 **Developers** – Help us build the UI, backend, or wallet integrations.
+- 🎨 **Designers** – Help shape the visual identity and UX flow.
+- 📢 **Marketers/Promoters** – Spread the word, create educational content, or run test campaigns.
+- 🧠 **Product Thinkers** – Help us refine onboarding, reputation systems, or zap flows.
+
+---
+
+## 🚀 Getting Started
+
+1. **Clone the Repo**
+   ```bash
+   git clone https://github.com/yourusername/localworx.git
+   cd localworx
+   ```
+
+Install Dependencies
+
+```bash
+npm install
+```
+
+Run Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Want to test Bitcoin zap flows? Use [Alby](https://getalby.com) and connect your lightning wallet.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🌐 Live Demos / Screenshots (Coming Soon)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+We’re in active development. Follow this space for updates, screenshots, and walkthroughs.
 
-## Learn More
+## 🧭 Roadmap Highlights
 
-To learn more about Next.js, take a look at the following resources:
+- MVP Launch (Profile setup, Listings, Promotions, Zaps)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Community Beta with real-world listings
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Admin dashboard & event calendar
 
-## Deploy on Vercel
+- Nostr integration for Zap-native communication
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Mobile-first optimizations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Self-hosted version for sovereign communities
+
+## 🛡️ Our Values
+
+- **Sovereignty** – Own your voice, your time, your income.
+
+- **Transparency** – No black-box algorithms or shadowbans.
+
+- **Community Over Corporations** – We're building from the bottom up.
+
+- **Earn While You Build** – Your participation adds value—and you can be rewarded in Bitcoin.
+
+## 📬 Stay Connected
+
+- 🌐 LocalWorx.io (coming soon)
+
+- 🧠 [The John Connor Project](https://johnconnorproject.org)
+
+<!-- 🐦 Twitter: @RenaissanceTech
+
+📧 Contact: info@localworx.io
+-->
+
+## 📄 License
+
+MIT — Use freely, fork ethically, contribute openly.
+
+⭐ If you believe in decentralizing opportunity, star this repo and help us build a better local future.
+`
