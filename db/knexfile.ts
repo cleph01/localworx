@@ -3,7 +3,8 @@
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
-module.exports = {
+// Ensure this file exports the knex configuration
+const knexfile = {
   development: {
     client: "sqlite3", // Use 'sqlite3' for SQLite database
     connection: {
@@ -50,3 +51,5 @@ module.exports = {
     },
   },
 };
+
+export default knexfile;

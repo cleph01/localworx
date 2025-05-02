@@ -1,5 +1,6 @@
-const knex = require("knex");
-const knexfile = require("./knexfile.ts");
+import knex from "knex";
+
+import knexfile from "./knexfile";
 
 // TODO: In Prod, don't access knexfile.development directly
 // but use environment variables for database connection
@@ -7,4 +8,4 @@ const knexfile = require("./knexfile.ts");
 // to use the production database
 const db = knex(knexfile.development);
 
-module.exports = db;
+export default db;
