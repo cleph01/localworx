@@ -10,6 +10,10 @@
 !.yarn/releases
 !.yarn/versions
 
+# sqlite database
+# local development
+/db/database.db
+
 # testing
 /coverage
 
