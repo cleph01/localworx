@@ -113,7 +113,7 @@ We’re in active development. Follow this space for updates, screenshots, and w
 
 ## 📬 Stay Connected
 
-- 🌐 LocalWorx.io (coming soon)
+- 🌐 [LocalWorx.io](https://localworx.io)
 
 - 🧠 [The John Connor Project](https://johnconnorproject.org)
 
