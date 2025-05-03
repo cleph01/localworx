@@ -10,8 +10,25 @@ export type CheckInRequest = Coordinates & {
   userId: string;
 };
 
-// Optional: Payload returned in API response
+// Payload returned in API response
 export type CheckInResponse = {
   success: boolean;
   message: string;
+};
+
+// Represents a reward offered by a business
+export type Reward = {
+  id: string;
+  businessId: string;
+  name: string;
+  description?: string;
+  threshold: number;
+};
+
+// Tracks when a user earns a reward
+export type RewardGrant = {
+  id: string;
+  rewardId: string;
+  userId: string;
+  grantedAt: Date;
 };

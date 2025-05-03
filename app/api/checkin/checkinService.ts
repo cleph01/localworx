@@ -1,5 +1,11 @@
-import { CheckInRequest, CheckInResponse } from "./checkinTypes";
-import { getBusinessLocation, insertCheckIn } from "./checkinDAO";
+import { CheckInRequest, CheckInResponse, Reward } from "./checkinTypes";
+import {
+  getBusinessLocation,
+  insertCheckIn,
+  getRewardForBusiness,
+  getUserCheckInCount,
+  grantReward,
+} from "./checkinDAO";
 import { haversineDistance } from "./haversine";
 
 const MAX_DISTANCE_METERS = 25;
@@ -7,6 +13,7 @@ const MAX_DISTANCE_METERS = 25;
 export async function performCheckIn(
   payload: CheckInRequest
 ): Promise<CheckInResponse> {
+  // Fetch the business location to validate the check-in distance
   const businessLocation = await getBusinessLocation(payload.businessId);
   if (!businessLocation) {
     return {
@@ -15,6 +22,7 @@ export async function performCheckIn(
     };
   }
 
+  // Calculate the distance from the business location
   const userCoords = {
     latitude: payload.latitude,
     longitude: payload.longitude,
@@ -22,6 +30,7 @@ export async function performCheckIn(
 
   const distance = haversineDistance(userCoords, businessLocation);
 
+  // Check if the user is within the valid distance to check in
   if (distance > MAX_DISTANCE_METERS) {
     return {
       success: false,
@@ -29,7 +38,27 @@ export async function performCheckIn(
     };
   }
 
+  // Insert the check-in record in the database
   await insertCheckIn(payload);
+
+  // Fetch the reward details for the business
+  const reward = await getRewardForBusiness(payload.businessId);
+  if (reward) {
+    // Get the count of check-ins for the user at the business
+    const checkInCount = await getUserCheckInCount(
+      payload.userId,
+      payload.businessId
+    );
+
+    // If the user's check-in count meets or exceeds the threshold, grant the reward
+    if (checkInCount >= reward.threshold) {
+      await grantReward(payload.userId, reward.id);
+      return {
+        success: true,
+        message: `Check-in successful! You've earned a reward: ${reward.name}`,
+      };
+    }
+  }
 
   return {
     success: true,
