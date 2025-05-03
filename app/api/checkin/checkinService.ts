@@ -1,25 +1,22 @@
 import { CheckInRequest, CheckInResponse, Reward } from "./checkinTypes";
 import {
-  getBusinessLocation,
-  insertCheckIn,
-  getRewardForBusiness,
-  getUserCheckInCount,
-  grantReward,
+  getBusinessLocationFromDB,
+  insertCheckInToDB,
+  getRewardForBusinessFromDB,
+  getUserCheckInCountForBusiness,
+  grantRewardToUser,
 } from "./checkinDAO";
 import { haversineDistance } from "../lib/haversineDistance";
 
 const MAX_DISTANCE_METERS = 25;
 
-export async function performCheckIn(
+export async function checkInUser(
   payload: CheckInRequest
 ): Promise<CheckInResponse> {
   // Fetch the business location to validate the check-in distance
-  const businessLocation = await getBusinessLocation(payload.businessId);
+  const businessLocation = await getBusinessLocationFromDB(payload.businessId);
   if (!businessLocation) {
-    return {
-      success: false,
-      message: "Business not found",
-    };
+    return { success: false, message: "Business not found" };
   }
 
   // Calculate the distance from the business location
@@ -39,20 +36,20 @@ export async function performCheckIn(
   }
 
   // Insert the check-in record in the database
-  await insertCheckIn(payload);
+  await insertCheckInToDB(payload);
 
   // Fetch the reward details for the business
-  const reward = await getRewardForBusiness(payload.businessId);
+  const reward = await getRewardForBusinessFromDB(payload.businessId);
   if (reward) {
     // Get the count of check-ins for the user at the business
-    const checkInCount = await getUserCheckInCount(
+    const checkInCount = await getUserCheckInCountForBusiness(
       payload.userId,
       payload.businessId
     );
 
     // If the user's check-in count meets or exceeds the threshold, grant the reward
     if (checkInCount >= reward.threshold) {
-      await grantReward(payload.userId, reward.id);
+      await grantRewardToUser(payload.userId, reward.id);
       return {
         success: true,
         message: `Check-in successful! You've earned a reward: ${reward.name}`,
@@ -60,8 +57,5 @@ export async function performCheckIn(
     }
   }
 
-  return {
-    success: true,
-    message: "Check-in successful!",
-  };
+  return { success: true, message: "Check-in successful!" };
 }

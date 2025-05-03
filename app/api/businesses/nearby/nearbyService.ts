@@ -1,28 +1,32 @@
 import { LatLng, Business } from "./nearbyTypes";
 import { getAllBusinesses } from "./nearbyDAO";
-import { haversineDistance } from "../../lib/haversineDistance"; // Reuse your existing utility
+import { haversineDistance } from "../../lib/haversineDistance";
 
-const MAX_DISTANCE_METERS = 1000; // 1km for example
+const MAX_DISTANCE_METERS = 1000;
 
-// This function retrieves all businesses and filters them based on
-// the distance from the provided coordinates
+// This function finds nearby businesses within a specified distance from the given coordinates.
+// It uses the Haversine formula to calculate distances between two points on the Earth.
+// Sorted by distance, it returns an array of businesses that are within the specified distance.
 export async function findNearbyBusinesses(
   coords: LatLng
 ): Promise<Business[]> {
   try {
-    // Fetch all businesses from the database
     const allBusinesses = await getAllBusinesses();
-    // Filter businesses based on the distance from the provided coordinates
-    // using the haversine formula
-    return allBusinesses.filter((business) => {
-      const distance = haversineDistance(coords, {
-        latitude: business.latitude,
-        longitude: business.longitude,
-      });
-      // Check if the distance is within the maximum allowed distance
-      // retunrns boolean value representing if the business is nearby
-      return distance <= MAX_DISTANCE_METERS;
-    });
+
+    // Create tuples of [business, distance]
+    const nearbyWithDistance = allBusinesses
+      .map((business) => {
+        const distance = haversineDistance(coords, {
+          latitude: business.latitude,
+          longitude: business.longitude,
+        });
+        return { business, distance };
+      })
+      .filter(({ distance }) => distance <= MAX_DISTANCE_METERS)
+      .sort((a, b) => a.distance - b.distance); // Sort ascending by distance
+
+    // Return only the business objects, not the distances
+    return nearbyWithDistance.map(({ business }) => business);
   } catch (err) {
     console.error("Error in findNearbyBusinesses:", err);
     throw new Error("Unable to process nearby business search.");

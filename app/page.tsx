@@ -10,9 +10,11 @@ export default function Home() {
 
       {/* Hero Image */}
       <Image
-        src="/localworx-logo.jpg"
+        src="/localworx-logo.svg"
         alt="LocalWorx Logo"
-        className="w-48 h-auto mb-6 rounded-lg shadow-lg"
+        className="w-48 h-auto mb-6 rounded-lg shadow-lg bg-white"
+        width={192}
+        height={192}
       />
 
       {/* Title & Tagline */}

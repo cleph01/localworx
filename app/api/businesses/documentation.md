@@ -1,20 +1,27 @@
-✅ Recommended File Structure
+File Structure
 
 ```bash
+
 /app
   /api
     /businesses
-      /nearby
-        route.ts                       ← API route entry
-        nearbyController.ts            ← Handles query param parsing, calls service
-        nearbyService.ts               ← Filters businesses using Haversine
-        nearbyDAO.ts                   ← DB queries for business data
-        nearbyTypes.ts                 ← Business, LatLng, etc.
-
+      /[id]
+        route.ts           ← for GET (one), PUT (update), DELETE
+      /create
+        route.ts           ← for POST (create business)
+      /list
+        route.ts           ← optional: list all or filter by owner
+  /businesses
+    businessDAO.ts
+    businessService.ts
+    businessController.ts
+    businessTypes.ts
 ```
 
-This keeps all business-related logic grouped together, and your nearby/route.ts can be lean and focused on routing.
+API Endpoints
 
-🔁 Flow Example
+- app/api/businesses/create/route.ts — POST /api/businesses/create
 
-???
+- app/api/businesses/[id]/route.ts — GET, PUT, DELETE
+
+- Optional: GET /api/businesses/list?ownerId=...

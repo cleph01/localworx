@@ -1,15 +1,16 @@
 import knex from "../../../db/db";
 import { CheckInRequest, Reward } from "./checkinTypes";
+import { Coordinates } from "./checkinTypes"; // Import Coordinates
 
 // Insert a new check-in into the database
-export async function insertCheckIn(data: CheckInRequest): Promise<void> {
+export async function insertCheckInToDB(data: CheckInRequest): Promise<void> {
   await knex("checkins").insert(data);
 }
 
 // Fetch the business location from the database
-export async function getBusinessLocation(
+export async function getBusinessLocationFromDB(
   businessId: string
-): Promise<{ latitude: number; longitude: number } | null> {
+): Promise<Coordinates | null> {
   const business = await knex("businesses")
     .select("latitude", "longitude")
     .where({ id: businessId })
@@ -19,7 +20,7 @@ export async function getBusinessLocation(
 }
 
 // Fetch the reward offered by a business
-export async function getRewardForBusiness(
+export async function getRewardForBusinessFromDB(
   businessId: string
 ): Promise<Reward | null> {
   const reward = await knex("rewards")
@@ -37,7 +38,7 @@ export async function getRewardForBusiness(
 }
 
 // Count user check-ins for this business
-export async function getUserCheckInCount(
+export async function getUserCheckInCountForBusiness(
   userId: string,
   businessId: string
 ): Promise<number> {
@@ -49,27 +50,14 @@ export async function getUserCheckInCount(
   return parseInt(result?.count ?? "0", 10);
 }
 
-// Grant a reward to a user if they've met the threshold
-export async function grantReward(
+// Grant a reward to a user by inserting a record in the reward_grants table
+export async function grantRewardToUser(
   userId: string,
-  businessId: string
+  rewardId: string
 ): Promise<void> {
-  // Fetch the reward for the business
-  const reward = await getRewardForBusiness(businessId);
-
-  if (!reward) {
-    return; // No reward found for this business
-  }
-
-  // Get the user's check-in count for this business
-  const checkInCount = await getUserCheckInCount(userId, businessId);
-
-  // If the user has met the threshold, grant the reward
-  if (checkInCount >= reward.threshold) {
-    // Insert the reward grant record for the user
-    await knex("reward_grants").insert({
-      user_id: userId,
-      reward_id: reward.id,
-    });
-  }
+  await knex("reward_grants").insert({
+    user_id: userId,
+    reward_id: rewardId,
+    granted_at: knex.fn.now(), // Assuming your database has a NOW() function
+  });
 }

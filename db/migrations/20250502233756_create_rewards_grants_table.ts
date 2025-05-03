@@ -5,8 +5,8 @@
 
 import { Knex } from "knex";
 
-exports.up = function (knex: Knex): Promise<void> {
-  return knex.schema.createTable("reward_grants", (table) => {
+export async function up(knex: Knex): Promise<void> {
+  await knex.schema.createTable("reward_grants", (table) => {
     // auto-incrementing primary key
     table.increments("id").primary();
     // User who received the reward
@@ -27,8 +27,7 @@ exports.up = function (knex: Knex): Promise<void> {
       .inTable("rewards")
       .onDelete("CASCADE");
   });
-};
-
-exports.down = function (knex: Knex): Promise<void> {
-  return knex.schema.dropTableIfExists("reward_grants");
-};
+}
+export async function down(knex: Knex): Promise<void> {
+  await knex.schema.dropTableIfExists("reward_grants");
+}

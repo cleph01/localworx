@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+// Toastify imports
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/localworx-logo.jpg",
+    icon: "/localworx-logo.png",
   },
   title: "LocalWorx | Empowering Communities Through Peer-Powered Promotion",
   description:
@@ -28,7 +31,7 @@ export const metadata: Metadata = {
     siteName: "LocalWorx",
     images: [
       {
-        url: "https://localworx.io/localworx-logo-192x192.png",
+        url: "https://localworx.io/localworx-logo.png",
         width: 64,
         height: 64,
         alt: "LocalWorx Logo",
@@ -49,6 +52,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ToastContainer position="top-right" />
         {children}
       </body>
     </html>

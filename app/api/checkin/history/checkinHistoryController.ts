@@ -1,6 +1,7 @@
 import { fetchCheckInHistory } from "./checkinHistoryService";
 import { NextRequest, NextResponse } from "next/server";
 
+// This file handles the check-in-history requests for businesses or users.
 export async function handleGetCheckInHistory(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);

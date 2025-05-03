@@ -1,15 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { handleCheckIn } from "./checkinController";
+import { handleCheckInRequest } from "./checkinController"; // Assuming this is the correct controller function
 
+// This file handles the check-in requests for businesses.
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  try {
-    const body = await req.json();
-    const result = await handleCheckIn(body);
-    return NextResponse.json(result, { status: result.success ? 200 : 400 });
-  } catch (err) {
-    return NextResponse.json(
-      { success: false, message: (err as Error).message || "Server error" },
-      { status: 400 }
-    );
-  }
+  return handleCheckInRequest(req);
 }
