@@ -24,3 +24,5 @@ app/
 | `checkinDAO.ts`        | Handles all DB interactions using Knex                                            |
 | `haversine.ts`         | Standalone utility to compute geographic distances                                |
 | `checkinTypes.ts`      | Typed structures: coordinates, payloads, responses                                |
+
+test
