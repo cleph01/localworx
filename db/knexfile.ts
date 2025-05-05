@@ -1,19 +1,26 @@
-// This file is used to configure Knex.js for database migrations and seeds.
 import type { Knex } from "knex";
+import path from "path";
+
+/***
+// For next-auth to work initially
+//
+***/
+
+const rootDir = process.cwd(); // always resolves to project root, even after Next.js builds
 
 const knexfile: { [key: string]: Knex.Config } = {
   development: {
     client: "sqlite3",
     connection: {
-      filename: "./database.db",
+      filename: path.join(rootDir, "db", "database.db"),
     },
     migrations: {
-      directory: "./migrations",
+      directory: path.join(rootDir, "db", "migrations"),
     },
     seeds: {
-      directory: "./seeds",
+      directory: path.join(rootDir, "db", "seeds"),
     },
-    useNullAsDefault: true, // Required for SQLite
+    useNullAsDefault: true,
   },
 
   production: {
@@ -31,30 +38,67 @@ const knexfile: { [key: string]: Knex.Config } = {
     },
     migrations: {
       tableName: "knex_migrations",
-      directory: "./migrations",
+      directory: path.join(rootDir, "db", "migrations"),
     },
     seeds: {
-      directory: "./seeds",
+      directory: path.join(rootDir, "db", "seeds"),
     },
   },
 };
 
+/***
+//
+// For Rollbacks
+//
+***/
+
+// import { fileURLToPath } from "url";
+
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+
+// const knexfile: { [key: string]: Knex.Config } = {
+//   development: {
+//     client: "sqlite3",
+//     connection: {
+//       filename: path.join(__dirname, "database.db"), // resolves to db/database.db
+//     },
+//     migrations: {
+//       directory: path.join(__dirname, "migrations"),
+//     },
+//     seeds: {
+//       directory: path.join(__dirname, "seeds"),
+//     },
+//     useNullAsDefault: true,
+//   },
+// };
+
+/***
+// Third Try
+***/
+
+// import { fileURLToPath } from "url";
+
+// // Required for ESM
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+
+// const databasePath = path.join(__dirname, "database.db");
+
+// const knexfile: { [key: string]: Knex.Config } = {
+//   development: {
+//     client: "sqlite3",
+//     connection: {
+//       filename: databasePath,
+//     },
+//     useNullAsDefault: true,
+//     migrations: {
+//       directory: path.join(__dirname, "migrations"),
+//     },
+//     seeds: {
+//       directory: path.join(__dirname, "seeds"),
+//     },
+//   },
+// };
+
 export default knexfile;
-
-// In Vercel:
-/*
-Go to Project → Settings → Environment Variables.
-
-Add these:
-
-ini
-Copy
-Edit
-NODE_ENV = production
-DB_HOST = your_host
-DB_PORT = 5432
-DB_USER = your_user
-DB_PASSWORD = your_password
-DB_DATABASE = your_db_name
-DB_SSL = true    // if needed (e.g., Railway, Supabase)
-*/

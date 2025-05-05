@@ -3,12 +3,11 @@
  * @returns { Promise<void> }
  */
 import { Knex } from "knex";
-import { v4 as uuidv4 } from "uuid";
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("businesses", (table: Knex.TableBuilder) => {
     // UUID primary key to be sent from the client
-    table.string("id", 36).primary();
+    table.increments("id").primary();
     // Basic info
     table.string("name").notNullable();
     table.string("address").notNullable();
