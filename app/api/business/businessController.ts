@@ -10,7 +10,7 @@ import {
 // Fetch a single business by ID
 export async function getBusinessByIdHandler(
   _: NextRequest,
-  { params }: { params: { id: string } }
+  params: { id: string }
 ) {
   try {
     const id = Number(params.id);

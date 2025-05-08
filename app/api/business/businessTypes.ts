@@ -1,5 +1,5 @@
 export interface Business {
-  id?: number;
+  businessId?: number;
   name: string;
   latitude: number;
   longitude: number;

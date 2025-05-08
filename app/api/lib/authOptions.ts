@@ -21,6 +21,7 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         // Add user ID to session object
         session.user.id = user.id;
+        session.user.role = (user as any).role; // bypass TypeScript check
       }
 
       return session;

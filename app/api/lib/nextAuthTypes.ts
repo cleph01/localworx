@@ -4,6 +4,8 @@ export interface AdapterUser {
   emailVerified: Date | null;
   name: string | null;
   image: string | null;
+  role?: string; // optional, can be string or undefined
+  phone_number?: string | null; // ✅ include this
 }
 
 export interface User {

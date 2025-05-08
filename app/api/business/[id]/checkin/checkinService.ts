@@ -6,7 +6,7 @@ import {
   getUserCheckInCountForBusiness,
   grantRewardToUser,
 } from "./checkinDAO";
-import { haversineDistance } from "../lib/haversineDistance";
+import { haversineDistance } from "../../../lib/haversineDistance";
 
 const MAX_DISTANCE_METERS = 25;
 

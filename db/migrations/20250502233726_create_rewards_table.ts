@@ -9,10 +9,13 @@ export async function up(knex: Knex): Promise<void> {
     // auto-incrementing primary key
     table.increments("id").primary();
     // Foreign key to businesses table
+
+    // owner_id and category_id
+    table.integer("business_id").unsigned().notNullable;
+
+    // Foreign keys
     table
-      .uuid("business_id")
-      .notNullable()
-      .unique()
+      .foreign("business_id")
       .references("id")
       .inTable("businesses")
       .onDelete("CASCADE");

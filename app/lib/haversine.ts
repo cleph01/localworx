@@ -1,4 +1,7 @@
-import { Coordinates } from "../business/[id]/checkin/checkinTypes";
+type Coordinates = {
+  latitude: number;
+  longitude: number;
+};
 
 export function haversineDistance(
   coord1: Coordinates,

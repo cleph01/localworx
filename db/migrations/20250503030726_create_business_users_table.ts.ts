@@ -3,18 +3,18 @@ import { Knex } from "knex";
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable("business_users", (table) => {
     table.increments("id").primary();
+
+    table.integer("business_id").unsigned().notNullable();
+    table.string("user_id").notNullable();
     // Foreign key to businesses table
     table
-      .integer("business_id")
-      .unsigned()
-      .notNullable()
+      .foreign("business_id")
       .references("id")
       .inTable("businesses")
       .onDelete("CASCADE");
     // Foreign key to users table
     table
-      .string("user_id")
-      .notNullable()
+      .foreign("user_id")
       .references("id")
       .inTable("users")
       .onDelete("CASCADE");

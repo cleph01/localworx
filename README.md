@@ -124,7 +124,7 @@ We’re in active development. Follow this space for updates, screenshots, and w
 
 ## 📄 License
 
-MIT — Use freely, fork ethically, contribute openly.
+[GNU GPLv3](./license.txt) — Use freely, fork ethically, contribute openly.
 
 ⭐ If you believe in decentralizing opportunity, star this repo and help us build a better local future.
 `

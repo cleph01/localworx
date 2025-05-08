@@ -53,6 +53,7 @@ export function CustomAdapter(knex: Knex) {
         email: newUser.email ?? "",
         emailVerified: newUser.emailVerified ?? null,
         image: newUser.image ?? null,
+        role: newUser.role ?? "user", // Default to "user" if not provided
       };
     },
 
@@ -74,6 +75,7 @@ export function CustomAdapter(knex: Knex) {
         emailVerified: user.emailVerified || null,
         name: user.name || null,
         image: user.image || null,
+        role: user.role || "",
       };
     },
 
@@ -91,6 +93,7 @@ export function CustomAdapter(knex: Knex) {
         emailVerified: user.emailVerified || null,
         name: user.name || null,
         image: user.image || null,
+        role: user.role || "",
       };
     },
 
@@ -120,6 +123,7 @@ export function CustomAdapter(knex: Knex) {
         emailVerified: user.emailVerified || null,
         name: user.name || null,
         image: user.image || null,
+        role: user.role || "",
       };
     },
 

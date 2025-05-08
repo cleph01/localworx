@@ -8,16 +8,19 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("checkins", (table) => {
     // UUID primary key to be sent from the client
     table.increments("id").primary();
+
+    // user_id and business_id
+    table.string("user_id").notNullable();
+    table.integer("business_id").unsigned().notNullable;
+
     // Foreign keys
     table
-      .uuid("user_id")
-      .notNullable()
+      .foreign("user_id")
       .references("id")
       .inTable("users")
       .onDelete("CASCADE");
     table
-      .uuid("business_id")
-      .notNullable()
+      .foreign("business_id")
       .references("id")
       .inTable("businesses")
       .onDelete("CASCADE");

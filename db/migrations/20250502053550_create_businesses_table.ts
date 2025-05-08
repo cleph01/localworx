@@ -19,12 +19,23 @@ export async function up(knex: Knex): Promise<void> {
     table.decimal("latitude", 9, 6).notNullable();
     table.decimal("longitude", 9, 6).notNullable();
 
+    // owner_id and category_id
+    table.string("owner_id").notNullable();
+    table.integer("category_id").unsigned().nullable();
+
     // Owner foreign key (assuming a users table with UUIDs)
     table
-      .uuid("owner_id")
+      .foreign("owner_id")
       .references("id")
       .inTable("users")
       .onDelete("CASCADE");
+
+    // Business category foreign key
+    table
+      .foreign("category_id")
+      .references("id")
+      .inTable("business_categories")
+      .onDelete("SET NULL");
 
     // Timestamps
     table.timestamps(true, true); // This will create created_at and updated_at columns

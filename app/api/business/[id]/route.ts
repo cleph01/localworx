@@ -7,9 +7,9 @@ import {
 
 export async function GET(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
-  return getBusinessByIdHandler(req, context);
+  return getBusinessByIdHandler(req, params);
 }
 
 export async function PUT(
