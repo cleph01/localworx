@@ -8,16 +8,17 @@ import {
 
 // GET /api/business/[businessId]/products/[productId]
 export async function GET(
-  req: Request,
-  context: { params: { businessId: string; productId: string } }
+  req: NextRequest,
+  { params }: { params: Promise<{ businessId: string; productId: string }> }
 ) {
-  const { businessId, productId } = context.params;
+  const { businessId, productId } = await params;
+
   return await getBusinessProductByIdHandler(req, productId);
 }
 
 // PATCH /api/business/[businessId]/products/[productId]
 export async function PATCH(
-  req: Request,
+  req: NextRequest,
   context: { params: { businessId: string; productId: string } }
 ) {
   const { productId } = context.params;
@@ -26,7 +27,7 @@ export async function PATCH(
 
 // DELETE /api/business/[businessId]/products/[productId]
 export async function DELETE(
-  req: Request,
+  req: NextRequest,
   context: { params: { businessId: string; productId: string } }
 ) {
   const { productId } = context.params;
