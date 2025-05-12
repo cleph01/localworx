@@ -28,10 +28,10 @@ export async function getBusinessProductsHandler(req: NextRequest) {
 // GET: Fetch a single product by its ID
 export async function getBusinessProductByIdHandler(
   _req: NextRequest,
-  params: { id: string }
+  id: string
 ) {
   try {
-    const product = await getBusinessProductByIdService(params.id);
+    const product = await getBusinessProductByIdService(id);
     if (!product) {
       return NextResponse.json(
         { success: false, message: "Product not found" },
@@ -64,12 +64,12 @@ export async function createBusinessProductHandler(req: NextRequest) {
 // PATCH: Update a product by ID
 export async function updateBusinessProductByIdHandler(
   req: NextRequest,
-  params: { id: string }
+  id: string
 ) {
   try {
     const data = await req.json();
     const updated = await updateBusinessProductService({
-      id: params.id,
+      id: id,
       ...data,
     });
     return NextResponse.json(updated);
@@ -84,10 +84,10 @@ export async function updateBusinessProductByIdHandler(
 // DELETE: Remove a product by ID
 export async function deleteBusinessProductByIdHandler(
   _req: NextRequest,
-  params: { id: string }
+  id: string
 ) {
   try {
-    await deleteBusinessProductService(params.id);
+    await deleteBusinessProductService(id);
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json(

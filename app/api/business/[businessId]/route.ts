@@ -16,14 +16,18 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  context: { params: { id: string } }
+  context: { params: { businessId: string } }
 ) {
-  return updateBusinessHandler(req, context);
+  // Extract the businessId from the context
+  const { businessId } = context.params;
+  return updateBusinessHandler(req, businessId);
 }
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: { id: string } }
+  context: { params: { businessId: string } }
 ) {
-  return deleteBusinessHandler(req, context);
+  // Extract the businessId from the context
+  const { businessId } = context.params;
+  return deleteBusinessHandler(req, businessId);
 }

@@ -59,14 +59,11 @@ export async function addBusinessHandler(req: NextRequest) {
 }
 
 // Modify/update a business
-export async function updateBusinessHandler(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function updateBusinessHandler(req: NextRequest, id: string) {
   try {
-    const id = Number(params.id);
+    const businessId = Number(id);
     const updates = await req.json();
-    const business = await modifyBusiness(id, updates);
+    const business = await modifyBusiness(businessId, updates);
     return NextResponse.json(business);
   } catch (err) {
     console.error("Error in updateBusinessHandler:", err);
@@ -78,13 +75,10 @@ export async function updateBusinessHandler(
 }
 
 // Delete a business
-export async function deleteBusinessHandler(
-  _: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function deleteBusinessHandler(_: NextRequest, id: string) {
   try {
-    const id = Number(params.id);
-    await removeBusiness(id);
+    const businessId = Number(id);
+    await removeBusiness(businessId);
     return NextResponse.json({ message: "Deleted" });
   } catch (err) {
     console.error("Error in deleteBusinessHandler:", err);
