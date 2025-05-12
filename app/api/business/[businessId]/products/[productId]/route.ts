@@ -11,7 +11,8 @@ export async function GET(
   req: NextRequest,
   context: { params: { businessId: string; productId: string } }
 ) {
-  return getBusinessProductByIdHandler(req, { id: context.params.productId });
+  const { productId } = context.params;
+  return getBusinessProductByIdHandler(req, { id: productId });
 }
 
 // PATCH /api/business/[businessId]/products/[productId]
@@ -19,8 +20,9 @@ export async function PATCH(
   req: NextRequest,
   context: { params: { businessId: string; productId: string } }
 ) {
+  const { productId } = context.params;
   return updateBusinessProductByIdHandler(req, {
-    id: context.params.productId,
+    id: productId,
   });
 }
 
@@ -29,7 +31,8 @@ export async function DELETE(
   req: NextRequest,
   context: { params: { businessId: string; productId: string } }
 ) {
+  const { productId } = context.params;
   return deleteBusinessProductByIdHandler(req, {
-    id: context.params.productId,
+    id: productId,
   });
 }
