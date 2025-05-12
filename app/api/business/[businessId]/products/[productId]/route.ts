@@ -6,12 +6,11 @@ import {
   deleteBusinessProductByIdHandler,
 } from "../businessProductController"; // adjust path as needed
 
+type RouteParams = { businessId: string; productId: string };
+
 // GET /api/business/[businessId]/products/[productId]
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { businessId: string; productId: string } }
-) {
-  return getBusinessProductByIdHandler(req, { id: params.productId });
+export async function GET(req: NextRequest, context: { params: RouteParams }) {
+  return getBusinessProductByIdHandler(req, { id: context.params.productId });
 }
 
 // PATCH /api/business/[businessId]/products/[productId]
