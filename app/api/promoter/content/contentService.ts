@@ -1,7 +1,7 @@
 // app/api/promoter/content/contentService.ts
 
 import {
-  getAllContentByUser,
+  getContentByUser,
   getContentById,
   createContent,
   updateContent,
@@ -12,7 +12,7 @@ import { Content, ContentInput, ContentUpdateInput } from "./contentTypes";
 /**
  * Create new promotional content.
  */
-export async function createContent(data: ContentInput) {
+export async function createNewContent(data: ContentInput) {
   // Business logic (e.g., input validation, rate limiting) could go here
   return await createContent(data);
 }
@@ -21,13 +21,13 @@ export async function createContent(data: ContentInput) {
  * Get all content created by a specific user.
  */
 export async function getAllContentByUser(userId: string) {
-  return await getAllContentByUser(userId);
+  return await getContentByUser(userId);
 }
 
 /**
  * Get a single content item by ID, ensuring ownership.
  */
-export async function getContentById(
+export async function fetchContentById(
   id: string,
   userId: string
 ): Promise<Content | null> {
@@ -40,19 +40,19 @@ export async function getContentById(
 /**
  * Update a content item.
  */
-export async function updateContent(
+export async function updateContentService(
   id: string,
-  data: ContentUpdateInput,
-  userId: string
+  userId: string,
+  data: ContentUpdateInput
 ) {
   const content = await getContentById(id, userId); // Ensure ownership
-  return await updateContent(id, data);
+  return await updateContent(id, userId, data);
 }
 
 /**
  * Delete a content item.
  */
-export async function deleteContent(id: string, userId: string) {
+export async function deleteContentService(id: string, userId: string) {
   const content = await getContentById(id, userId); // Ensure ownership
-  return await deleteContent(id);
+  return await deleteContent(id, userId);
 }

@@ -11,7 +11,7 @@ export async function up(knex: Knex): Promise<void> {
     // Foreign key to businesses table
 
     // owner_id and category_id
-    table.integer("business_id").unsigned().notNullable;
+    table.string("business_id").notNullable();
 
     // Foreign keys
     table
@@ -23,8 +23,11 @@ export async function up(knex: Knex): Promise<void> {
     table.string("name").notNullable();
     // Description of the reward
     table.text("description");
+    // 'loyalty' or 'in-kind'
+    table.string("reward_type").notNullable();
     // Minimum check-ins required to earn the reward
-    table.integer("threshold").notNullable().checkPositive();
+    // Allow NULL for in-kind rewards
+    table.integer("threshold").nullable();
     // created_at and updated_at
     table.timestamps(true, true);
   });

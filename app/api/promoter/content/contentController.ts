@@ -2,18 +2,18 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import {
-  createContent,
+  createNewContent,
   getAllContentByUser,
-  getContentById,
-  updateContent,
-  deleteContent,
+  fetchContentById,
+  updateContentService,
+  deleteContentService,
 } from "./contentService";
 import { ContentUpdateInput } from "./contentTypes";
 
 export async function createContentHandler(req: NextRequest) {
   try {
     const body = await req.json();
-    const newContent = await createContent(body);
+    const newContent = await createNewContent(body);
     return NextResponse.json(newContent, { status: 201 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -38,7 +38,7 @@ export async function getContentByIdHandler(
 ) {
   try {
     const { id, userId } = params;
-    const content = await getContentById(id, userId);
+    const content = await fetchContentById(id, userId);
     if (!content) {
       return NextResponse.json({ error: "Content not found" }, { status: 404 });
     }
@@ -66,7 +66,7 @@ export async function updateContentHandler(
       );
     }
 
-    const updatedContent = await updateContent(id, userId, updates);
+    const updatedContent = await updateContentService(id, userId, updates);
     return NextResponse.json(updatedContent);
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -75,10 +75,12 @@ export async function updateContentHandler(
 
 export async function deleteContentHandler(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string; userId: string } }
 ) {
   try {
-    await deleteContent(params.id);
+    const { id, userId } = params;
+
+    await deleteContentService(params.id, userId);
     return NextResponse.json({ success: true });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

@@ -11,21 +11,32 @@ export async function up(knex: Knex): Promise<void> {
     table.increments("id").primary();
     // User who received the reward
     table.string("user_id").notNullable();
+    // Foreign key to users table
+    table
+      .foreign("user_id")
+      .references("id")
+      .inTable("users")
+      .onDelete("CASCADE");
     // Business offering the reward
     table.string("business_id").notNullable();
+    // Foreign key to businesses table
+    table
+      .foreign("business_id")
+      .references("id")
+      .inTable("businesses")
+      .onDelete("CASCADE");
+    // Reward ID
+    table.string("reward_id").notNullable();
     // Foreign key to rewards table
-    table.integer("reward_id").unsigned().notNullable();
-    // Timestamp for when the reward was granted
-    table.timestamp("granted_at").defaultTo(knex.fn.now());
-    // created_at, updated_at
-    table.timestamps(true, true);
-
-    // Add foreign key constraint to link to rewards table
     table
       .foreign("reward_id")
       .references("id")
       .inTable("rewards")
       .onDelete("CASCADE");
+    // Timestamp for when the reward was granted
+    table.timestamp("granted_at").defaultTo(knex.fn.now());
+    // created_at, updated_at
+    table.timestamps(true, true);
   });
 }
 export async function down(knex: Knex): Promise<void> {

@@ -4,7 +4,7 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable("business_users", (table) => {
     table.increments("id").primary();
 
-    table.integer("business_id").unsigned().notNullable();
+    table.string("business_id").notNullable();
     table.string("user_id").notNullable();
     // Foreign key to businesses table
     table

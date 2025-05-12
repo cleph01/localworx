@@ -52,53 +52,53 @@ import path from "path";
 //
 ***/
 
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const knexfile: { [key: string]: Knex.Config } = {
-  development: {
-    client: "sqlite3",
-    connection: {
-      filename: path.join(__dirname, "database.db"), // resolves to db/database.db
-    },
-    migrations: {
-      directory: path.join(__dirname, "migrations"),
-    },
-    seeds: {
-      directory: path.join(__dirname, "seeds"),
-    },
-    useNullAsDefault: true,
-  },
-};
-
-/***
-// Third Try
-***/
-
 // import { fileURLToPath } from "url";
 
-// // Required for ESM
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
-
-// const databasePath = path.join(__dirname, "database.db");
 
 // const knexfile: { [key: string]: Knex.Config } = {
 //   development: {
 //     client: "sqlite3",
 //     connection: {
-//       filename: databasePath,
+//       filename: path.join(__dirname, "database.db"), // resolves to db/database.db
 //     },
-//     useNullAsDefault: true,
 //     migrations: {
 //       directory: path.join(__dirname, "migrations"),
 //     },
 //     seeds: {
 //       directory: path.join(__dirname, "seeds"),
 //     },
+//     useNullAsDefault: true,
 //   },
 // };
+
+/***
+// Third Try
+***/
+
+import { fileURLToPath } from "url";
+
+// Required for ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const databasePath = path.join(__dirname, "database.db");
+
+const knexfile: { [key: string]: Knex.Config } = {
+  development: {
+    client: "sqlite3",
+    connection: {
+      filename: databasePath,
+    },
+    useNullAsDefault: true,
+    migrations: {
+      directory: path.join(__dirname, "migrations"),
+    },
+    seeds: {
+      directory: path.join(__dirname, "seeds"),
+    },
+  },
+};
 
 export default knexfile;

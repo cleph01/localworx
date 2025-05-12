@@ -1,8 +1,11 @@
 // app/dashboard/promoter/page.tsx
-
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/app/api/lib/authOptions";
+import EarningsSummary from "./components/EarningsSummary";
+import PromotionsList from "./components/PromotionsList";
+import ContentManager from "./components/ContentManager";
+import MarketplaceManager from "./components/MarketplaceManager";
 
 export default async function PromoterDashboardPage() {
   const session = await getServerSession(authOptions);
@@ -17,34 +20,22 @@ export default async function PromoterDashboardPage() {
 
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-2">Earnings Summary</h2>
-        <div className="bg-white shadow p-4 rounded-md">
-          {/* TODO: Replace with earnings component */}
-          <p>Lifetime: $0.00 | Pending: $0.00 | In-Kind: 0 items</p>
-        </div>
+        <EarningsSummary />
       </section>
 
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-2">Active Promotions</h2>
-        <div className="bg-white shadow p-4 rounded-md">
-          {/* TODO: Replace with promotion list component */}
-          <p>No active promotions yet.</p>
-        </div>
+        <PromotionsList />
       </section>
 
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-2">Your Content</h2>
-        <div className="bg-white shadow p-4 rounded-md">
-          {/* TODO: Replace with content list/upload */}
-          <p>Upload videos and posts to promote your favorite businesses.</p>
-        </div>
+        <ContentManager />
       </section>
 
       <section>
         <h2 className="text-xl font-semibold mb-2">Marketplace Items</h2>
-        <div className="bg-white shadow p-4 rounded-md">
-          {/* TODO: Replace with marketplace manager */}
-          <p>Manage your in-kind rewards or list them for others to claim.</p>
-        </div>
+        <MarketplaceManager />
       </section>
     </div>
   );

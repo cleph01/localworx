@@ -1,47 +1,177 @@
 import Image from "next/image";
+import ButtonLink from "./components/ButtonLink";
+import {
+  BriefcaseIcon,
+  DocumentCheckIcon,
+  MegaphoneIcon,
+  NewspaperIcon,
+  RectangleGroupIcon,
+  SpeakerWaveIcon,
+  UserGroupIcon,
+  UsersIcon,
+} from "@heroicons/react/24/outline";
+import { BitcoinIcon } from "@bitcoin-design/bitcoin-icons-react/filled";
+import Carousel from "./components/Carousel";
+import HomeFeaturesCard from "./components/HomeFeaturesCard";
 
 export default function Home() {
+  const profiles = [
+    {
+      name: "Charlie Montoya",
+      category: "WebDev",
+      accolades: ["Bitcoin Dev", "Full Stack Dev"],
+      imageUrl:
+        "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg",
+    },
+    {
+      name: "Charlie Montoya",
+      category: "WebDev",
+      accolades: ["Bitcoin Dev", "Full Stack Dev"],
+      imageUrl:
+        "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg",
+    },
+    {
+      name: "Charlie Montoya",
+      category: "WebDev",
+      accolades: ["Bitcoin Dev", "Full Stack Dev"],
+      imageUrl:
+        "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg",
+    },
+  ];
+
+  const features = [
+    {
+      title: "Bitcoin Zap Integration",
+      description:
+        "Send and receive instant payments for community engagement and service promotion.",
+      icon: <BitcoinIcon className="h-10 w-10 text-blue-400" />,
+    },
+    {
+      title: "Promoter Hub",
+      description:
+        "Earn by promoting local businesses and services or sharing community-powered deals with your friends.",
+      icon: <SpeakerWaveIcon className="h-10 w-10 text-blue-400" />,
+    },
+    {
+      title: "Service Directory",
+      description:
+        "Quickly find local offerings that match your needs using intuitive filters and categories.",
+      icon: <NewspaperIcon className="h-10 w-10 text-blue-400" />,
+    },
+    {
+      title: "Role Based User Profiles",
+      description:
+        "Easily showcase your skills or service with profiles tailored to freelancers, promoters, and business owners.",
+      icon: <UserGroupIcon className="h-10 w-10 text-blue-400" />,
+    },
+    {
+      title: "Reward Dashboard",
+      description:
+        "Stay motivated with real-time insights into your earnings, milestones, and progress through gamified tracking.",
+      icon: <RectangleGroupIcon className="h-10 w-10 text-blue-400" />,
+    },
+    {
+      title: "Community Check-Ins",
+      description:
+        "Share your wins, track impact, and stay connected with the local businesses that matter most to you.",
+      icon: <DocumentCheckIcon className="h-10 w-10 text-blue-400" />,
+    },
+  ];
   return (
-    <main className="min-h-screen bg-[#1A1A1A] text-white flex flex-col items-center justify-center px-6 py-12">
-      {/* Coming Soon Badge */}
-      <div className="bg-yellow-400 text-black text-sm px-3 py-1 rounded-full mb-4">
-        🚧 Coming Soon
-      </div>
+    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-12">
+      {/* Header */}
+      <section className="flex flex-col items-center justify-center">
+        {/* Title & Tagline */}
+        <p className="mb-6">
+          🟦 Connect with your community to grow, share, and thrive together.
+        </p>
+        <h1 className="text-5xl sm:text-4xl md:text-5xl font-bold mb-6">
+          <span className="font-serif italic">Empowering</span> Communities. One
+          Skill at a Time.
+        </h1>
+        {/* Hero Image */}
+        <Image
+          src="/localworx-logo.png"
+          alt="LocalWorx Logo"
+          className="w-48 h-auto mb-6 "
+          width={192}
+          height={192}
+        />
+        <p className="text-lg sm:text-xl text-gray-500 mb-8">
+          Connect, collaborate, and thrive with a platform built to boost
+          skills, services, and community driven income.
+        </p>
+      </section>
 
-      {/* Hero Image */}
-      <Image
-        src="/localworx-logo.svg"
-        alt="LocalWorx Logo"
-        className="w-48 h-auto mb-6 rounded-lg shadow-lg bg-white"
-        width={192}
-        height={192}
-      />
+      {/* Visitor Type Buttons */}
+      <section className="flex flex-col items-center justify-center">
+        <ButtonLink
+          text="I'm looking for services"
+          icon={<UsersIcon className="h-6 w-6 text-white" />}
+          link="/signup"
+          color="bg-blue-600" // Custom color for this button
+        />
 
-      {/* Title & Tagline */}
-      <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
-        LocalWorx.io
-      </h1>
-      <p className="text-lg text-gray-300 text-center capitalize max-w-xl mb-8">
-        A peer-powered platform to grow small businesses, reward local promoters
-        with Bitcoin, and build resilient communities.
-      </p>
+        <ButtonLink
+          text="I'm a business owner"
+          icon={<BriefcaseIcon className="h-6 w-6 text-slate-900" />}
+          link="/signup"
+        />
 
+        <ButtonLink
+          text="I'm a promoter"
+          icon={<MegaphoneIcon className="h-6 w-6 text-slate-900" />}
+          link="/signup"
+        />
+      </section>
+
+      {/* Carousel */}
+      <section className="w-full max-w-7xl mx-auto flex flex-col items-center justify-center mt-10 px-4">
+        <Carousel profiles={profiles} />
+      </section>
+
+      {/* Features Header*/}
+      <section className="flex flex-col items-center justify-center">
+        <p className="my-2 font-bold">
+          🟦 Tools to grow within your local network.
+        </p>
+        <p className="text-gray-500">
+          From listing your services to getting paid for promoting your
+          community, LocalWorx.io gives you the infrastructure to grow your
+          impct locally and sustainably.
+        </p>
+        {/* Features Cards */}
+        <div className="flex flex-col items-center justify-center mt-10 gap-6 sm:flex-row sm:gap-8">
+          {/* Feature Cards */}
+          {features.map((feature, index) => (
+            <HomeFeaturesCard
+              key={index}
+              title={feature.title}
+              description={feature.description}
+              icon={feature.icon}
+            />
+          ))}
+        </div>
+      </section>
       {/* Vision / Mission */}
       <section className="text-center max-w-2xl space-y-4">
-        <h2 className="text-2xl font-semibold">🚀 Our Vision</h2>
+        <h2 className="text-2xl sm:text-3xl font-semibold">🚀 Our Vision</h2>
         <p className="text-gray-400 capitalize">
           To revitalize local economies and defend digital sovereignty by
           enabling trust-based, peer-to-peer promotion networks.
         </p>
 
-        <h2 className="text-2xl font-semibold mt-6">🔍 Our Mission</h2>
-        <ul className="text-gray-400 capitalize list-disc list-inside">
+        <h2 className="text-2xl sm:text-3xl font-semibold mt-6">
+          🔍 Our Mission
+        </h2>
+        <ul className="text-gray-400 capitalize list-disc list-inside space-y-2">
           <li>Empower small businesses with transparent promotion tools</li>
           <li>Enable locals to earn by supporting their community</li>
           <li>Operate without centralized gatekeepers or ad algorithms</li>
         </ul>
       </section>
 
+      <section></section>
       {/* GitHub CTA */}
       <a
         href="https://github.com/cleph01/localworx"
