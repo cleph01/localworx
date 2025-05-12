@@ -44,7 +44,7 @@ export default function Home() {
       title: "Bitcoin Zap Integration",
       description:
         "Send and receive instant payments for community engagement and service promotion.",
-      icon: <BitcoinIcon className="h-10 w-10 text-blue-400" />,
+      icon: <BitcoinIcon className="h-12 w-12 text-blue-400" />,
     },
     {
       title: "Promoter Hub",
