@@ -40,10 +40,10 @@ export async function getMarketplaceItemsHandler(
 // Handler to get a specific marketplace item by ID
 export async function getMarketplaceItemByIdHandler(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  id: string
 ) {
   try {
-    const item = await getMarketplaceItemByIdService(params.id);
+    const item = await getMarketplaceItemByIdService(id);
     if (!item) {
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
@@ -56,11 +56,11 @@ export async function getMarketplaceItemByIdHandler(
 // Handler to update an existing marketplace item
 export async function updateMarketplaceItemHandler(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  id: string
 ) {
   try {
     const updates: MarketplaceItemUpdateInput = await req.json();
-    const updatedItem = await updateMarketplaceItemService(params.id, updates);
+    const updatedItem = await updateMarketplaceItemService(id, updates);
     return NextResponse.json(updatedItem);
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -70,10 +70,10 @@ export async function updateMarketplaceItemHandler(
 // Handler to delete a marketplace item
 export async function deleteMarketplaceItemHandler(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  id: string
 ) {
   try {
-    await deleteMarketplaceItemService(params.id);
+    await deleteMarketplaceItemService(id);
     return NextResponse.json({ success: true });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

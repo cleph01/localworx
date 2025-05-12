@@ -10,23 +10,26 @@ import {
 // GET request to fetch a marketplace item by ID
 export async function GET(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  return getMarketplaceItemByIdHandler(req, context);
+  const { id } = await params;
+  return getMarketplaceItemByIdHandler(req, id);
 }
 
 // PUT request to update a marketplace item by ID
 export async function PUT(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  return updateMarketplaceItemHandler(req, context);
+  const { id } = await params;
+  return updateMarketplaceItemHandler(req, id);
 }
 
 // DELETE request to delete a marketplace item by ID
 export async function DELETE(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  return deleteMarketplaceItemHandler(req, context);
+  const { id } = await params;
+  return deleteMarketplaceItemHandler(req, id);
 }
