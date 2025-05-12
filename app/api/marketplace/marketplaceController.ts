@@ -25,10 +25,7 @@ export async function createMarketplaceItemHandler(req: NextRequest) {
 }
 
 // Handler to get all marketplace items
-export async function getMarketplaceItemsHandler(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function getMarketplaceItemsHandler(req: NextRequest) {
   try {
     const items = await getMarketplaceItemsService();
     return NextResponse.json(items);
