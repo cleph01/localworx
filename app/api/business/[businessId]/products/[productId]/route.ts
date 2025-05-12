@@ -12,7 +12,7 @@ export async function GET(
   { params }: { params: { businessId: string; productId: string } }
 ) {
   const { businessId, productId } = params;
-  return getBusinessProductByIdHandler(req, productId);
+  return await getBusinessProductByIdHandler(req, productId);
 }
 
 // PATCH /api/business/[businessId]/products/[productId]
