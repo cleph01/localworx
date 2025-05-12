@@ -5,7 +5,9 @@ import { getWalletByUserId } from "../walletControler";
 // Fetch rewards for a specific user
 export async function GET(
   req: NextRequest,
-  context: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
-  return getWalletByUserId(context.params.userId);
+  // Extract the userId from the context
+  const { userId } = await params;
+  return getWalletByUserId(userId);
 }
