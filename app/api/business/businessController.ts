@@ -8,13 +8,10 @@ import {
 } from "./businessService";
 
 // Fetch a single business by ID
-export async function getBusinessByIdHandler(
-  _: NextRequest,
-  params: { id: string }
-) {
+export async function getBusinessByIdHandler(_: NextRequest, id: string) {
   try {
-    const id = Number(params.id);
-    const business = await fetchBusiness(id);
+    const businessId = Number(id);
+    const business = await fetchBusiness(businessId);
     return business
       ? NextResponse.json(business)
       : NextResponse.json({ error: "Not found" }, { status: 404 });
