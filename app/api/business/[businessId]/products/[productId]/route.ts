@@ -8,27 +8,27 @@ import {
 
 // GET /api/business/[businessId]/products/[productId]
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { businessId: string; productId: string } }
+  req: Request,
+  context: { params: { businessId: string; productId: string } }
 ) {
-  const { businessId, productId } = params;
+  const { businessId, productId } = context.params;
   return await getBusinessProductByIdHandler(req, productId);
 }
 
 // PATCH /api/business/[businessId]/products/[productId]
 export async function PATCH(
-  req: NextRequest,
-  { params }: { params: { businessId: string; productId: string } }
+  req: Request,
+  context: { params: { businessId: string; productId: string } }
 ) {
-  const { productId } = params;
+  const { productId } = context.params;
   return updateBusinessProductByIdHandler(req, productId);
 }
 
 // DELETE /api/business/[businessId]/products/[productId]
 export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { businessId: string; productId: string } }
+  req: Request,
+  context: { params: { businessId: string; productId: string } }
 ) {
-  const { productId } = params;
+  const { productId } = context.params;
   return deleteBusinessProductByIdHandler(req, productId);
 }
