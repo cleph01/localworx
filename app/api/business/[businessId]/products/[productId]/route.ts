@@ -11,7 +11,7 @@ export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ businessId: string; productId: string }> }
 ) {
-  const { businessId, productId } = await params;
+  const { productId } = await params;
 
   return await getBusinessProductByIdHandler(req, productId);
 }
@@ -19,9 +19,9 @@ export async function GET(
 // PATCH /api/business/[businessId]/products/[productId]
 export async function PATCH(
   req: NextRequest,
-  context: { params: { businessId: string; productId: string } }
+  { params }: { params: Promise<{ businessId: string; productId: string }> }
 ) {
-  const { productId } = context.params;
+  const { productId } = await params;
   return updateBusinessProductByIdHandler(req, productId);
 }
 
