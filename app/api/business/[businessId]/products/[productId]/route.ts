@@ -28,8 +28,8 @@ export async function PATCH(
 // DELETE /api/business/[businessId]/products/[productId]
 export async function DELETE(
   req: NextRequest,
-  context: { params: { businessId: string; productId: string } }
+  { params }: { params: Promise<{ businessId: string; productId: string }> }
 ) {
-  const { productId } = context.params;
+  const { productId } = await params;
   return deleteBusinessProductByIdHandler(req, productId);
 }
