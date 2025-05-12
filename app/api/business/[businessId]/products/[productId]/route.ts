@@ -9,26 +9,26 @@ import {
 // GET /api/business/[businessId]/products/[productId]
 export async function GET(
   req: NextRequest,
-  context: { params: { businessId: string; productId: string } }
+  { params }: { params: { businessId: string; productId: string } }
 ) {
-  const { productId } = context.params;
+  const { businessId, productId } = params;
   return getBusinessProductByIdHandler(req, productId);
 }
 
 // PATCH /api/business/[businessId]/products/[productId]
 export async function PATCH(
   req: NextRequest,
-  context: { params: { businessId: string; productId: string } }
+  { params }: { params: { businessId: string; productId: string } }
 ) {
-  const { productId } = context.params;
+  const { productId } = params;
   return updateBusinessProductByIdHandler(req, productId);
 }
 
 // DELETE /api/business/[businessId]/products/[productId]
 export async function DELETE(
   req: NextRequest,
-  context: { params: { businessId: string; productId: string } }
+  { params }: { params: { businessId: string; productId: string } }
 ) {
-  const { productId } = context.params;
+  const { productId } = params;
   return deleteBusinessProductByIdHandler(req, productId);
 }
