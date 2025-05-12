@@ -1,3 +1,4 @@
+"use client";
 // app/marketplace/components/MarketplaceItemCard.tsx
 import { MarketplaceItem } from "../marketplaceTypes";
 import { useRouter } from "next/navigation";

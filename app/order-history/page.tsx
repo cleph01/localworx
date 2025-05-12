@@ -1,3 +1,4 @@
+"use client";
 // app/order-history/page.tsx
 import { useEffect, useState } from "react";
 
