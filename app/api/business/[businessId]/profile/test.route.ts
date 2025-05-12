@@ -1,4 +1,4 @@
-// app/api/business/[id]/profile/route.ts
+// app/api/business/[businessId]/profile/route.ts
 import { getBusinessByIdHandler } from "../../businessController";
 import { NextRequest } from "next/server";
 
