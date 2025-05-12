@@ -7,27 +7,27 @@ import {
 
 export async function GET(
   req: NextRequest,
-  context: { params: { businessId: string } }
+  { params }: { params: Promise<{ businessId: string }> }
 ) {
   // Extract the businessId from the context
-  const { businessId } = context.params;
+  const { businessId } = await params;
   return getBusinessByIdHandler(req, businessId);
 }
 
 export async function PUT(
   req: NextRequest,
-  context: { params: { businessId: string } }
+  { params }: { params: Promise<{ businessId: string }> }
 ) {
   // Extract the businessId from the context
-  const { businessId } = context.params;
+  const { businessId } = await params;
   return updateBusinessHandler(req, businessId);
 }
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: { businessId: string } }
+  { params }: { params: Promise<{ businessId: string }> }
 ) {
   // Extract the businessId from the context
-  const { businessId } = context.params;
+  const { businessId } = await params;
   return deleteBusinessHandler(req, businessId);
 }
