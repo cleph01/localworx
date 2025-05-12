@@ -9,9 +9,9 @@ import {
 // GET /api/business/products/[id]
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { productId: string } }
 ) {
-  return getBusinessProductByIdHandler(req, params);
+  return getBusinessProductByIdHandler(req, { id: params.productId });
 }
 
 // PATCH /api/business/products/[id]
