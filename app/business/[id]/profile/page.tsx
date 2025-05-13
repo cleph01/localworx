@@ -11,7 +11,7 @@ import { fetchBusiness } from "@/app/api/business/businessService";
 export default async function BusinessProfilePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const session = await getServerSession(authOptions);
 
@@ -19,9 +19,11 @@ export default async function BusinessProfilePage({
     return redirect("/api/auth/signin?callbackUrl=/dashboard");
   }
 
-  // Convert params.id to a number to match the expected type
-  // and handle potential NaN case
-  const businessId = Number(params.id);
+  // Extract the id from the params
+  // Note: params is a Promise, so we need to await it
+  const { id } = await params;
+
+  const businessId = Number(id);
   if (isNaN(businessId)) {
     return redirect("/error?message=Invalid%20Business%20ID");
   }
@@ -39,7 +41,7 @@ export default async function BusinessProfilePage({
       <p className="text-lg font-semibold">{business.name}</p>
       <p className="text-gray-700 mt-2 mb-6">{business.description}</p>
       <a
-        href={`/business/${params.id}/update`}
+        href={`/business/${id}/update`}
         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
       >
         Edit

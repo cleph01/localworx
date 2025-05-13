@@ -5,9 +5,9 @@ import { MarketplaceItem } from "../marketplaceTypes";
 export default async function ItemDetails({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params; // Get the item id from the URL
+  const { id } = await params; // Get the item id from the URL
 
   const res = await fetch(`/api/marketplace/${id}`);
   const item: MarketplaceItem = await res.json();

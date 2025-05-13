@@ -6,9 +6,12 @@ import db from "@/db/db";
 export default async function BusinessDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const business = await db("businesses").where("id", params.id).first();
+  // Extract the id from the context
+  const { id } = await params;
+
+  const business = await db("businesses").where("id", id).first();
 
   if (!business) return notFound();
 

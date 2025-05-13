@@ -7,14 +7,17 @@ import UpdateBusinessForm from "../../../components/UpdateBusinessForm";
 export default async function UpdateBusinessPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/api/auth/signin");
 
+  // Extract the id from the context
+  // Note: params is a Promise, so we need to await it
+  const { id } = await params;
   // Convert params.id to a number to match the expected type
   // and handle potential NaN case
-  const businessId = Number(params.id);
+  const businessId = Number(id);
   if (isNaN(businessId)) {
     return redirect("/error?message=Invalid%20Business%20ID");
   }
