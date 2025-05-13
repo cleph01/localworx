@@ -1,7 +1,7 @@
 "use client";
 // app/components/Carousel.tsx
 import React, { useState } from "react";
-import ProfileCard from "./HomeProfileCard";
+import ProfileCard from "./home/ProfileCard";
 
 type CarouselProps = {
   profiles: {

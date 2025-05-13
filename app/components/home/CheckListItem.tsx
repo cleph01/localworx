@@ -5,7 +5,7 @@ type ChecklistProps = {
   text: string;
 };
 
-const HomeCheckList: React.FC<ChecklistProps> = ({ number, text }) => {
+const CheckList: React.FC<ChecklistProps> = ({ number, text }) => {
   return (
     <div className="flex flex-row items-center justify-center mt-10 gap-6 sm:flex-row sm:gap-8">
       <div className="mr-2">
@@ -18,4 +18,4 @@ const HomeCheckList: React.FC<ChecklistProps> = ({ number, text }) => {
     </div>
   );
 };
-export default HomeCheckList;
+export default CheckList;

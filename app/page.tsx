@@ -15,10 +15,17 @@ import {
 } from "react-icons/fa";
 
 import Carousel from "./components/Carousel";
-import HomeFeaturesCard from "./components/HomeFeaturesCard";
-import HomeCheckListItem from "./components/HomeCheckListItem";
+import HomeFeaturesCard from "./components/home/FeaturesCard";
+import HomeCheckListItem from "./components/home/CheckListItem";
+import {
+  CreateAccount,
+  CommunityConnect,
+  EarningSnapshot,
+} from "./components/home/StepsCardHeaders";
+import StepsCard from "./components/home/StepsCard";
 
 export default function Home() {
+  // Profiles Test Data
   const profiles = [
     {
       name: "Charlie Montoya",
@@ -43,6 +50,7 @@ export default function Home() {
     },
   ];
 
+  // Features Test Data
   const features = [
     {
       title: "Bitcoin Zap Integration",
@@ -82,6 +90,7 @@ export default function Home() {
     },
   ];
 
+  // Checklist Items Test Data
   const checklistItems = [
     {
       number: "150+",
@@ -96,12 +105,38 @@ export default function Home() {
       text: "Services listed by local professionals",
     },
   ];
+
+  // Steps Cards Test Data
+  const stepCards = [
+    {
+      header: <CreateAccount />,
+      step: "01",
+      title: "Create your profile",
+      description:
+        "Sign up and you'll automatically become a user, promoter, and business owner with a personalized profile.",
+    },
+    {
+      header: <CommunityConnect />,
+      step: "02",
+      title: "Connect with your community",
+      description:
+        "Access discounts, rewards, and income opportnities from creating content that promotes your favorite local spots",
+    },
+    {
+      header: <EarningSnapshot />,
+      step: "03",
+      title: "Start earning and growing",
+      description:
+        "Get paid directly via bitcoin from business owners and/or from reselling rewards and discounts earned from supporting your local economies.",
+    },
+  ];
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-12">
+    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-12 ">
       {/* Header */}
-      <section className="flex flex-col items-center justify-center">
+      <section className="flex flex-col items-center justify-center text-xl">
         {/* Title & Tagline */}
-        <p className="mb-6">
+        <p className="mb-6 text-base">
           🟦 Connect with your community to grow, share, and thrive together.
         </p>
         <h1 className="text-5xl sm:text-4xl md:text-5xl font-bold">
@@ -116,7 +151,7 @@ export default function Home() {
           width={192}
           height={192}
         />
-        <p className="text-xl sm:text-2xl text-gray-500 mb-4">
+        <p className="sm:text-2xl text-gray-500 mb-4">
           We are the <span className="font-bold">Main Street First</span>{" "}
           platform that is putting LOCAL businesses ahead of global ones.
         </p>
@@ -126,10 +161,14 @@ export default function Home() {
           <span className="font-bold">Nostr</span>
         </p>
         <p className="text-gray-500 mb-4">
-          Our focus is to tilt the playing field in our favor and fire up local
-          economies through word-of-mouth marketing, decentralize social media,
-          and Bitcoin micro-payments.
+          Our focus is to fire up local economies through word-of-mouth
+          marketing, decentralize social media, and Bitcoin micro-payments.
         </p>
+
+        <p className="font-bold capitalize text-gray-500 mb-4">
+          Take control of the technology we use
+        </p>
+
         <p className="text-gray-500 mb-8">
           We're all influencers to our friends and families. We create content
           for the benefit of the gatekeepers. LocalWorx.io is here to flip the
@@ -169,8 +208,8 @@ export default function Home() {
       </section>
 
       {/* Features Header*/}
-      <section className="flex flex-col items-center justify-center">
-        <p className="my-4 font-bold">
+      <section className="flex flex-col items-center justify-center text-lg">
+        <p className="my-4 font-bold text-base">
           🟦 Tools to grow within your local network.
         </p>
         <p className="text-gray-500">
@@ -192,7 +231,7 @@ export default function Home() {
         </div>
       </section>
       {/* Vision / Mission */}
-      <section className="flex flex-col items-center justify-between">
+      <section className="flex flex-col items-center justify-between text-lg">
         <img
           src="https://images.unsplash.com/photo-1533574508174-2921ef150b1c"
           alt="Main Street"
@@ -206,7 +245,7 @@ export default function Home() {
           <span className="font-serif italic">strengthen</span> local
           connections, economies, and opportunities.
         </h2>
-        <p className="mb-6 font-bold text-xl sm:text-2xl">
+        <p className="mb-6 font-bold text-base sm:text-lg">
           🟦 Built for immediate local benefit.
         </p>
 
@@ -252,15 +291,16 @@ export default function Home() {
           ))}
         </div>
       </section>
-      {/* Signup How/Why */}
 
-      <section className=" min-w-screen px-4 py-8 mt-10 bg-slate-gray-background flex-col items-center justify-center ">
+      {/* Signup Steps */}
+
+      <section className=" min-w-screen px-4 py-8 mt-10 bg-slate-gray-background flex-col items-center justify-center text-lg">
         <h2 className="text-5xl sm:text-6xl font-semibold text-white mb-6">
           Turn your skills into local{" "}
           <span className="font-serif italic">impact</span> in three simple
           steps
         </h2>
-        <p className="text-xl sm:text-2xl font-semibold text-white mb-4">
+        <p className="text-base sm:text-lg font-semibold text-white mb-4">
           ◻️ Join, Share, Thrive
         </p>
         <p className="text-gray-200 capitalize list-disc list-inside space-y-2">
@@ -268,10 +308,24 @@ export default function Home() {
           and others' services, and start earning money—all in just a few
           clicks.
         </p>
+
+        {/* Sign up and Earn Steps */}
+        <div className="my-8">
+          {stepCards.map((step, index) => (
+            <div key={index} className="mb-4">
+              <StepsCard
+                header={step.header}
+                step={step.step}
+                title={step.title}
+                description={step.description}
+              />
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Reviews */}
-      <section className="flex flex-col items-center justify-center mt-10">
+      <section className="flex flex-col items-center justify-center mt-10 text-lg">
         <h2 className="text-5xl sm:text-6xl font-semibold mb-6">
           Don't take our word for it, here's what our{" "}
           <span className="font-serif italic">users</span> say:

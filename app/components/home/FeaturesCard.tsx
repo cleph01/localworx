@@ -7,7 +7,7 @@ type FeaturesCardProps = {
   icon: React.ReactNode;
 };
 
-const HomeFeaturesCard: React.FC<FeaturesCardProps> = ({
+const FeaturesCard: React.FC<FeaturesCardProps> = ({
   title,
   description,
   icon,
@@ -25,4 +25,4 @@ const HomeFeaturesCard: React.FC<FeaturesCardProps> = ({
   );
 };
 
-export default HomeFeaturesCard;
+export default FeaturesCard;
