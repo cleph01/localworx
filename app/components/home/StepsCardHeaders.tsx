@@ -11,6 +11,7 @@ export const CreateAccount = () => {
   );
 };
 
+// Avatar Group Stack
 export const CommunityConnect = () => {
   return (
     <div className="flex -space-x-2 overflow-hidden">
@@ -45,17 +46,19 @@ export const CommunityConnect = () => {
 
 export const EarningSnapshot = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full">
-      <div className="flex flex-col items-center ">
-        <div className="flex flex-row justify-between">
-          <FaBtc />
-          5024<span className="text-xs">.75</span>
-          <div className="w-15 text-gray-400 text-sm">
-            Balance available for withdrawal
-          </div>
+    <div className="flex flex-col items-center justify-center w-full my-6">
+      <div className="w-full flex flex-row items-center justify-between">
+        <div className="w-1/2 flex flex-row items-center justify-center text-4xl">
+          <FaBtc className="inline-block" />
+          5024<span className="text-base mt-3">.75</span>
+        </div>
+
+        <div className="w-1/2 pl-3 text-gray-400 text-sm">
+          Balance available <br />
+          for withdrawal
         </div>
       </div>
-      <div className="p-2 my-6 shadow-lg inline-flex items-center justify-center rounded-lg bg-green-600 text-white">
+      <div className="px-10 py-3 my-6 shadow-2xl inline-flex items-center justify-center rounded-lg bg-green-600 text-white text-2xl">
         Withdraw balance
       </div>
     </div>
