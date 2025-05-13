@@ -1,14 +1,13 @@
 // ✅ app/business/products/update/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function UpdateBusinessProductPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const productId = searchParams.get("id");
+  const [productId, setProductId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -18,7 +17,15 @@ export default function UpdateBusinessProductPage() {
 
   // Fetch existing product data on mount
   useEffect(() => {
+    // Get the product ID from the URL
+    const searchParams = useSearchParams();
+    const productId = searchParams.get("id");
+
+    // Check if productId is available
     if (!productId) return;
+
+    // Set the productId in state
+    setProductId(productId);
 
     const fetchProduct = async () => {
       try {
@@ -37,7 +44,7 @@ export default function UpdateBusinessProductPage() {
     };
 
     fetchProduct();
-  }, [productId]);
+  }, []);
 
   // Handle form field changes
   const handleChange = (
