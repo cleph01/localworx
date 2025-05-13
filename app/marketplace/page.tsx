@@ -1,11 +1,21 @@
 // app/marketplace/page.tsx
 import { MarketplaceItem } from "./marketplaceTypes"; // Define the type for items
 import MarketplaceItemCard from "./components/MarketplaceItemCard";
+import { getMarketplaceItemsService } from "../api/marketplace/marketplaceService"; // Import the service to fetch items
 
 // Fetch marketplace items server-side (this will be done at request time)
 export default async function Marketplace() {
-  const res = await fetch(`/api/marketplace`);
-  const items: MarketplaceItem[] = await res.json(); // Fetch items from the API
+  // Initialize an empty array for items
+  let items: MarketplaceItem[] = [];
+
+  try {
+    const tempItems = await getMarketplaceItemsService();
+    // Fetch the items from the API
+    items = tempItems;
+  } catch (error) {
+    console.error("Error fetching marketplace items:", error);
+    return <div>Error loading items</div>; // Handle error gracefully
+  }
 
   return (
     <div className="container mx-auto p-4">
