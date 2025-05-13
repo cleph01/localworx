@@ -1,7 +1,7 @@
 "use client";
 // app/promoter/page.tsx
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createMarketplaceItemService } from "../api/marketplace/marketplaceService";
 
