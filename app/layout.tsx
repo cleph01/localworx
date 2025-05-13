@@ -22,7 +22,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/localworx-logo.png",
+    icon: "/localworx-logo.jpg",
   },
   title: "LocalWorx | Empowering Communities Through Peer-Powered Promotion",
   description:
