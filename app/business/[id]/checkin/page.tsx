@@ -4,7 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
-export default function CheckInPage({ params }: { params: { id: string } }) {
+export default function CheckInPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const router = useRouter();
   const [status, setStatus] = useState<
     "idle" | "locating" | "checking_in" | "success" | "error"
@@ -23,7 +27,10 @@ export default function CheckInPage({ params }: { params: { id: string } }) {
       async (position) => {
         setStatus("checking_in");
         try {
-          const res = await fetch(`/api/business/${params.id}/checkin`, {
+          // Extract the id from the context
+          const { id } = await params;
+          // Make the API call to check in
+          const res = await fetch(`/api/business/${id}/checkin`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -31,7 +38,7 @@ export default function CheckInPage({ params }: { params: { id: string } }) {
             body: JSON.stringify({
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
-              businessId: params.id,
+              businessId: id,
             }),
           });
 
