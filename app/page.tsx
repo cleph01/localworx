@@ -1,18 +1,22 @@
 import Image from "next/image";
 import ButtonLink from "./components/ButtonLink";
 import {
-  BriefcaseIcon,
-  DocumentCheckIcon,
-  MegaphoneIcon,
-  NewspaperIcon,
-  RectangleGroupIcon,
-  SpeakerWaveIcon,
-  UserGroupIcon,
-  UsersIcon,
-} from "@heroicons/react/24/outline";
-import { BitcoinIcon } from "@bitcoin-design/bitcoin-icons-react/filled";
+  FaAddressCard,
+  FaBriefcase,
+  FaBtc,
+  FaBullhorn,
+  FaColumns,
+  FaInfo,
+  FaInfoCircle,
+  FaQrcode,
+  FaUser,
+  FaUsers,
+  FaVolumeUp,
+} from "react-icons/fa";
+
 import Carousel from "./components/Carousel";
 import HomeFeaturesCard from "./components/HomeFeaturesCard";
+import HomeCheckListItem from "./components/HomeCheckListItem";
 
 export default function Home() {
   const profiles = [
@@ -44,37 +48,52 @@ export default function Home() {
       title: "Bitcoin Zap Integration",
       description:
         "Send and receive instant payments for community engagement and service promotion.",
-      icon: <BitcoinIcon className="h-12 w-12 text-blue-400" />,
+      icon: <FaBtc className="h-12 w-12 text-blue-400" />,
     },
     {
       title: "Promoter Hub",
       description:
         "Earn by promoting local businesses and services or sharing community-powered deals with your friends.",
-      icon: <SpeakerWaveIcon className="h-10 w-10 text-blue-400" />,
+      icon: <FaVolumeUp className="h-10 w-10 text-blue-400" />,
     },
     {
       title: "Service Directory",
       description:
         "Quickly find local offerings that match your needs using intuitive filters and categories.",
-      icon: <NewspaperIcon className="h-10 w-10 text-blue-400" />,
+      icon: <FaAddressCard className="h-10 w-10 text-blue-400" />,
     },
     {
       title: "Role Based User Profiles",
       description:
         "Easily showcase your skills or service with profiles tailored to freelancers, promoters, and business owners.",
-      icon: <UserGroupIcon className="h-10 w-10 text-blue-400" />,
+      icon: <FaUsers className="h-10 w-10 text-blue-400" />,
     },
     {
       title: "Reward Dashboard",
       description:
         "Stay motivated with real-time insights into your earnings, milestones, and progress through gamified tracking.",
-      icon: <RectangleGroupIcon className="h-10 w-10 text-blue-400" />,
+      icon: <FaColumns className="h-10 w-10 text-blue-400" />,
     },
     {
       title: "Community Check-Ins",
       description:
         "Share your wins, track impact, and stay connected with the local businesses that matter most to you.",
-      icon: <DocumentCheckIcon className="h-10 w-10 text-blue-400" />,
+      icon: <FaQrcode className="h-10 w-10 text-blue-400" />,
+    },
+  ];
+
+  const checklistItems = [
+    {
+      number: "150+",
+      text: "Cities represented accross the platform",
+    },
+    {
+      number: "3k+",
+      text: "Verified members and growing",
+    },
+    {
+      number: "2.5k+",
+      text: "Services listed by local professionals",
     },
   ];
   return (
@@ -107,20 +126,20 @@ export default function Home() {
       <section className="flex flex-col items-center justify-center">
         <ButtonLink
           text="I'm looking for services"
-          icon={<UsersIcon className="h-6 w-6 text-white" />}
+          icon={<FaUser className="h-6 w-6 text-white" />}
           link="/signup"
           color="bg-blue-600" // Custom color for this button
         />
 
         <ButtonLink
           text="I'm a business owner"
-          icon={<BriefcaseIcon className="h-6 w-6 text-slate-900" />}
+          icon={<FaBriefcase className="h-6 w-6 text-slate-900" />}
           link="/signup"
         />
 
         <ButtonLink
           text="I'm a promoter"
-          icon={<MegaphoneIcon className="h-6 w-6 text-slate-900" />}
+          icon={<FaBullhorn className="h-6 w-6 text-slate-900" />}
           link="/signup"
         />
       </section>
@@ -132,7 +151,7 @@ export default function Home() {
 
       {/* Features Header*/}
       <section className="flex flex-col items-center justify-center">
-        <p className="my-2 font-bold">
+        <p className="my-4 font-bold">
           🟦 Tools to grow within your local network.
         </p>
         <p className="text-gray-500">
@@ -154,21 +173,90 @@ export default function Home() {
         </div>
       </section>
       {/* Vision / Mission */}
-      <section className="text-center max-w-2xl space-y-4">
-        <h2 className="text-2xl sm:text-3xl font-semibold">🚀 Our Vision</h2>
-        <p className="text-gray-400 capitalize">
+      <section className="flex flex-col items-center justify-between">
+        <img
+          src="https://images.unsplash.com/photo-1533574508174-2921ef150b1c"
+          alt="Main Street"
+          className="rounded my-12"
+          width={"auto"}
+          height={"auto"}
+        />
+
+        <h2 className="text-5xl sm:text-4xl md:text-5xl font-bold mb-8">
+          A platform built to{" "}
+          <span className="font-serif italic">strengthen</span> local
+          connections, economies, and opportunities.
+        </h2>
+        <p className="mb-6 font-bold text-xl sm:text-2xl">
+          🟦 Built for immediate local benefit.
+        </p>
+
+        <p className="text-gray-600 mb-6">
           To revitalize local economies and defend digital sovereignty by
           enabling trust-based, peer-to-peer promotion networks.
         </p>
 
-        <h2 className="text-2xl sm:text-3xl font-semibold mt-6">
-          🔍 Our Mission
+        <p className="text-gray-600 mb-6">
+          LocalWorx.io is an innovative platform designed to drive community
+          collaboratoin, economic empowerment, and professional growth. As an
+          extension of the John Connor Project, LocalWorx encourages digital
+          sovereignty and local resilience by providing a decentralized,
+          peer-to-peer platform for individuals to connect, do business, and
+          thrive. By leveraging the power of Bitcoin and community-driven
+          initiatives, LocalWorx aims to create a sustainable ecosystem that
+          benefits both individuals and local businesses.
+        </p>
+
+        <ButtonLink
+          text="Learn more about us"
+          icon={
+            <FaInfoCircle className="h-6 text-blue-500 w-6 text-blue-500" />
+          }
+          link="/about"
+        />
+
+        <img
+          src="https://images.unsplash.com/photo-1627896067004-38a36f39e506"
+          alt="Family Shopping"
+          className="rounded mb-4 mt-6"
+          width={"auto"}
+          height={"auto"}
+        />
+
+        <div className="flex flex-col mt-10 gap-6 sm:flex-row sm:gap-8">
+          {checklistItems.map((item, index) => (
+            <HomeCheckListItem
+              key={index}
+              number={item.number}
+              text={item.text}
+            />
+          ))}
+        </div>
+      </section>
+      {/* Signup How/Why */}
+
+      <section className=" min-w-screen px-4 py-8 mt-10 bg-slate-gray-background flex-col items-center justify-center ">
+        <h2 className="text-5xl sm:text-6xl font-semibold text-white mb-6">
+          Turn your skills into local{" "}
+          <span className="font-serif italic">impact</span> in three simple
+          steps
         </h2>
-        <ul className="text-gray-400 capitalize list-disc list-inside space-y-2">
-          <li>Empower small businesses with transparent promotion tools</li>
-          <li>Enable locals to earn by supporting their community</li>
-          <li>Operate without centralized gatekeepers or ad algorithms</li>
-        </ul>
+        <p className="text-xl sm:text-2xl font-semibold text-white mb-4">
+          ◻️ Join, Share, Thrive
+        </p>
+        <p className="text-gray-200 capitalize list-disc list-inside space-y-2">
+          Discover how quickly you can connect with your community, promote your
+          and others' services, and start earning money—all in just a few
+          clicks.
+        </p>
+      </section>
+
+      {/* Reviews */}
+      <section className="flex flex-col items-center justify-center mt-10">
+        <h2 className="text-5xl sm:text-6xl font-semibold mb-6">
+          Don't take our word for it, here's what our{" "}
+          <span className="font-serif italic">users</span> say:
+        </h2>
       </section>
 
       <section></section>

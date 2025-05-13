@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@bitcoin-design/bitcoin-icons-react": "^0.1.10",
-    "@heroicons/react": "^2.2.0",
     "authjs-knexjs-adapter": "^3.0.0",
     "knex": "^3.1.0",
     "next": "15.3.1",
@@ -19,6 +17,7 @@
     "pg-query-stream": "^4.9.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
     "react-toastify": "^11.0.5",
     "sqlite3": "^5.1.7"
   },

@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
+
 import React, { useState } from "react";
 import Image from "next/image";
+import { FaBars, FaRegWindowClose } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,9 +82,9 @@ const Navbar = () => {
               className="text-gray-300 hover:text-white focus:outline-none"
             >
               {isOpen ? (
-                <XMarkIcon className="h-6 w-6" />
+                <FaRegWindowClose className="h-6 w-6" />
               ) : (
-                <Bars3Icon className="h-6 w-6" />
+                <FaBars className="h-6 w-6" />
               )}
             </button>
           </div>
