@@ -158,7 +158,7 @@ export default function Home() {
         <p className="text-gray-500 mb-4">
           LocalWorx.io is a decentralized platform powered by{" "}
           <span className="font-bold">Lightning</span> and{" "}
-          <span className="font-bold">Nostr</span>
+          <span className="font-bold">Nostr</span>.
         </p>
         <p className="text-gray-500 mb-4">
           Our focus is to fire up local economies through word-of-mouth
@@ -166,7 +166,7 @@ export default function Home() {
         </p>
 
         <p className="font-bold capitalize text-gray-500 mb-4">
-          Take control of the technology we use
+          Empowerment not enslavement.
         </p>
 
         <p className="text-gray-500 mb-8">
@@ -212,7 +212,7 @@ export default function Home() {
         <p className="my-4 font-bold text-base">
           🟦 Tools to grow within your local network.
         </p>
-        <p className="text-gray-500">
+        <p className="text-gray-500 text-lg">
           From listing your services to getting paid for promoting your
           community, LocalWorx.io gives you the infrastructure to grow your
           impct locally and sustainably.
@@ -249,12 +249,12 @@ export default function Home() {
           🟦 Built for immediate local benefit.
         </p>
 
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-600 mb-6 text-lg">
           To revitalize local economies and defend digital sovereignty by
           enabling trust-based, peer-to-peer promotion networks.
         </p>
 
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-600 mb-6 text-lg">
           LocalWorx.io is an innovative platform designed to drive community
           collaboratoin, economic empowerment, and professional growth. As an
           extension of the John Connor Project, LocalWorx encourages digital
@@ -303,7 +303,7 @@ export default function Home() {
         <p className="text-base sm:text-lg font-semibold text-white mb-4">
           ◻️ Join, Share, Thrive
         </p>
-        <p className="text-gray-200 capitalize list-disc list-inside space-y-2">
+        <p className="text-gray-200 capitalize text-lg">
           Discover how quickly you can connect with your community, promote your
           and others' services, and start earning money—all in just a few
           clicks.
