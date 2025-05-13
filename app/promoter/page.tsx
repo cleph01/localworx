@@ -50,7 +50,7 @@ const PromoterPage = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Create a New Promotion</h1>
       {session ? (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={() => handleSubmit} className="space-y-4">
           <input
             type="text"
             name="title"
