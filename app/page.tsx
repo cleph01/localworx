@@ -106,7 +106,7 @@ export default function Home() {
         </p>
         <h1 className="text-5xl sm:text-4xl md:text-5xl font-bold">
           <span className="font-serif italic">Empowering</span> Communities. One
-          Skill at a Time.
+          Shoutout at a Time.
         </h1>
         {/* Hero Image */}
         <Image
@@ -116,17 +116,24 @@ export default function Home() {
           width={192}
           height={192}
         />
-        <p className="text-xl sm:text-2xl text-gray-500 mb-8">
+        <p className="text-xl sm:text-2xl text-gray-500 mb-4">
           We are the <span className="font-bold">Main Street First</span>{" "}
-          platform that is putting OUR communities ahead of wall street.
+          platform that is putting LOCAL businesses ahead of global ones.
+        </p>
+        <p className="text-gray-500 mb-4">
+          LocalWorx.io is a decentralized platform powered by{" "}
+          <span className="font-bold">Lightning</span> and{" "}
+          <span className="font-bold">Nostr</span>
+        </p>
+        <p className="text-gray-500 mb-4">
+          Our focus is to tilt the playing field in our favor and fire up local
+          economies through word-of-mouth marketing, decentralize social media,
+          and Bitcoin micro-payments.
         </p>
         <p className="text-gray-500 mb-8">
-          LocalWorx.io is a decentralized platform that helps local businesses
-          grow through word-of-mouth marketing, Bitcoin micro-payments, and
-          community collaboration.
-        </p>
-        <p className="text-gray-500 mb-8">
-          Promote, earn, and support local resilience — without the gatekeepers.
+          We're all influencers to our friends and families. We create content
+          for the benefit of the gatekeepers. LocalWorx.io is here to flip the
+          paradigm on its head.
         </p>
 
         <p className="text-3xl font-bold font-italic mb-8">
