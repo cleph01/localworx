@@ -104,7 +104,7 @@ export default function Home() {
         <p className="mb-6">
           🟦 Connect with your community to grow, share, and thrive together.
         </p>
-        <h1 className="text-5xl sm:text-4xl md:text-5xl font-bold mb-6">
+        <h1 className="text-5xl sm:text-4xl md:text-5xl font-bold">
           <span className="font-serif italic">Empowering</span> Communities. One
           Skill at a Time.
         </h1>
@@ -112,13 +112,25 @@ export default function Home() {
         <Image
           src="/localworx-logo.png"
           alt="LocalWorx Logo"
-          className="w-48 h-auto mb-6 "
+          className="w-48 h-auto my-6 "
           width={192}
           height={192}
         />
-        <p className="text-lg sm:text-xl text-gray-500 mb-8">
-          Connect, collaborate, and thrive with a platform built to boost
-          skills, services, and community driven income.
+        <p className="text-xl sm:text-2xl text-gray-500 mb-8">
+          We are the <span className="font-bold">Main Street First</span>{" "}
+          platform that is putting OUR communities ahead of wall street.
+        </p>
+        <p className="text-gray-500 mb-8">
+          LocalWorx.io is a decentralized platform that helps local businesses
+          grow through word-of-mouth marketing, Bitcoin micro-payments, and
+          community collaboration.
+        </p>
+        <p className="text-gray-500 mb-8">
+          Promote, earn, and support local resilience — without the gatekeepers.
+        </p>
+
+        <p className="text-3xl font-bold font-italic mb-8">
+          It's OUR data, OUR content, OUR livlihood, OUR money
         </p>
       </section>
 
