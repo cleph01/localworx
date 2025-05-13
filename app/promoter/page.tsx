@@ -28,18 +28,18 @@ const PromoterPage = () => {
       return;
     }
 
-    try {
-      const result = await createMarketplaceItemService({
-        ...itemDetails,
-        price: parseFloat(itemDetails.price), // Convert price to a number
-        user_id: session?.user?.id || "", // Assuming session.user.id contains the user ID
-      });
-      console.log(result);
-      // Handle success (e.g., show a success message, redirect, etc.)
-    } catch (error) {
-      console.error("Error Creating New Item", error);
-      return <div>Error Creating New Items</div>; // Handle error gracefully
-    }
+    // try {
+    //   const result = await createMarketplaceItemService({
+    //     ...itemDetails,
+    //     price: parseFloat(itemDetails.price), // Convert price to a number
+    //     user_id: session?.user?.id || "", // Assuming session.user.id contains the user ID
+    //   });
+    //   console.log(result);
+    //   // Handle success (e.g., show a success message, redirect, etc.)
+    // } catch (error) {
+    //   console.error("Error Creating New Item", error);
+    //   return <div>Error Creating New Items</div>; // Handle error gracefully
+    // }
   };
 
   if (status === "loading") {
