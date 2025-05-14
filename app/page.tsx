@@ -321,13 +321,25 @@ export default function Home() {
 
         <p className="text-gray-600 mb-6 text-lg">
           LocalWorx.io is an innovative platform designed to drive community
-          collaboratoin, economic empowerment, and professional growth. As an
-          extension of the John Connor Project, LocalWorx encourages digital
-          sovereignty and local resilience by providing a decentralized,
-          peer-to-peer platform for individuals to connect, do business, and
-          thrive. By leveraging the power of Bitcoin and community-driven
-          initiatives, LocalWorx aims to create a sustainable ecosystem that
-          benefits both individuals and local businesses.
+          collaboratoin, economic empowerment, and professional growth.
+        </p>
+        <p className="text-gray-600 mb-6 text-lg">
+          As an extension of{" "}
+          <a
+            className="underline decoration-solid"
+            href="http://johnconnorproject.org"
+            target="_blank"
+          >
+            The John Connor Project
+          </a>
+          , LocalWorx encourages digital sovereignty and local resilience by
+          providing a decentralized, peer-to-peer platform for individuals to
+          connect, do business, and thrive.
+        </p>
+        <p className="text-gray-600 mb-6 text-lg">
+          By leveraging the power of Bitcoin and community-driven initiatives,
+          LocalWorx aims to create a sustainable ecosystem that benefits both
+          individuals and local businesses.
         </p>
 
         <ButtonLink
@@ -346,7 +358,7 @@ export default function Home() {
           height={"auto"}
         />
 
-        <div className="flex flex-col mt-10 gap-6 sm:flex-row sm:gap-8">
+        <div className="flex flex-col mt-6 gap-6 sm:flex-row sm:gap-8">
           {checklistItems.map((item, index) => (
             <HomeCheckListItem
               key={index}
@@ -413,7 +425,7 @@ export default function Home() {
 
       {/* General Inquiries */}
       <section className="min-w-screen px-4 py-8 mt-10 bg-gray-200 flex-col items-center justify-center text-lg">
-        <h2 className="text-5xl sm:text-6xl font-semibold mb-6">
+        <h2 className="text-2xl sm:text-6xl font-semibold mb-6">
           General inquiries
         </h2>
         <div>
@@ -490,7 +502,7 @@ export default function Home() {
         </p>
       </section>
       {/* Footer */}
-      <section className="p-4 min-w-screen bg-navy-blue-background text-gray-500 text-lg">
+      <section className="p-4 min-w-screen bg-navy-blue-background text-gray-400 text-lg">
         <Image
           src="/localworx-text-only.svg"
           className="my-6"
@@ -521,7 +533,7 @@ export default function Home() {
           {/* Add Newsletter component */}
           <p>Stay up to date with promos and announcements</p>
         </div>
-        <p>&copy; 2025 LocalWorx. All Rights Reserved</p>
+        <p className="font-bold">&copy; 2025 LocalWorx. All Rights Reserved</p>
       </section>
       {/* GitHub CTA */}
       <a

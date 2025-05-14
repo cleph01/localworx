@@ -12,8 +12,7 @@ const CheckList: React.FC<ChecklistProps> = ({ number, text }) => {
         <FaCheck className="h-6 w-6 text-blue-500" />
       </div>
       <div>
-        <span className="font-bold">{number}</span>
-        {text}
+        <span className="font-bold">{number}</span> {text}
       </div>
     </div>
   );
