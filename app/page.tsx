@@ -2,13 +2,16 @@ import Image from "next/image";
 import ButtonLink from "./components/ButtonLink";
 import {
   FaAddressCard,
+  FaAngleRight,
   FaBriefcase,
   FaBtc,
   FaBullhorn,
   FaColumns,
+  FaEnvelope,
   FaInfo,
   FaInfoCircle,
   FaQrcode,
+  FaRegEnvelope,
   FaUser,
   FaUsers,
   FaVolumeUp,
@@ -24,6 +27,7 @@ import {
 } from "./components/home/StepsCardHeaders";
 import StepsCard from "./components/home/StepsCard";
 import ReviewCard from "./components/home/ReviewCard";
+import FaqCard from "./components/home/FaqCard";
 
 export default function Home() {
   // Profiles Test Data
@@ -163,10 +167,37 @@ export default function Home() {
     },
   ];
 
+  const faqs = [
+    {
+      title: "What is LocalWorx.io and who is it for?",
+      description:
+        "LocalWorx.io is a platfom that connects local professionals, freelancers, creators, and residents to exchange services, promote work, and earn within their community.",
+    },
+    {
+      title: "How do I get started on the platform?",
+      description:
+        "LocalWorx.io is a platfom that connects local professionals, freelancers, creators, and residents to exchange services, promote work, and earn within their community.",
+    },
+    {
+      title: "Is it free to use LocalWorx.io?",
+      description:
+        "LocalWorx.io is a platfom that connects local professionals, freelancers, creators, and residents to exchange services, promote work, and earn within their community.",
+    },
+    {
+      title: "Can I earn money promoting outher people's work?",
+      description:
+        "LocalWorx.io is a platfom that connects local professionals, freelancers, creators, and residents to exchange services, promote work, and earn within their community.",
+    },
+    {
+      title: "How is LocalWorx different from other gig platforms?",
+      description:
+        "LocalWorx.io is a platfom that connects local professionals, freelancers, creators, and residents to exchange services, promote work, and earn within their community.",
+    },
+  ];
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-6 py-12 ">
       {/* Header */}
-      <section className="flex flex-col items-center justify-center text-xl">
+      <section className="flex flex-col items-center justify-center text-lg">
         {/* Title & Tagline */}
         <p className="mb-6 text-base">
           🟦 Connect with your community to grow, share, and thrive together.
@@ -202,9 +233,11 @@ export default function Home() {
         </p>
 
         <p className="text-gray-500 mb-8">
-          We're all influencers to our friends and families. We create content
-          for the benefit of the gatekeepers. LocalWorx.io is here to flip the
-          paradigm on its head.
+          We are all influencers. Our friends and families want to know what we
+          think about this restaurants or that mechanic. We tell the world what
+          we think all the time. But the gatekeepers keep the lion's share of
+          the advertiser money. LocalWorx.io is here to flip that paradigm on
+          its head.
         </p>
 
         <p className="text-3xl font-bold font-italic mb-8">
@@ -244,7 +277,7 @@ export default function Home() {
         <p className="my-4 font-bold text-base">
           🟦 Tools to grow within your local network.
         </p>
-        <p className="text-gray-500 text-lg">
+        <p className="text-gray-500">
           From listing your services to getting paid for promoting your
           community, LocalWorx.io gives you the infrastructure to grow your
           impct locally and sustainably.
@@ -335,7 +368,7 @@ export default function Home() {
         <p className="text-base sm:text-lg font-semibold text-white mb-4">
           ◻️ Join, Share, Thrive
         </p>
-        <p className="text-gray-200 capitalize text-lg">
+        <p className="text-gray-200">
           Discover how quickly you can connect with your community, promote your
           and others' services, and start earning money—all in just a few
           clicks.
@@ -364,7 +397,7 @@ export default function Home() {
         </h2>
       </section>
 
-      {/* Reviews Carousel */}
+      {/* Review Cards */}
       <section className="w-full mx-auto flex flex-col items-center justify-center mt-10 px-4">
         {reviews.map((review, index) => (
           <ReviewCard
@@ -376,6 +409,89 @@ export default function Home() {
             avatarUrl={review.avatarUrl}
           />
         ))}
+      </section>
+
+      {/* General Inquiries */}
+      <section className="min-w-screen px-4 py-8 mt-10 bg-gray-200 flex-col items-center justify-center text-lg">
+        <h2 className="text-5xl sm:text-6xl font-semibold mb-6">
+          General inquiries
+        </h2>
+        <div>
+          {faqs.map((faq, index) => (
+            <FaqCard
+              key={index}
+              title={faq.title}
+              description={faq.description}
+            />
+          ))}
+        </div>
+        <div className="mt-12 space-y-4">
+          <p className="font-bold text-lg">Got more questions?</p>
+          <p className="text-gray-500 text-base">Send us an email at</p>
+          <p className="font-bold text-lg">
+            <span>
+              <FaRegEnvelope className="inline-flex" />
+            </span>{" "}
+            support@LocalWorx.io
+          </p>
+        </div>
+      </section>
+      {/* CTA */}
+      <section className="p-4 min-w-screen text-gray-900 bg-[url('https://images.unsplash.com/photo-1672766113353-1888bf37a41c?w=800&auto=format&fit=crop')]">
+        <p className="w-40 py-1 px-2 mb-6 rounded font-bold text-base sm:text-lg text-white">
+          Get Started
+        </p>
+        <h2 className="py-1 px-2 bg-gray-400/66 rounded text-5xl sm:text-4xl md:text-5xl font-bold mb-8">
+          Start <span className="font-serif italic">Earning</span>, Promoting,
+          and Energizing Locally
+        </h2>
+        <p className="py-1 px-2 bg-gray-400/66 rounded font-bold text-lg">
+          Join a growing community where your skills, services, and support help
+          power local success.
+        </p>
+        {/* Button */}
+        <div className="w-full my-8 p-2 shadow-lg inline-flex items-center justify-center rounded bg-blue-600 text-white font-bold text-xl">
+          Create an account{" "}
+          <span className="ml-2">
+            <FaAngleRight />
+          </span>
+        </div>
+        {/* Avatar stack */}
+        <div className="mb-8 flex -space-x-2 overflow-hidden">
+          <img
+            className="inline-block size-15 rounded-full ring-2 ring-white"
+            src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt=""
+          />
+          <img
+            className="inline-block size-15 rounded-full ring-2 ring-white"
+            src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt=""
+          />
+          <img
+            className="inline-block size-15 rounded-full ring-2 ring-white"
+            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+            alt=""
+          />
+          <img
+            className="inline-block size-15 rounded-full ring-2 ring-white"
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt=""
+          />
+          <img
+            className="inline-block size-15 rounded-full ring-2 ring-white"
+            src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt=""
+          />
+        </div>
+        <p className="font-bold py-1 px-2 bg-gray-400/75 rounded">
+          {" "}
+          Trusted by 5k+ workers locally
+        </p>
+      </section>
+      {/* Footer */}
+      <section className="min-w-screen bg-navy-blue-background">
+        <Image src="/localworx-text-only.svg" alt="" width={100} height={50} />
       </section>
       {/* GitHub CTA */}
       <a

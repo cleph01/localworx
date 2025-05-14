@@ -10,7 +10,7 @@
 /* Tailwind colors customization */
 @theme inline {
   --color-background: var(--background);
-  --color-navy-background: var(--navy-blue-background);
+  --color-navy-blue-background: var(--navy-blue-background);
   --color-slate-gray-background: var(--slate-gray-background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
