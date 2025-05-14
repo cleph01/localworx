@@ -240,7 +240,7 @@ export default function Home() {
           its head.
         </p>
 
-        <p className="text-3xl font-bold font-italic mb-8">
+        <p className="text-2xl font-bold font-italic mb-8">
           It's OUR data, OUR content, OUR livlihood, OUR money
         </p>
       </section>
