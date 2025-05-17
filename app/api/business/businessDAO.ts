@@ -16,9 +16,3 @@ export async function updateBusiness(id: number, updates: Partial<Business>) {
 export async function deleteBusiness(id: number) {
   return db("businesses").where({ id }).del();
 }
-
-export async function listBusinesses(ownerId?: number) {
-  const query = db("businesses").select("*");
-  if (ownerId) query.where({ owner_id: ownerId });
-  return query;
-}

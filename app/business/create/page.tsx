@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 // app/business/create/page.tsx
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
@@ -9,6 +13,10 @@ export const dynamic = "force-dynamic";
 export default async function CreateBusinessPage() {
   const session = await getServerSession(authOptions);
   if (!session?.user) redirect("/api/auth/signin?callbackUrl=/business/create");
+
+  // Nostr keypair (loaded from localStorage)
+  const [pubkey, setPubkey] = useState("");
+  const [sk, setSk] = useState("");
 
   async function handleCreate(formData: FormData) {
     "use server";
@@ -39,6 +47,19 @@ export default async function CreateBusinessPage() {
     revalidatePath("/business/profile");
     redirect("/business/profile");
   }
+
+  // Load user's Nostr keys from localStorage on first render
+  useEffect(() => {
+    const storedPubkey = localStorage.getItem("nostr-pubkey");
+    const storedSk = localStorage.getItem("nostr-sk");
+
+    if (!storedPubkey || !storedSk) {
+      redirect("/nostr/keys/create");
+    }
+
+    if (storedPubkey) setPubkey(storedPubkey);
+    if (storedSk) setSk(storedSk);
+  }, []);
 
   return (
     <div className="max-w-xl mx-auto p-8">

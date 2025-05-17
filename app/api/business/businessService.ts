@@ -3,7 +3,6 @@ import {
   getBusinessById,
   updateBusiness,
   deleteBusiness,
-  listBusinesses,
 } from "./businessDAO";
 import { Business } from "./businessTypes";
 
@@ -21,8 +20,4 @@ export async function modifyBusiness(id: number, updates: Partial<Business>) {
 
 export async function removeBusiness(id: number) {
   return deleteBusiness(id);
-}
-
-export async function fetchBusinesses(ownerId?: number) {
-  return listBusinesses(ownerId);
 }
