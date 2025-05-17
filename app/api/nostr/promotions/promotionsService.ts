@@ -6,6 +6,7 @@ import {
 } from "nostr-tools/pure";
 
 import { bytesToHex, hexToBytes } from "@noble/hashes/utils"; // already an installed dependency
+import { nip19 } from "nostr-tools";
 
 import { connectToRelays, publishEvent } from "../../lib/nostr/relayManager";
 import { DEFAULT_RELAYS } from "../../lib/nostr/relayList";
@@ -34,14 +35,23 @@ export async function publishPromotionService({
     content,
   };
 
-  // 3. Convert secret key currently in hex code for output or persistence to
-  //  Uint8Aarray for use in cryptogrpahy
-  const secretKeyBytes = hexToBytes(sk); // ✅ one-way conversion
+  // 3. Decode pubKey and secKey
+  const decodedPubKey = nip19.decode(pubkey); // returns { type: 'npub', data: hex }
+  const decodedSecKey = nip19.decode(sk); // returns { type: 'npub', data: hex }
 
-  // 4. Finalize (sign) the event → this gives us a VerifiedEvent
+  // 4. Convert secret key currently in hex code for output or persistence to
+  //  Uint8Aarray for use in cryptogrpahy
+  const secretKeyBytes =
+    typeof decodedSecKey.data === "string"
+      ? hexToBytes(decodedSecKey.data)
+      : decodedSecKey.data instanceof Uint8Array
+      ? decodedSecKey.data
+      : new Uint8Array(decodedSecKey.data as unknown as ArrayBufferLike); // Ensure it's Uint8Array
+
+  // 5. Finalize (sign) the event → this gives us a VerifiedEvent
   const signed: VerifiedEvent = finalizeEvent(unsignedEvent, secretKeyBytes);
 
-  // 5. Publish to all relays and auto-disconnect
+  // 6. Publish to all relays and auto-disconnect
   await publishEvent(signed, { autoDisconnect: true });
 
   return DEFAULT_RELAYS.length;

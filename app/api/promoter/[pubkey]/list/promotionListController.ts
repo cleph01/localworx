@@ -11,7 +11,7 @@ export async function listPromoterEventsController(
 ) {
   try {
     const decodedPubKey = nip19.decode(pubkey); // returns { type: 'npub', data: hex }
-    console.log("pubkey:", decodedPubKey);
+    // console.log("pubkey at keygenService:", decodedPubKey);
     if (!decodedPubKey.data || decodedPubKey.data.toString().length !== 64) {
       return NextResponse.json(
         { error: "Invalid or missing pubkey" },
