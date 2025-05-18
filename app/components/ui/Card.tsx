@@ -20,7 +20,7 @@ const Card: React.FC<CardProps> = ({
       {Header && <div className="mb-4">{Header}</div>}
       {Content && <div className="text-gray-800">{Content}</div>}
       {Footer && (
-        <div className="mt-4 pt-2 border-t text-sm text-gray-500">{Footer}</div>
+        <div className="mt-4 pt-2 text-sm text-gray-500">{Footer}</div>
       )}
     </div>
   );
