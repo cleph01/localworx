@@ -1,15 +1,30 @@
+import ListingsSection from "../components/services-directory/ServiceListingsSection";
 import SearchBarSection from "../components/services-directory/SearchBarSection";
 import PageHeader from "../components/ui/PageHeader";
+import CallToActionSection from "../components/CallToActionSection";
+import Footer from "../components/Footer";
 
 const ServicesDirectoryPage = () => {
   return (
-    <main className="min-h-screen flex flex-col items-center px-6 pb-12 ">
+    <main className="min-h-screen flex flex-col items-center px-6 ">
       {/* Page Header */}
       <PageHeader />
 
       {/* Search Section */}
       <SearchBarSection />
-      <div>testing services directory page</div>
+
+      {/* Listings Section */}
+      <ListingsSection />
+
+      {/* Call to Action Section */}
+      <CallToActionSection />
+
+      {/* Footer */}
+      <Footer />
+
+      {/* Optional: Add any additional sections or components here */}
+      {/* <CommunityConnect /> */}
+      {/* <EarningSnapshot /> */}
     </main>
   );
 };

@@ -37,7 +37,7 @@ import VisionMissionSection from "./components/home/VisionMissionSection";
 import SignupStepsSection from "./components/home/SignupStepsSection";
 import ReviewsSection from "./components/home/ReviewsSection";
 import GeneralInquiriesSection from "./components/home/GeneralInquiries";
-import CallToActionSection from "./components/home/CallToActionSection";
+import CallToActionSection from "./components/CallToActionSection";
 import Footer from "./components/Footer";
 import GithubSection from "./components/GithubSection";
 
