@@ -25,7 +25,7 @@ const Navbar = () => {
             </Link>
           </div>
           {/* Desktop Menu */}
-          <div className="hidden font-sans md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             <Link
               href="/"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
@@ -39,10 +39,10 @@ const Navbar = () => {
               About
             </Link>
             <Link
-              href="/how-it-works"
+              href="/services-directory"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
-              How It Works
+              Services Directory
             </Link>
             <Link
               href="/marketplace"
@@ -51,23 +51,18 @@ const Navbar = () => {
               Marketplace
             </Link>
             <Link
-              href="/businesses"
+              href="/promoter-hub"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
-              Businesses
+              Promoter Hub
             </Link>
             <Link
-              href="/promoters"
+              href="/help"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
-              Promoters
+              Help
             </Link>
-            <Link
-              href="/contact"
-              className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
-            >
-              Contact
-            </Link>
+
             <Link
               href="/signup"
               className="block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"
@@ -107,10 +102,10 @@ const Navbar = () => {
               About
             </Link>
             <Link
-              href="/how-it-works"
+              href="/services-directory"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
-              How It Works
+              Services Directory
             </Link>
             <Link
               href="/marketplace"
@@ -119,26 +114,21 @@ const Navbar = () => {
               Marketplace
             </Link>
             <Link
-              href="/businesses"
+              href="/promoter-hub"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
-              Businesses
+              Promoter Hub
             </Link>
             <Link
-              href="/promoters"
+              href="/help"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
-              Promoters
+              Help
             </Link>
-            <Link
-              href="/contact"
-              className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
-            >
-              Contact
-            </Link>
+
             <Link
               href="/signup"
-              className="block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"
+              className="text-center block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"
             >
               Join LocalWorx
             </Link>

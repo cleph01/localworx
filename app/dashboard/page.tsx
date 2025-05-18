@@ -2,6 +2,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/lib/authOptions";
 import { redirect } from "next/navigation";
+import PageHeader from "../components/ui/PageHeader";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -15,6 +16,7 @@ export default async function DashboardPage() {
     //   <pre>{JSON.stringify(session, null, 2)}</pre>
     // </div>
     <div className="min-h-screen bg-gray-100 p-8">
+      <PageHeader />
       <div className="max-w-2xl mx-auto bg-white shadow-md rounded-md p-6">
         <h1 className="text-3xl font-bold mb-4 text-gray-800">Dashboard</h1>
 

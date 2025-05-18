@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/lib/authOptions";
 import { fetchBusiness } from "@/app/api/business/businessService";
-import UpdateBusinessForm from "../../../components/UpdateBusinessForm";
+import UpdateBusinessForm from "../../../components/business/UpdateBusinessForm";
 
 export default async function UpdateBusinessPage({
   params,
