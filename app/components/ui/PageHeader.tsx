@@ -35,7 +35,7 @@ const PageHeader = () => {
   }
 
   return (
-    <section className="flex flex-col justify-center text-lg">
+    <section className="flex flex-col justify-center text-lg px-4">
       <p className="my-6 text-base capitalize">🟦 {title}</p>
       <h1 className="text-5xl sm:text-4xl md:text-5xl font-bold">
         <span className="font-serif italic">

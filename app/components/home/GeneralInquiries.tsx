@@ -33,11 +33,11 @@ const faqs = [
 
 const GeneralInquiriesSection = () => {
   return (
-    <section className="min-w-screen px-4 py-8 mt-10 bg-gray-200 flex-col items-center justify-center text-lg">
+    <section className="min-w-screen px-4 py-8 mt-10 bg-gray-200 flex-col justify-center text-lg">
       <h2 className="text-2xl sm:text-6xl font-semibold mb-6">
         General inquiries
       </h2>
-      <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
         {faqs.map((faq, index) => (
           <FaqCard
             key={index}

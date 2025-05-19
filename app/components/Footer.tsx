@@ -15,24 +15,34 @@ const Footer = () => {
         pariatur cum atque quis quibusdam, nesciunt earum voluptate harum esse
         ea vel sequi at molestias iusto magni error quidem delectus.
       </p>
-      <div className="space-y-2 mb-12">
-        <h5 className="text-white font-bold text-xl mt-10">Navigation</h5>
-        <p>Home</p>
-        <p>About</p>
-        <p>Services Directory</p>
-        <p>Promoter Hub</p>
-        <p>Marketplace</p>
-        <p>Help</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 ">
+        <div>
+          <h5 className="text-white font-bold text-xl">Navigation</h5>
+          <p>Home</p>
+          <p>About</p>
+          <p>Services Directory</p>
+          <p>Promoter Hub</p>
+          <p>Marketplace</p>
+          <p>Help</p>
+        </div>
 
-        <h5 className="text-white font-bold text-xl mt-10">Contact</h5>
-        <p>support@localworx.io</p>
-        <p>(212)555-5555</p>
+        <div>
+          <h5 className="text-white font-bold text-xl">Contact</h5>
+          <p>support@localworx.io</p>
+          <p>(212)555-5555</p>
+        </div>
 
-        <h5 className="text-white font-bold mt-10">Newsletter</h5>
-        {/* Add Newsletter component */}
-        <p>Stay up to date with promos and announcements</p>
+        <div>
+          <h5 className="text-white font-bold text-xl">Newsletter</h5>
+          {/* Add Newsletter component */}
+          <p>Stay up to date with promos and announcements</p>
+        </div>
       </div>
-      <p className="font-bold">&copy; 2025 LocalWorx. All Rights Reserved</p>
+      <div className="flex justify-center mt-6">
+        <p className="font-bold">
+          &copy; {new Date().getFullYear()} LocalWorx. All Rights Reserved
+        </p>
+      </div>
     </section>
   );
 };

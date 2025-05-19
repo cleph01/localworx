@@ -10,7 +10,7 @@ const buttonData = {
 
 const ContentManagementSection = () => {
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4 px-4">
       <div className="flex flex-col border rounded border-gray-400 p-4 space-y-4">
         <h2 className="text-2xl font-bold">Content Management</h2>
 

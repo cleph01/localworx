@@ -3,7 +3,7 @@ import ButtonLink from "../ButtonLink";
 
 const VisitorTypeSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center">
+    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
       <ButtonLink
         text="I'm looking for services"
         icon={<FaUser className="h-6 w-6 text-white" />}
