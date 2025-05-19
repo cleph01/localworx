@@ -1,3 +1,5 @@
+// VisitorTypeSection.tsx
+
 import { FaBriefcase, FaBullhorn, FaUser } from "react-icons/fa";
 import ButtonLink from "../ButtonLink";
 
