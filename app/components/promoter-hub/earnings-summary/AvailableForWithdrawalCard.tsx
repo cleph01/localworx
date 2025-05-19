@@ -11,12 +11,12 @@ import {
 const withdrawalData = {
   title: "Available For Withdrawal",
   description: "You can withdraw this amount",
-  amount: "100.00",
+  amount: "2029.00",
 };
 
 // Sample data for the button
 const buttonData = {
-  css: "py-2 bg-green-600 hover:bg-green-700 text-white text-lg font-bold",
+  css: "mt-2 py-2 bg-green-600 hover:bg-green-700 text-white text-lg font-bold",
   text: "Withdraw balance",
 };
 

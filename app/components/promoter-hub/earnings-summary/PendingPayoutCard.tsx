@@ -2,31 +2,31 @@ import { FaBtc } from "react-icons/fa";
 import Button from "../../ui/Button";
 import Card from "../../ui/Card";
 import {
-  LifetimeEarningsContentType,
-  LifetimeEarningsHeaderType,
+  PendingPayoutHeaderType,
+  PendingPayoutContentType,
 } from "./earningSummaryTypes";
 
 // Sample data for the Available For Withdrawal Card
-const lifetimeEarningsData = {
-  amount: "4601.00",
-  description: "Lifetime earnings",
+const pendingPayoutData = {
+  amount: "400.00",
+  description: "Pending payout",
 };
 
-const LifetimeEarningsCard = () => {
+const PendingPayoutCard = () => {
   /* Available For Withdrawal Card */
-  const { amount, description } = lifetimeEarningsData;
+  const { amount, description } = pendingPayoutData;
 
   return (
     <Card
-      Header={<LifetimeEarningsHeader {...lifetimeEarningsData} />}
-      Content={<LifetimeEarningsContent {...lifetimeEarningsData} />}
+      Header={<PendingPayoutHeader {...pendingPayoutData} />}
+      Content={<PendingPayoutContent {...pendingPayoutData} />}
       className="w-full max-w-sm"
     />
   );
 };
-export default LifetimeEarningsCard;
+export default PendingPayoutCard;
 
-const LifetimeEarningsHeader = ({ amount }: LifetimeEarningsHeaderType) => (
+const PendingPayoutHeader = ({ amount }: PendingPayoutHeaderType) => (
   // Withdrawal Amount
   <div className="font-bold inline-flex items-center text-2xl">
     <span className="">
@@ -36,9 +36,7 @@ const LifetimeEarningsHeader = ({ amount }: LifetimeEarningsHeaderType) => (
   </div>
 );
 
-const LifetimeEarningsContent = ({
-  description,
-}: LifetimeEarningsContentType) => (
+const PendingPayoutContent = ({ description }: PendingPayoutContentType) => (
   // Withdrawal Description
   <div className="inline-flex text-gray-400 font-semibold">{description}</div>
 );

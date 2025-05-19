@@ -1,6 +1,8 @@
 // app/promoter-hub/page.tsx
 
-import EarningsSummarySection from "../components/promoter-hub/earnings-summary/EarningsSummarySection";
+import CampaignsListingSection from "../components/promoter-hub/CampaignsListingSection";
+import ContentManagementSection from "../components/promoter-hub/ContentManagementSection";
+import EarningsSummarySection from "../components/promoter-hub/EarningsSummarySection";
 import PageHeader from "../components/ui/PageHeader";
 
 const PromoterHubPage = () => {
@@ -11,7 +13,12 @@ const PromoterHubPage = () => {
 
       {/* Earnings Summary Section */}
       <EarningsSummarySection />
-      <div>Test promoter hub page</div>
+
+      {/* Campaigns Listing Section */}
+      <CampaignsListingSection />
+
+      {/* Content Management Section */}
+      <ContentManagementSection />
     </div>
   );
 };
