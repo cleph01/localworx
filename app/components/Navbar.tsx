@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
 import { FaBars, FaRegWindowClose } from "react-icons/fa";
+import CartIcon from "./ui/CartIcon";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +63,8 @@ const Navbar = () => {
             >
               Help
             </Link>
-
+            {/* Cart Icon */}
+            <CartIcon />
             <Link
               href="/signup"
               className="block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"
@@ -125,7 +127,8 @@ const Navbar = () => {
             >
               Help
             </Link>
-
+            {/* Cart Icon */}
+            <CartIcon />
             <Link
               href="/signup"
               className="text-center block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"

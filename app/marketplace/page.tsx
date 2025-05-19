@@ -1,32 +1,23 @@
-// app/marketplace/page.tsx
-import { MarketplaceItem } from "./marketplaceTypes"; // Define the type for items
-import MarketplaceItemCard from "./components/MarketplaceItemCard";
-import { getMarketplaceItemsService } from "../api/marketplace/marketplaceService"; // Import the service to fetch items
+// marketplace/page.tsx
 import PageHeader from "../components/ui/PageHeader";
+import MarketplaceIntroSection from "../components/marketplace/MarketplaceIntroSection";
+import HowItWorksSection from "../components/marketplace/HowItWorksSection";
+import EarnedRewardsSection from "../components/marketplace/EarnedRewardsSection";
+import ListingsGridSection from "../components/marketplace/ListingsGridSection";
+import CallToActionSection from "../components/CallToActionSection";
+import Footer from "../components/Footer";
 
-// Fetch marketplace items server-side (this will be done at request time)
-export default async function Marketplace() {
-  // Initialize an empty array for items
-  let items: MarketplaceItem[] = [];
-
-  try {
-    const tempItems = await getMarketplaceItemsService();
-    // Fetch the items from the API
-    items = tempItems;
-  } catch (error) {
-    console.error("Error fetching marketplace items:", error);
-    return <div>Error loading items</div>; // Handle error gracefully
-  }
-
+export default function MarketplacePage() {
   return (
-    <div className="container mx-auto p-4">
+    <main className="min-h-screen flex flex-col justify-center pb-12">
       <PageHeader />
-      <h1 className="text-3xl font-bold mb-6">Marketplace</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {items.map((item) => (
-          <MarketplaceItemCard key={item.id} item={item} />
-        ))}
-      </div>
-    </div>
+
+      <MarketplaceIntroSection />
+      <HowItWorksSection />
+      <EarnedRewardsSection />
+      <ListingsGridSection />
+      <CallToActionSection />
+      <Footer />
+    </main>
   );
 }
