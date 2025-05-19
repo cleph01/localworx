@@ -1,9 +1,19 @@
-import type { File } from "formdata-node";
-import { MAX_FILE_SIZE_BYTES } from "../../../lib/media/mediaUtils";
-import type { UploadResult } from "./mediaUploadTypes";
+type CustomFile = {
+  name: string;
+  size: number;
+};
 
-// Service: handles file size logic and generates mock URL
-export async function handleMockUpload(file: File): Promise<UploadResult> {
+type UploadResult = {
+  message?: string;
+  cdnUrl?: string;
+  error?: string;
+};
+
+const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024 * 1024; // 2GB
+
+export async function handleMockUpload(
+  file: CustomFile
+): Promise<UploadResult> {
   if (file.size > MAX_FILE_SIZE_BYTES) {
     return {
       error: "File too large. Max size is 2GB.",
