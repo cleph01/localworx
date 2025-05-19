@@ -2,7 +2,7 @@ import { FaSearch } from "react-icons/fa";
 
 const SearchBarSection = () => {
   return (
-    <section className="flex flex-row items-center justify-center w-full mt-6">
+    <section className="flex flex-row items-center justify-center w-full mt-6 px-6 ">
       <input
         type="text"
         placeholder="What service are you looking for?"

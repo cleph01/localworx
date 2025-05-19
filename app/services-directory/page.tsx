@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 
 const ServicesDirectoryPage = () => {
   return (
-    <main className="min-h-screen flex flex-col items-center px-6 ">
+    <main className="min-h-screen flex flex-col">
       {/* Page Header */}
       <PageHeader />
 
@@ -21,10 +21,6 @@ const ServicesDirectoryPage = () => {
 
       {/* Footer */}
       <Footer />
-
-      {/* Optional: Add any additional sections or components here */}
-      {/* <CommunityConnect /> */}
-      {/* <EarningSnapshot /> */}
     </main>
   );
 };
