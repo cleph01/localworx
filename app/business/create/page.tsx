@@ -19,7 +19,7 @@ export default async function CreateBusinessPage() {
   const [sk, setSk] = useState("");
 
   async function handleCreate(formData: FormData) {
-    "use server";
+    // "use server";
 
     const name = formData.get("name")?.toString() || "";
     const description = formData.get("description")?.toString() || "";
