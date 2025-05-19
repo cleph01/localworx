@@ -16,7 +16,7 @@ const ZapWalletListings = () => {
         <span>Zap Wallet Listings</span>
       </h2>
       <p className="text-sm text-gray-500">
-        Manage your Zap Enables Wallets here. You can add, edit, or remove
+        Manage your Zap-Enabled Wallets here. You can add, edit, or remove
         wallets as needed.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
