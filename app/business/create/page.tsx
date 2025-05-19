@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/lib/authOptions";
-import { revalidatePath } from "next/cache";
+// import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -44,7 +44,7 @@ export default async function CreateBusinessPage() {
       return;
     }
 
-    revalidatePath("/business/profile");
+    // revalidatePath("/business/profile");
     redirect("/business/profile");
   }
 
