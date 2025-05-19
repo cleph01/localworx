@@ -33,7 +33,7 @@ const stepCards = [
 
 const SignupStepsSection = () => {
   return (
-    <section className=" min-w-screen px-4 py-8 mt-10 bg-slate-gray-background flex-col items-center justify-center text-lg">
+    <section className=" min-w-screen mt-10 bg-slate-gray-background flex-col items-center justify-center text-lg px-4 py-8">
       <h2 className="text-5xl sm:text-6xl font-semibold text-white mb-6">
         Turn your skills into local{" "}
         <span className="font-serif italic">impact</span> in three simple steps

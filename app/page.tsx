@@ -43,7 +43,7 @@ import GithubSection from "./components/GithubSection";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-6 pb-12 ">
+    <main className="min-h-screen flex flex-col justify-center pb-12 ">
       {/* Header */}
       <PageHeader />
 

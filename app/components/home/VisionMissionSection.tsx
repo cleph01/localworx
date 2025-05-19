@@ -22,7 +22,7 @@ const checklistItems = [
 
 const VisionMissionSection = () => {
   return (
-    <section className="flex flex-col items-center justify-between text-lg">
+    <section className="flex flex-col items-center justify-between text-lg px-4">
       <img
         src="https://images.unsplash.com/photo-1533574508174-2921ef150b1c"
         alt="Main Street"

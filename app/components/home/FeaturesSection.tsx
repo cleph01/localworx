@@ -52,7 +52,7 @@ const features = [
 
 const FeaturesSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center text-lg">
+    <section className="flex flex-col items-center justify-center text-lg px-4">
       <p className="my-4 font-bold text-base">
         🟦 Tools to grow within your local network.
       </p>
@@ -62,7 +62,7 @@ const FeaturesSection = () => {
         sustainably.
       </p>
       {/* Features Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+      <div className="grid place-items-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
         {/* Feature Cards */}
         {features.map((feature, index) => (
           <HomeFeaturesCard

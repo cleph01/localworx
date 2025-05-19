@@ -5,7 +5,7 @@ import { FaUser, FaBriefcase, FaBullhorn } from "react-icons/fa";
 
 const HeroSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center text-lg">
+    <section className="flex flex-col items-center justify-center text-lg p-4">
       {/* Hero Image */}
       <Image
         src="/localworx-logo.png"
