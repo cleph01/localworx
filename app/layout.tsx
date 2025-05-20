@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     siteName: "LocalWorx",
     images: [
       {
-        url: "https://localworx.io/localworx-logo.png",
+        url: "https://localworx.io/localworx-logo.jpg",
         width: 64,
         height: 64,
         alt: "LocalWorx Logo",
