@@ -6,7 +6,7 @@ const profiles = [
   {
     name: "Charlie Montoya",
     category: "Cybersecurity Student",
-    accolades: ["Nostr Dev", "SysAdmin", "Network Security"],
+    accolades: ["WebDev", "SysAdmin", "Network Security"],
     imageUrl:
       "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg",
   },
