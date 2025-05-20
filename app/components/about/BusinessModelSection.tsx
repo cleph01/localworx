@@ -15,15 +15,16 @@ const BusinessModelSection = () => {
           <p className="text-gray-500 font-bold mb-2">$150/month</p>
           <ul className="list-disc space-y-2">
             <li>
-              This montly subscription fee be a sliding scale based on how much
-              pay local promoters for increased foot-traffic and visibility.
+              This montly subscription fee will be a sliding scale based on how
+              much a business pays a local promoters for increased foot-traffic
+              and visibility.
             </li>
             <li>
-              The more businesses pay thier promoters, the less they pay the
-              platform.
+              The more businesses pay thier promoters, the less they pay
+              LocalWorx.
             </li>
             <li>
-              Genuine grassroots marketing and reputation building at its
+              Genuine grassroots-marketing and reputation-building at its
               finest.
             </li>
           </ul>
@@ -33,16 +34,14 @@ const BusinessModelSection = () => {
           <h3 className="font-bold mb-2">Community Promoter Posts</h3>
           <p className="text-gray-500 font-bold mb-2">$5/post</p>
           <ul className="list-disc mb-2 space-y-2">
-            <li>Non-business users can publish for a flat fee.</li>
+            <li>Non-business users can post for a flat fee.</li>
             <li>
               Every post opens a universe of possibility to receive Bitcoin zaps
-              from everyone and anyone in the world - wholly outweighing what
-              they spend.
+              from anyone in the world - outweighing the $5/post they spent.
             </li>
             <li>
-              Promoters promote themselves, their content, and their services
-              with each posts which entertains, informs, and encourages
-              engagement with local businesses.
+              Promoters not only promote local businesses but they also promote
+              themselves, their content, and their services as content creators.
             </li>
           </ul>
         </div>
@@ -53,15 +52,18 @@ const BusinessModelSection = () => {
           <ul className="list-disc mb-2 space-y-2">
             <li>
               If you believe your content can deliver value—LocalWorx makes sure
-              it pays. All while preventing spam and preserving post quality.
+              it pays. The $5/post helps prevent spam and preserves post
+              quality.
             </li>
             <li>
-              Businesses can be promoters, too, and earn more than $150/month in
-              Bitcoin zaps to offset their their subscription.
+              Businesses can be promoters, too - ya' know - and earn way more
+              than $150/month in Bitcoin Zaps to offset their their
+              subscription.
             </li>
             <li>
-              Even if Bitcoin isn't your thing, earn frictionlessly via Bitcoin
-              zaps then immediately convert to USD.
+              ... And even if Bitcoin isn't your thing, be rewarded for your
+              content in Bitcoin Zaps then immediately convert to USD. It's your
+              choice.
             </li>
           </ul>
         </div>

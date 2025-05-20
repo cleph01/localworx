@@ -6,14 +6,15 @@ const PlatformBenefitsSection = () => {
         More Than Just Another Gig App
       </h2>
       <p className="text-gray-600 text-lg max-w-3xl mb-4">
-        Whether you're a promoter or a business, your exposure goes far beyond
-        LocalWorx. Continue creating content on YouTube, X, and other platforms
-        to continue receiving Adsense - but now include a link to LocalWorx so
-        that viewers can thank (Zap) you too.
+        Whether you're a promoter or a business, your visibility goes far beyond
+        LocalWorx. Continue creating content on YouTube, X, and the other
+        platforms. Make as much Adsense money as you can - but now include a
+        link to LocalWorx so that viewers can{" "}
+        <span className="font-semibold">Thank-Zap</span> you too.
       </p>
       <p className="text-gray-600 text-lg max-w-3xl text-center">
-        You keep your AdSense, your channel growth, and earn Bitcoin directly
-        from your audience.
+        You keep your AdSense and your channel growth while earning Bitcoin from
+        your audience too.
       </p>
       <p className="text-gray-600 text-2xl max-w-3xl text-center font-bold capitalize mt-4">
         It's freedom by design.

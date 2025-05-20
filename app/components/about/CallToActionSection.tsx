@@ -12,7 +12,7 @@ const CallToActionSection = () => {
 
       <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-8">
         Whether you're a business looking to boost visibility, a promoter
-        looking to earn Bitcoin, or a bargain-hunter seeking local deal — the
+        looking to earn Bitcoin, or a bargain-hunter seeking local deals — the
         LocalWorx economy has something for you.
       </p>
 
