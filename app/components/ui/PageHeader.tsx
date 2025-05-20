@@ -45,10 +45,12 @@ const PageHeader = () => {
               headerValues[contentKey].headLine.indexOf(" ")
             )}
         </span>{" "}
-        {contentKey &&
-          headerValues[contentKey].headLine.substring(
-            headerValues[contentKey].headLine.indexOf(" ") + 1
-          )}
+        <span className="capitalize">
+          {contentKey &&
+            headerValues[contentKey].headLine.substring(
+              headerValues[contentKey].headLine.indexOf(" ") + 1
+            )}
+        </span>
       </h1>
       <h3 className="mt-2 text-lg sm:text-base md:text-lg text-gray-500">
         {contentKey && headerValues[contentKey].tagLine}
