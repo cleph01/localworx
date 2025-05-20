@@ -78,7 +78,7 @@ export default function Home() {
       <Footer />
 
       {/* GitHub CTA */}
-      <GithubSection />
+      {/* <GithubSection /> */}
 
       {/* Under Construction Note */}
       <section className="mt-4 flex flex-col items-center justify-center space-y-2 text-sm text-red-500 italic">
