@@ -4,7 +4,7 @@ import DecentralizedEconomySection from "../components/about/DecentralizedEconom
 import BusinessModelSection from "../components/about/BusinessModelSection";
 import PlatformBenefitsSection from "../components/about/PlatformBenefitsSection";
 import ForeverVisibleSection from "../components/about/ForeverVisibleSection";
-import CallToActionSection from "../components/CallToActionSection";
+import CallToActionSection from "../components/about/CallToActionSection";
 import Footer from "../components/Footer";
 
 export default function AboutPage() {

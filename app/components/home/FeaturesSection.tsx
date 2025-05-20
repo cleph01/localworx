@@ -56,7 +56,7 @@ const FeaturesSection = () => {
       <p className="my-4 font-bold text-base">
         🟦 Tools to grow within your local network.
       </p>
-      <p className="text-gray-500">
+      <p className="max-w-4xl text-gray-500">
         From listing your services to getting paid for promoting your community,
         LocalWorx.io gives you the infrastructure to grow your impct locally and
         sustainably.

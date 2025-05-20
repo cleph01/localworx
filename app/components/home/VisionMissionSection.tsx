@@ -31,7 +31,7 @@ const VisionMissionSection = () => {
         height={800} // Adjust as needed
       />
 
-      <h2 className="text-5xl sm:text-4xl md:text-5xl font-bold mb-8">
+      <h2 className="max-w-4xl text-5xl sm:text-4xl md:text-5xl font-bold mb-8">
         A platform built to{" "}
         <span className="font-serif italic">strengthen</span> local connections,
         economies, and opportunities.
@@ -40,16 +40,16 @@ const VisionMissionSection = () => {
         🟦 Built for immediate local benefit.
       </p>
 
-      <p className="text-gray-600 mb-6 text-lg">
+      <p className="max-w-4xl text-gray-600 mb-6 text-lg">
         To revitalize local economies and defend digital sovereignty by enabling
         trust-based, peer-to-peer promotion networks.
       </p>
 
-      <p className="text-gray-600 mb-6 text-lg">
+      <p className="max-w-4xl text-gray-600 mb-6 text-lg">
         LocalWorx.io is an innovative platform designed to drive community
         collaboratoin, economic empowerment, and professional growth.
       </p>
-      <p className="text-gray-600 mb-6 text-lg">
+      <p className="max-w-4xl text-gray-600 mb-6 text-lg">
         As an extension of{" "}
         <a
           className="underline decoration-solid"
@@ -62,7 +62,7 @@ const VisionMissionSection = () => {
         providing a decentralized, peer-to-peer platform for individuals to
         connect, do business, and thrive.
       </p>
-      <p className="text-gray-600 mb-6 text-lg">
+      <p className="max-w-4xl text-gray-600 mb-6 text-lg">
         By leveraging the power of Bitcoin and community-driven initiatives,
         LocalWorx aims to create a sustainable ecosystem that benefits both
         individuals and local businesses.

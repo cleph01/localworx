@@ -60,7 +60,7 @@ type BrandIconCardDetails = {
 const BrandIconCard = ({ details }: { details: BrandIconCardDetails }) => {
   return (
     <div
-      className={`${details.btnCss} w-80 flex flex-row items-center bg-white border border-gray-400 rounded-lg p-4 `}
+      className={`${details.btnCss} w-80 flex flex-row items-center border border-gray-400 rounded-lg p-4 `}
     >
       <div
         className={`${details.imgCss} flex items-center justify-center mr-4`}
