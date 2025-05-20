@@ -127,8 +127,8 @@ const ListingContent = ({
     <div className="flex flex-col justify-center gap-2 mt-2">
       {/* Business Details */}
       <div className="flex flex-col gap-2">
-        <div className="flex flex-col justify-center">
-          <div className="flex flex-row items-center justify-between">
+        <div className="flex flex-col">
+          <div className="flex flex-row items-start justify-between">
             {/* Business Name */}
             <div className="flex-1 text-lg font-semibold text-gray-800 ">
               {businessName}
