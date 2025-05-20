@@ -90,7 +90,7 @@ const Navbar = () => {
       {/* Mobile Menu Dropdown */}
       {isOpen && (
         <div className="md:hidden bg-gray-900">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <div className="px-3 pt-2 pb-3 space-y-1 sm:px-3">
             <Link
               href="/"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"

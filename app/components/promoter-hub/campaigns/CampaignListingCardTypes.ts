@@ -9,6 +9,7 @@ type ListingContentType = {
   rating?: string;
   reviewCount?: string;
   avatarUrl?: string;
+  description?: string;
 };
 
 type ListingFooterType = {

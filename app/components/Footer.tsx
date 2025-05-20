@@ -11,9 +11,10 @@ const Footer = () => {
         height={75}
       />
       <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est excepturi
-        pariatur cum atque quis quibusdam, nesciunt earum voluptate harum esse
-        ea vel sequi at molestias iusto magni error quidem delectus.
+        LocalWorx is a decentralized platform powered by Lightning and Nostr.
+        Our focus is to deliver the power of sovereign technology to fire up
+        local economies through word-of-mouth marketing, decentralize social
+        media, and Bitcoin micro-payments.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 ">
         <div>

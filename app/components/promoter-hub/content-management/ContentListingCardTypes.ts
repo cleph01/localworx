@@ -6,11 +6,13 @@ type ListingHeaderType = {
 };
 
 type ListingContentType = {
-  likes?: string;
-  comments?: string;
+  description?: string;
 };
 
 type ListingFooterType = {
+  likes?: string;
+  comments?: string;
+  zapCount?: string;
   publishDate: string;
 };
 

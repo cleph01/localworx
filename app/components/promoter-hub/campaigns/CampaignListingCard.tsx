@@ -1,3 +1,4 @@
+import Button from "../../ui/Button";
 import Card from "../../ui/Card";
 import {
   ListingContentType,
@@ -18,7 +19,7 @@ const ServiceListingCard = ({ listing }: CampaignListingCardProps) => {
 };
 export default ServiceListingCard;
 
-//
+/* Service Listing Header */
 
 const ListingHeader = ({
   businessName,
@@ -96,42 +97,66 @@ const ListingHeader = ({
   );
 };
 
+/* Service Listing Content */
 const ListingContent = ({
   firstName,
   rating,
   reviewCount,
   avatarUrl,
+  description,
 }: ListingContentType) => {
   return (
-    <div className="flex flex-row items-center gap-2 mt-2">
-      <img
-        className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
-        src={avatarUrl}
-        alt={firstName}
-      />
-      <div className="text-lg font-semibold mr-2">{firstName}</div>
-      <div className="flex flex-row items-center gap-1">
-        <span className="text-xs ml-2">⭐</span>
-        <span className="text-sm text-gray-500 font-semibold">{rating}</span>
-        <span className="text-sm text-gray-400 "> ({reviewCount} reviews)</span>
+    <div className="flex flex-col gap-2 mt-2">
+      {/* Promoter Info */}
+      <div className="flex flex-row items-start justify-between gap-2">
+        <div className="flex flex-row items-center mr-1 gap-2">
+          <img
+            className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+            src={avatarUrl}
+            alt={firstName}
+          />
+          <div className="text-lg font-semibold mr-2">{firstName}</div>
+        </div>
+
+        <div className="flex flex-row items-center gap-1">
+          <span className="text-xs ml-2">⭐</span>
+          <span className="text-sm text-gray-500 font-semibold">{rating}</span>
+          <span className="text-sm text-gray-400 ">
+            {" "}
+            ({reviewCount} reviews)
+          </span>
+        </div>
+      </div>
+      {/* Description */}
+      <div className="text-base text-gray-600 mt-2">
+        {description && description.length > 100
+          ? `${description.slice(0, 100)}...`
+          : description}
       </div>
     </div>
   );
 };
 
 const ListingFooter = ({ clicks, views, referrals }: ListingFooterType) => (
-  <div className="flex flex-row gap-4 mt-1">
+  <div className="flex flex-row items-center justify-between gap-4">
     {/* Clicks */}
-    <div>
+    <div className="flex flex-col gap-1">
       Clicks: <span className="font-bold">{clicks}</span>
     </div>
     {/* Views */}
-    <div>
+    <div className="flex flex-col gap-1">
       Views: <span className="font-bold">{views}</span>
     </div>
     {/* Referrals */}
-    <div>
+    <div className="flex flex-col gap-1">
       Referrals: <span className="font-bold">{referrals}</span>
     </div>
+    {/* Zap Button */}
+    <Button
+      details={{
+        text: "⚡️ Zap It!",
+        css: "w-full my-6 py-2 bg-orange-500 text-white text-base font-bold",
+      }}
+    />
   </div>
 );

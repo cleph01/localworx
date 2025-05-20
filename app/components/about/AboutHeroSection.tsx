@@ -11,10 +11,10 @@ const AboutHeroSection = () => {
         power belongs with the people who create the value
       </p>
 
-      <p className="text-gray-500 text-lg">
+      <p className="text-gray-500 text-lg italic">
         — not the platforms who harvest it.
       </p>
-      <p className="text-gray-500 max-w-3xl text-center text-lg capitalize mt-4">
+      <p className="text-gray-500 max-w-3xl text-lg capitalize mt-4">
         We’re not another gig app. We’re a movement. A decentralized platform
         giving individuals and businesses the tools to promote, earn, and build
         lasting relationships on their own terms.

@@ -1,5 +1,5 @@
 import ListingsSection from "../components/services-directory/ServiceListingsSection";
-import SearchBarSection from "../components/services-directory/SearchBarSection";
+import SearchBarSection from "../components/ui/SearchBarSection";
 import PageHeader from "../components/ui/PageHeader";
 import CallToActionSection from "../components/CallToActionSection";
 import Footer from "../components/Footer";

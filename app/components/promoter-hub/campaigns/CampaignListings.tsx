@@ -1,10 +1,13 @@
+import Button from "../../ui/Button";
 import ServiceListingCard from "./CampaignListingCard";
 
 // This is a placeholder for the listings data. In a real application, this data would be fetched from an API or database.
 const listings = [
   {
     id: 1,
-    businessName: "business1",
+    businessName: "BrightPath Marketing",
+    description:
+      "We help local businesses grow through targeted marketing strategies.",
     firstName: "John",
     rating: "4.5",
     reviewCount: "10",
@@ -19,7 +22,8 @@ const listings = [
   },
   {
     id: 2,
-    businessName: "business2",
+    businessName: "Tech Innovations",
+    description: "Leading the way in tech solutions for small businesses.",
     firstName: "Jane",
     rating: "4.0",
     reviewCount: "20",
@@ -33,7 +37,8 @@ const listings = [
   },
   {
     id: 3,
-    businessName: "business3",
+    businessName: "Green Thumb Landscaping",
+    description: "Transforming outdoor spaces into beautiful landscapes.",
     firstName: "Alice",
     rating: "5.0",
     reviewCount: "30",
@@ -47,7 +52,8 @@ const listings = [
   },
   {
     id: 4,
-    businessName: "business4",
+    businessName: "Bob's Auto Repair",
+    description: "Your trusted local auto repair shop.",
     firstName: "Bob",
     rating: "3.5",
     reviewCount: "5",
@@ -62,7 +68,9 @@ const listings = [
   },
   {
     id: 5,
-    businessName: "business5",
+    businessName: "Charlie & Co. Consulting",
+    description:
+      "Expert consulting services for small businesses and startups.",
     firstName: "Charlie",
     rating: "4.8",
     reviewCount: "15",
@@ -77,7 +85,9 @@ const listings = [
   },
   {
     id: 6,
-    businessName: "business6",
+    businessName: "Dave's Digital Marketing",
+    description:
+      "Specializing in SEO, PPC, and social media marketing for local businesses.",
     firstName: "Dave",
     rating: "4.2",
     reviewCount: "25",
@@ -101,10 +111,13 @@ const ListingsSection = () => {
         ))}
       </div>
 
-      {/* TODO: Modularize this button into UI component */}
-      <div className="my-6 py-4 shadow-lg inline-flex items-center justify-center rounded-lg bg-navy-blue-background text-white text-sm font-bold">
-        Load more results
-      </div>
+      {/* Load More Results Button */}
+      <Button
+        details={{
+          text: "Load more results",
+          css: "w-full my-6 py-4 bg-navy-blue-background text-white text-base font-bold",
+        }}
+      />
     </section>
   );
 };

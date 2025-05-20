@@ -4,6 +4,7 @@ type ListingHeaderType = {
   rating?: number;
   reviewCount?: number;
   avatarUrl?: string;
+  zapCount?: number;
 };
 
 type ListingContentType = {

@@ -1,8 +1,10 @@
+import { Zap } from "nostr-tools/kinds";
+import Button from "../ui/Button";
 import ServiceListingCard from "./ServiceListingCard";
 const listings = [
   {
     id: 1,
-    businessName: "business1",
+    businessName: "John's Plumbing Services",
     firstName: "John",
     rating: 4.5,
     reviewCount: 10,
@@ -14,10 +16,11 @@ const listings = [
     hasSpecialOffers: false,
     introOffer: "10% off your first service",
     categories: ["Category1", "Category2"],
+    zapCount: 100,
   },
   {
     id: 2,
-    businessName: "business2",
+    businessName: "Tech Solutions Inc.",
     firstName: "Jane",
     rating: 4.0,
     reviewCount: 20,
@@ -29,10 +32,11 @@ const listings = [
     hasSpecialOffers: true,
     introOffer: "Free consultation",
     categories: ["Category3", "Category4"],
+    zapCount: 200,
   },
   {
     id: 3,
-    businessName: "business3",
+    businessName: "Green Thumb Landscaping",
     firstName: "Alice",
     rating: 5.0,
     reviewCount: 30,
@@ -44,10 +48,11 @@ const listings = [
     hasSpecialOffers: false,
     introOffer: "20% off for referrals",
     categories: ["Category5", "Category6"],
+    zapCount: 300,
   },
   {
     id: 4,
-    businessName: "business4",
+    businessName: "Bob's Auto Repair",
     firstName: "Bob",
     rating: 3.5,
     reviewCount: 5,
@@ -59,10 +64,11 @@ const listings = [
     hasSpecialOffers: true,
     introOffer: "Buy one get one free",
     categories: ["Category7", "Category8"],
+    zapCount: 50,
   },
   {
     id: 5,
-    businessName: "business5",
+    businessName: "Charlie’s Bakery",
     firstName: "Charlie",
     rating: 4.8,
     reviewCount: 15,
@@ -74,10 +80,11 @@ const listings = [
     hasSpecialOffers: false,
     introOffer: "Free shipping on orders over $50",
     categories: ["Category9", "Category10"],
+    zapCount: 150,
   },
   {
     id: 6,
-    businessName: "business6",
+    businessName: "Dave's Fitness Center",
     firstName: "Dave",
     rating: 4.2,
     reviewCount: 25,
@@ -89,6 +96,7 @@ const listings = [
     hasSpecialOffers: true,
     introOffer: "10% off for new customers",
     categories: ["Category11", "Category12"],
+    zapCount: 400,
   },
 ];
 // This is a placeholder for the listings data. In a real application, this data would be fetched from an API or database.
@@ -104,10 +112,13 @@ const ListingsSection = () => {
         ))}
       </div>
 
-      {/* TODO: Modularize this button into UI component */}
-      <div className="my-6 py-4 shadow-lg inline-flex items-center justify-center rounded-lg bg-navy-blue-background text-white text-sm font-bold">
-        Load more results
-      </div>
+      {/* Load More Results Button */}
+      <Button
+        details={{
+          text: "Load more results",
+          css: "w-full my-6 py-4 bg-navy-blue-background text-white text-base font-bold",
+        }}
+      />
     </section>
   );
 };

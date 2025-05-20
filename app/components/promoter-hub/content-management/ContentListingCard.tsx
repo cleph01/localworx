@@ -6,6 +6,7 @@ import {
   ListingHeaderType,
   ContentListingCardProps,
 } from "./ContentListingCardTypes";
+import Button from "../../ui/Button";
 
 const ServiceListingCard = ({ listing }: ContentListingCardProps) => {
   return (
@@ -34,15 +35,8 @@ const ListingHeader = ({
     title: string,
     description: string
   ) => {
-    if (!mediaUrl && mediaType != "text") return null;
+    if (!mediaUrl) return null;
 
-    if (mediaType === "text") {
-      return (
-        <div>
-          <p className="text-base text-gray-500 mt-2">{description}</p>
-        </div>
-      );
-    }
     // Check if the media type is an image
     if (mediaType === "image") {
       return (
@@ -118,21 +112,49 @@ const ListingHeader = ({
   );
 };
 
-const ListingContent = ({ likes, comments }: ListingContentType) => {
+const ListingContent = ({ description }: ListingContentType) => {
   return (
-    <div className="flex flex-row items-center gap-2">
-      <div className="inline-flex items-center text-base font-semibold mr-2">
-        <FaHeart className="text-red-400 text-xs mr-2" /> {likes}
-      </div>
-      <div className="inline-flex items-center text-base font-semibold mr-2">
-        <FaComment className="text-blue-200 text-xs mr-2" /> {comments}
-      </div>
+    // Description
+    <div className="text-base text-gray-600 mt-2">
+      {description && description.length > 100 ? (
+        <span>{description.slice(0, 100)}...</span>
+      ) : (
+        <span>{description}</span>
+      )}
     </div>
   );
 };
 
-const ListingFooter = ({ publishDate }: ListingFooterType) => (
-  <div className="flex flex-row gap-4 mt-1">
+const ListingFooter = ({
+  publishDate,
+  zapCount,
+  likes,
+  comments,
+}: ListingFooterType) => (
+  <div className="flex flex-col gap-2">
+    <div className="flex flew-row items-center justify-between">
+      <div className="flex flex-row flex-1 items-center gap-2 mt-2">
+        <div className="inline-flex text-base font-semibold mr-2">
+          {/* <FaHeart className="text-red-400 text-xs mr-2" /> */}
+          ⚡️ {zapCount}
+        </div>
+        <div className="inline-flex text-base font-semibold mr-2">
+          {/* <FaHeart className="text-red-400 text-xs mr-2" /> */}
+          👍 {likes}
+        </div>
+        <div className="inline-flex items-center text-base font-semibold mr-2">
+          {/* <FaComment className="text-blue-200 text-xs mr-2" /> */}
+          💭 {comments}
+        </div>
+      </div>
+
+      <Button
+        details={{
+          text: "⚡️ Zap It!",
+          css: "my-6 py-2 px-6 bg-orange-500 text-white text-base font-bold",
+        }}
+      />
+    </div>
     {publishDate && (
       <div className="text-sm text-gray-500">
         Published on: {new Date(publishDate).toLocaleDateString()}

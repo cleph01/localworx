@@ -33,10 +33,21 @@ const ListingHeader = ({
   rating,
   reviewCount,
   avatarUrl,
+  zapCount,
 }: ListingHeaderType) => (
-  <div className="">
-    {/* Title */}
-    <h3 className="text-xl">{businessName}</h3>
+  <div className="flex flex-col gap-2">
+    <div className="flex flex-row items-start justify-between gap-2">
+      {/* Title */}
+      <h3 className="flex-1 text-xl font-bold">{businessName}</h3>
+      {/* business review */}
+      <div className="flex flex-row flex-0 items-center gap-1">
+        <span className="text-base ml-2">⭐</span>{" "}
+        {/* <FaStar className="text-yellow-500" /> */}
+        <span className="text-gray-500 font-bold">{rating}</span>
+        <span className="text-gray-400"> ({reviewCount})</span>
+      </div>
+    </div>
+
     {/* User Avatar, name, rating in a row */}
     <div className="flex flex-row items-center gap-2 mt-2">
       <img
@@ -44,13 +55,13 @@ const ListingHeader = ({
         src={avatarUrl}
         alt={firstName}
       />
+      {/* Business Owner FirstName  */}
       <div>{firstName}</div>
-      <div className="flex flex-row items-center gap-1">
-        <span className="text-xs ml-2">⭐</span>{" "}
-        {/* <FaStar className="text-yellow-500" /> */}
-        <span className="text-sm text-gray-500">{rating}</span>
-        <span className="text-gray-300"> ({reviewCount})</span>
-      </div>
+
+      {/* Show Zap Payments to Promoters if zapCount > 0 */}
+      {zapCount && zapCount > 0 && (
+        <span className="text-gray-500">⚡️ {zapCount} (Zaps)</span>
+      )}
     </div>
   </div>
 );
@@ -66,28 +77,29 @@ const ListingContent = ({
     {/* Business Hours */}
     <div className="flex flex-row items-center gap-2">
       <span className="font-bold">
-        <FaBriefcase />
+        {/* <FaBriefcase />*/}
+        💼
       </span>
       <span>{businessHours}</span>
     </div>
     {/* Address */}
     <div className="flex flex-row items-center gap-2">
       <span>
-        <FaMapMarkerAlt />
+        {/* <FaMapMarkerAlt /> */}
+        📍
       </span>
       <span>{address}</span>
     </div>
     {/* Bitcoin Accepted */}
     <div className="flex flex-row items-center gap-2">
-      <span>
-        <FaBtc />
-      </span>
+      <span className="text-orange-500">{/* <FaBtc /> */}₿</span>
       <span>Hiring Promoters: {hiringPromoters ? "Yes" : "No"}</span>
     </div>
     {/* Special Offers */}
     <div className="flex flex-row items-center gap-2">
       <span>
-        <FaRegHandshake />
+        {/* <FaRegHandshake /> */}
+        🎁
       </span>
       <span>Currently {hasSpecialOffers ? "has" : "no"} Special Offers</span>
     </div>
