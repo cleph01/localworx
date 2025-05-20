@@ -56,11 +56,13 @@ const ListingHeader = ({
         alt={firstName}
       />
       {/* Business Owner FirstName  */}
-      <div>{firstName}</div>
+      <div className="text-lg">{firstName}</div>
 
       {/* Show Zap Payments to Promoters if zapCount > 0 */}
       {zapCount && zapCount > 0 && (
-        <span className="text-gray-500">⚡️ {zapCount} (Zaps)</span>
+        <span className="text-gray-500 text-base">
+          ⚡️ <span className="font-semibold">{zapCount}</span> (Zap payouts)
+        </span>
       )}
     </div>
   </div>

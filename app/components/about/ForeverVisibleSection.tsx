@@ -12,15 +12,15 @@ const ForeverVisibleSection = () => {
       <p className="text-gray-600 text-lg max-w-2xl mt-4"></p>
       <ol className="text-gray-600 text-left text-lg max-w-2xl mt-4 space-y-2">
         <li className="">This means:</li>
-        <li className="list-disc">
+        <li className="">
           <span className="font-semibold">No Censorship:</span> Your content is
           not subject to the whims of any single platform or authority.
         </li>
-        <li className="list-disc">
+        <li className="">
           <span className="font-semibold">No Deletion:</span> Once you post,
           it’s permanent. Your content can’t be deleted or hidden by anyone.
         </li>
-        <li className="list-disc">
+        <li className="">
           <span className="font-semibold">No Intermediaries:</span> You control
           your content, how it’s shared, and the amount you can earn. No
           middlemen taking a cut or controlling your reach.
