@@ -144,7 +144,7 @@ const ListingFooter = ({
         </div>
         <div className="inline-flex items-center text-base font-semibold mr-2">
           {/* <FaComment className="text-blue-200 text-xs mr-2" /> */}
-          💭 {comments}
+          💬 {comments}
         </div>
       </div>
 

@@ -7,27 +7,27 @@ const faqs = [
   {
     title: "What is LocalWorx.io and who is it for?",
     description:
-      "LocalWorx.io is a platfom that connects local professionals, freelancers, creators, and residents to exchange services, promote work, and earn within their community.",
+      "LocalWorx.io is a platform designed for local professionals, freelancers, creators, and residents to connect, exchange services, promote their work, and earn within their community.",
   },
   {
     title: "How do I get started on the platform?",
     description:
-      "LocalWorx.io is a platfom that connects local professionals, freelancers, creators, and residents to exchange services, promote work, and earn within their community.",
+      "To get started, simply sign up for a free account on LocalWorx.io, create your profile, and begin browsing or posting services and opportunities in your local area.",
   },
   {
     title: "Is it free to use LocalWorx.io?",
     description:
-      "LocalWorx.io is a platfom that connects local professionals, freelancers, creators, and residents to exchange services, promote work, and earn within their community.",
+      "Yes, creating an account and browsing opportunities on LocalWorx.io is free. Some premium features or promotional tools may have associated costs.",
   },
   {
-    title: "Can I earn money promoting outher people's work?",
+    title: "Can I earn money promoting other people's work?",
     description:
-      "LocalWorx.io is a platfom that connects local professionals, freelancers, creators, and residents to exchange services, promote work, and earn within their community.",
+      "Yes, LocalWorx.io allows users to earn by promoting services or work posted by others in the community, helping to boost local talent and businesses.",
   },
   {
     title: "How is LocalWorx different from other gig platforms?",
     description:
-      "LocalWorx.io is a platfom that connects local professionals, freelancers, creators, and residents to exchange services, promote work, and earn within their community.",
+      "LocalWorx.io focuses on building local connections and supporting community-driven growth, making it easier to find trusted professionals and opportunities nearby.",
   },
 ];
 

@@ -20,14 +20,14 @@ const stepCards = [
     step: "02",
     title: "Connect with your community",
     description:
-      "Access discounts, rewards, and income opportnities from creating content that promotes your favorite local spots",
+      "Access discounts, rewards, and income by creating content that promotes your favorite local spots.",
   },
   {
     header: <EarningSnapshot />,
     step: "03",
     title: "Start earning and growing",
     description:
-      "Get paid directly via bitcoin from business owners and/or from reselling rewards and discounts earned from supporting your local economies.",
+      "Get paid ₿itcoin directly from business owners for creating content and driving traffic to them - or by reselling rewards and discounts earned from Checking In while supporting your local shops.",
   },
 ];
 

@@ -41,13 +41,13 @@ const VisionMissionSection = () => {
       </p>
 
       <p className="max-w-4xl text-gray-600 mb-6 text-lg">
-        To revitalize local economies and defend digital sovereignty by enabling
+        To revitalize local economies and defend digital sovereignty through
         trust-based, peer-to-peer promotion networks.
       </p>
 
       <p className="max-w-4xl text-gray-600 mb-6 text-lg">
         LocalWorx.io is an innovative platform designed to drive community
-        collaboratoin, economic empowerment, and professional growth.
+        collaboration, economic empowerment, and professional growth.
       </p>
       <p className="max-w-4xl text-gray-600 mb-6 text-lg">
         As an extension of{" "}
@@ -58,14 +58,17 @@ const VisionMissionSection = () => {
         >
           The John Connor Project
         </a>
-        , LocalWorx encourages digital sovereignty and local resilience by
-        providing a decentralized, peer-to-peer platform for individuals to
-        connect, do business, and thrive.
+        , LocalWorx encourages digital sovereignty by providing a decentralized,
+        peer-to-peer platform for individuals to connect, do business, and
+        thrive.
       </p>
       <p className="max-w-4xl text-gray-600 mb-6 text-lg">
         By leveraging the power of Bitcoin and community-driven initiatives,
         LocalWorx aims to create a sustainable ecosystem that benefits both
         individuals and local businesses.
+      </p>
+      <p className="text-gray-600 font-semibold text-base mb-6">
+        Amazon, Walmart, Facebook and Co. Can Go Kick Rocks
       </p>
 
       <ButtonLink

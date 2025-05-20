@@ -28,7 +28,7 @@ const Carousel: React.FC<CarouselProps> = ({ profiles }) => {
   };
 
   return (
-    <div className="relative w-full mx-auto overflow-hidden">
+    <div className="flex flex-row justify-center gap-4 w-full mx-auto overflow-hidden">
       {/* Carousel Container */}
       <div className="flex space-x-4 overflow-x-auto">
         {/* Profiles in Carousel */}

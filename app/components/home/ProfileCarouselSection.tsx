@@ -5,24 +5,25 @@ import Carousel from "../Carousel";
 const profiles = [
   {
     name: "Charlie Montoya",
-    category: "WebDev",
-    accolades: ["Bitcoin Dev", "Full Stack Dev"],
+    category: "Cybersecurity Student",
+    accolades: ["Nostr Dev", "SysAdmin", "Network Security"],
     imageUrl:
       "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg",
   },
+
   {
-    name: "Charlie Montoya",
-    category: "WebDev",
-    accolades: ["Bitcoin Dev", "Full Stack Dev"],
+    name: "Alexa Young",
+    category: "UI/UX Designer",
+    accolades: ["Figma Expert", "Branding", "Mobile Design"],
     imageUrl:
-      "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg",
+      "https://images.pexels.com/photos/1181696/pexels-photo-1181696.jpeg",
   },
   {
-    name: "Charlie Montoya",
-    category: "WebDev",
-    accolades: ["Bitcoin Dev", "Full Stack Dev"],
+    name: "Priya Patel",
+    category: "Data Scientist",
+    accolades: ["Machine Learning", "Python", "Data Visualization"],
     imageUrl:
-      "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg",
+      "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg",
   },
 ];
 

@@ -9,7 +9,7 @@ const buttonData = {
 
 const PaymentSettingsSection = () => {
   return (
-    <section className="flex flex-col gap-4 px-4">
+    <section className="flex flex-col gap-4 px-4 pb-12">
       <div className="flex flex-col border rounded border-gray-400 p-4 space-y-4">
         <h2 className="text-2xl font-bold">Payment Settings</h2>
 

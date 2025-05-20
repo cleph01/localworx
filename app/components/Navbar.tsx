@@ -57,12 +57,12 @@ const Navbar = () => {
             >
               Promoter Hub
             </Link>
-            <Link
+            {/* <Link
               href="/help"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
               Help
-            </Link>
+            </Link> */}
             {/* Cart Icon */}
             <CartIcon />
             <Link
@@ -121,14 +121,17 @@ const Navbar = () => {
             >
               Promoter Hub
             </Link>
-            <Link
+            {/* <Link
               href="/help"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
               Help
-            </Link>
+            </Link> */}
             {/* Cart Icon */}
-            <CartIcon />
+            <div className="my-4">
+              <CartIcon />
+            </div>
+
             <Link
               href="/signup"
               className="text-center block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"

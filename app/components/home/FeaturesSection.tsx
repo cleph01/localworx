@@ -33,7 +33,7 @@ const features = [
   {
     title: "Role Based User Profiles",
     description:
-      "Easily showcase your skills or service with profiles tailored to freelancers, promoters, and business owners.",
+      "Easily showcase your skills and service with tools tailored for freelancers, promoters, and business owners.",
     icon: <FaUsers className="h-10 w-10 text-blue-400" />,
   },
   {
@@ -45,7 +45,7 @@ const features = [
   {
     title: "Community Check-Ins",
     description:
-      "Share your wins, track impact, and stay connected with the local businesses that matter most to you.",
+      "Share your wins, track local impact, and stay connected with the businesses that matter most to you.",
     icon: <FaQrcode className="h-10 w-10 text-blue-400" />,
   },
 ];
@@ -58,8 +58,8 @@ const FeaturesSection = () => {
       </p>
       <p className="max-w-4xl text-gray-500">
         From listing your services to getting paid for promoting your community,
-        LocalWorx.io gives you the infrastructure to grow your impct locally and
-        sustainably.
+        LocalWorx.io gives you the infrastructure to grow your impa ct locally
+        and sustainably.
       </p>
       {/* Features Cards */}
       <div className="grid place-items-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">

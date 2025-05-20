@@ -26,7 +26,7 @@ const HeroSection = () => {
       </p>
       <p className="max-w-4xl text-gray-500 mb-4">
         Our focus is to fire up local economies through word-of-mouth marketing,
-        decentralize social media, and Bitcoin micro-payments.
+        decentralized social media, and Bitcoin micro-payments.
       </p>
 
       <p className="font-bold capitalize text-gray-500 mb-4">
@@ -35,9 +35,10 @@ const HeroSection = () => {
 
       <p className="max-w-4xl text-gray-500 mb-8">
         We are all influencers. Our friends and families want to know what we
-        think about this restaurants or that mechanic. We tell the world what we
-        think all the time. But the gatekeepers keep the lion's share of the
-        advertiser money. LocalWorx.io is here to flip that paradigm on its
+        think about <span className="font-semibold">this</span> restaurant or
+        <span className="font-semibold"> that</span> mechanic. We tell the world
+        what we think all the time. But the gatekeepers keep the lion's share of
+        the advertiser money. LocalWorx.io is here to flip that paradigm on its
         head.
       </p>
 

@@ -48,8 +48,8 @@ export const EarningSnapshot = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full my-6">
       <div className="w-full flex flex-row items-center justify-between">
-        <div className="w-1/2 flex flex-row items-center justify-center text-4xl">
-          <FaBtc className="inline-block" />
+        <div className="w-1/2 flex flex-row items-center justify-center text-4xl text-gray-700">
+          <FaBtc className="inline-block text-orange-500" />
           5024<span className="text-base mt-3">.75</span>
         </div>
 

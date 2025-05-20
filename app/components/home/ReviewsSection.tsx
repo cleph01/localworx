@@ -13,18 +13,18 @@ const reviews = [
       "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   },
   {
-    rating: 4,
+    rating: 5,
     review:
-      "As a small business owner, finding local promoters who genuinely care about our neighborhood made all the difference. We've seen real results.",
+      "LocalWorx helped us connect with new customers in our area. The platform is easy to use and the support team is fantastic!",
     name: "gloria",
     businessName: "catering",
     avatarUrl:
       "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   },
   {
-    rating: 3,
+    rating: 5,
     review:
-      "As a small business owner, finding local promoters who genuinely care about our neighborhood made all the difference. We've seen real results.",
+      "The exposure we gained through LocalWorx was incredible. Our bookings increased and we built lasting relationships with local customers.",
     name: "Santiago",
     businessName: "mechanic",
     avatarUrl:
