@@ -28,6 +28,7 @@ export default async function MarketplaceItemPage({
       <SellerPreviewSection
         seller={item.firstName}
         avatarUrl={item.avatarUrl}
+        zapCount={item.zapCount}
       />
       <BusinessContextSection item={item} />
       <Footer />
