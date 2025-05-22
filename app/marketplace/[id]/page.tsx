@@ -9,9 +9,9 @@ import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 export default async function MarketplaceItemPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
 
   const res = await mockFetch(`/api/marketplace/${id}`);
   const item = await res.data;
