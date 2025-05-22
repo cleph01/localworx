@@ -162,7 +162,7 @@ const ListingContent = ({
         <div className="flex flex-row items-center gap-2">
           {/* Avatar */}
           <img
-            className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+            className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
             src={avatarUrl}
             alt={firstName}
           />
