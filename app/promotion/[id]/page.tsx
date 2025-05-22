@@ -8,9 +8,9 @@ import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 export default async function PromotionProfilePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
 
   // 🔧 Fetch promotion details (replace with your real API call)
   //   const res = await fetch(
