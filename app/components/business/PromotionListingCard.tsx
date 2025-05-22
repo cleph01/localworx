@@ -1,14 +1,14 @@
 "use client";
 
 import { FaEye, FaMapMarkerAlt } from "react-icons/fa";
-import Button from "../../ui/Button";
-import Card from "../../ui/Card";
+import Button from "../ui/Button";
+import Card from "../ui/Card";
 import {
   ListingContentType,
   ListingFooterType,
   ListingHeaderType,
   CampaignListingCardProps,
-} from "./CampaignListingCardTypes";
+} from "./PromotionListingCardTypes";
 
 const CampaignListingCard = ({ listing }: CampaignListingCardProps) => {
   return (
@@ -178,11 +178,11 @@ const ListingContent = ({
           </div>
 
           <div className="flex flex-row items-center gap-1">
-            <span className="text-base ml-2">⭐</span>
-            <span className="text-lg text-gray-500 font-semibold">
+            <span className="text-base sm:text-sm ml-2">⭐</span>
+            <span className="text-lg sm:text-sm text-gray-500 font-semibold">
               {rating}
             </span>
-            <span className="text-sm text-gray-400 ">
+            <span className="text-sm sm:text-xs text-gray-400 ">
               {" "}
               ({reviewCount} reviews)
             </span>
@@ -195,25 +195,27 @@ const ListingContent = ({
 
 const ListingFooter = ({ clicks, views, referrals }: ListingFooterType) => {
   return (
-    <div className="flex flex-row items-center justify-between gap-4">
-      {/* Clicks */}
-      <div className="flex flex-col gap-1">
-        Clicks: <span className="font-bold">{clicks}</span>
+    <div className="flex flex-row sm:flex-col items-center justify-between ">
+      <div className="flex flex-row items-center justify-between mt-2 gap-4 mr-2">
+        {/* Clicks */}
+        <div className="flex flex-col gap-1">
+          Clicks: <span className="font-bold">{clicks}</span>
+        </div>
+        {/* Views */}
+        <div className="flex flex-col gap-1">
+          Views: <span className="font-bold">{views}</span>
+        </div>
+        {/* Referrals */}
+        <div className="flex flex-col gap-1">
+          Referrals: <span className="font-bold">{referrals}</span>
+        </div>
       </div>
-      {/* Views */}
-      <div className="flex flex-col gap-1">
-        Views: <span className="font-bold">{views}</span>
-      </div>
-      {/* Referrals */}
-      <div className="flex flex-col gap-1">
-        Referrals: <span className="font-bold">{referrals}</span>
-      </div>
-      {/* CTA */}
 
+      {/* CTA */}
       <Button
         details={{
           text: "⚡️ Zap It!",
-          css: "w-full my-6 py-2 bg-orange-500 text-white text-base font-bold",
+          css: "w-full mt-4 py-2 bg-orange-500 text-white text-base font-bold",
         }}
       />
       {/* Zap Button */}

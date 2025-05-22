@@ -44,7 +44,7 @@ export default async function PromotionProfilePage({
 
   // Render the promotion details page
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-screen flex flex-col items-center justify-center">
       <PromotionHeroSection promotion={heroSectiondData} />
       <PromotionDetailsSection promotion={detailsSectionData} />
       <RewardCalloutSection promotion={rewardCalloutSectionData} />

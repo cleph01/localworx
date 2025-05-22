@@ -26,23 +26,44 @@ const RewardCalloutSection = async ({ promotion }: { promotion: any }) => {
     (reward: any) => reward.type === "loyalty"
   );
 
-  console.log("Loyalty Reward: ", loyaltyReward);
   // Render the rewards section
   return (
-    <section className="bg-green-50 border border-green-200 rounded px-6 py-4 my-6 mx-6">
+    <section className="bg-green-50 border border-green-200 rounded px-6 py-4 mx-4 space-y-2">
       <h2 className="text-xl font-bold mb-2">🎉 Earn Rewards</h2>
-      <p className="text-gray-700">
-        Check in with this business and start earning Zaps. Eligible promoters
-        may also receive discounts, merch, or services!
+      <p className="text-gray-700 mb-4">
+        Check in with this business and start earning perks. Become a promoter
+        and receive discounts, merch, or{" "}
+        <span className="text-orange-500 font-semibold">₿itcoin</span>!
       </p>
-      {promotion.introOffer && (
-        <div className="mt-3 text-sm bg-yellow-100 text-yellow-800 px-3 py-2 rounded inline-block font-semibold">
-          🎁 Intro Offer: {introOffer}
+      {/* Intro Offer */}
+      {introOffer && (
+        <div className="space-y-2 mb-4">
+          <h2 className="text-xl font-bold mb-2">🎁 Introductory Offer</h2>
+          <p className="text-gray-700 text-base font-semibold">
+            {introOffer.title}
+          </p>
+          <p className="text-gray-700 text-sm">
+            On your first visit when you check-in using LocalWorx.
+          </p>
         </div>
       )}
-      {promotion.loyaltyReward && (
-        <div className="mt-3 text-sm bg-yellow-100 text-yellow-800 px-3 py-2 rounded inline-block font-semibold">
-          🛎️ Loyalty Reward: {loyaltyReward}
+
+      {/* Loyalty Reward Section */}
+      {loyaltyReward && (
+        <div className="space-y-2">
+          <h2 className="text-xl font-bold mb-2">🔁 Loyalty Program</h2>
+          <p className="text-gray-700 text-base font-semibold">
+            {loyaltyReward.title}
+          </p>
+          <p className="text-gray-700 text-sm">
+            Check in at this business{" "}
+            <span className="font-semibold">
+              {loyaltyReward.threshold}{" "}
+              {Number(loyaltyReward.threshold) > 1 ? "times" : "time"}
+            </span>{" "}
+            🛎️ and start earning rewards which you can redeem here or re-sell
+            for Bitcoin on the marketplace!
+          </p>
         </div>
       )}
     </section>

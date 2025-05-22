@@ -32,9 +32,6 @@ export default async function BusinessProfilePage({
       {/* Promotions tied to this business */}
       <BusinessPromotionsSection />
 
-      {/* Loyalty Program Summary */}
-      <LoyaltyProgramSection />
-
       {/* CTA + Footer */}
       <CallToActionSection />
       <Footer />

@@ -18,7 +18,7 @@ const BusinessOverviewSection = async ({
   const businessData = business.data;
 
   return (
-    <section className="py-8 px-6 max-w-3xl">
+    <section className="w-full py-8 px-6 max-w-4xl">
       <div className="flex flex-col md:flex-row gap-6 items-start">
         <img
           src={

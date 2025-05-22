@@ -14,12 +14,11 @@ const BusinessPreviewSection = async ({
   const business = businessDetails.data;
 
   return (
-    <section className="px-6 py-4 border-t border-gray-200">
+    <section className="w-full max-w-4xl flex flex-col px-6 py-4 my-4 border-t border-gray-200">
       <h2 className="text-xl font-bold mb-2">🏢 About {business.name}</h2>
       <p className="text-gray-600 mb-1">{business.description}</p>
-      <p className="text-gray-500 text-sm">
-        📍 {business.address} | ⏰ {business.hours}
-      </p>
+      <p className="text-gray-500 text-sm">📍 {business.address}</p>
+      <p className="text-gray-500 text-sm">⏰ {business.hours}</p>
       <p className="text-gray-500 text-sm">📧 {business.email}</p>
     </section>
   );

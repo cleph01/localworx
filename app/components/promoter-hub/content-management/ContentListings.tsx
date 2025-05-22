@@ -107,7 +107,8 @@ const listings = [
     likes: "20",
     comments: "6",
     publishDate: "2023-10-06",
-    avatarUrl: "",
+    avatarUrl:
+      "https://plus.unsplash.com/premium_photo-1689629870780-5d0e655383e6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
     mediaUrl: "",
     mediaType: "text",
     zapCount: "40",

@@ -63,7 +63,7 @@ const PromotionHeroSection = ({ promotion }: { promotion: any }) => {
   };
 
   return (
-    <section className="w-full px-4">
+    <section className="w-full px-4 max-w-4xl">
       {/* Media preview (image or embed) */}
       {promotion.mediaUrl && promotion.mediaType
         ? renderMediaPreview(promotion.mediaUrl, promotion.mediaType)

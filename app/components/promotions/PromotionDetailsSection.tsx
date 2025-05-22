@@ -2,7 +2,7 @@
 
 const PromotionDetailsSection = ({ promotion }: { promotion: any }) => {
   return (
-    <section className="px-6 py-4">
+    <section className="w-full px-4 py-4 max-w-4xl">
       <h2 className="text-xl font-bold mb-2">📄 Details</h2>
       <p className="text-gray-700">{promotion.description}</p>
 
