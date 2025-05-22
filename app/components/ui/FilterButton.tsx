@@ -31,7 +31,6 @@ const FilterButton = ({ details }: { details: ButtonDetails }) => {
   //     };
   //   }, []);
 
-  console.log("isOpen", isOpen);
   return (
     <div
       className={`${details.css} flex flex-col border px-2 py-1 items-center justify-center rounded-lg shadow-lg transition duration-300`}

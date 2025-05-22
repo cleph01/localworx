@@ -125,7 +125,7 @@ const ListingContent = ({
         <div className="flex flex-row items-center justify-between">
           {/* Address */}
           <div className="flex flex-row items-center">
-            <FaMapMarkerAlt className="text-gray-400 mr-2" />
+            <FaMapMarkerAlt className="text-red-600 mr-1" />
             <p className="flex-1 text-gray-600 text-base flex items-center gap-2">
               {businessName}
             </p>
