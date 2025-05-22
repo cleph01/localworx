@@ -1,3 +1,6 @@
+"use client";
+
+import { FaEye, FaMapMarkerAlt } from "react-icons/fa";
 import Button from "../../ui/Button";
 import Card from "../../ui/Card";
 import {
@@ -6,8 +9,9 @@ import {
   ListingHeaderType,
   CampaignListingCardProps,
 } from "./CampaignListingCardTypes";
+import ButtonLink from "../../ButtonLink";
 
-const ServiceListingCard = ({ listing }: CampaignListingCardProps) => {
+const CampaignListingCard = ({ listing }: CampaignListingCardProps) => {
   return (
     <Card
       Header={<ListingHeader {...listing} />}
@@ -17,15 +21,11 @@ const ServiceListingCard = ({ listing }: CampaignListingCardProps) => {
     />
   );
 };
-export default ServiceListingCard;
+export default CampaignListingCard;
 
 /* Service Listing Header */
 
-const ListingHeader = ({
-  businessName,
-  mediaUrl,
-  mediaType,
-}: ListingHeaderType) => {
+const ListingHeader = ({ title, mediaUrl, mediaType }: ListingHeaderType) => {
   // Determine appropriate media preview component (image or embed)
   const renderMediaPreview = (mediaUrl: string, mediaType: string) => {
     if (!mediaUrl) return null;
@@ -89,74 +89,135 @@ const ListingHeader = ({
   // Render the header with business name and media preview
   return (
     <div className="">
-      {/* Title */}
-      <h3 className="text-2xl font-bold mb-3">{businessName}</h3>
       {/* Media preview (image or embed) */}
       {mediaUrl && mediaType ? renderMediaPreview(mediaUrl, mediaType) : null}
+      {/* Offer Description */}
+      {/* Business Name */}
+      <h3 className="text-xl font-bold mt-4">{title}</h3>
     </div>
   );
 };
 
 /* Service Listing Content */
 const ListingContent = ({
+  id,
   firstName,
   rating,
   reviewCount,
   avatarUrl,
+  businessName,
   description,
+  address,
+  city,
+  state,
+  phone,
+  expiresAt,
 }: ListingContentType) => {
+  // Handle View Item
+  const handleViewItem = () => {
+    // Use useRouter inside the parent component and pass router as a prop if needed
+    window.location.href = `/marketplace/${id}`;
+  };
+
   return (
     <div className="flex flex-col gap-2 mt-2">
-      {/* Promoter Info */}
-      <div className="flex flex-row items-start justify-between gap-2">
-        <div className="flex flex-row items-center mr-1 gap-2">
-          <img
-            className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
-            src={avatarUrl}
-            alt={firstName}
-          />
-          <div className="text-lg font-semibold mr-2">{firstName}</div>
+      {/* Business Name + Location */}
+      <div className="flex flex-col justify-between">
+        <div className="flex flex-row items-center justify-between">
+          {/* Address */}
+          <div className="flex flex-row items-center">
+            <FaMapMarkerAlt className="text-gray-400 mr-2" />
+            <p className="flex-1 text-gray-600 text-base flex items-center gap-2">
+              {businessName}
+            </p>
+          </div>
+          {/* Phone Number */}
+          <p className="text-gray-600 text-xs">{phone}</p>
         </div>
-
-        <div className="flex flex-row items-center gap-1">
-          <span className="text-xs ml-2">⭐</span>
-          <span className="text-sm text-gray-500 font-semibold">{rating}</span>
-          <span className="text-sm text-gray-400 ">
-            {" "}
-            ({reviewCount} reviews)
-          </span>
-        </div>
+        <p className="text-xs mt-1">
+          {address}
+          {", "}
+          {city}
+          {", "}
+          {state}
+        </p>
       </div>
+
       {/* Description */}
-      <div className="text-base text-gray-600 mt-2">
+      <p className="text-base text-gray-600 my-2">
         {description && description.length > 100
           ? `${description.slice(0, 100)}...`
           : description}
+      </p>
+
+      <div className="flex flex-row justify-between items-start">
+        {/* Expiration Date */}
+        {expiresAt && (
+          <div className="text-sm text-gray-500 ">
+            ⏳ Expires: {new Date(expiresAt).toLocaleDateString()}
+          </div>
+        )}
+        {/* View Item */}
+        <button
+          onClick={handleViewItem}
+          className="bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm flex items-center gap-1 hover:bg-gray-300 cursor-pointer"
+        >
+          <FaEye /> View
+        </button>
+      </div>
+      {/* Promoter Info */}
+      <div className="flex flex-col border-t border-gray-400 mt-2 pt-2 gap-2">
+        <p className="text-gray-500 text-sm mt-1">Promotion By:</p>
+        <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-row items-center mr-1 mt-1 gap-2">
+            <img
+              className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+              src={avatarUrl}
+              alt={firstName}
+            />
+            <div className="text-lg font-semibold mr-2">{firstName}</div>
+          </div>
+
+          <div className="flex flex-row items-center gap-1">
+            <span className="text-base ml-2">⭐</span>
+            <span className="text-lg text-gray-500 font-semibold">
+              {rating}
+            </span>
+            <span className="text-sm text-gray-400 ">
+              {" "}
+              ({reviewCount} reviews)
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-const ListingFooter = ({ clicks, views, referrals }: ListingFooterType) => (
-  <div className="flex flex-row items-center justify-between gap-4">
-    {/* Clicks */}
-    <div className="flex flex-col gap-1">
-      Clicks: <span className="font-bold">{clicks}</span>
+const ListingFooter = ({ clicks, views, referrals }: ListingFooterType) => {
+  return (
+    <div className="flex flex-row items-center justify-between gap-4">
+      {/* Clicks */}
+      <div className="flex flex-col gap-1">
+        Clicks: <span className="font-bold">{clicks}</span>
+      </div>
+      {/* Views */}
+      <div className="flex flex-col gap-1">
+        Views: <span className="font-bold">{views}</span>
+      </div>
+      {/* Referrals */}
+      <div className="flex flex-col gap-1">
+        Referrals: <span className="font-bold">{referrals}</span>
+      </div>
+      {/* CTA */}
+
+      <Button
+        details={{
+          text: "⚡️ Zap It!",
+          css: "w-full my-6 py-2 bg-orange-500 text-white text-base font-bold",
+        }}
+      />
+      {/* Zap Button */}
     </div>
-    {/* Views */}
-    <div className="flex flex-col gap-1">
-      Views: <span className="font-bold">{views}</span>
-    </div>
-    {/* Referrals */}
-    <div className="flex flex-col gap-1">
-      Referrals: <span className="font-bold">{referrals}</span>
-    </div>
-    {/* Zap Button */}
-    <Button
-      details={{
-        text: "⚡️ Zap It!",
-        css: "w-full my-6 py-2 bg-orange-500 text-white text-base font-bold",
-      }}
-    />
-  </div>
-);
+  );
+};

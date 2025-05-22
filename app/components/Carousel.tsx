@@ -28,15 +28,12 @@ const Carousel: React.FC<CarouselProps> = ({ profiles }) => {
   };
 
   return (
-    <div className="flex flex-row justify-center gap-4 w-full mx-auto overflow-hidden">
+    <div className="flex flex-row justify-center gap-4 w-full overflow-hidden">
       {/* Carousel Container */}
-      <div className="flex space-x-4 overflow-x-auto">
+      <div className="flex space-x-4 overflow-x-auto sm:ml-60">
         {/* Profiles in Carousel */}
         {profiles.map((profile, index) => (
-          <div
-            key={index}
-            className="flex-shrink-0 sm:w-3/4 md:w-1/3 lg:w-1/4 mx-2"
-          >
+          <div key={index} className="flex-shrink-0 sm:w-3/4 md:w-1/3 lg:w-1/4">
             <ProfileCard
               name={profile.name}
               category={profile.category}

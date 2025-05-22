@@ -6,7 +6,7 @@ type ButtonDetails = {
 const Button = ({ details }: { details: ButtonDetails }) => {
   return (
     <div
-      className={`${details.css} block text-center rounded-lg shadow-lg transition duration-300`}
+      className={`${details.css} block text-center rounded-lg shadow-lg transition duration-300 cursor-pointer`}
     >
       {details.text}
     </div>

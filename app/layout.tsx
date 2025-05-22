@@ -24,11 +24,12 @@ export const metadata: Metadata = {
   icons: {
     icon: "/localworx-logo.jpg",
   },
-  title: "LocalWorx | Empowering Communities Through Peer-Powered Promotion",
+  title: "LocalWorx | Empowering Local Businesses with Peer-Powered Promotion",
   description:
-    "LocalWorx.io is a decentralized platform that helps local businesses grow through word-of-mouth marketing, Bitcoin micro-payments, and community collaboration. Promote, earn, and support local resilience — without the gatekeepers.",
+    "LocalWorx.io is a decentralized platform that helps local businesses grow with word-of-mouth marketing, Bitcoin micro-payments, and community collaboration. Promote, earn, and support local resilience — without the gatekeepers.",
   openGraph: {
-    title: "LocalWorx | Empowering Communities Through Peer-Powered Promotion",
+    title:
+      "LocalWorx | Empowering Local Businesses Through Peer-Powered Promotion",
     description:
       "LocalWorx.io is a decentralized platform that helps local businesses grow through word-of-mouth marketing, Bitcoin micro-payments, and community collaboration. Promote, earn, and support local resilience — without the gatekeepers.",
     url: "https://LocalWorx.io",

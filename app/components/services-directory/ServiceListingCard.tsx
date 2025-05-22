@@ -1,6 +1,9 @@
+"use client";
+
 import {
   FaBriefcase,
   FaBtc,
+  FaEye,
   FaMapMarkerAlt,
   FaRegHandshake,
   FaStar,
@@ -115,15 +118,32 @@ const ListingContent = ({
   </div>
 );
 
-const ListingFooter = ({ categories }: ListingFooterType) => (
-  <div className="flex flex-row items-center gap-2">
-    {categories?.map((category) => (
-      <div
-        key={category}
-        className="inline-block bg-gray-200 text-gray-400 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded"
-      >
-        {category}
+const ListingFooter = ({ id, categories }: ListingFooterType) => {
+  // Handle View Item
+  const handleViewItem = () => {
+    // Use useRouter inside the parent component and pass router as a prop if needed
+    window.location.href = `/business/${id}`;
+  };
+
+  return (
+    <div className="flex flex-row items-center justify-between gap-2">
+      <div>
+        {categories?.map((category) => (
+          <div
+            key={category}
+            className="inline-block bg-gray-200 text-gray-400 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded"
+          >
+            {category}
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
-);
+      {/* View Item */}
+      <button
+        onClick={handleViewItem}
+        className="bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm flex items-center gap-1 hover:bg-gray-300"
+      >
+        <FaEye /> View
+      </button>
+    </div>
+  );
+};

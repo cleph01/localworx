@@ -3,7 +3,7 @@ import Button from "../ui/Button";
 import ServiceListingCard from "./ServiceListingCard";
 const listings = [
   {
-    id: 1,
+    id: "1",
     businessName: "John's Plumbing Services",
     firstName: "John",
     rating: 4.5,
@@ -19,7 +19,7 @@ const listings = [
     zapCount: 100,
   },
   {
-    id: 2,
+    id: "2",
     businessName: "Tech Solutions Inc.",
     firstName: "Jane",
     rating: 4.0,
@@ -35,7 +35,7 @@ const listings = [
     zapCount: 200,
   },
   {
-    id: 3,
+    id: "3",
     businessName: "Green Thumb Landscaping",
     firstName: "Alice",
     rating: 5.0,
@@ -51,7 +51,7 @@ const listings = [
     zapCount: 300,
   },
   {
-    id: 4,
+    id: "4",
     businessName: "Bob's Auto Repair",
     firstName: "Bob",
     rating: 3.5,
@@ -67,7 +67,7 @@ const listings = [
     zapCount: 50,
   },
   {
-    id: 5,
+    id: "5",
     businessName: "Charlie’s Bakery",
     firstName: "Charlie",
     rating: 4.8,
@@ -83,7 +83,7 @@ const listings = [
     zapCount: 150,
   },
   {
-    id: 6,
+    id: "6",
     businessName: "Dave's Fitness Center",
     firstName: "Dave",
     rating: 4.2,

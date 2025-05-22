@@ -16,6 +16,7 @@ type ListingContentType = {
 };
 
 type ListingFooterType = {
+  id: string;
   categories?: string[];
 };
 

@@ -1,4 +1,5 @@
-import { FaComment, FaHeart } from "react-icons/fa";
+"use client";
+
 import Card from "../../ui/Card";
 import {
   ListingContentType,
@@ -7,6 +8,7 @@ import {
   ContentListingCardProps,
 } from "./ContentListingCardTypes";
 import Button from "../../ui/Button";
+import { FaEye } from "react-icons/fa";
 
 const ServiceListingCard = ({ listing }: ContentListingCardProps) => {
   return (
@@ -112,15 +114,49 @@ const ListingHeader = ({
   );
 };
 
-const ListingContent = ({ description }: ListingContentType) => {
+const ListingContent = ({
+  id,
+  firstName,
+  avatarUrl,
+  description,
+}: ListingContentType) => {
+  // Handle View Item
+  const handleViewItem = () => {
+    // Use useRouter inside the parent component and pass router as a prop if needed
+    window.location.href = `/marketplace/${id}`;
+  };
+
   return (
-    // Description
-    <div className="text-base text-gray-600 mt-2">
-      {description && description.length > 100 ? (
-        <span>{description.slice(0, 100)}...</span>
-      ) : (
-        <span>{description}</span>
-      )}
+    <div className="flex flex-col">
+      {/* Description */}
+      <div className="text-base text-gray-600 mt-2">
+        {description && description.length > 100 ? (
+          <span>{description.slice(0, 100)}...</span>
+        ) : (
+          <span>{description}</span>
+        )}
+      </div>
+      <div className="flex flex-col gap-2 border-t border-gray-400 mt-4 pt-4">
+        <p className="text-gray-500 text-sm">Author:</p>
+        <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-row items-center gap-2 mt-1">
+            <img
+              className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+              src={avatarUrl}
+              alt={firstName}
+            />
+            <div className="text-lg font-semibold mr-2">{firstName}</div>
+          </div>
+
+          {/* View Item */}
+          <button
+            onClick={handleViewItem}
+            className="bg-gray-200 text-gray-800 px-3 py-1 h-10 rounded text-sm flex items-center gap-1 hover:bg-gray-300 cursor-pointer"
+          >
+            <FaEye /> View
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -38,7 +38,7 @@ interface ProfilesCarouselSectionProps {
 
 const ProfilesCarouselSection = () => {
   return (
-    <section className="w-full max-w-7xl mx-auto flex flex-col items-center justify-center mt-10 px-4">
+    <section className="w-full max-w-7xl flex flex-col items-center justify-center mt-10 px-4">
       <Carousel profiles={profiles} />
     </section>
   );

@@ -6,6 +6,7 @@ import Button from "../../ui/Button";
 const listings = [
   {
     id: 1,
+    firstName: "Sophie",
     title:
       "Just Launched: My Local Art Workshop Series! Join Us & Get Creative 🎨",
     description:
@@ -22,6 +23,7 @@ const listings = [
   },
   {
     id: 2,
+    firstName: "James",
     title: "Must-See: My New Video on Local History!",
     description:
       "I just uploaded a new video exploring the rich history of our town. From hidden gems to famous landmarks, it's a journey through time. Check it out and let me know your thoughts!",
@@ -36,6 +38,7 @@ const listings = [
   },
   {
     id: 3,
+    firstName: "Olivia",
     title: "Check Out My New Video on Local Wildlife!",
     description:
       "I just uploaded a new video showcasing the amazing wildlife in our area. From birds to deer, it's a must-watch for nature lovers! Let me know what you think in the comments.",
@@ -50,6 +53,7 @@ const listings = [
   },
   {
     id: 4,
+    firstName: "Liam",
     title: "Exploring Local Parks: My Favorite Spots 🌳",
     description:
       "I just published a new blog post about my favorite parks in the area. From hidden trails to scenic views, these spots are perfect for a weekend getaway. Check it out and share your favorites too!",
@@ -65,6 +69,7 @@ const listings = [
   },
   {
     id: 5,
+    firstName: "Emma",
     title: "Local Food Festival: My Experience & Recommendations 🍽️",
     description:
       "I had a blast at the local food festival this weekend! From delicious street food to amazing local vendors, it was a feast for the senses. Check out my top picks and let me know your favorites!",
@@ -80,6 +85,7 @@ const listings = [
   },
   {
     id: 6,
+    firstName: "Noah",
     title: "My New Video on Local Art Scene 🎨",
     description:
       "I just released a new video exploring the vibrant local art scene. From galleries to street art, there's so much creativity in our community. Check it out and let me know your thoughts!",
@@ -94,6 +100,7 @@ const listings = [
   },
   {
     id: 7,
+    firstName: "Mason",
     title: "Need help with home repairs? I'm available this weekend!",
     description:
       "Hey neighbors! I'm a licensed handyman with 10+ years experience in home repairs. If you need help with anything around the house, feel free to reach out. I'm available this weekend and would love to assist you!",
@@ -107,6 +114,7 @@ const listings = [
   },
   {
     id: 8,
+    firstName: "Ava",
     title: "Community Garden Volunteers Needed 🌱",
     description:
       "We're looking for volunteers to help maintain our local community garden this summer! No experience necessary—just bring your enthusiasm and love for plants. Tools and refreshments provided. Let's grow together!",
@@ -122,6 +130,7 @@ const listings = [
   },
   {
     id: 9,
+    firstName: "Lucas",
     title: "Local Book Club: June Meeting Announcement 📚",
     description:
       "Our neighborhood book club is meeting on June 20th at the community center! This month, we're reading 'The Night Circus' by Erin Morgenstern. New members are always welcome—come for the discussion, stay for the snacks!",
@@ -137,6 +146,7 @@ const listings = [
   },
   {
     id: 10,
+    firstName: "Mia",
     title: "Local Hiking Group: Weekend Adventure! 🥾",
     description:
       "Join us for a weekend hike at the beautiful Blue Ridge Mountains! All skill levels are welcome. Bring your water, snacks, and a sense of adventure. Let's explore the great outdoors together!",

@@ -6,7 +6,10 @@ type ListingHeaderType = {
 };
 
 type ListingContentType = {
+  id?: number;
   description?: string;
+  firstName?: string;
+  avatarUrl?: string;
 };
 
 type ListingFooterType = {
