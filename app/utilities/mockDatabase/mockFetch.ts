@@ -5,6 +5,7 @@ import {
   mockBusinesses,
   mockPromotions,
   mockRewards,
+  mockMarketplace,
   User,
   Business,
   Promotion,
@@ -58,6 +59,9 @@ export async function mockFetch(
       break;
     case "rewards":
       db = mockRewards;
+      break;
+    case "marketplace":
+      db = mockMarketplace;
       break;
     default:
       throw new Error(`Unknown resource: ${resource}`);

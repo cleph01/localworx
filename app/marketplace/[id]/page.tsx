@@ -1,51 +1,36 @@
-// app/marketplace/[id]/page.tsx
-import { MarketplaceItem } from "../marketplaceTypes";
+import MarketplaceItemHeroSection from "../../components/marketplace/MarketplaceItemHeroSection";
+import MarketplaceItemDetailsSection from "../../components/marketplace/MarketplaceItemDetailsSection";
+import SellerPreviewSection from "../../components/marketplace/SellerPreviewSection";
+import BusinessContextSection from "../../components/marketplace/BusinessContextSection";
+import AddToCartCTASection from "../../components/marketplace/AddToCartCTASection";
+import Footer from "../../components/Footer";
+import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 
-// Fetch the item details server-side based on the id
-export default async function ItemDetails({
+export default async function MarketplaceItemPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params; // Get the item id from the URL
+  const { id } = params;
 
-  const res = await fetch(`/api/marketplace/${id}`);
-  const item: MarketplaceItem = await res.json();
+  const res = await mockFetch(`/api/marketplace/${id}`);
+  const item = await res.data;
 
   if (!item) {
-    return <div>Item not found</div>;
+    return <div> Item Not Found </div>;
   }
 
-  const handleAddToCart = () => {
-    // Add item to the cart (use localStorage or context)
-    // For simplicity, here we'll just log to the console
-    console.log("Added to cart:", item);
-  };
-
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">{item.title}</h1>
-      <div className="flex gap-6">
-        <div className="w-1/2">
-          <img
-            src={item.media_url || "/default.jpg"}
-            alt={item.title}
-            className="w-full h-auto"
-          />
-        </div>
-        <div className="w-1/2">
-          <p className="text-lg mb-4">{item.description}</p>
-          <div className="flex justify-between items-center">
-            <span className="text-xl font-semibold">${item.price}</span>
-            <button
-              onClick={handleAddToCart}
-              className="bg-green-500 text-white px-4 py-2 rounded"
-            >
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <main className="min-h-screen flex flex-col items-center">
+      <MarketplaceItemHeroSection item={item} />
+      <MarketplaceItemDetailsSection item={item} />
+      <AddToCartCTASection item={item} />
+      <SellerPreviewSection
+        seller={item.firstName}
+        avatarUrl={item.avatarUrl}
+      />
+      <BusinessContextSection item={item} />
+      <Footer />
+    </main>
   );
 }

@@ -158,19 +158,22 @@ const ListingContent = ({
       {/* Item Description */}
       <div className="text-base text-gray-500 mt-2">{description}</div>
       {/* Re-Seller Profile Info */}
-      <div className="flex flex-row items-center justify-between gap-2 border-t border-gray-200 pt-4">
-        <div className="flex flex-row items-center gap-2">
-          {/* Avatar */}
-          <img
-            className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
-            src={avatarUrl}
-            alt={firstName}
-          />
-          <div className="text-lg font-semibold mr-2">{firstName}</div>
-        </div>
-        <div className="text-sm text-gray-500 mr-2">
-          ⚡️ <span className="font-semibold mr-1">{zapCount}</span>
-          (Zaps Received){" "}
+      <div className="flex flex-col gap-2 border-t border-gray-200 pt-2 mt-2">
+        <div className="text-gray-500">Seller: </div>
+        {/* Avatar & Zaps Received*/}
+        <div className="flex flex-row items-center justify-between gap-2">
+          <div className="flex flex-row items-center gap-2">
+            <img
+              className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+              src={avatarUrl}
+              alt={firstName}
+            />
+            <div className="text-lg font-semibold mr-2">{firstName}</div>
+          </div>
+          <div className="text-sm text-gray-500 mr-2">
+            ⚡️ <span className="font-semibold mr-1">{zapCount}</span>
+            (Zaps Received){" "}
+          </div>
         </div>
       </div>
     </div>
