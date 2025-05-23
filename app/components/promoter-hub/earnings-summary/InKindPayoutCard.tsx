@@ -1,5 +1,4 @@
-import { FaBtc } from "react-icons/fa";
-import Button from "../../ui/Button";
+// components/promoter-hub/earnings-summary/InKindPaymentCard.tsx
 import Card from "../../ui/Card";
 import {
   InKindPayoutHeaderType,

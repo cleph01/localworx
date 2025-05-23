@@ -1,3 +1,4 @@
+// /components/promoter-hub/earnings-summary/PendingPayoutCard.tsx
 import { FaBtc } from "react-icons/fa";
 import Button from "../../ui/Button";
 import Card from "../../ui/Card";

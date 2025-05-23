@@ -1,3 +1,4 @@
+// AvailableForWithdrawalCard.tsx
 import { FaBtc } from "react-icons/fa";
 import Button from "../../ui/Button";
 import Card from "../../ui/Card";
@@ -29,7 +30,7 @@ const AvailableForWithdrawalCard = () => {
       Header={<WithdrawalHeader {...withdrawalData} />}
       Content={<WithdrawalContent {...withdrawalData} />}
       Footer={<WithdrawalFooter css={buttonData.css} text={buttonData.text} />}
-      className="w-full max-w-sm"
+      className="w-full max-w-sm "
     />
   );
 };
