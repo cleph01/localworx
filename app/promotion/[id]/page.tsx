@@ -1,9 +1,12 @@
+// app/promotion/[id]/page.tsx
+
 import PromotionHeroSection from "../../components/promotions/PromotionHeroSection";
 import PromotionDetailsSection from "../../components/promotions/PromotionDetailsSection";
 import BusinessPreviewSection from "../../components/promotions/BusinessPreviewSection";
 import RewardCalloutSection from "../../components/promotions/RewardCalloutSection";
 import Footer from "../../components/Footer";
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
+import PromoterDetailsSection from "@/app/components/promotions/PromoterDetailsSection";
 
 export default async function PromotionProfilePage({
   params,
@@ -42,13 +45,22 @@ export default async function PromotionProfilePage({
     businessId: promotion.businessId,
   };
 
+  const businessPreviewSectionData = {
+    businessId: promotion.businessId,
+  };
+
+  const promoterDetailsSectionData = {
+    promoterId: promotion.promoterId,
+  };
+
   // Render the promotion details page
   return (
     <main className="min-h-screen flex flex-col items-center justify-center">
-      <PromotionHeroSection promotion={heroSectiondData} />
-      <PromotionDetailsSection promotion={detailsSectionData} />
-      <RewardCalloutSection promotion={rewardCalloutSectionData} />
-      <BusinessPreviewSection businessId={promotion.businessId} />
+      <PromotionHeroSection data={heroSectiondData} />
+      <PromotionDetailsSection data={detailsSectionData} />
+      <RewardCalloutSection data={rewardCalloutSectionData} />
+      <BusinessPreviewSection data={businessPreviewSectionData} />
+      <PromoterDetailsSection data={promoterDetailsSectionData} />
       <Footer />
     </main>
   );

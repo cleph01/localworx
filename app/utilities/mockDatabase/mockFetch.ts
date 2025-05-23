@@ -10,6 +10,8 @@ import {
   Business,
   Promotion,
   Reward,
+  mockPosts,
+  mockPromoterRatings,
 } from "./mockDatabase";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
@@ -62,6 +64,12 @@ export async function mockFetch(
       break;
     case "marketplace":
       db = mockMarketplace;
+      break;
+    case "posts":
+      db = mockPosts;
+      break;
+    case "promoter-ratings":
+      db = mockPromoterRatings;
       break;
     default:
       throw new Error(`Unknown resource: ${resource}`);

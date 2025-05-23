@@ -1,35 +1,32 @@
 "use client";
 
-import Card from "../../ui/Card";
-import {
-  ListingContentType,
-  ListingFooterType,
-  ListingHeaderType,
-  ContentListingCardProps,
-} from "./ContentListingCardTypes";
-import Button from "../../ui/Button";
-import { FaEye } from "react-icons/fa";
+import Card from "../ui/Card";
 
-const ServiceListingCard = ({ listing }: ContentListingCardProps) => {
+import { PostContentType, PostFooterType, PostHeaderType } from "./PostTypes";
+import Button from "../ui/Button";
+import { FaEye } from "react-icons/fa";
+import { Post } from "./PostTypes";
+
+const PostCard = ({ post }: { post: Post }) => {
   return (
     <Card
-      Header={<ListingHeader {...listing} />}
-      Content={<ListingContent {...listing} />}
-      Footer={<ListingFooter {...listing} />}
+      Header={<PostHeader {...post} />}
+      Content={<PostContent {...post} />}
+      Footer={<PostFooter {...post} />}
       className="w-full max-w-sm"
     />
   );
 };
-export default ServiceListingCard;
+export default PostCard;
 
 //
 
-const ListingHeader = ({
+const PostHeader = ({
   title,
   mediaUrl,
   mediaType,
   description,
-}: ListingHeaderType) => {
+}: PostHeaderType) => {
   // Determine appropriate media preview component (image or embed)
   const renderMediaPreview = (
     mediaUrl: string,
@@ -114,16 +111,16 @@ const ListingHeader = ({
   );
 };
 
-const ListingContent = ({
+const PostContent = ({
   id,
   firstName,
   avatarUrl,
   description,
-}: ListingContentType) => {
+}: PostContentType) => {
   // Handle View Item
   const handleViewItem = () => {
     // Use useRouter inside the parent component and pass router as a prop if needed
-    window.location.href = `/marketplace/${id}`;
+    window.location.href = `/post/${id}`;
   };
 
   return (
@@ -161,12 +158,12 @@ const ListingContent = ({
   );
 };
 
-const ListingFooter = ({
+const PostFooter = ({
   publishDate,
   zapCount,
   likes,
   comments,
-}: ListingFooterType) => (
+}: PostFooterType) => (
   <div className="flex flex-col gap-2">
     <div className="flex flew-row items-center justify-between">
       <div className="flex flex-row flex-1 items-center gap-2 mt-2">

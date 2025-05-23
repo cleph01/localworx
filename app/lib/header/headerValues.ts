@@ -23,6 +23,11 @@ const headerValues = {
     tagLine:
       "A value-powered marketplace where earned discounts, products, and services get a second life—and you get paid in Bitcoin.",
   },
+  posts: {
+    headLine: "Showcase Your Voice. Share, Create, and Earn.",
+    tagLine:
+      "Publish posts to spotlight your talents, ideas, or offerings—reach your community, inspire engagement, and earn zaps for your creativity.",
+  },
 };
 
 export default headerValues;

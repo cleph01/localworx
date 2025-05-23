@@ -1,6 +1,8 @@
 // PromotionHeroSection.tsx
 
-const PromotionHeroSection = ({ promotion }: { promotion: any }) => {
+import { PromotionHeroSectionProps } from "./promotionTypes";
+
+const PromotionHeroSection = ({ data }: PromotionHeroSectionProps) => {
   // Determine appropriate media preview component (image or embed)
 
   const renderMediaPreview = (mediaUrl: string, mediaType: string) => {
@@ -65,12 +67,12 @@ const PromotionHeroSection = ({ promotion }: { promotion: any }) => {
   return (
     <section className="w-full px-4 max-w-4xl">
       {/* Media preview (image or embed) */}
-      {promotion.mediaUrl && promotion.mediaType
-        ? renderMediaPreview(promotion.mediaUrl, promotion.mediaType)
+      {data.mediaUrl && data.mediaType
+        ? renderMediaPreview(data.mediaUrl, data.mediaType)
         : null}
       <div className="py-4">
-        <h1 className="text-3xl font-bold">{promotion.title}</h1>
-        <p className="text-gray-500">{promotion.businessName}</p>
+        <h1 className="text-3xl font-bold">{data.title}</h1>
+        <p className="text-gray-500">{data.businessName}</p>
       </div>
     </section>
   );

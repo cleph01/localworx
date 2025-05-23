@@ -9,7 +9,7 @@ const VisitorTypeSection = () => {
       <ButtonLink
         text="I'm looking for services"
         icon={<FaUser className="h-5 w-5 text-white " />}
-        link="/signup"
+        link="/services-directory"
         color="bg-blue-500" // Custom color for this button
       />
 

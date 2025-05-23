@@ -101,7 +101,7 @@ const listings = [
 ];
 // This is a placeholder for the listings data. In a real application, this data would be fetched from an API or database.
 
-const ListingsSection = () => {
+const ServiceListingsSection = () => {
   return (
     <section className="flex flex-col gap-4 py-12 px-6 ">
       <h2 className="text-2xl font-bold">Service Listings</h2>
@@ -122,5 +122,5 @@ const ListingsSection = () => {
     </section>
   );
 };
-export default ListingsSection;
+export default ServiceListingsSection;
 // This component is a placeholder for the listings section of the services directory page.

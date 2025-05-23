@@ -1,76 +1,227 @@
-// PromotionCard.tsx
-import Image from "next/image";
-import Link from "next/link";
-import { FaBolt, FaMapMarkerAlt, FaGift } from "react-icons/fa";
+"use client";
 
-type PromotionCardProps = {
-  promotion: {
-    id: string;
-    title: string;
-    description: string;
-    imageUrl: string;
-    businessName: string;
-    location: string;
-    introOffer?: string;
-    expiresAt?: string;
-  };
-};
+import { FaEye, FaMapMarkerAlt } from "react-icons/fa";
+import Button from "../ui/Button";
+import Card from "../ui/Card";
+import {
+  PromotionHeaderType,
+  PromotionContentType,
+  PromotionFooterType,
+  PromotionCardProps,
+} from "./promotionTypes";
 
 const PromotionCard = ({ promotion }: PromotionCardProps) => {
   return (
-    <div className="bg-white shadow border rounded-lg overflow-hidden flex flex-col hover:shadow-lg transition-all duration-200">
-      {/* Thumbnail */}
-      <img
-        src={promotion.imageUrl || "/placeholder-image.jpg"}
-        alt={promotion.title}
-        width={600}
-        height={400}
-        className="w-full h-48 object-cover"
-      />
+    <Card
+      Header={<PromotionHeader {...promotion} />}
+      Content={<PromotionContent {...promotion} />}
+      Footer={<PromotionFooter {...promotion} />}
+      className="w-full max-w-sm"
+    />
+  );
+};
+export default PromotionCard;
 
-      {/* Content */}
-      <div className="p-4 flex flex-col gap-2 flex-1">
-        {/* Title */}
-        <h3 className="text-xl font-bold text-navy-blue">{promotion.title}</h3>
+/* Service Listing Header */
 
-        {/* Business Name + Location */}
-        <p className="text-gray-600 text-sm flex items-center gap-2">
-          <FaMapMarkerAlt className="text-gray-400" /> {promotion.businessName}{" "}
-          – {promotion.location}
-        </p>
+const PromotionHeader = ({
+  title,
+  mediaUrl,
+  mediaType,
+}: PromotionHeaderType) => {
+  // Determine appropriate media preview component (image or embed)
+  const renderMediaPreview = (mediaUrl: string, mediaType: string) => {
+    if (!mediaUrl) return null;
 
-        {/* Description */}
-        <p className="text-gray-700 text-sm line-clamp-3">
-          {promotion.description}
-        </p>
+    if (mediaType === "image") {
+      return (
+        <img
+          src={mediaUrl}
+          alt="Image Preview"
+          className="w-full max-h-64 object-cover mt-2"
+        />
+      );
+    }
 
-        {/* Intro Offer */}
-        {promotion.introOffer && (
-          <div className="mt-2 text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded inline-flex items-center gap-1 font-semibold">
-            <FaGift className="text-yellow-500" />
-            {promotion.introOffer}
+    // Match common YouTube and Vimeo patterns
+    const youTubeMatch = mediaUrl.match(
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/
+    );
+    const vimeoMatch = mediaUrl.match(/vimeo\.com\/(\d+)/);
+
+    if (youTubeMatch) {
+      const id = youTubeMatch[1];
+      return (
+        <iframe
+          className="w-full h-64 mt-2"
+          src={`https://www.youtube.com/embed/${id}`}
+          title="YouTube Preview"
+          allowFullScreen
+        />
+      );
+    }
+
+    if (vimeoMatch) {
+      const id = vimeoMatch[1];
+      return (
+        <iframe
+          className="w-full h-64 mt-2"
+          src={`https://player.vimeo.com/video/${id}`}
+          title="Vimeo Preview"
+          allowFullScreen
+        />
+      );
+    }
+
+    // Basic image preview fallback
+    if (mediaUrl.match(/\.(jpeg|jpg|gif|png|webp)$/)) {
+      return (
+        <img
+          src={mediaUrl}
+          alt="Image Preview"
+          className="w-full max-h-64 object-cover mt-2"
+        />
+      );
+    }
+
+    return (
+      <p className="text-sm text-gray-500 mt-2">Unrecognized media format.</p>
+    );
+  };
+  //
+  // Render the header with business name and media preview
+  return (
+    <div className="">
+      {/* Media preview (image or embed) */}
+      {mediaUrl && mediaType ? renderMediaPreview(mediaUrl, mediaType) : null}
+      {/* Offer Description */}
+      {/* Business Name */}
+      <h3 className="text-xl font-bold mt-4">{title}</h3>
+    </div>
+  );
+};
+
+/* Service Listing Content */
+const PromotionContent = ({
+  id,
+  firstName,
+  rating,
+  reviewCount,
+  avatarUrl,
+  businessName,
+  description,
+  address,
+  city,
+  state,
+  phone,
+  expiresAt,
+}: PromotionContentType) => {
+  // Handle View Item
+  const handleViewItem = () => {
+    // Use useRouter inside the parent component and pass router as a prop if needed
+    window.location.href = `/promotion/${id}`;
+  };
+
+  return (
+    <div className="flex flex-col gap-2 mt-2">
+      {/* Business Name + Location */}
+      <div className="flex flex-col justify-between">
+        <div className="flex flex-row items-center justify-between">
+          {/* Address */}
+          <div className="flex flex-row items-center">
+            <FaMapMarkerAlt className="text-gray-400 mr-2" />
+            <p className="flex-1 text-gray-600 text-base flex items-center gap-2">
+              {businessName}
+            </p>
           </div>
-        )}
-
-        {/* Expiry */}
-        {promotion.expiresAt && (
-          <p className="text-xs text-gray-400 mt-1">
-            ⏳ Expires {new Date(promotion.expiresAt).toLocaleDateString()}
-          </p>
-        )}
+          {/* Phone Number */}
+          <p className="text-gray-600 text-xs">{phone}</p>
+        </div>
+        <p className="text-xs mt-1">
+          {address}
+          {", "}
+          {city}
+          {", "}
+          {state}
+        </p>
       </div>
 
-      {/* CTA */}
-      <div className="px-4 py-3 border-t mt-auto">
-        <Link
-          href={`/promotions/${promotion.id}`}
-          className="w-full text-center block bg-blue-600 text-white py-2 rounded font-bold hover:bg-blue-700 transition-colors duration-200"
+      {/* Description */}
+      <p className="text-base text-gray-600 my-2">
+        {description && description.length > 100
+          ? `${description.slice(0, 100)}...`
+          : description}
+      </p>
+
+      <div className="flex flex-row justify-between items-start">
+        {/* Expiration Date */}
+        {expiresAt && (
+          <div className="text-sm text-gray-500 ">
+            ⏳ Expires: {new Date(expiresAt).toLocaleDateString()}
+          </div>
+        )}
+        {/* View Item */}
+        <button
+          onClick={handleViewItem}
+          className="bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm flex items-center gap-1 hover:bg-gray-300 cursor-pointer"
         >
-          View Promotion
-        </Link>
+          <FaEye /> View
+        </button>
+      </div>
+      {/* Promoter Info */}
+      <div className="flex flex-col border-t border-gray-400 mt-2 pt-2 gap-2">
+        <p className="text-gray-500 text-sm mt-1">Promotion By:</p>
+        <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-row items-center mr-1 mt-1 gap-2">
+            <img
+              className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+              src={avatarUrl}
+              alt={firstName}
+            />
+            <div className="text-lg font-semibold mr-2">{firstName}</div>
+          </div>
+
+          <div className="flex flex-row items-center gap-1">
+            <span className="text-base sm:text-sm ml-2">⭐</span>
+            <span className="text-lg sm:text-sm text-gray-500 font-semibold">
+              {rating}
+            </span>
+            <span className="text-sm sm:text-xs text-gray-400 ">
+              {" "}
+              ({reviewCount} reviews)
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default PromotionCard;
+const PromotionFooter = ({ clicks, views, referrals }: PromotionFooterType) => {
+  return (
+    <div className="flex flex-row sm:flex-col items-center justify-between ">
+      <div className="flex flex-row items-center justify-between mt-2 gap-4 mr-2">
+        {/* Clicks */}
+        <div className="flex flex-col gap-1">
+          Clicks: <span className="font-bold">{clicks}</span>
+        </div>
+        {/* Views */}
+        <div className="flex flex-col gap-1">
+          Views: <span className="font-bold">{views}</span>
+        </div>
+        {/* Referrals */}
+        <div className="flex flex-col gap-1">
+          Referrals: <span className="font-bold">{referrals}</span>
+        </div>
+      </div>
+
+      {/* CTA - Zap Button */}
+      <Button
+        details={{
+          text: "⚡️ Zap It!",
+          css: "w-full mt-4 py-2 bg-orange-500 text-white text-base font-bold",
+        }}
+      />
+    </div>
+  );
+};

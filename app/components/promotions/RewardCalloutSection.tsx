@@ -1,20 +1,15 @@
 // RewardCalloutSection.tsx
 
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
+import { PromotionRewardCalloutSectionProps } from "./promotionTypes";
 
-const RewardCalloutSection = async ({ promotion }: { promotion: any }) => {
-  const rewards = await mockFetch(`/api/rewards?${promotion.businessId}`);
+const RewardCalloutSection = async ({
+  data,
+}: PromotionRewardCalloutSectionProps) => {
+  const rewards = await mockFetch(`/api/rewards?${data.businessId}`);
   if (!rewards) {
     return <div>No rewards available</div>;
   }
-  console.log(
-    "promotion: ",
-    promotion,
-    "rewardId: ",
-    promotion.rewardId,
-    "Rewards data:",
-    rewards
-  );
 
   // Find Intro Reward
   const introOffer = rewards.data.find(
