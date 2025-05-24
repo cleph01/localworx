@@ -14,7 +14,7 @@ export default async function PostPage({
 }) {
   const { id } = await params;
 
-  const post = await mockFetch(`/api/post/${id}`);
+  const post = await mockFetch(`/api/posts/${id}`);
 
   if (!post) {
     return <div>No Post Found</div>;
@@ -22,12 +22,34 @@ export default async function PostPage({
 
   const postData = await post.data;
 
+  // Organize the data I want to pass as props
+  const heroSectiondData = {
+    title: postData.title,
+    firstName: postData.businessName || "Business Name",
+    mediaUrl: postData.mediaUrl || "/placeholder-image.jpg",
+    mediaType: postData.mediaType || "image",
+  };
+
+  const bodySectionData = {
+    description: postData.description,
+  };
+
+  const zapsSectionData = {
+    userId: postData.userId,
+  };
+
+  const authorPreviewSectionData = {
+    userId: postData.userId,
+  };
+
+  console.log("PostData @ post/[id]: ", postData);
+
   return (
-    <main className="min-h-screen flex flex-col">
-      <PostHeroSection post={post} />
-      <PostBodySection post={post} />
-      <ZapStatsSection zapCount={post.zapCount} />
-      <AuthorPreviewSection author={post.author} avatarUrl={post.avatarUrl} />
+    <main className="min-h-screen flex flex-col items-center">
+      <PostHeroSection data={heroSectiondData} />
+      <PostBodySection data={bodySectionData} />
+      <ZapStatsSection data={zapsSectionData} />
+      <AuthorPreviewSection data={authorPreviewSectionData} />
       <Footer />
     </main>
   );

@@ -2,7 +2,7 @@ import { Content, ZCOOL_KuaiLe } from "next/font/google";
 import Button from "../../ui/Button";
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 import PostCard from "../../posts/PostCard";
-import { Post } from "../../posts/PostTypes";
+import { Post } from "../../posts/postTypes";
 
 const ContentListings = async ({ listings }: any) => {
   const posts = await mockFetch("/api/posts");

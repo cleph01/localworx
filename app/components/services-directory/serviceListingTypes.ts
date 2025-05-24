@@ -3,7 +3,7 @@ type ListingHeaderType = {
   firstName?: string;
   rating?: number;
   reviewCount?: number;
-  avatarUrl?: string;
+  logoUrl?: string;
   zapCount?: number;
 };
 
@@ -21,7 +21,7 @@ type ListingFooterType = {
 };
 
 type ServiceListingCardProps = {
-  listing: ListingHeaderType & ListingContentType & ListingFooterType;
+  business: ListingHeaderType & ListingContentType & ListingFooterType;
 };
 
 export type {

@@ -16,12 +16,12 @@ import {
   ServiceListingCardProps,
 } from "./serviceListingTypes";
 
-const ServiceListingCard = ({ listing }: ServiceListingCardProps) => {
+const ServiceListingCard = ({ business }: ServiceListingCardProps) => {
   return (
     <Card
-      Header={<ListingHeader {...listing} />}
-      Content={<ListingContent {...listing} />}
-      Footer={<ListingFooter {...listing} />}
+      Header={<ListingHeader {...business} />}
+      Content={<ListingContent {...business} />}
+      Footer={<ListingFooter {...business} />}
       className="w-full max-w-sm"
     />
   );
@@ -35,11 +35,11 @@ const ListingHeader = ({
   firstName,
   rating,
   reviewCount,
-  avatarUrl,
+  logoUrl,
   zapCount,
 }: ListingHeaderType) => (
   <div className="flex flex-col gap-2">
-    <div className="flex flex-row items-start justify-between gap-2">
+    <div className="flex flex-row items-center justify-between gap-2">
       {/* Title */}
       <h3 className="flex-1 text-xl font-bold">{businessName}</h3>
       {/* business review */}
@@ -55,7 +55,7 @@ const ListingHeader = ({
     <div className="flex flex-row items-center gap-2 mt-2">
       <img
         className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
-        src={avatarUrl}
+        src={logoUrl}
         alt={firstName}
       />
       {/* Business Owner FirstName  */}
@@ -127,7 +127,7 @@ const ListingFooter = ({ id, categories }: ListingFooterType) => {
 
   return (
     <div className="flex flex-row items-center justify-between gap-2">
-      <div>
+      <div className="flex flex-wrap gap-1">
         {categories?.map((category) => (
           <div
             key={category}

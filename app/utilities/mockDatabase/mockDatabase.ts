@@ -87,7 +87,8 @@ export type Marketplace = {
 };
 
 export type Post = {
-  id: number;
+  id: string;
+  userId: string;
   firstName: string;
   title: string;
   description: string;
@@ -104,11 +105,11 @@ export type Post = {
 export const mockUsers: User[] = [
   {
     id: "1",
-    firstName: "Alice",
+    firstName: "Dennis",
     lastName: "Promoter",
     role: "promoter",
     avatarUrl:
-      "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
   },
   {
     id: "2",
@@ -175,8 +176,6 @@ export const mockBusinesses: Business[] = [
     zip: "62701",
     businessHours: "9 AM - 5 PM",
     website: "www.bobsbarbershop.com",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     logoUrl:
       "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=350&auto=format&fit=crop",
     hours: "Mon-Fri: 9 AM - 5 PM, Sat: 10 AM - 4 PM",
@@ -201,7 +200,7 @@ export const mockBusinesses: Business[] = [
     website: "www.johnsplumbing.com",
     rating: 4.5,
     reviewCount: 10,
-    avatarUrl:
+    logoUrl:
       "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     businessHours: "9 AM - 5 PM",
     address: "123 Main St",
@@ -210,6 +209,8 @@ export const mockBusinesses: Business[] = [
     introOffer: "10% off your first service",
     categories: ["Category1", "Category2"],
     zapCount: 100,
+    email: "john@johnsplumbing.com",
+    phone: "555-555-5555",
   },
   {
     id: "3",
@@ -223,7 +224,7 @@ export const mockBusinesses: Business[] = [
     website: "www.techsolutions.com",
     rating: 4.0,
     reviewCount: 20,
-    avatarUrl:
+    logoUrl:
       "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     businessHours: "10 AM - 6 PM",
     address: "456 Elm St",
@@ -232,6 +233,8 @@ export const mockBusinesses: Business[] = [
     introOffer: "Free consultation",
     categories: ["Category3", "Category4"],
     zapCount: 200,
+    email: "info@techsolutions.com",
+    phone: "555-555-5555",
   },
   {
     id: "4",
@@ -245,7 +248,7 @@ export const mockBusinesses: Business[] = [
     website: "www.greenthumblandscaping.com",
     rating: 5.0,
     reviewCount: 30,
-    avatarUrl:
+    logoUrl:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
     businessHours: "8 AM - 4 PM",
     address: "789 Oak St",
@@ -254,6 +257,8 @@ export const mockBusinesses: Business[] = [
     introOffer: "20% off for referrals",
     categories: ["Category5", "Category6"],
     zapCount: 300,
+    email: "info@greenthumb.com",
+    phone: "555-555-5555",
   },
   {
     id: "5",
@@ -267,7 +272,7 @@ export const mockBusinesses: Business[] = [
     website: "www.bobsautorepair.com",
     rating: 3.5,
     reviewCount: 5,
-    avatarUrl:
+    logoUrl:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     businessHours: "11 AM - 7 PM",
     address: "101 Pine St",
@@ -276,6 +281,8 @@ export const mockBusinesses: Business[] = [
     introOffer: "Buy one get one free",
     categories: ["Category7", "Category8"],
     zapCount: 50,
+    email: "bob@bobsautorepair.com",
+    phone: "555-555-5555",
   },
   {
     id: "6",
@@ -289,7 +296,7 @@ export const mockBusinesses: Business[] = [
     website: "www.charliesbakery.com",
     rating: 4.8,
     reviewCount: 15,
-    avatarUrl:
+    logoUrl:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
     businessHours: "7 AM - 3 PM",
     address: "202 Maple St",
@@ -298,6 +305,8 @@ export const mockBusinesses: Business[] = [
     introOffer: "Free shipping on orders over $50",
     categories: ["Category9", "Category10"],
     zapCount: 150,
+    email: "charlie@charliesbakery.com",
+    phone: "555-555-5555",
   },
   {
     id: "7",
@@ -311,7 +320,7 @@ export const mockBusinesses: Business[] = [
     website: "www.davesfitness.com",
     rating: 4.2,
     reviewCount: 25,
-    avatarUrl:
+    logoUrl:
       "https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
     businessHours: "12 PM - 8 PM",
     address: "303 Birch St",
@@ -320,6 +329,8 @@ export const mockBusinesses: Business[] = [
     introOffer: "10% off for new customers",
     categories: ["Category11", "Category12"],
     zapCount: 400,
+    email: "dave@davesfitness.com",
+    phone: "555-555-5555",
   },
   {
     id: "8",
@@ -334,8 +345,7 @@ export const mockBusinesses: Business[] = [
     website: "www.davesdigitalmarketing.com",
     rating: 4.2,
     reviewCount: 25,
-    avatarUrl:
-      "https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
     businessHours: "9 AM - 6 PM",
     address: "404 Digital Ave",
     hiringPromoters: true,
@@ -369,8 +379,7 @@ export const mockBusinesses: Business[] = [
     rating: 4.8,
     reviewCount: 15,
     businessHours: "9 AM - 5 PM",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
     introOffer: "Startup Package: Free Strategy Session",
     categories: ["Consulting", "Business Services"],
     zapCount: 180,
@@ -391,14 +400,13 @@ export const mockPromotions: Promotion[] = [
     mediaType: "video",
     termsAndConditions: "Valid for new customers only.",
     expiresAt: "2025-09-13",
-    firstName: "Bob",
+
     rating: "4.7",
     reviewCount: "12",
     clicks: "80",
     views: "150",
     referrals: "30",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=350&auto=format&fit=crop",
+
     address: "123 Main St, Springfield, USA",
     city: "Springfield",
     state: "IL",
@@ -414,14 +422,13 @@ export const mockPromotions: Promotion[] = [
     businessName: "BrightPath Marketing",
     description:
       "We help local businesses grow through targeted marketing strategies.",
-    firstName: "John",
+
     rating: "4.5",
     reviewCount: "10",
     clicks: "100",
     views: "200",
     referrals: "50",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+
     mediaUrl:
       "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     mediaType: "image",
@@ -439,14 +446,13 @@ export const mockPromotions: Promotion[] = [
     title: "Free Consultation for New Clients!",
     businessName: "Tech Innovations",
     description: "Leading the way in tech solutions for small businesses.",
-    firstName: "Jane",
+
     rating: "4.0",
     reviewCount: "20",
     clicks: "150",
     views: "300",
     referrals: "70",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+
     mediaUrl: "https://vimeo.com/153173314?&login=true",
     mediaType: "video",
     address: "456 Oak Ave",
@@ -463,14 +469,13 @@ export const mockPromotions: Promotion[] = [
     title: "Spring Special: Free Garden Assessment",
     businessName: "Green Thumb Landscaping",
     description: "Transforming outdoor spaces into beautiful landscapes.",
-    firstName: "Alice",
+
     rating: "5.0",
     reviewCount: "30",
     clicks: "200",
     views: "400",
     referrals: "100",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
     mediaUrl: "https://youtu.be/ilE0T2H5pF4",
     mediaType: "video",
     address: "789 Elm St",
@@ -487,14 +492,13 @@ export const mockPromotions: Promotion[] = [
     title: "10% Off All Repairs This Month!",
     businessName: "Bob's Auto Repair",
     description: "Your trusted local auto repair shop.",
-    firstName: "Bob",
+
     rating: "3.5",
     reviewCount: "5",
     clicks: "50",
     views: "100",
     referrals: "20",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+
     mediaUrl:
       "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     mediaType: "image",
@@ -513,14 +517,13 @@ export const mockPromotions: Promotion[] = [
     businessName: "Charlie & Co. Consulting",
     description:
       "Expert consulting services for small businesses and startups.",
-    firstName: "Charlie",
+
     rating: "4.8",
     reviewCount: "15",
     clicks: "80",
     views: "160",
     referrals: "40",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
     mediaUrl:
       "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     mediaType: "image",
@@ -539,14 +542,13 @@ export const mockPromotions: Promotion[] = [
     businessName: "Dave's Digital Marketing",
     description:
       "Specializing in SEO, PPC, and social media marketing for local businesses.",
-    firstName: "Dave",
+
     rating: "4.2",
     reviewCount: "25",
     clicks: "120",
     views: "240",
     referrals: "60",
-    avatarUrl:
-      "https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
+
     mediaUrl: "https://youtu.be/hr2Im6lLJhA",
     mediaType: "video",
     address: "987 Maple Ln",
@@ -564,16 +566,134 @@ export const mockRewards: Reward[] = [
     businessId: "1",
     title: "50% Off Next Cut",
     termsAndConditions: "Available after 3 check-ins.",
-    type: "loyalty", // Use "rewardType" to distinguish between intro and loyalty
+    type: "loyalty",
     threshold: "3",
   },
   {
     id: "2",
     businessId: "1",
     title: "Complimentary Hot Towel & Shave",
-    // Note: No terms and conditions for intro offer
-    type: "intro", // Use "rewardKind" to distinguish
-    // No threshold on introOffer
+    type: "intro",
+  },
+  {
+    id: "3",
+    businessId: "2",
+    title: "10% Off First Plumbing Service",
+    type: "intro",
+    termsAndConditions: "Valid for new customers only.",
+  },
+  {
+    id: "4",
+    businessId: "2",
+    title: "Free Drain Inspection",
+    type: "loyalty",
+    termsAndConditions: "After 2 paid services.",
+    threshold: "2",
+  },
+  {
+    id: "5",
+    businessId: "3",
+    title: "Free Consultation",
+    type: "intro",
+    termsAndConditions: "One per business.",
+  },
+  {
+    id: "6",
+    businessId: "3",
+    title: "20% Off Annual Support Plan",
+    type: "loyalty",
+    termsAndConditions: "After 1 completed project.",
+    threshold: "1",
+  },
+  {
+    id: "7",
+    businessId: "4",
+    title: "20% Off for Referrals",
+    type: "intro",
+    termsAndConditions: "Valid for new clients only.",
+  },
+  {
+    id: "8",
+    businessId: "4",
+    title: "Free Seasonal Planting Guide",
+    type: "loyalty",
+    termsAndConditions: "After 2 completed services.",
+    threshold: "2",
+  },
+  {
+    id: "9",
+    businessId: "5",
+    title: "Buy One Get One Free",
+    type: "intro",
+    termsAndConditions: "On select services.",
+  },
+  {
+    id: "10",
+    businessId: "5",
+    title: "Free Tire Rotation",
+    type: "loyalty",
+    termsAndConditions: "After 3 oil changes.",
+    threshold: "3",
+  },
+  {
+    id: "11",
+    businessId: "6",
+    title: "Free Shipping on Orders Over $50",
+    type: "intro",
+    termsAndConditions: "Online orders only.",
+  },
+  {
+    id: "12",
+    businessId: "6",
+    title: "Free Cupcake with 5th Purchase",
+    type: "loyalty",
+    termsAndConditions: "After 5 purchases.",
+    threshold: "5",
+  },
+  {
+    id: "13",
+    businessId: "7",
+    title: "10% Off for New Customers",
+    type: "intro",
+    termsAndConditions: "First-time members only.",
+  },
+  {
+    id: "14",
+    businessId: "7",
+    title: "Free Personal Training Session",
+    type: "loyalty",
+    termsAndConditions: "After 10 visits.",
+    threshold: "10",
+  },
+  {
+    id: "15",
+    businessId: "8",
+    title: "Free SEO Audit for New Clients",
+    type: "intro",
+    termsAndConditions: "One per business.",
+  },
+  {
+    id: "16",
+    businessId: "8",
+    title: "25% Off Next Campaign",
+    type: "loyalty",
+    termsAndConditions: "After 3 completed campaigns.",
+    threshold: "3",
+  },
+  {
+    id: "17",
+    businessId: "9",
+    title: "Startup Package: Free Strategy Session",
+    type: "intro",
+    termsAndConditions: "For new clients only.",
+  },
+  {
+    id: "18",
+    businessId: "9",
+    title: "Discounted Hourly Rate",
+    type: "loyalty",
+    termsAndConditions: "After 20 hours of consulting.",
+    threshold: "20",
   },
 ];
 
@@ -643,8 +763,9 @@ export const mockMarketplace: Marketplace[] = [
 
 export const mockPosts: Post[] = [
   {
-    id: 1,
-    firstName: "Sophie",
+    id: "1",
+    userId: "1",
+    firstName: "Alice",
     title:
       "Just Launched: My Local Art Workshop Series! Join Us & Get Creative 🎨",
     description:
@@ -660,8 +781,9 @@ export const mockPosts: Post[] = [
     zapCount: "100",
   },
   {
-    id: 2,
-    firstName: "James",
+    id: "2",
+    userId: "3",
+    firstName: "Charlie",
     title: "Must-See: My New Video on Local History!",
     description:
       "I just uploaded a new video exploring the rich history of our town. From hidden gems to famous landmarks, it's a journey through time. Check it out and let me know your thoughts!",
@@ -675,8 +797,9 @@ export const mockPosts: Post[] = [
     zapCount: "50",
   },
   {
-    id: 3,
-    firstName: "Olivia",
+    id: "3",
+    userId: "4",
+    firstName: "Diana",
     title: "Check Out My New Video on Local Wildlife!",
     description:
       "I just uploaded a new video showcasing the amazing wildlife in our area. From birds to deer, it's a must-watch for nature lovers! Let me know what you think in the comments.",
@@ -690,8 +813,9 @@ export const mockPosts: Post[] = [
     zapCount: "75",
   },
   {
-    id: 4,
-    firstName: "Liam",
+    id: "4",
+    userId: "2",
+    firstName: "Bob",
     title: "Exploring Local Parks: My Favorite Spots 🌳",
     description:
       "I just published a new blog post about my favorite parks in the area. From hidden trails to scenic views, these spots are perfect for a weekend getaway. Check it out and share your favorites too!",
@@ -706,8 +830,9 @@ export const mockPosts: Post[] = [
     zapCount: "60",
   },
   {
-    id: 5,
-    firstName: "Emma",
+    id: "5",
+    userId: "5",
+    firstName: "Ethan",
     title: "Local Food Festival: My Experience & Recommendations 🍽️",
     description:
       "I had a blast at the local food festival this weekend! From delicious street food to amazing local vendors, it was a feast for the senses. Check out my top picks and let me know your favorites!",
@@ -722,8 +847,9 @@ export const mockPosts: Post[] = [
     zapCount: "90",
   },
   {
-    id: 6,
-    firstName: "Noah",
+    id: "6",
+    userId: "6",
+    firstName: "Fiona",
     title: "My New Video on Local Art Scene 🎨",
     description:
       "I just released a new video exploring the vibrant local art scene. From galleries to street art, there's so much creativity in our community. Check it out and let me know your thoughts!",
@@ -737,8 +863,9 @@ export const mockPosts: Post[] = [
     zapCount: "110",
   },
   {
-    id: 7,
-    firstName: "Mason",
+    id: "7",
+    userId: "7",
+    firstName: "George",
     title: "Need help with home repairs? I'm available this weekend!",
     description:
       "Hey neighbors! I'm a licensed handyman with 10+ years experience in home repairs. If you need help with anything around the house, feel free to reach out. I'm available this weekend and would love to assist you!",
@@ -750,54 +877,6 @@ export const mockPosts: Post[] = [
     mediaUrl: "",
     mediaType: "text",
     zapCount: "40",
-  },
-  {
-    id: 8,
-    firstName: "Ava",
-    title: "Community Garden Volunteers Needed 🌱",
-    description:
-      "We're looking for volunteers to help maintain our local community garden this summer! No experience necessary—just bring your enthusiasm and love for plants. Tools and refreshments provided. Let's grow together!",
-    likes: "18",
-    comments: "5",
-    publishDate: "2024-06-12",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    mediaUrl:
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    mediaType: "image",
-    zapCount: "80",
-  },
-  {
-    id: 9,
-    firstName: "Lucas",
-    title: "Local Book Club: June Meeting Announcement 📚",
-    description:
-      "Our neighborhood book club is meeting on June 20th at the community center! This month, we're reading 'The Night Circus' by Erin Morgenstern. New members are always welcome—come for the discussion, stay for the snacks!",
-    likes: "14",
-    comments: "3",
-    publishDate: "2024-06-05",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    mediaUrl:
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    mediaType: "image",
-    zapCount: "30",
-  },
-  {
-    id: 10,
-    firstName: "Mia",
-    title: "Local Hiking Group: Weekend Adventure! 🥾",
-    description:
-      "Join us for a weekend hike at the beautiful Blue Ridge Mountains! All skill levels are welcome. Bring your water, snacks, and a sense of adventure. Let's explore the great outdoors together!",
-    likes: "25",
-    comments: "8",
-    publishDate: "2024-06-15",
-    avatarUrl:
-      "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    mediaUrl:
-      "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    mediaType: "image",
-    zapCount: "0",
   },
 ];
 
@@ -920,5 +999,94 @@ export const mockPromoterRatings: PromoterRating[] = [
     overall: "5",
     comment: "Very professional and easy to work with.",
     createdAt: "2024-06-17",
+  },
+];
+
+export type ZapTransaction = {
+  id: string;
+  fromUserId: string;
+  toUserId: string;
+  fromNostrPubkey: string;
+  toNostrPubkey: string;
+  amountSats: number;
+  createdAt: string;
+  note?: string;
+  relatedPromotionId?: string;
+  relatedBusinessId?: string;
+  zapType?: "promotion" | "reward" | "post" | "tip";
+  status?: "pending" | "completed" | "failed";
+};
+
+export const mockZapTransactions: ZapTransaction[] = [
+  {
+    id: "1",
+    fromUserId: "3",
+    toUserId: "1",
+    fromNostrPubkey:
+      "npub1fromuser3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    toNostrPubkey: "npub1touser1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    amountSats: 500,
+    createdAt: "2024-06-15T10:30:00Z",
+    note: "Great promotion!",
+    relatedPromotionId: "1",
+    zapType: "promotion",
+    status: "completed",
+  },
+  {
+    id: "2",
+    fromUserId: "6",
+    toUserId: "4",
+    fromNostrPubkey:
+      "npub1fromuser6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    toNostrPubkey: "npub1touser4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    amountSats: 250,
+    createdAt: "2024-06-16T14:45:00Z",
+    note: "Thanks for the gardening tips.",
+    relatedBusinessId: "4",
+    zapType: "reward",
+    status: "completed",
+  },
+  {
+    id: "3",
+    fromUserId: "2",
+    toUserId: "7",
+    fromNostrPubkey:
+      "npub1fromuser2xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    toNostrPubkey: "npub1touser7xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    amountSats: 1000,
+    createdAt: "2024-06-17T09:20:00Z",
+    note: "Awesome digital marketing campaign.",
+    relatedPromotionId: "7",
+    relatedBusinessId: "8",
+    zapType: "promotion",
+    status: "completed",
+  },
+  {
+    id: "4",
+    fromUserId: "1",
+    toUserId: "5",
+    fromNostrPubkey:
+      "npub1fromuser1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    toNostrPubkey: "npub1touser5xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    amountSats: 150,
+    createdAt: "2024-06-18T12:00:00Z",
+    note: "Thanks for the auto repair advice.",
+    relatedBusinessId: "5",
+    zapType: "tip",
+    status: "completed",
+  },
+  {
+    id: "5",
+    fromUserId: "4",
+    toUserId: "2",
+    fromNostrPubkey:
+      "npub1fromuser4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    toNostrPubkey: "npub1touser2xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    amountSats: 300,
+    createdAt: "2024-06-18T15:30:00Z",
+    note: "Appreciate your support!",
+    relatedPromotionId: "2",
+    zapType: "promotion",
+    status: "completed",
   },
 ];

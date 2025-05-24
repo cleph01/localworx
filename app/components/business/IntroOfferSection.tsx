@@ -4,7 +4,7 @@ import LoyaltyProgramSection from "./LoyaltyProgramSection";
 // IntroOfferSection.tsx
 const IntroOfferSection = async ({ businessId }: { businessId: string }) => {
   // Simulate fetching from a mock database
-  const item = await mockFetch(`/api/rewards?${businessId}`);
+  const item = await mockFetch(`/api/rewards?businessId=${businessId}`);
 
   // Check if the item exists
   if (!item) {
@@ -22,9 +22,9 @@ const IntroOfferSection = async ({ businessId }: { businessId: string }) => {
   );
 
   return (
-    <section className="bg-yellow-50 py-6 px-6 border border-yellow-300 rounded my-6 mx-6 space-y-2">
+    <section className="bg-yellow-50 py-6 px-4 border border-yellow-300 rounded my-6 mx-4 space-y-2">
       {/* Intro Offer */}
-      {introOffer && (
+      {introOffer ? (
         <div className="space-y-2">
           <h2 className="text-xl font-bold mb-2">🎁 Introductory Offer</h2>
           <p className="text-gray-700 text-base font-semibold">{introOffer}</p>
@@ -32,14 +32,20 @@ const IntroOfferSection = async ({ businessId }: { businessId: string }) => {
             On your first visit when you check-in using LocalWorx.
           </p>
         </div>
+      ) : (
+        <p className="text-gray-700 text-sm">Currently no Introductory Offer</p>
       )}
 
       {/* Loyalty Reward Section */}
-      {loyaltyReward && (
+      {loyaltyReward ? (
         <LoyaltyProgramSection
           loyaltyReward={loyaltyReward}
           threshold={threshold}
         />
+      ) : (
+        <p className="text-gray-700 text-sm">
+          Currently no Rewards program available
+        </p>
       )}
     </section>
   );

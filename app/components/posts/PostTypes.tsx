@@ -1,3 +1,32 @@
+/**
+ * post/[id]/page.tsx
+ **/
+
+export type PostHeroSectionProps = {
+  data: {
+    title: string;
+    firstName: string;
+    mediaUrl: string;
+    mediaType: string;
+  };
+};
+
+export type PostBodySectionProps = {
+  data: {
+    description: string;
+  };
+};
+
+export type PostZapSectionProps = {
+  data: {
+    userId: string;
+  };
+};
+
+/**
+ *
+ *
+ */
 export type Post = {
   id: string | number;
   firstName: string;

@@ -1,4 +1,7 @@
-// promtion/[id]/page.tsx
+/**
+ * promotion/[id]/page.tsx
+ * */
+
 export type PromotionHeroSectionProps = {
   data: {
     title: string;
@@ -32,7 +35,9 @@ export type promoterDetailsSectionProps = {
   };
 };
 
-// PromoterDetailsSection.tsx
+/**
+ *  PromoterDetailsSection.tsx
+ **/
 export type PromoterDetails = {
   promoterId: string;
   avatarUrl: string;
@@ -41,7 +46,9 @@ export type PromoterDetails = {
   reviewCount: number;
 };
 
-// PromotionCard.tsx
+/**
+ *  PromotionCard.tsx
+ **/
 export type PromotionHeaderType = {
   title?: string;
   mediaUrl?: string;
@@ -50,10 +57,10 @@ export type PromotionHeaderType = {
 
 export type PromotionContentType = {
   id: number;
-  firstName?: string;
+  promoterId?: string;
   rating?: string;
   reviewCount?: string;
-  avatarUrl?: string;
+
   businessName?: string;
   description?: string;
   address?: string;

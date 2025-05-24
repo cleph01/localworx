@@ -1,4 +1,6 @@
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
+import Button from "../ui/Button";
+import { FaBitcoin } from "react-icons/fa";
 
 // BusinessOverviewSection.tsx
 const BusinessOverviewSection = async ({
@@ -32,17 +34,39 @@ const BusinessOverviewSection = async ({
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-bold">{businessData.businessName}</h1>
           <p className="text-gray-600">
-            {businessData.address}, {businessData.city}, {businessData.state}
+            📍 {businessData.address}, {businessData.city}, {businessData.state}
           </p>
           <p className="text-gray-600">
-            <span className="font-semibold">Hours:</span> {businessData.hours}
+            <span className="font-semibold">💼 Hours:</span>{" "}
+            {businessData.businessHours}
           </p>
           <p className="text-gray-600">
-            <span className="font-semibold">Email:</span> {businessData.email}
+            <span className="font-semibold">✉️ Email:</span>{" "}
+            {businessData.email}
           </p>
           <p className="text-gray-600">
-            <span className="font-semibold">Phone</span>: {businessData.phone}
+            <span className="font-semibold">📱 Phone:</span>{" "}
+            {businessData.phone}
           </p>
+          {businessData.hiringPromoters ? (
+            <div className="flex flex-col">
+              <div className="flex flex-row items-center mb-2">
+                <span className="flex flex-row items-center font-semibold mr-1">
+                  <FaBitcoin className="text-orange-500 mr-1" />
+                  Income:
+                </span>
+                <div className="text-gray-600"> HIRING Promoters!</div>
+              </div>
+              <Button
+                details={{
+                  css: "bg-green-600 px-4 py-2 text-gray-100 font-bold",
+                  text: "Reach out 🤝",
+                }}
+              />{" "}
+            </div>
+          ) : (
+            <div>❌ Currently not hiring promoters</div>
+          )}
         </div>
       </div>
     </section>

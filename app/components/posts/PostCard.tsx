@@ -2,10 +2,10 @@
 
 import Card from "../ui/Card";
 
-import { PostContentType, PostFooterType, PostHeaderType } from "./PostTypes";
+import { PostContentType, PostFooterType, PostHeaderType } from "./postTypes";
 import Button from "../ui/Button";
 import { FaEye } from "react-icons/fa";
-import { Post } from "./PostTypes";
+import { Post } from "./postTypes";
 
 const PostCard = ({ post }: { post: Post }) => {
   return (

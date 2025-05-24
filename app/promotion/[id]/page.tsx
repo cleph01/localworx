@@ -22,35 +22,37 @@ export default async function PromotionProfilePage({
   //   const promotion = await res.json();
 
   // Simulate fetching from a mock database
-  const res = await mockFetch(`/api/promotions/${id}`);
-  const promotion = res.data;
+  const promotion = await mockFetch(`/api/promotions/${id}`);
 
   if (!promotion) {
     return <div>Promotion not found</div>;
   }
 
+  const promotionData = promotion.data;
+
+  // Organize the data I want to pass as props
   const heroSectiondData = {
-    title: promotion.title,
-    businessName: promotion.businessName || "Business Name",
-    mediaUrl: promotion.mediaUrl || "/placeholder-image.jpg",
-    mediaType: promotion.mediaType || "image",
+    title: promotionData.title,
+    businessName: promotionData.businessName || "Business Name",
+    mediaUrl: promotionData.mediaUrl || "/placeholder-image.jpg",
+    mediaType: promotionData.mediaType || "image",
   };
   const detailsSectionData = {
-    description: promotion.description,
-    termsAndConditions: promotion.termsAndConditions,
-    expiresAt: promotion.expiresAt,
+    description: promotionData.description,
+    termsAndConditions: promotionData.termsAndConditions,
+    expiresAt: promotionData.expiresAt,
   };
   const rewardCalloutSectionData = {
-    rewardId: promotion.rewardId,
-    businessId: promotion.businessId,
+    rewardId: promotionData.rewardId,
+    businessId: promotionData.businessId,
   };
 
   const businessPreviewSectionData = {
-    businessId: promotion.businessId,
+    businessId: promotionData.businessId,
   };
 
   const promoterDetailsSectionData = {
-    promoterId: promotion.promoterId,
+    promoterId: promotionData.promoterId,
   };
 
   // Render the promotion details page

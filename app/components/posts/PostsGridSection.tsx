@@ -1,6 +1,6 @@
 // PostGridSection.tsx
 import PostCard from "./PostCard";
-import { PostsGridSectionProps } from "./PostTypes";
+import { PostsGridSectionProps } from "./postTypes";
 
 const PostsGridSection = ({ posts }: PostsGridSectionProps) => {
   return (

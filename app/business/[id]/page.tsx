@@ -30,7 +30,7 @@ export default async function BusinessProfilePage({
       <IntroOfferSection businessId={id} />
 
       {/* Promotions tied to this business */}
-      <BusinessPromotionsSection />
+      <BusinessPromotionsSection businessId={id} />
 
       {/* CTA + Footer */}
       <CallToActionSection />

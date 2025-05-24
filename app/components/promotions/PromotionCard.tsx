@@ -9,13 +9,15 @@ import {
   PromotionFooterType,
   PromotionCardProps,
 } from "./promotionTypes";
+import PromoterDetailsSection from "./PromoterDetailsSection";
 
 const PromotionCard = ({ promotion }: PromotionCardProps) => {
+  console.log("Promotion @ promotionCard: ", promotion);
   return (
     <Card
       Header={<PromotionHeader {...promotion} />}
       Content={<PromotionContent {...promotion} />}
-      Footer={<PromotionFooter {...promotion} />}
+      // Footer={<PromotionFooter {...promotion} />}
       className="w-full max-w-sm"
     />
   );
@@ -104,10 +106,7 @@ const PromotionHeader = ({
 /* Service Listing Content */
 const PromotionContent = ({
   id,
-  firstName,
-  rating,
-  reviewCount,
-  avatarUrl,
+  promoterId,
   businessName,
   description,
   address,
@@ -169,30 +168,7 @@ const PromotionContent = ({
         </button>
       </div>
       {/* Promoter Info */}
-      <div className="flex flex-col border-t border-gray-400 mt-2 pt-2 gap-2">
-        <p className="text-gray-500 text-sm mt-1">Promotion By:</p>
-        <div className="flex flex-row items-center justify-between">
-          <div className="flex flex-row items-center mr-1 mt-1 gap-2">
-            <img
-              className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
-              src={avatarUrl}
-              alt={firstName}
-            />
-            <div className="text-lg font-semibold mr-2">{firstName}</div>
-          </div>
-
-          <div className="flex flex-row items-center gap-1">
-            <span className="text-base sm:text-sm ml-2">⭐</span>
-            <span className="text-lg sm:text-sm text-gray-500 font-semibold">
-              {rating}
-            </span>
-            <span className="text-sm sm:text-xs text-gray-400 ">
-              {" "}
-              ({reviewCount} reviews)
-            </span>
-          </div>
-        </div>
-      </div>
+      <PromoterDetailsSection data={{ promoterId: promoterId ?? "" }} />
     </div>
   );
 };

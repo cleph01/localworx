@@ -45,7 +45,7 @@ const PromoterProfileSection = async ({ data }: PromoterDetailsHeaderProps) => {
   }
 
   const promoterData = promoter.data;
-  console.log("Promoter Profile Section: ", data);
+
   return (
     <div className="flex flex-col gap-2">
       <p className="text-gray-500 text-sm mt-1">Promotion By:</p>
@@ -97,9 +97,6 @@ const PromoterRatingSection = async ({ data }: PromoterRatingProps) => {
   }, 0);
   // Avg rating
   const avgRating = ratingSum / ratingsData.length;
-
-  // Count of reviews left
-  console.log("rating counts: ", ratingCount);
 
   return (
     <div className="flex flex-row items-center gap-1">
