@@ -151,7 +151,7 @@ const PromoterMetricsSection = async ({ data }: PromoterMetricsProps) => {
       <Button
         details={{
           text: "⚡️ Zap It!",
-          css: "w-full mt-4 py-2 bg-orange-500 text-white text-base font-bold",
+          css: "w-full flex-1 mt-4 py-2 bg-orange-500 text-white text-base font-bold",
         }}
       />
     </div>
