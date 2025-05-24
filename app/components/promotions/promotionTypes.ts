@@ -56,7 +56,7 @@ export type PromotionHeaderType = {
 };
 
 export type PromotionContentType = {
-  id: number;
+  id: string;
   promoterId?: string;
   rating?: string;
   reviewCount?: string;

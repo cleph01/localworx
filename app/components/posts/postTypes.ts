@@ -28,7 +28,7 @@ export type PostZapSectionProps = {
  *
  */
 export type Post = {
-  id: string | number;
+  id: string;
   firstName: string;
   title: string;
   description: string;
@@ -53,7 +53,7 @@ export type PostHeaderType = {
 };
 
 export type PostContentType = {
-  id?: string | number;
+  id?: string;
   description?: string;
   firstName?: string;
   avatarUrl?: string;

@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const Cart = () => {
   const [cart, setCart] = useState<any[]>([]);
@@ -19,8 +20,10 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
+    //
+    const router = useRouter();
     // Redirect to checkout page
-    window.location.href = "/checkout";
+    router.push("/checkout");
   };
 
   return (

@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
 import { FaBars, FaRegWindowClose } from "react-icons/fa";
-import CartIcon from "./ui/CartIcon";
+import CartIcon from "../ui/CartIcon";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,11 +52,17 @@ const Navbar = () => {
               Marketplace
             </Link>
             <Link
+              href="/promotions"
+              className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
+            >
+              Promotions
+            </Link>
+            {/* <Link
               href="/promoter-hub"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
               Promoter Hub
-            </Link>
+            </Link> */}
             {/* <Link
               href="/help"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
@@ -65,9 +71,13 @@ const Navbar = () => {
             </Link> */}
             {/* Cart Icon */}
             <CartIcon />
+            {/* TODO: should push to Dashboard - Next-Auth will pick up and for signin 
+            Should probably use useSession() in the Navbar to toggle "Join LocalWorx" vs. "Signin"
+            Which will automatically push to dashboard and pick up the fact that a session is detected
+            */}
             <Link
-              href="/signup"
-              className="block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"
+              href="/dashboard"
+              className="text-center block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"
             >
               Join LocalWorx
             </Link>
@@ -116,11 +126,17 @@ const Navbar = () => {
               Marketplace
             </Link>
             <Link
+              href="/promotions"
+              className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
+            >
+              Promotions
+            </Link>
+            {/* <Link
               href="/promoter-hub"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
               Promoter Hub
-            </Link>
+            </Link> */}
             {/* <Link
               href="/help"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
@@ -132,8 +148,12 @@ const Navbar = () => {
               <CartIcon />
             </div>
 
+            {/* TODO: should push to Dashboard - Next-Auth will pick up and for signin 
+            Should probably use useSession() in the Navbar to toggle "Join LocalWorx" vs. "Signin"
+            Which will automatically push to dashboard and pick up the fact that a session is detected
+            */}
             <Link
-              href="/signup"
+              href="/dashboard"
               className="text-center block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"
             >
               Join LocalWorx

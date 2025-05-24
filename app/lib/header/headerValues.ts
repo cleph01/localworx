@@ -28,6 +28,11 @@ const headerValues = {
     tagLine:
       "Publish posts to spotlight your talents, ideas, or offerings—reach your community, inspire engagement, and earn zaps for your creativity.",
   },
+  promotions: {
+    headLine: "Amplify Local Impact. Promote What Matters.",
+    tagLine:
+      "Support your neighbors and local businesses by sharing opportunities, boosting visibility, and driving real change in your community.",
+  },
 };
 
 export default headerValues;

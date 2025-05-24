@@ -1,42 +1,38 @@
 // app/dashboard/page.tsx
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/lib/authOptions";
-import { redirect } from "next/navigation";
-import PageHeader from "../components/ui/PageHeader";
+import UserSummarySection from "../components/dashboard/UserSummarySection";
+import MyBusinessesSection from "../components/dashboard/MyBusinessesSection";
+import MyPromotionsSection from "../components/dashboard/MyPromotionsSection";
+import MyPostsSection from "../components/dashboard/MyPostsSection";
+import Footer from "../components/Footer";
+import MyEarningsSnapshotSection from "../components/dashboard/MyEarningsSummarySection";
+import MyBitcoinWallet from "../components/dashboard/MyBitcoinWallet";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
   console.log("Session in DashboardPage:", session);
-  if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/dashboard");
-  }
+  // Checks if User is signed in
+  // if (!session) {
+  //   redirect("/api/auth/signin?callbackUrl=/dashboard");
+  // }
 
   return (
     // <div className="p-8">
     //   <pre>{JSON.stringify(session, null, 2)}</pre>
     // </div>
-    <div className="min-h-screen bg-gray-100 p-8">
-      <PageHeader />
-      <div className="max-w-2xl mx-auto bg-white shadow-md rounded-md p-6">
-        <h1 className="text-3xl font-bold mb-4 text-gray-800">Dashboard</h1>
+    <main className="min-h-screen flex flex-col items-center px-4 py-8">
+      <section className="w-full lg:max-w-4xl flex flex-row justify-start">
+        <h1 className="w-full text-3xl font-bold mb-4">My Dashboard</h1>
+      </section>
+      <UserSummarySection />
+      <MyEarningsSnapshotSection />
+      <MyBitcoinWallet />
+      <MyBusinessesSection />
+      <MyPromotionsSection />
+      <MyPostsSection />
 
-        <p className="text-lg text-gray-700 mb-2">
-          Welcome,{" "}
-          <span className="font-semibold">{session?.user?.name || "user"}</span>
-          !
-        </p>
-        <p className="text-gray-600">Email: {session?.user?.email}</p>
-        <p className="text-gray-600 mb-4">User ID: {session?.user?.id}</p>
-
-        <form action="/api/auth/signout" method="POST">
-          <button
-            type="submit"
-            className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-          >
-            Sign out
-          </button>
-        </form>
-      </div>
-    </div>
+      <Footer />
+    </main>
   );
 }

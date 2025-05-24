@@ -14,10 +14,11 @@ const ZapStatsSection = async ({ data }: PostZapSectionProps) => {
   let zapCount = zaps.data.length;
 
   return (
-    <section className="max-w-4xl w-full bg-yellow-50 border border-yellow-200 rounded mx-4 px-4 py-4 my-6">
+    <section className="max-w-4xl bg-yellow-50 border border-yellow-200 rounded mx-4 px-4 py-4 my-6">
       <h2 className="text-xl font-bold mb-2">⚡ Zaps Received</h2>
       <p className="text-gray-700 text-lg font-semibold">
-        {zapCount} ⚡ from supporters
+        {/* if zapCount === 0 then at least display 1 */}
+        {!zapCount ? "1" : zapCount} ⚡ from supporters
       </p>
       <p className="text-sm text-gray-500">
         Supporters have tipped this post using Bitcoin on the Lightning Network.

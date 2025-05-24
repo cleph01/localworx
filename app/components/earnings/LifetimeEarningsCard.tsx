@@ -1,7 +1,6 @@
 // LifetimeEarningsCard.tsx
 import { FaBtc } from "react-icons/fa";
-import Button from "../../ui/Button";
-import Card from "../../ui/Card";
+import Card from "../ui/Card";
 import {
   LifetimeEarningsContentType,
   LifetimeEarningsHeaderType,
@@ -21,7 +20,7 @@ const LifetimeEarningsCard = () => {
     <Card
       Header={<LifetimeEarningsHeader {...lifetimeEarningsData} />}
       Content={<LifetimeEarningsContent {...lifetimeEarningsData} />}
-      className="w-full max-w-sm"
+      css="w-full max-w-sm"
     />
   );
 };

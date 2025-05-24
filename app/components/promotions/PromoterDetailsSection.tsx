@@ -1,5 +1,3 @@
-import { DiVim } from "react-icons/di";
-
 import Button from "../ui/Button";
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 
@@ -14,7 +12,7 @@ type promoterDetailsSectionProps = {
 
 const PromoterDetailsSection = ({ data }: promoterDetailsSectionProps) => {
   return (
-    <section className="w-full max-w-4xl flex flex-col border-t border-gray-400 my-2 py-2 gap-2 px-4">
+    <section className="w-full max-w-4xl flex flex-col border-t border-gray-200 my-2 py-2 gap-2 px-4">
       <PromoterProfileSection
         data={{
           promoterId: data.promoterId,

@@ -14,7 +14,7 @@ type AuthorDetailsSectionProps = {
 
 const AuthorPreviewSection = ({ data }: AuthorDetailsSectionProps) => {
   return (
-    <section className="w-full max-w-4xl flex flex-col border-t border-gray-400 my-2 py-2 gap-2 px-4">
+    <section className="w-full max-w-4xl flex flex-col border-t border-gray-200 my-2 py-2 gap-2 px-4">
       <AuthorProfileSection
         data={{
           userId: data.userId,
@@ -103,11 +103,13 @@ const AuthorRatingSection = async ({ data }: AuthorRatingProps) => {
     <div className="flex flex-row items-center gap-1">
       <span className="text-base sm:text-2xl ml-2">⭐</span>
       <span className="text-lg sm:text-xl text-gray-500 font-semibold">
-        {avgRating.toString()}
+        {/* AvgRating might be NaN if no rating records exist */}
+        {isNaN(avgRating) ? "5" : avgRating.toString()}
       </span>
       <span className="text-sm sm:text-base text-gray-400 ">
         {" "}
-        ({ratingCount} {ratingCount > 1 ? "ratings" : "rating"})
+        ({ratingCount}{" "}
+        {ratingCount > 1 || ratingCount === 0 ? "ratings" : "rating"})
       </span>
     </div>
   );

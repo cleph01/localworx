@@ -1,11 +1,9 @@
-"use client";
-
-import Card from "../ui/Card";
-
 import { PostContentType, PostFooterType, PostHeaderType } from "./postTypes";
 import Button from "../ui/Button";
 import { FaEye } from "react-icons/fa";
 import { Post } from "./postTypes";
+import Card from "../ui/Card";
+import PostViewButton from "./PostViewButton";
 
 const PostCard = ({ post }: { post: Post }) => {
   return (
@@ -13,7 +11,7 @@ const PostCard = ({ post }: { post: Post }) => {
       Header={<PostHeader {...post} />}
       Content={<PostContent {...post} />}
       Footer={<PostFooter {...post} />}
-      className="w-full max-w-sm"
+      css="w-full max-w-sm"
     />
   );
 };
@@ -117,12 +115,6 @@ const PostContent = ({
   avatarUrl,
   description,
 }: PostContentType) => {
-  // Handle View Item
-  const handleViewItem = () => {
-    // Use useRouter inside the parent component and pass router as a prop if needed
-    window.location.href = `/post/${id}`;
-  };
-
   return (
     <div className="flex flex-col">
       {/* Description */}
@@ -146,12 +138,7 @@ const PostContent = ({
           </div>
 
           {/* View Item */}
-          <button
-            onClick={handleViewItem}
-            className="bg-gray-200 text-gray-800 px-3 py-1 h-10 rounded text-sm flex items-center gap-1 hover:bg-gray-300 cursor-pointer"
-          >
-            <FaEye /> View
-          </button>
+          <PostViewButton postId={id ?? ""} />
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Importing Providers from layout-providers
 import { Providers } from "./layout-providers";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

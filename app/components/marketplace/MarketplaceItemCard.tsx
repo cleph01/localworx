@@ -1,7 +1,6 @@
 // MarketplaceItemCard.tsx
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   CartItem,
@@ -19,14 +18,12 @@ type MarketplaceItemCardProps = {
 };
 
 const MarketplaceItemCard = ({ item }: MarketplaceItemCardProps) => {
-  const router = useRouter();
-
   return (
     <Card
       Header={<ListingHeader {...item} />}
       Content={<ListingContent {...item} />}
       Footer={<ListingFooter {...item} />}
-      className="w-full max-w-sm"
+      css="w-full max-w-sm"
     />
   );
 };
@@ -182,6 +179,7 @@ const ListingContent = ({
 
 /* Service Listing Footer */
 const ListingFooter = (item: MarketplaceItem) => {
+  const router = useRouter();
   // Handle Add to Cart
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -211,7 +209,7 @@ const ListingFooter = (item: MarketplaceItem) => {
   // Handle View Item
   const handleViewItem = () => {
     // Use useRouter inside the parent component and pass router as a prop if needed
-    window.location.href = `/marketplace/${item.id}`;
+    router.push(`/marketplace/${item.id}`);
   };
 
   return (

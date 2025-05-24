@@ -1,5 +1,5 @@
 // components/promoter-hub/earnings-summary/InKindPaymentCard.tsx
-import Card from "../../ui/Card";
+import Card from "../ui/Card";
 import {
   InKindPayoutHeaderType,
   InKindPayoutContentType,
@@ -19,7 +19,7 @@ const InKindPayoutCard = () => {
     <Card
       Header={<InKindPayoutHeader {...inKindPayoutData} />}
       Content={<InKindPayoutContent {...inKindPayoutData} />}
-      className="w-full max-w-sm"
+      css="w-full max-w-sm"
     />
   );
 };

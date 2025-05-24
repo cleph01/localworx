@@ -1,5 +1,4 @@
-"use client";
-
+import { redirect } from "next/navigation";
 import { FaEye, FaMapMarkerAlt } from "react-icons/fa";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
@@ -10,6 +9,7 @@ import {
   PromotionCardProps,
 } from "./promotionTypes";
 import PromoterDetailsSection from "./PromoterDetailsSection";
+import PromotionViewButton from "./PromotionViewButton";
 
 const PromotionCard = ({ promotion }: PromotionCardProps) => {
   console.log("Promotion @ promotionCard: ", promotion);
@@ -117,8 +117,9 @@ const PromotionContent = ({
 }: PromotionContentType) => {
   // Handle View Item
   const handleViewItem = () => {
-    // Use useRouter inside the parent component and pass router as a prop if needed
-    window.location.href = `/promotion/${id}`;
+    //
+    // can't use useRouter in a server component
+    redirect(`/promotion/${id}`);
   };
 
   return (
@@ -160,12 +161,7 @@ const PromotionContent = ({
           </div>
         )}
         {/* View Item */}
-        <button
-          onClick={handleViewItem}
-          className="bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm flex items-center gap-1 hover:bg-gray-300 cursor-pointer"
-        >
-          <FaEye /> View
-        </button>
+        <PromotionViewButton promotionId={id ?? ""} />
       </div>
       {/* Promoter Info */}
       <PromoterDetailsSection data={{ promoterId: promoterId ?? "" }} />
@@ -192,6 +188,8 @@ const PromotionFooter = ({ clicks, views, referrals }: PromotionFooterType) => {
       </div>
 
       {/* CTA - Zap Button */}
+      {/* Consider making the Zap Button it's own client component (i think) because 
+      of the interactivity involved */}
       <Button
         details={{
           text: "⚡️ Zap It!",

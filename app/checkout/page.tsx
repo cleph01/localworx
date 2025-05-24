@@ -1,8 +1,12 @@
 "use client";
 // app/checkout/page.tsx
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Checkout = () => {
+  // to be able to programitcally change routes from a client component
+  const router = useRouter();
+  //
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
@@ -24,7 +28,7 @@ const Checkout = () => {
     alert("Payment successful!");
     // Clear cart after checkout
     localStorage.setItem("cart", JSON.stringify([]));
-    window.location.href = "/order-history"; // Redirect to Order History
+    router.push("/order-history"); // Redirect to Order History
   };
 
   return (

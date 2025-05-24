@@ -9,7 +9,7 @@ import Footer from "../components/Footer";
 
 export default function MarketplacePage() {
   return (
-    <main className="min-h-screen flex flex-col justify-center">
+    <main className="min-h-screen flex flex-col items-center">
       <MarketplaceIntroSection />
       <HowItWorksSection />
       <EarnedRewardsSection />

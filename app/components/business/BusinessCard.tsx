@@ -1,34 +1,34 @@
 import Card from "../ui/Card";
 import BusinessViewButton from "./BusinessViewButton";
 import {
-  ListingContentType,
-  ListingFooterType,
-  ListingHeaderType,
-  ServiceListingCardProps,
-} from "./serviceListingTypes";
+  BusinessCardContentType,
+  BusinessCardFooterType,
+  BusinessCardHeaderType,
+  BusinessCardProps,
+} from "./businessCardTypes";
 
-const ServiceListingCard = ({ business }: ServiceListingCardProps) => {
+const BusinessCard = ({ business }: BusinessCardProps) => {
   return (
     <Card
-      Header={<ListingHeader {...business} />}
-      Content={<ListingContent {...business} />}
-      Footer={<ListingFooter {...business} />}
+      Header={<BusinessCardHeader {...business} />}
+      Content={<BusinessCardContent {...business} />}
+      Footer={<BusinessCardFooter {...business} />}
       css="w-full max-w-sm"
     />
   );
 };
-export default ServiceListingCard;
+export default BusinessCard;
 
 //
 
-const ListingHeader = ({
+const BusinessCardHeader = ({
   businessName,
   firstName,
   rating,
   reviewCount,
   logoUrl,
   zapCount,
-}: ListingHeaderType) => (
+}: BusinessCardHeaderType) => (
   <div className="flex flex-col gap-2">
     <div className="flex flex-row items-center justify-between gap-2">
       {/* Title */}
@@ -62,13 +62,13 @@ const ListingHeader = ({
   </div>
 );
 
-const ListingContent = ({
+const BusinessCardContent = ({
   businessHours,
   address,
   hiringPromoters,
   hasSpecialOffers,
   introOffer,
-}: ListingContentType) => (
+}: BusinessCardContentType) => (
   <div className="flex flex-col gap-2">
     {/* Business Hours */}
     <div className="flex flex-row items-center gap-2">
@@ -109,7 +109,7 @@ const ListingContent = ({
   </div>
 );
 
-const ListingFooter = ({ id, categories }: ListingFooterType) => {
+const BusinessCardFooter = ({ id, categories }: BusinessCardFooterType) => {
   return (
     <div className="flex flex-row items-center justify-between gap-2">
       <div className="flex flex-wrap gap-1">

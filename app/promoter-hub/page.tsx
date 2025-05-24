@@ -9,7 +9,7 @@ import PageHeader from "../components/ui/PageHeader";
 
 const PromoterHubPage = () => {
   return (
-    <div className="min-h-screenflex flex-col justify-center">
+    <main className="min-h-screenflex flex-col justify-center">
       {/* Page Header */}
       <PageHeader />
 
@@ -27,7 +27,7 @@ const PromoterHubPage = () => {
 
       {/* Footer */}
       <Footer />
-    </div>
+    </main>
   );
 };
 
