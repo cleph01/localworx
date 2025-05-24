@@ -1,6 +1,6 @@
 // PostBodySection.tsx
 
-import { PostBodySectionProps } from "../posts/postTypes";
+import { PostBodySectionProps } from "@/app/components/posts/postTypes";
 
 const PostBodySection = ({ data }: PostBodySectionProps) => {
   return (
