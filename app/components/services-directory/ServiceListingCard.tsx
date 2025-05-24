@@ -22,7 +22,7 @@ const ServiceListingCard = ({ business }: ServiceListingCardProps) => {
       Header={<ListingHeader {...business} />}
       Content={<ListingContent {...business} />}
       Footer={<ListingFooter {...business} />}
-      className="w-full max-w-sm"
+      css="w-full max-w-sm"
     />
   );
 };

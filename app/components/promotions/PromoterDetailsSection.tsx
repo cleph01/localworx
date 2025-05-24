@@ -56,7 +56,7 @@ const PromoterProfileSection = async ({ data }: PromoterDetailsHeaderProps) => {
             src={promoterData.avatarUrl}
             alt={promoterData.firstName}
           />
-          <div className="text-lg font-semibold mr-2">
+          <div className="text-lg sm:text-base font-semibold mr-2">
             {promoterData.firstName}
           </div>
         </div>
@@ -100,11 +100,11 @@ const PromoterRatingSection = async ({ data }: PromoterRatingProps) => {
 
   return (
     <div className="flex flex-row items-center gap-1">
-      <span className="text-base sm:text-2xl ml-2">⭐</span>
-      <span className="text-lg sm:text-xl text-gray-500 font-semibold">
+      <span className="text-base sm:text-base ml-2">⭐</span>
+      <span className="text-lg sm:text-base text-gray-500 font-semibold">
         {avgRating.toString()}
       </span>
-      <span className="text-sm sm:text-base text-gray-400 ">
+      <span className="text-sm sm:text-xs text-gray-400 ">
         {" "}
         ({ratingCount} {ratingCount > 1 ? "ratings" : "rating"})
       </span>
@@ -132,7 +132,7 @@ const PromoterMetricsSection = async ({ data }: PromoterMetricsProps) => {
 
   return (
     <div className="flex flex-row items-center justify-between sm:flex-col sm:items-start text-gray-500 text-sm">
-      <div className="flex flex-row items-center justify-between mt-2 gap-4 mr-6">
+      <div className="flex flex-row items-center justify-between mt-2 gap-4 mr-4">
         {/* Clicks */}
         <div className="flex flex-col gap-1">
           Clicks: <span className="font-bold">{clicks}</span>

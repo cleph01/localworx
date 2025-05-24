@@ -18,7 +18,7 @@ const PromotionCard = ({ promotion }: PromotionCardProps) => {
       Header={<PromotionHeader {...promotion} />}
       Content={<PromotionContent {...promotion} />}
       // Footer={<PromotionFooter {...promotion} />}
-      className="w-full max-w-sm"
+      css="w-full max-w-sm p-0 px-4"
     />
   );
 };
