@@ -170,7 +170,7 @@ export const mockBusinesses: Business[] = [
     reviewCount: 10,
     description: "Old-school cuts with a new-school vibe.",
     ownerId: "2",
-    address: "123 Main St, Springfield, USA",
+    address: "123 Main St",
     city: "Springfield",
     state: "IL",
     zip: "62701",

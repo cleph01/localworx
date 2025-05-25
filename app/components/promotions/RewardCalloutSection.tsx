@@ -23,7 +23,7 @@ const RewardCalloutSection = async ({
 
   // Render the rewards section
   return (
-    <section className="bg-green-50 border border-green-200 rounded px-6 py-4 mx-4 space-y-2">
+    <section className="bg-green-50 border border-green-200 rounded px-6 py-4 mx-4 mb-2 space-y-2">
       <h2 className="text-xl font-bold mb-2">🎉 Earn Rewards</h2>
       <p className="text-gray-700 mb-4">
         Check in with this business and start earning perks. Become a promoter

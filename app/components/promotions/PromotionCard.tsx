@@ -40,7 +40,7 @@ const PromotionHeader = ({
         <img
           src={mediaUrl}
           alt="Image Preview"
-          className="w-full max-h-64 object-cover mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
         />
       );
     }
@@ -55,7 +55,7 @@ const PromotionHeader = ({
       const id = youTubeMatch[1];
       return (
         <iframe
-          className="w-full h-64 mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
           src={`https://www.youtube.com/embed/${id}`}
           title="YouTube Preview"
           allowFullScreen
@@ -67,7 +67,7 @@ const PromotionHeader = ({
       const id = vimeoMatch[1];
       return (
         <iframe
-          className="w-full h-64 mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
           src={`https://player.vimeo.com/video/${id}`}
           title="Vimeo Preview"
           allowFullScreen
@@ -81,7 +81,7 @@ const PromotionHeader = ({
         <img
           src={mediaUrl}
           alt="Image Preview"
-          className="w-full max-h-64 object-cover mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
         />
       );
     }
@@ -98,7 +98,9 @@ const PromotionHeader = ({
       {mediaUrl && mediaType ? renderMediaPreview(mediaUrl, mediaType) : null}
       {/* Offer Description */}
       {/* Business Name */}
-      <h3 className="text-xl font-bold mt-4">{title}</h3>
+      <h3 className="text-xl sm:text-2xl font-extrabold text-slate-800 mt-4">
+        {title}
+      </h3>
     </div>
   );
 };
@@ -128,35 +130,29 @@ const PromotionContent = ({
       <div className="flex flex-col justify-between">
         <div className="flex flex-row items-center justify-between">
           {/* Address */}
-          <div className="flex flex-row items-center">
-            <FaMapMarkerAlt className="text-gray-400 mr-2" />
-            <p className="flex-1 text-gray-600 text-base flex items-center gap-2">
-              {businessName}
-            </p>
-          </div>
+
+          <p className="flex-1 text-slate-600 text-base font-semibold">
+            {businessName}
+          </p>
+
           {/* Phone Number */}
           <p className="text-gray-600 text-xs">{phone}</p>
         </div>
-        <p className="text-xs mt-1">
-          {address}
-          {", "}
-          {city}
-          {", "}
-          {state}
-        </p>
+        <div className="inline-flex items-center text-xs bg-gray-100 text-gray-700 px-2 py-1 mt-3 rounded-full">
+          <FaMapMarkerAlt className="text-red-500 mr-1" />
+          {address}, {city}, {state}
+        </div>
       </div>
 
       {/* Description */}
-      <p className="text-base text-gray-600 my-2">
-        {description && description.length > 100
-          ? `${description.slice(0, 100)}...`
-          : description}
+      <p className="text-base sm:text-lg text-gray-600 my-2 line-clamp-3">
+        {description}
       </p>
 
-      <div className="flex flex-row justify-between items-start">
+      <div className="flex flex-row justify-between items-center">
         {/* Expiration Date */}
         {expiresAt && (
-          <div className="text-sm text-gray-500 ">
+          <div className="text-xs text-gray-500 ">
             ⏳ Expires: {new Date(expiresAt).toLocaleDateString()}
           </div>
         )}
@@ -193,7 +189,7 @@ const PromotionFooter = ({ clicks, views, referrals }: PromotionFooterType) => {
       <Button
         details={{
           text: "⚡️ Zap It!",
-          css: "w-full mt-4 py-2 bg-orange-500 text-white text-base font-bold",
+          css: "w-full mt-4 py-2 bg-orange-500 hover:bg-orange-600 transition-colors text-white text-base font-semibold rounded-md",
         }}
       />
     </div>

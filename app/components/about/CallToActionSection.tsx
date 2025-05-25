@@ -19,13 +19,13 @@ const CallToActionSection = () => {
       <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
         <ButtonLink
           text="I'm a Business Owner"
-          link="/signup"
+          link=""
           icon={<FaBriefcase className="h-5 w-5 text-white" />}
           color="bg-blue-500"
         />
         <ButtonLink
           text="I'm a Promoter"
-          link="/signup"
+          link=""
           icon={<FaBullhorn className="h-5 w-5 text-white" />}
           color="bg-slate-700"
         />

@@ -20,7 +20,7 @@ const MyPromotionsSection = () => {
       views: "150",
       referrals: "30",
 
-      address: "123 Main St, Springfield, USA",
+      address: "123 Main St",
       city: "Springfield",
       state: "IL",
       zip: "62701",

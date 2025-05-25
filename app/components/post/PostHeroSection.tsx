@@ -13,7 +13,7 @@ const PostHeroSection = ({ data }: PostHeroSectionProps) => {
         <img
           src={mediaUrl}
           alt="Image Preview"
-          className="w-full max-h-64 object-cover mt-2"
+          className="w-full h-64 mt-2 rounded-md border border-gray-200"
         />
       );
     }
@@ -28,7 +28,7 @@ const PostHeroSection = ({ data }: PostHeroSectionProps) => {
       const id = youTubeMatch[1];
       return (
         <iframe
-          className="w-full h-64 mt-2"
+          className="w-full h-64 mt-2 rounded-md border border-gray-200"
           src={`https://www.youtube.com/embed/${id}`}
           title="YouTube Preview"
           allowFullScreen
@@ -40,7 +40,7 @@ const PostHeroSection = ({ data }: PostHeroSectionProps) => {
       const id = vimeoMatch[1];
       return (
         <iframe
-          className="w-full h-64 mt-2"
+          className="w-full h-64 mt-2 rounded-md border border-gray-200"
           src={`https://player.vimeo.com/video/${id}`}
           title="Vimeo Preview"
           allowFullScreen
@@ -54,7 +54,7 @@ const PostHeroSection = ({ data }: PostHeroSectionProps) => {
         <img
           src={mediaUrl}
           alt="Image Preview"
-          className="w-full max-h-64 object-cover mt-2"
+          className="w-full h-64 mt-2 rounded-md border border-gray-200"
         />
       );
     }

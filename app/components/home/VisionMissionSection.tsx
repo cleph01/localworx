@@ -73,8 +73,9 @@ const VisionMissionSection = () => {
 
       <ButtonLink
         text="Learn more about us"
-        icon={<FaInfoCircle className="h-6 text-blue-500 w-6 text-blue-500" />}
+        icon={<FaInfoCircle className="h-5 w-5 text-white" />}
         link="/about"
+        color="bg-green-600"
       />
 
       <img

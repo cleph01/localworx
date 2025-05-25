@@ -9,8 +9,7 @@ const MarketplaceItemHeroSection = ({ item }: { item: any }) => {
         alt={item.title}
         width={1200}
         height={500}
-        className="w-full max-h-64 object-cover mt-2"
-        // className="w-full h-64 object-cover"
+        className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
       />
       <div className="py-4">
         <h1 className="text-3xl font-bold">{item.title}</h1>

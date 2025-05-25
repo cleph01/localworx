@@ -1,8 +1,8 @@
-import ListingsSection from "../components/services-directory/ServiceListingsSection";
 import SearchBarSection from "../components/ui/SearchBarSection";
 import PageHeader from "../components/ui/PageHeader";
 import CallToActionSection from "../components/CallToActionSection";
 import Footer from "../components/Footer";
+import BusinessListingsSection from "../components/services-directory/BusinessListingsSection";
 
 const ServicesDirectoryPage = () => {
   return (
@@ -14,7 +14,7 @@ const ServicesDirectoryPage = () => {
       <SearchBarSection />
 
       {/* Listings Section */}
-      <ListingsSection />
+      <BusinessListingsSection />
 
       {/* Call to Action Section */}
       <CallToActionSection />

@@ -1,9 +1,9 @@
 import { Zap } from "nostr-tools/kinds";
 import Button from "../ui/Button";
-import ServiceListingCard from "./ServiceListingCard";
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
+import BusinessCard from "../business/BusinessCard";
 
-const ServiceListingsSection = async () => {
+const BusinessListingsSection = async () => {
   const businesses = await mockFetch("/api/businesses");
 
   if (!businesses) {
@@ -17,7 +17,7 @@ const ServiceListingsSection = async () => {
       <div className="grid place-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* Example listing item */}
         {businessesData.map((business: any, index: any) => (
-          <ServiceListingCard key={index} business={business} />
+          <BusinessCard key={index} business={business} />
         ))}
       </div>
 
@@ -31,5 +31,5 @@ const ServiceListingsSection = async () => {
     </section>
   );
 };
-export default ServiceListingsSection;
+export default BusinessListingsSection;
 // This component is a placeholder for the listings section of the services directory page.

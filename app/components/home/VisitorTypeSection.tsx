@@ -1,6 +1,6 @@
 // VisitorTypeSection.tsx
 
-import { FaBriefcase, FaBullhorn, FaUser } from "react-icons/fa";
+import { FaBriefcase, FaBullhorn, FaTags, FaUser } from "react-icons/fa";
 import ButtonLink from "../ButtonLink";
 
 const VisitorTypeSection = () => {
@@ -15,14 +15,16 @@ const VisitorTypeSection = () => {
 
       <ButtonLink
         text="I'm a business owner"
-        icon={<FaBriefcase className="h-5 w-5 text-blue-500 " />}
-        link="/signup"
+        icon={<FaBriefcase className="h-5 w-5 text-white" />}
+        color="bg-slate-700"
+        link=""
       />
 
       <ButtonLink
-        text="I'm a promoter"
-        icon={<FaBullhorn className="h-5 w-5 text-blue-500 " />}
-        link="/signup"
+        text="Browse the Marketplace"
+        link="/marketplace"
+        icon={<FaTags className="h-5 w-5 text-white" />}
+        color="bg-green-600"
       />
     </section>
   );

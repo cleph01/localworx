@@ -12,7 +12,7 @@ type promoterDetailsSectionProps = {
 
 const PromoterDetailsSection = ({ data }: promoterDetailsSectionProps) => {
   return (
-    <section className="w-full max-w-4xl flex flex-col border-t border-gray-200 my-2 py-2 gap-2 px-4">
+    <section className="w-full max-w-4xl flex flex-col border-t border-gray-200 mt-1 mb-8 py-2 gap-2 px-4">
       <PromoterProfileSection
         data={{
           promoterId: data.promoterId,
@@ -149,7 +149,7 @@ const PromoterMetricsSection = async ({ data }: PromoterMetricsProps) => {
       <Button
         details={{
           text: "⚡️ Zap It!",
-          css: "w-full flex-1 mt-4 py-2 bg-orange-500 text-white text-base font-bold",
+          css: "w-full flex-1 mt-8 py-2 bg-orange-500 text-white text-base font-bold",
         }}
       />
     </div>

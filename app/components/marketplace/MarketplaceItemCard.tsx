@@ -42,7 +42,7 @@ const ListingHeader = ({ title, mediaUrl, mediaType }: ListingHeaderType) => {
         <img
           src={mediaUrl}
           alt="Image Preview"
-          className="w-full max-h-64 object-cover mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
         />
       );
     }
@@ -57,7 +57,7 @@ const ListingHeader = ({ title, mediaUrl, mediaType }: ListingHeaderType) => {
       const id = youTubeMatch[1];
       return (
         <iframe
-          className="w-full h-64 mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
           src={`https://www.youtube.com/embed/${id}`}
           title="YouTube Preview"
           allowFullScreen
@@ -69,7 +69,7 @@ const ListingHeader = ({ title, mediaUrl, mediaType }: ListingHeaderType) => {
       const id = vimeoMatch[1];
       return (
         <iframe
-          className="w-full h-64 mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
           src={`https://player.vimeo.com/video/${id}`}
           title="Vimeo Preview"
           allowFullScreen
@@ -83,7 +83,7 @@ const ListingHeader = ({ title, mediaUrl, mediaType }: ListingHeaderType) => {
         <img
           src={mediaUrl}
           alt="Image Preview"
-          className="w-full max-h-64 object-cover mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
         />
       );
     }
@@ -100,7 +100,9 @@ const ListingHeader = ({ title, mediaUrl, mediaType }: ListingHeaderType) => {
       {mediaUrl && mediaType ? renderMediaPreview(mediaUrl, mediaType) : null}
 
       {/* Title */}
-      <h3 className="text-2xl font-bold mt-2 mb-3">{title}</h3>
+      <h3 className="text-2xl font-extrabold text-slate-800 mt-4 mb-2 leading-tight">
+        {title}
+      </h3>
     </div>
   );
 };
@@ -125,14 +127,16 @@ const ListingContent = ({
       {/* Business Details */}
       <div className="flex flex-col gap-2">
         <div className="flex flex-col">
-          <div className="flex flex-row items-start justify-between">
+          <div className="flex flex-row items-center justify-between">
             {/* Business Name */}
             <div className="flex-1 text-lg font-semibold text-gray-800 ">
               {businessName}
             </div>
-            <div className="flex-none text-sm text-gray-500">
-              {category ? category : "Category not provided"}
-            </div>
+            {category && (
+              <span className="bg-indigo-100 text-indigo-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+                {category}
+              </span>
+            )}
           </div>
 
           {/* Business Rating */}
@@ -153,24 +157,31 @@ const ListingContent = ({
         </div>
       </div>
       {/* Item Description */}
-      <div className="text-base text-gray-500 mt-2">{description}</div>
+      <p className="text-sm sm:text-lg text-gray-600 line-clamp-3 mt-2">
+        {description}
+      </p>
+
       {/* Re-Seller Profile Info */}
       <div className="flex flex-col gap-2 border-t border-gray-200 pt-2 mt-2">
-        <div className="text-gray-500">Seller: </div>
         {/* Avatar & Zaps Received*/}
-        <div className="flex flex-row items-center justify-between gap-2">
+        <div className="flex flex-row items-center justify-between gap-2 mt-2">
           <div className="flex flex-row items-center gap-2">
             <img
-              className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+              className="inline-block h-10 w-10 rounded-full ring-2 ring-white shadow-sm"
               src={avatarUrl}
               alt={firstName}
             />
-            <div className="text-lg font-semibold mr-2">{firstName}</div>
+            <div className="flex flex-col">
+              <div className="text-sm font-semibold text-slate-700">
+                {firstName}
+              </div>
+              <div className="text-xs text-gray-500">Community Seller</div>
+            </div>
           </div>
-          <div className="text-sm text-gray-500 mr-2">
-            ⚡️ <span className="font-semibold mr-1">{zapCount}</span>
-            (Zaps Received){" "}
-          </div>
+
+          <span className="text-xs bg-yellow-100 text-yellow-700 font-semibold px-2 py-0.5 rounded-full">
+            ⚡ {zapCount} zaps
+          </span>
         </div>
       </div>
     </div>
@@ -223,14 +234,14 @@ const ListingFooter = (item: MarketplaceItem) => {
         {/* Add to Cart */}
         <button
           onClick={handleAddToCart}
-          className="bg-blue-500 text-white px-3 py-1 rounded text-sm flex items-center gap-1 hover:bg-blue-700"
+          className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-md text-sm font-semibold transition-colors gap-2"
         >
           <FaShoppingCart /> Add
         </button>
-        {/* View Item */}
+
         <button
           onClick={handleViewItem}
-          className="bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm flex items-center gap-1 hover:bg-gray-300"
+          className="inline-flex items-center bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-1.5 rounded-md text-sm font-semibold transition-colors gap-2"
         >
           <FaEye /> View
         </button>

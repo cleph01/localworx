@@ -40,7 +40,7 @@ const PostHeader = ({
         <img
           src={mediaUrl}
           alt="Image Preview"
-          className="w-full max-h-64 object-cover mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
         />
       );
     }
@@ -55,7 +55,7 @@ const PostHeader = ({
       const id = youTubeMatch[1];
       return (
         <iframe
-          className="w-full h-64 mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
           src={`https://www.youtube.com/embed/${id}`}
           title="YouTube Preview"
           allowFullScreen
@@ -67,7 +67,7 @@ const PostHeader = ({
       const id = vimeoMatch[1];
       return (
         <iframe
-          className="w-full h-64 mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
           src={`https://player.vimeo.com/video/${id}`}
           title="Vimeo Preview"
           allowFullScreen
@@ -81,13 +81,15 @@ const PostHeader = ({
         <img
           src={mediaUrl}
           alt="Image Preview"
-          className="w-full max-h-64 object-cover mt-2"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
         />
       );
     }
 
     return (
-      <p className="text-sm text-gray-500 mt-2">Unrecognized media format.</p>
+      <p className="w-full h-64 mt-2 rounded-md border border-gray-200">
+        Unrecognized media format.
+      </p>
     );
   };
   //
@@ -104,7 +106,9 @@ const PostHeader = ({
           )
         : null}
       {/* Title */}
-      <h3 className="text-lg font-bold mt-2">{title}</h3>
+      <h3 className="text-xl sm:text-2xl font-extrabold text-slate-800 mt-4">
+        {title}
+      </h3>
     </div>
   );
 };
@@ -118,23 +122,24 @@ const PostContent = ({
   return (
     <div className="flex flex-col">
       {/* Description */}
-      <div className="text-base text-gray-600 mt-2">
-        {description && description.length > 100 ? (
-          <span>{description.slice(0, 100)}...</span>
-        ) : (
-          <span>{description}</span>
-        )}
+      <div className="text-base sm:text-lg text-gray-600 mt-2 line-clamp-3">
+        {description}
       </div>
       <div className="flex flex-col gap-2 border-t border-gray-400 mt-4 pt-4">
-        <p className="text-gray-500 text-sm">Author:</p>
+        <span className="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full font-semibold">
+          🧠 Community Creator
+        </span>
+
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center gap-2 mt-1">
             <img
-              className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+              className="inline-block h-12 w-12 rounded-full ring-2 ring-white shadow-sm"
               src={avatarUrl}
               alt={firstName}
             />
-            <div className="text-lg font-semibold mr-2">{firstName}</div>
+            <div className="text-base font-semibold text-slate-700">
+              {firstName}
+            </div>
           </div>
 
           {/* View Item */}
@@ -153,25 +158,24 @@ const PostFooter = ({
 }: PostFooterType) => (
   <div className="flex flex-col gap-2">
     <div className="flex flew-row items-center justify-between">
-      <div className="flex flex-row flex-1 items-center gap-2 mt-2">
-        <div className="inline-flex text-base font-semibold mr-2">
-          {/* <FaHeart className="text-red-400 text-xs mr-2" /> */}
-          ⚡️ {zapCount}
-        </div>
-        <div className="inline-flex text-base font-semibold mr-2">
-          {/* <FaHeart className="text-red-400 text-xs mr-2" /> */}
-          👍 {likes}
-        </div>
-        <div className="inline-flex items-center text-base font-semibold mr-2">
-          {/* <FaComment className="text-blue-200 text-xs mr-2" /> */}
-          💬 {comments}
+      <div className="flex flex-row flex-1 items-center gap-1 mt-2 mr-1">
+        <div className="flex flex-row gap-2 text-xs text-gray-600 mt-2">
+          <span className="inline-flex text-center justify-center gap-1 bg-yellow-100 text-yellow-700 px-2 py-1.5 rounded-full font-semibold">
+            ⚡ {zapCount}
+          </span>
+          <span className="inline-flex text-center justify-center gap-1 bg-green-100 text-green-700 px-2 py-1.5 rounded-full font-semibold">
+            👍 {likes}
+          </span>
+          <span className="inline-flex text-center justify-center gap-1 bg-blue-100 text-blue-700 px-2 py-1.5 rounded-full font-semibold">
+            💬 {comments}
+          </span>
         </div>
       </div>
 
       <Button
         details={{
           text: "⚡️ Zap It!",
-          css: "my-6 py-2 px-6 bg-orange-500 text-white text-base font-bold",
+          css: "my-6 py-2 px-4 bg-orange-500 hover:bg-orange-600 transition-all text-white text-base font-bold rounded-md",
         }}
       />
     </div>

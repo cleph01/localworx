@@ -25,7 +25,7 @@ const MyBusinessesSection = () => {
       categories: ["Category1", "Category2"],
       zapCount: 100,
       hiringPromoters: true,
-      hasSpecialOffers: false,
+      hasSpecialOffers: true,
     },
   ]; // Replace with real fetch
 
