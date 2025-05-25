@@ -13,8 +13,8 @@ const PromotionsShowAll = async () => {
   const promotionsData = promotions.data;
 
   return (
-    <section className="flex flex-col gap-4 pb-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <section className="flex flex-col items-center gap-4 pb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
         {/* Example listing item */}
         {promotionsData.map((promotion: any) => (
           <PromotionCard key={promotion.id} promotion={promotion} />
