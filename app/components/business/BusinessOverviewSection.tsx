@@ -1,6 +1,6 @@
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 import Button from "../ui/Button";
-import { FaBitcoin } from "react-icons/fa";
+import { FaBitcoin, FaBtc } from "react-icons/fa";
 
 // BusinessOverviewSection.tsx
 const BusinessOverviewSection = async ({
@@ -28,7 +28,7 @@ const BusinessOverviewSection = async ({
             "https://dn721803.ca.archive.org/0/items/placeholder-image//placeholder-image.jpg"
           }
           alt="Business Logo"
-          className="rounded w-32 h-32 object-cover"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
         />
 
         <div className="flex flex-col gap-2">
@@ -52,7 +52,7 @@ const BusinessOverviewSection = async ({
             <div className="flex flex-col">
               <div className="flex flex-row items-center mb-2">
                 <span className="flex flex-row items-center font-semibold mr-1">
-                  <FaBitcoin className="text-orange-500 mr-1" />
+                  <FaBtc className="text-orange-500 mr-1" />
                   Income:
                 </span>
                 <div className="text-gray-600"> HIRING Promoters!</div>
