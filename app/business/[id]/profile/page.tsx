@@ -13,11 +13,11 @@ export default async function BusinessProfilePage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
 
-  if (!session?.user) {
-    return redirect("/api/auth/signin?callbackUrl=/dashboard");
-  }
+  // if (!session?.user) {
+  //   return redirect("/api/auth/signin?callbackUrl=/dashboard");
+  // }
 
   // Extract the id from the params
   // Note: params is a Promise, so we need to await it
@@ -31,9 +31,9 @@ export default async function BusinessProfilePage({
   const business = await fetchBusiness(businessId);
 
   // Optional: confirm ownership
-  if (business?.owner_id !== session.user.id) {
-    return redirect("/unauthorized");
-  }
+  // if (business?.owner_id !== session.user.id) {
+  //   return redirect("/unauthorized");
+  // }
 
   return (
     <div className="max-w-xl mx-auto p-8">

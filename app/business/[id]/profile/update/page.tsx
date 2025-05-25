@@ -7,43 +7,43 @@ import { revalidatePath } from "next/cache";
 export const dynamic = "force-dynamic";
 
 export default async function CreateBusinessPage() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) redirect("/api/auth/signin?callbackUrl=/business/create");
+  // const session = await getServerSession(authOptions);
+  // if (!session?.user) redirect("/api/auth/signin?callbackUrl=/business/create");
 
-  async function handleCreate(formData: FormData) {
-    "use server";
+  // async function handleCreate(formData: FormData) {
+  //   "use server";
 
-    const name = formData.get("name")?.toString() || "";
-    const description = formData.get("description")?.toString() || "";
+  // const name = formData.get("name")?.toString() || "";
+  // const description = formData.get("description")?.toString() || "";
 
-    if (!name) {
-      // Handle the error internally
-      console.error("Business name is required");
-      return;
-    }
+  // if (!name) {
+  //   // Handle the error internally
+  //   console.error("Business name is required");
+  //   return;
+  // }
 
-    const res = await fetch("http://localhost:3000/api/business/create", {
-      method: "POST",
-      body: JSON.stringify({ name, description }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  // const res = await fetch("http://localhost:3000/api/business/create", {
+  //   method: "POST",
+  //   body: JSON.stringify({ name, description }),
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // });
 
-    if (!res.ok) {
-      // Handle the error internally
-      console.error("Failed to create business");
-      return;
-    }
+  // if (!res.ok) {
+  //   // Handle the error internally
+  //   console.error("Failed to create business");
+  //   return;
+  // }
 
-    revalidatePath("/business/profile");
-    redirect("/business/profile");
-  }
+  // revalidatePath("/business/profile");
+  // redirect("/business/profile");
+  // }
 
   return (
     <div className="max-w-xl mx-auto p-8">
       <h1 className="text-3xl font-bold mb-6">Create Your Business</h1>
-      <form action={handleCreate} className="space-y-4">
+      <form action={""} className="space-y-4">
         <div>
           <label htmlFor="name" className="block font-semibold">
             Business Name

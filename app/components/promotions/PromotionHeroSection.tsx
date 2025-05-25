@@ -13,7 +13,7 @@ const PromotionHeroSection = ({ data }: PromotionHeroSectionProps) => {
         <img
           src={mediaUrl}
           alt="Image Preview"
-          className="w-full h-64 mt-2 rounded-md border border-gray-200"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
         />
       );
     }
@@ -28,7 +28,7 @@ const PromotionHeroSection = ({ data }: PromotionHeroSectionProps) => {
       const id = youTubeMatch[1];
       return (
         <iframe
-          className="w-full h-64 mt-2 rounded-md border border-gray-200"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
           src={`https://www.youtube.com/embed/${id}`}
           title="YouTube Preview"
           allowFullScreen
@@ -40,7 +40,7 @@ const PromotionHeroSection = ({ data }: PromotionHeroSectionProps) => {
       const id = vimeoMatch[1];
       return (
         <iframe
-          className="w-full h-64 mt-2 rounded-md border border-gray-200"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
           src={`https://player.vimeo.com/video/${id}`}
           title="Vimeo Preview"
           allowFullScreen
@@ -54,7 +54,7 @@ const PromotionHeroSection = ({ data }: PromotionHeroSectionProps) => {
         <img
           src={mediaUrl}
           alt="Image Preview"
-          className="w-full h-64 mt-2 rounded-md border border-gray-200"
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
         />
       );
     }

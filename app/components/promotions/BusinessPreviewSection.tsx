@@ -18,7 +18,9 @@ const BusinessPreviewSection = async ({
         🏢 About {businessData?.businessName}
       </h2>
       <p className="text-gray-600 mb-1">{businessData.description}</p>
-      <p className="text-gray-500 text-sm">📍 {businessData.address}</p>
+      <p className="text-gray-500 text-sm">
+        📍 {businessData.address}, {businessData.city}, {businessData.state}
+      </p>
       <p className="text-gray-500 text-sm">⏰ {businessData.hours}</p>
       <p className="text-gray-500 text-sm">📧 {businessData.email}</p>
     </section>

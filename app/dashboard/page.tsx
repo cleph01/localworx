@@ -10,8 +10,8 @@ import MyEarningsSnapshotSection from "../components/dashboard/MyEarningsSummary
 import MyBitcoinWallet from "../components/dashboard/MyBitcoinWallet";
 
 export default async function DashboardPage() {
-  const session = await getServerSession(authOptions);
-  console.log("Session in DashboardPage:", session);
+  // const session = await getServerSession(authOptions);
+  // console.log("Session in DashboardPage:", session);
   // Checks if User is signed in
   // if (!session) {
   //   redirect("/api/auth/signin?callbackUrl=/dashboard");

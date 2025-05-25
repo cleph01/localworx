@@ -25,7 +25,7 @@ export type Business = {
   email?: string;
   rating?: number;
   reviewCount?: number;
-  businessHours?: string;
+
   avatarUrl?: string;
   introOffer?: string;
   categories?: string[];
@@ -174,7 +174,7 @@ export const mockBusinesses: Business[] = [
     city: "Springfield",
     state: "IL",
     zip: "62701",
-    businessHours: "9 AM - 5 PM",
+
     website: "www.bobsbarbershop.com",
     logoUrl:
       "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=350&auto=format&fit=crop",
@@ -202,7 +202,7 @@ export const mockBusinesses: Business[] = [
     reviewCount: 10,
     logoUrl:
       "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    businessHours: "9 AM - 5 PM",
+    hours: "9 AM - 5 PM",
     address: "123 Main St",
     hiringPromoters: true,
     hasSpecialOffers: false,
@@ -226,7 +226,7 @@ export const mockBusinesses: Business[] = [
     reviewCount: 20,
     logoUrl:
       "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    businessHours: "10 AM - 6 PM",
+    hours: "10 AM - 6 PM",
     address: "456 Elm St",
     hiringPromoters: false,
     hasSpecialOffers: true,
@@ -250,7 +250,7 @@ export const mockBusinesses: Business[] = [
     reviewCount: 30,
     logoUrl:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
-    businessHours: "8 AM - 4 PM",
+    hours: "8 AM - 4 PM",
     address: "789 Oak St",
     hiringPromoters: true,
     hasSpecialOffers: false,
@@ -274,7 +274,7 @@ export const mockBusinesses: Business[] = [
     reviewCount: 5,
     logoUrl:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    businessHours: "11 AM - 7 PM",
+    hours: "11 AM - 7 PM",
     address: "101 Pine St",
     hiringPromoters: false,
     hasSpecialOffers: true,
@@ -298,7 +298,7 @@ export const mockBusinesses: Business[] = [
     reviewCount: 15,
     logoUrl:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
-    businessHours: "7 AM - 3 PM",
+    hours: "7 AM - 3 PM",
     address: "202 Maple St",
     hiringPromoters: true,
     hasSpecialOffers: false,
@@ -322,7 +322,7 @@ export const mockBusinesses: Business[] = [
     reviewCount: 25,
     logoUrl:
       "https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
-    businessHours: "12 PM - 8 PM",
+    hours: "12 PM - 8 PM",
     address: "303 Birch St",
     hiringPromoters: false,
     hasSpecialOffers: true,
@@ -346,7 +346,7 @@ export const mockBusinesses: Business[] = [
     rating: 4.2,
     reviewCount: 25,
 
-    businessHours: "9 AM - 6 PM",
+    hours: "9 AM - 6 PM",
     address: "404 Digital Ave",
     hiringPromoters: true,
     hasSpecialOffers: true,
@@ -355,7 +355,7 @@ export const mockBusinesses: Business[] = [
     zapCount: 250,
     logoUrl:
       "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    hours: "Mon-Fri: 9 AM - 6 PM",
+
     phone: "(555) 789-0123",
     email: "dave@davesdigitalmarketing.com",
   },
@@ -378,7 +378,6 @@ export const mockBusinesses: Business[] = [
     email: "charlie@charlieco.com",
     rating: 4.8,
     reviewCount: 15,
-    businessHours: "9 AM - 5 PM",
 
     introOffer: "Startup Package: Free Strategy Session",
     categories: ["Consulting", "Business Services"],

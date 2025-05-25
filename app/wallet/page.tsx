@@ -5,21 +5,21 @@ import { NextResponse } from "next/server";
 
 // Server-side function to fetch the user's wallet and rewards data
 export default async function MyWallet() {
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
 
-  if (!session) {
-    // Redirect to login page if no session (user is not authenticated)
-    return NextResponse.redirect("/login");
-  }
+  // if (!session) {
+  //   // Redirect to login page if no session (user is not authenticated)
+  //   return NextResponse.redirect("/login");
+  // }
 
   // Fetch the wallet and rewards data for the user
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/wallet/rewards/${session.user.id}`
-  );
-  const data = await res.json();
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_API_URL}/api/wallet/rewards/${session.user.id}`
+  // );
+  // const data = await res.json();
 
-  const rewards = data.rewards || [];
-  const balance = data.balance || 0;
+  // const rewards = data.rewards || [];
+  // const balance = data.balance || 0;
 
   // Render the wallet page with the rewards and balance data
   return (
@@ -29,14 +29,14 @@ export default async function MyWallet() {
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-2">Balance</h2>
         <div className="bg-white shadow p-4 rounded-md">
-          <p>Your current balance: ${balance}</p>
+          {/* <p>Your current balance: ${balance}</p> */}
         </div>
       </section>
 
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-2">Your Rewards</h2>
         <div className="bg-white shadow p-4 rounded-md">
-          {rewards.length === 0 ? (
+          {/* {rewards.length === 0 ? (
             <p>No rewards found in your wallet.</p>
           ) : (
             rewards.map((reward: any) => (
@@ -61,7 +61,7 @@ export default async function MyWallet() {
                 </div>
               </div>
             ))
-          )}
+          )} */}
         </div>
       </section>
     </div>

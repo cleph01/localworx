@@ -11,8 +11,8 @@ import { authOptions } from "@/app/api/lib/authOptions";
 export const dynamic = "force-dynamic";
 
 export default async function CreateBusinessPage() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) redirect("/api/auth/signin?callbackUrl=/business/create");
+  // const session = await getServerSession(authOptions);
+  // if (!session?.user) redirect("/api/auth/signin?callbackUrl=/business/create");
 
   // Nostr keypair (loaded from localStorage)
   const [pubkey, setPubkey] = useState("");
