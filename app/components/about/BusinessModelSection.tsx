@@ -56,14 +56,14 @@ const BusinessModelSection = () => {
               quality.
             </li>
             <li>
-              Earn Bitcoin by onboarding local businesses: 10% commission for
-              the first 20, 25% for the next 30, and 50% for 50+ businesses you
-              onboard via your presonalized referral link and QR code.
+              Earn residual monthly Bitcoin by onboarding local businesses: 10%
+              commission for the first 20, 25% for the next 30, and 50% for 50+
+              businesses you onboard for as long the business is on the
+              platform.
             </li>
             <li>
-              Businesses can be promoters, too - ya' know - and earn way more
-              than $150/month in Bitcoin Zaps to offset their their
-              subscription.
+              Businesses can be promoters too, and earn way more than $150/month
+              in Bitcoin Zaps to offset their their subscription.
             </li>
 
             {/* <li>
