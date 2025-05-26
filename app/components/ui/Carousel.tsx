@@ -16,20 +16,39 @@ const Carousel: React.FC<CarouselProps> = ({ profiles }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Optional: Update currentIndex based on scroll
+  /**
+   * Optional: Update currentIndex based on most left-aligned inside the scroll area
+   * It doesn't assume fixed widths, so it works regardless of margins, flex gaps, or responsive sizing
+   * It's scroll-safe inside a overflow-hidden wrapper
+   */
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const handleScroll = () => {
-      const scrollLeft = container.scrollLeft;
-      const containerWidth = container.clientWidth;
+      const cards = Array.from(container.children) as HTMLDivElement[];
 
-      const index = Math.round(scrollLeft / containerWidth);
-      setCurrentIndex(index);
+      let minDiff = Infinity;
+      let visibleIndex = 0;
+
+      cards.forEach((card, index) => {
+        const cardRect = card.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+
+        const diff = Math.abs(cardRect.left - containerRect.left);
+
+        if (diff < minDiff) {
+          minDiff = diff;
+          visibleIndex = index;
+        }
+      });
+
+      setCurrentIndex(visibleIndex);
     };
 
-    container.addEventListener("scroll", handleScroll);
+    container.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
