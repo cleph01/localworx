@@ -1,5 +1,6 @@
 // PromotionHeroSection.tsx
 
+import LazyLoadWrapper from "../ui/LazyLoadWrapper";
 import { PromotionHeroSectionProps } from "./promotionTypes";
 
 const PromotionHeroSection = ({ data }: PromotionHeroSectionProps) => {
@@ -67,9 +68,18 @@ const PromotionHeroSection = ({ data }: PromotionHeroSectionProps) => {
   return (
     <section className="w-full px-4 max-w-4xl">
       {/* Media preview (image or embed) */}
-      {data.mediaUrl && data.mediaType
-        ? renderMediaPreview(data.mediaUrl, data.mediaType)
-        : null}
+
+      {data.mediaUrl && data.mediaType ? (
+        <LazyLoadWrapper
+          fallback={
+            <div className="w-full h-64 mt-2 rounded-xl border border-gray-200 bg-gray-200 animate-pulse" />
+          }
+          delayMs={200}
+          timeoutMs={5000}
+        >
+          {renderMediaPreview(data.mediaUrl, data.mediaType)}
+        </LazyLoadWrapper>
+      ) : null}
       <div className="py-4">
         <h1 className="text-3xl font-bold">{data.title}</h1>
         <p className="text-gray-500">{data.businessName}</p>

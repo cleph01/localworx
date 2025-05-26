@@ -1,6 +1,7 @@
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 import Button from "../ui/Button";
 import { FaBitcoin, FaBtc } from "react-icons/fa";
+import LazyLoadWrapper from "../ui/LazyLoadWrapper";
 
 // BusinessOverviewSection.tsx
 const BusinessOverviewSection = async ({
@@ -22,14 +23,22 @@ const BusinessOverviewSection = async ({
   return (
     <section className="w-full py-8 px-6 max-w-4xl">
       <div className="flex flex-col md:flex-row gap-6 items-start">
-        <img
-          src={
-            businessData.logoUrl ||
-            "https://dn721803.ca.archive.org/0/items/placeholder-image//placeholder-image.jpg"
+        <LazyLoadWrapper
+          fallback={
+            <div className="w-full h-64 mt-2 rounded-xl border border-gray-200 bg-gray-200 animate-pulse" />
           }
-          alt="Business Logo"
-          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
-        />
+          delayMs={200}
+          timeoutMs={5000}
+        >
+          <img
+            src={
+              businessData.logoUrl ||
+              "https://dn721803.ca.archive.org/0/items/placeholder-image//placeholder-image.jpg"
+            }
+            alt="Business Logo"
+            className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
+          />
+        </LazyLoadWrapper>
 
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-bold">{businessData.businessName}</h1>

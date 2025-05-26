@@ -10,6 +10,7 @@ import {
 } from "./promotionTypes";
 import PromoterDetailsSection from "./PromoterDetailsSection";
 import PromotionViewButton from "./PromotionViewButton";
+import LazyLoadWrapper from "../ui/LazyLoadWrapper";
 
 const PromotionCard = ({ promotion }: PromotionCardProps) => {
   console.log("Promotion @ promotionCard: ", promotion);
@@ -95,7 +96,17 @@ const PromotionHeader = ({
   return (
     <div className="">
       {/* Media preview (image or embed) */}
-      {mediaUrl && mediaType ? renderMediaPreview(mediaUrl, mediaType) : null}
+      {mediaUrl && mediaType ? (
+        <LazyLoadWrapper
+          fallback={
+            <div className="w-full h-64 mt-2 rounded-xl border border-gray-200 bg-gray-200 animate-pulse" />
+          }
+          delayMs={200}
+          timeoutMs={5000}
+        >
+          {renderMediaPreview(mediaUrl, mediaType)}
+        </LazyLoadWrapper>
+      ) : null}
       {/* Offer Description */}
       {/* Business Name */}
       <h3 className="text-xl sm:text-2xl font-extrabold text-slate-800 mt-4">

@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.20.6",
     "authjs-knexjs-adapter": "^3.0.0",
+    "canvas-confetti": "^1.9.3",
     "knex": "^3.1.0",
     "next": "15.3.1",
     "next-auth": "^4.24.11",
@@ -19,6 +21,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
+    "react-intersection-observer": "^9.16.0",
     "react-toastify": "^11.0.5",
     "sqlite3": "^5.1.7"
   },

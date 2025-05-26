@@ -13,6 +13,7 @@ import {
   mockPosts,
   mockPromoterRatings,
   mockZapTransactions,
+  mockCheckins,
 } from "./mockDatabase";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
@@ -75,6 +76,10 @@ export async function mockFetch(
     case "zaps":
       db = mockZapTransactions;
       break;
+    case "checkins":
+      db = mockCheckins;
+      break;
+
     default:
       throw new Error(`Unknown resource: ${resource}`);
   }
@@ -108,8 +113,44 @@ export async function mockFetch(
     const newItem = {
       ...(options.body ?? {}),
       id: `mock-${Date.now()}`,
+      timestamp: new Date().toISOString(),
     };
+
     db.push(newItem);
+
+    // Special response shape for checkins
+    if (resource === "checkins") {
+      const { businessId, userId }: any = newItem;
+
+      // Count check-ins for this user at this business
+      const userCheckins = db.filter(
+        (checkin) =>
+          checkin.userId === userId && checkin.businessId === businessId
+      );
+
+      const userCheckinCount = userCheckins.length;
+
+      // Fetch loyalty reward for this business
+      const loyaltyReward = mockRewards.find(
+        (reward) =>
+          reward.businessId === businessId && reward.type === "loyalty"
+      );
+
+      const eligibleForReward = loyaltyReward
+        ? userCheckinCount >= parseInt(loyaltyReward.threshold ?? "0")
+        : false;
+
+      return {
+        data: {
+          message: "Check-in recorded.",
+          checkin: newItem,
+          userCheckinCount,
+          eligibleForReward,
+        },
+      };
+    }
+
+    // Default return for all other POSTs
     return { data: newItem };
   }
 

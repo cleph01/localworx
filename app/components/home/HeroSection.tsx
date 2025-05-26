@@ -2,18 +2,28 @@
 import Image from "next/image";
 import ButtonLink from "../ButtonLink";
 import { FaUser, FaBriefcase, FaBullhorn } from "react-icons/fa";
+import LazyLoadWrapper from "../ui/LazyLoadWrapper";
 
 const HeroSection = () => {
   return (
     <section className="flex flex-col items-center justify-center text-lg p-4">
       {/* Hero Image */}
-      <Image
-        src="/localworx-logo.png"
-        alt="LocalWorx Logo"
-        className="w-48 h-auto my-6 "
-        width={192}
-        height={192}
-      />
+      <LazyLoadWrapper
+        fallback={
+          <div className="w-full h-48 w-48 mt-2 rounded-xl border border-gray-200 bg-gray-200 animate-pulse" />
+        }
+        delayMs={200}
+        timeoutMs={5000}
+      >
+        <Image
+          src="/localworx-logo.png"
+          alt="LocalWorx Logo"
+          className="w-48 h-auto my-6 "
+          width={192}
+          height={192}
+        />
+      </LazyLoadWrapper>
+
       <p className="max-w-4xl sm:text-2xl text-gray-500 mb-4">
         We are the <span className="font-bold">Main Street First</span> platform
         that is putting <span className="font-bold">LOCAL</span> businesses

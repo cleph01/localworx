@@ -4,6 +4,7 @@ import { FaEye } from "react-icons/fa";
 import { Post } from "./postTypes";
 import Card from "../ui/Card";
 import PostViewButton from "./PostViewButton";
+import LazyLoadWrapper from "../ui/LazyLoadWrapper";
 
 const PostCard = ({ post }: { post: Post }) => {
   return (
@@ -97,14 +98,22 @@ const PostHeader = ({
   return (
     <div className="">
       {/* Media preview (image or embed) */}
-      {mediaType
-        ? renderMediaPreview(
+      {mediaType ? (
+        <LazyLoadWrapper
+          fallback={
+            <div className="w-full h-64 mt-2 rounded-xl border border-gray-200 bg-gray-200 animate-pulse" />
+          }
+          delayMs={200}
+          timeoutMs={5000}
+        >
+          {renderMediaPreview(
             mediaUrl || "",
             mediaType || "",
             title || "",
             description || ""
-          )
-        : null}
+          )}
+        </LazyLoadWrapper>
+      ) : null}
       {/* Title */}
       <h3 className="text-xl sm:text-2xl font-extrabold text-slate-800 mt-4">
         {title}

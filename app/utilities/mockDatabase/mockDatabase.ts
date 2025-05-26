@@ -101,7 +101,20 @@ export type Post = {
   zapCount: string;
 };
 
-// Mutable arrays to simulate a live DB
+export type Checkin = {
+  id: string;
+  userId: string;
+  businessId: string;
+  timestamp: string;
+  latitude: number;
+  longitude: number;
+  redeemedRewardId?: string;
+};
+
+/**
+ * Mutable arrays to simulate a live DB
+ */
+
 export const mockUsers: User[] = [
   {
     id: "1",
@@ -1087,5 +1100,58 @@ export const mockZapTransactions: ZapTransaction[] = [
     relatedPromotionId: "2",
     zapType: "promotion",
     status: "completed",
+  },
+];
+
+export const mockCheckins: Checkin[] = [
+  {
+    id: "c1",
+    userId: "3",
+    businessId: "1",
+    timestamp: "2024-06-20T14:00:00Z",
+    latitude: 39.7817,
+    longitude: -89.6501,
+  },
+  {
+    id: "c2",
+    userId: "3",
+    businessId: "1",
+    timestamp: "2024-06-22T13:45:00Z",
+    latitude: 39.7816,
+    longitude: -89.6502,
+  },
+  {
+    id: "c3",
+    userId: "3",
+    businessId: "1",
+    timestamp: "2024-06-24T16:10:00Z",
+    latitude: 39.7815,
+    longitude: -89.6503,
+    redeemedRewardId: "1",
+  },
+  {
+    id: "c4",
+    userId: "6",
+    businessId: "2",
+    timestamp: "2024-06-19T11:20:00Z",
+    latitude: 39.7821,
+    longitude: -89.6511,
+  },
+  {
+    id: "c5",
+    userId: "6",
+    businessId: "2",
+    timestamp: "2024-06-25T10:00:00Z",
+    latitude: 39.782,
+    longitude: -89.651,
+    redeemedRewardId: "3",
+  },
+  {
+    id: "c6",
+    userId: "1",
+    businessId: "5",
+    timestamp: "2024-06-18T09:30:00Z",
+    latitude: 39.7809,
+    longitude: -89.6495,
   },
 ];
