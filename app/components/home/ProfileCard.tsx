@@ -15,14 +15,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   imageUrl,
 }) => {
   return (
-    <div className="relative bg-white rounded-lg shadow-lg overflow-hidden w-64 sm:w-72 md:w-80">
+    <div className="relative bg-white rounded-lg shadow-lg overflow-hidden w-64 sm:w-72 md:w-80 mb-6">
       {/* Profile Picture */}
-      <div className="w-full h-3/4 overflow-hidden">
-        <img src={imageUrl} alt={name} className="object-cover w-full h-full" />
+      <div className="w-full h-3/4 overflow-hidden p-4">
+        <img
+          src={imageUrl}
+          alt={name}
+          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm "
+        />
       </div>
 
       {/* Footer Section */}
-      <div className="p-4 flex flex-col space-y-1 bg-gray-100">
+      <div className="px-4 pb-4 flex flex-col space-y-1 bg-white">
         <h3 className="font-bold text-lg">{name}</h3>
         <p className="text-sm font-bold text-gray-400">{category}</p>
         <ul className="text-xs text-gray-500 list-inside">

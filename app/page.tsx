@@ -17,7 +17,7 @@ import {
   FaVolumeUp,
 } from "react-icons/fa";
 
-import Carousel from "./components/Carousel";
+import Carousel from "./components/ui/Carousel";
 import HomeFeaturesCard from "./components/home/FeaturesCard";
 import HomeCheckListItem from "./components/home/CheckListItem";
 import {

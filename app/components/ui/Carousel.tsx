@@ -1,7 +1,7 @@
 "use client";
 // app/components/Carousel.tsx
 import React, { useState } from "react";
-import ProfileCard from "./home/ProfileCard";
+import ProfileCard from "../home/ProfileCard";
 
 type CarouselProps = {
   profiles: {
@@ -43,22 +43,6 @@ const Carousel: React.FC<CarouselProps> = ({ profiles }) => {
           </div>
         ))}
       </div>
-
-      {/* Move left side of the carousel */}
-      {/* <button
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 text-black p-2 rounded-full shadow-lg"
-        onClick={handlePrev}
-      >
-        &lt;
-      </button> */}
-
-      {/* Move right side of the carousel */}
-      {/* <button
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 text-black p-2 rounded-full shadow-lg"
-        onClick={handleNext}
-      >
-        &gt;
-      </button> */}
     </div>
   );
 };

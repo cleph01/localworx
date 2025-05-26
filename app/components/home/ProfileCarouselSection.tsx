@@ -1,5 +1,5 @@
 // components/home/ProfilesCarouselSection.tsx
-import Carousel from "../Carousel";
+import Carousel from "../ui/Carousel";
 
 // Profiles Test Data
 const profiles = [
