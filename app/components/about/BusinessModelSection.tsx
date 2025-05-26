@@ -9,7 +9,7 @@ const BusinessModelSection = () => {
         A Transparent, Incentive-Driven Model
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-lg text-gray-700">
-        <div className="border p-6 rounded shadow">
+        <div className="border border-gray-200 p-6 rounded shadow">
           <FaBriefcase className="w-8 h-8 text-blue-500 mb-2" />
           <h3 className="font-bold mb-2">Business Subscription</h3>
           <p className="text-gray-500 font-bold mb-2">$150/month</p>
@@ -29,7 +29,7 @@ const BusinessModelSection = () => {
             </li>
           </ul>
         </div>
-        <div className="border p-6 rounded shadow">
+        <div className="border border-gray-200 p-6 rounded shadow">
           <FaBullhorn className="w-8 h-8 text-blue-500 mb-2" />
           <h3 className="font-bold mb-2">Community Promoter Posts</h3>
           <p className="text-gray-500 font-bold mb-2">$5/post</p>
@@ -45,7 +45,7 @@ const BusinessModelSection = () => {
             </li>
           </ul>
         </div>
-        <div className="border p-6 rounded shadow">
+        <div className="border border-gray-200 p-6 rounded shadow">
           <FaDollarSign className="w-8 h-8 text-blue-500 mb-2" />
           <h3 className="font-bold mb-2">Cost-Benefit by Design</h3>
           <p className="text-gray-500 font-bold mb-2">Win-WIn</p>
