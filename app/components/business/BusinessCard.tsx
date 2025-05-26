@@ -14,7 +14,7 @@ const BusinessCard = ({ business }: BusinessCardProps) => {
       Header={<BusinessCardHeader {...business} />}
       Content={<BusinessCardContent {...business} />}
       Footer={<BusinessCardFooter {...business} />}
-      css="w-full max-w-sm transition-shadow hover:shadow-xl"
+      css="w-full max-w-sm border border-gray-200 transition-shadow hover:shadow-xl"
     />
   );
 };
