@@ -1,33 +1,3 @@
-import Image from "next/image";
-import ButtonLink from "./components/ButtonLink";
-import {
-  FaAddressCard,
-  FaAngleRight,
-  FaBriefcase,
-  FaBtc,
-  FaBullhorn,
-  FaColumns,
-  FaEnvelope,
-  FaInfo,
-  FaInfoCircle,
-  FaQrcode,
-  FaRegEnvelope,
-  FaUser,
-  FaUsers,
-  FaVolumeUp,
-} from "react-icons/fa";
-
-import Carousel from "./components/ui/Carousel";
-import HomeFeaturesCard from "./components/home/FeaturesCard";
-import HomeCheckListItem from "./components/home/CheckListItem";
-import {
-  CreateAccount,
-  CommunityConnect,
-  EarningSnapshot,
-} from "./components/home/StepsCardHeaders";
-import StepsCard from "./components/home/StepsCard";
-import ReviewCard from "./components/home/ReviewCard";
-import FaqCard from "./components/home/FaqCard";
 import PageHeader from "./components/ui/PageHeader";
 import HeroSection from "./components/home/HeroSection";
 import VisitorTypeSection from "./components/home/VisitorTypeSection";
@@ -82,8 +52,8 @@ export default function Home() {
 
       {/* Under Construction Note */}
       <section className="mt-4 flex flex-col items-center justify-center space-y-2 text-sm text-red-500 italic">
-        <p>This site is under active construction.</p>
-        <p>Join the journey early.</p>
+        <p>This site is under active construction</p>
+        <p>Enjoy the journey ✨</p>
       </section>
     </main>
   );
