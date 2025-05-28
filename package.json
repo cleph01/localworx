@@ -13,6 +13,7 @@
     "authjs-knexjs-adapter": "^3.0.0",
     "canvas-confetti": "^1.9.3",
     "knex": "^3.1.0",
+    "light-bolt11-decoder": "^3.2.0",
     "next": "15.3.1",
     "next-auth": "^4.24.11",
     "nostr-tools": "^2.13.0",
