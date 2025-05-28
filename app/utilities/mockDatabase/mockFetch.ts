@@ -14,6 +14,7 @@ import {
   mockPromoterRatings,
   mockZapTransactions,
   mockCheckins,
+  mockBitcoinWallets,
 } from "./mockDatabase";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
@@ -78,6 +79,9 @@ export async function mockFetch(
       break;
     case "checkins":
       db = mockCheckins;
+      break;
+    case "bitcoin-wallets":
+      db = mockBitcoinWallets;
       break;
 
     default:

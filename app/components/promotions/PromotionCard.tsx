@@ -13,7 +13,6 @@ import PromotionViewButton from "./PromotionViewButton";
 import LazyLoadWrapper from "../ui/LazyLoadWrapper";
 
 const PromotionCard = ({ promotion }: PromotionCardProps) => {
-  console.log("Promotion @ promotionCard: ", promotion);
   return (
     <Card
       Header={<PromotionHeader {...promotion} />}

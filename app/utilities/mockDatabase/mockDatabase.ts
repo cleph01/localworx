@@ -111,6 +111,14 @@ export type Checkin = {
   redeemedRewardId?: string;
 };
 
+export interface BitcoinWallet {
+  id: string;
+  walletId: string; // typically the Lightning Address or LNURL wallet string
+  userId: string; // foreign key reference to mock user
+  label?: string; // optional user-friendly label
+  createdAt?: string;
+}
+
 /**
  * Mutable arrays to simulate a live DB
  */
@@ -1153,5 +1161,15 @@ export const mockCheckins: Checkin[] = [
     timestamp: "2024-06-18T09:30:00Z",
     latitude: 39.7809,
     longitude: -89.6495,
+  },
+];
+
+export const mockBitcoinWallets: BitcoinWallet[] = [
+  {
+    id: "1",
+    walletId: "charlieburpee@getalby.com", // or your LNURL or Lightning Address
+    userId: "1",
+    label: "Main Wallet",
+    createdAt: new Date().toISOString(),
   },
 ];
