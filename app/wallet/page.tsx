@@ -1,7 +1,6 @@
 // app/dashboard/my-wallet/page.tsx
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/lib/authOptions";
-import { NextResponse } from "next/server";
+
+// import { redirect } from "next/server";
 
 // Server-side function to fetch the user's wallet and rewards data
 export default async function MyWallet() {
