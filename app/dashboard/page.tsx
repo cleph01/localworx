@@ -1,6 +1,5 @@
 // app/dashboard/page.tsx
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/lib/authOptions";
+
 import UserSummarySection from "../components/dashboard/UserSummarySection";
 import MyBusinessesSection from "../components/dashboard/MyBusinessesSection";
 import MyPromotionsSection from "../components/dashboard/MyPromotionsSection";
