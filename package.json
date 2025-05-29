@@ -9,13 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@getalby/sdk": "^5.1.0",
     "@react-google-maps/api": "^2.20.6",
     "authjs-knexjs-adapter": "^3.0.0",
     "canvas-confetti": "^1.9.3",
     "knex": "^3.1.0",
     "light-bolt11-decoder": "^3.2.0",
     "next": "15.3.1",
-    "next-auth": "^4.24.11",
     "nostr-tools": "^2.13.0",
     "pg": "^8.15.6",
     "pg-query-stream": "^4.9.6",

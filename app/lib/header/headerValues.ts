@@ -33,6 +33,11 @@ const headerValues = {
     tagLine:
       "Support your neighbors and local businesses by sharing opportunities, boosting visibility, and driving real change in your community.",
   },
+  auth: {
+    headLine: "Unlock Your Local Power",
+    tagLine:
+      "Create your Nostr account to access a secure, decentralized identity and become a vital force in building a thriving, community-driven economy with LocalWorx.",
+  },
 };
 
 export default headerValues;

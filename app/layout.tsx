@@ -4,10 +4,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 // Toastify imports
 
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// Importing Providers from layout-providers
-import { Providers } from "./layout-providers";
 import Navbar from "./components/navbar/Navbar";
 
 const geistSans = Geist({
@@ -57,10 +56,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>
-          <Navbar />
-          {children}
-        </Providers>
+        <ToastContainer position="top-right" />
+        <Navbar />
+        {children}
       </body>
     </html>
   );
