@@ -4,9 +4,9 @@ import { getProfileController } from "./profileController";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { pubkey: string } }
+  { params }: { params: Promise<{ pubkey: string }> }
 ) {
-  const pubkey = params.pubkey;
+  const { pubkey } = await params;
   if (!pubkey) {
     return NextResponse.json({ error: "Missing pubkey" }, { status: 400 });
   }
