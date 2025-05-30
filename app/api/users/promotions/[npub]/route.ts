@@ -1,5 +1,9 @@
 import { getPromotionsByUserHandler } from "./userPromotionsController";
 
-export async function GET(_: Request, context: { params: { npub: string } }) {
-  return getPromotionsByUserHandler(context.params.npub);
+export async function GET(
+  _: Request,
+  { params }: { params: Promise<{ npub: string }> }
+) {
+  const { npub } = await params;
+  return getPromotionsByUserHandler(npub);
 }
