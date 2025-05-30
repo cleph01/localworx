@@ -1,35 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useNostrUser } from "@/app/context/NostrUserContext";
 import Card from "../ui/Card";
 
 export default function SignUpForm() {
-  type UserKeys = {
+  const [username, setUsername] = useState<string>("");
+  const [generating, setGenerating] = useState(false);
+  const [userKeys, setUserKeys] = useState<{
     pubkey: string;
     privkey: string;
-  };
+  } | null>(null);
 
-  const [username, setUsername] = useState<string>("");
-  const [userKeys, setUserKeys] = useState<UserKeys | null>(null);
+  const router = useRouter();
 
-  //   {
-  //     pubkey: "ljfsajfljslfslfjjflsjfdllalkdjdf",
-  //     privkey: "asjflsjflsjdljslfjlsjflsjflksdl",
-  //   }
+  const { signUp } = useNostrUser();
 
   const handleSignUp = async () => {
-    const res = await fetch("/api/nostr/keys", {
-      method: "POST",
-    });
+    setGenerating(true);
+    // const keys = await signUp();
+    // if (keys) {
+    //   setUserKeys(keys);
+    //   router.push("/dashboard");
+    // }
+    console.log("Test Sign Up");
 
-    const data = await res.json();
-    if (data.pubkey && data.privkey) {
-      localStorage.setItem("nsec", data.privkey);
-      localStorage.setItem("npub", data.pubkey);
-      setUserKeys(data);
-      //
-      localStorage.set("isAuth", true);
-    }
+    setGenerating(false);
   };
 
   return (
@@ -42,7 +39,13 @@ export default function SignUpForm() {
           userKeys={userKeys}
         />
       }
-      Footer={<SignUpFooter handleSignUp={handleSignUp} userKeys={userKeys} />}
+      Footer={
+        <SignUpFooter
+          handleSignUp={handleSignUp}
+          userKeys={userKeys}
+          generating={generating}
+        />
+      }
       css="w-full max-w-sm"
     />
   );
@@ -135,6 +138,7 @@ interface SignUpFooterProps {
     pubkey: string;
     privkey: string;
   } | null;
+  generating: boolean;
 }
 
 /**
@@ -148,11 +152,17 @@ const SignUpFooter = ({ handleSignUp, userKeys }: SignUpFooterProps) => {
       Nsec Saved! Continue to Dashboard
     </button>
   ) : (
-    <button
-      onClick={handleSignUp}
-      className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded"
-    >
-      Generate Nostr Keys & Sign Up
-    </button>
+    <>
+      <button
+        onClick={handleSignUp}
+        className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded"
+        disabled={true}
+      >
+        Generate Nostr Keys & Sign Up
+      </button>
+      <p className="text-xs text-red-500 text-center mt-2">
+        Button Disabled While in Development
+      </p>
+    </>
   );
 };

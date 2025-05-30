@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "./components/navbar/Navbar";
+import { NostrUserProvider } from "./context/NostrUserContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,9 +57,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ToastContainer position="top-right" />
-        <Navbar />
-        {children}
+        <NostrUserProvider>
+          <ToastContainer position="top-right" />
+          <Navbar />
+          {children}
+        </NostrUserProvider>
       </body>
     </html>
   );

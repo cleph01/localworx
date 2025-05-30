@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 
 interface WalletBalanceProps {
   walletId: string;
+  pairingUri: string;
 }
 
-const MiniWalletBalance = ({ walletId }: WalletBalanceProps) => {
+const MiniWalletBalance = ({ walletId, pairingUri }: WalletBalanceProps) => {
   const [sats, setSats] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -14,8 +15,17 @@ const MiniWalletBalance = ({ walletId }: WalletBalanceProps) => {
     const fetchBalance = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/lightning/wallet/${walletId}/balance`);
+        const res = await fetch(`/api/lightning/wallet/get-balance`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ walletId: walletId, pairingUri: pairingUri }),
+        });
+
         const data = await res.json();
+        if (!data.invoice) throw new Error("No invoice returned");
+
         if (res.ok && data.balance) {
           setSats(Math.floor(data.balance / 1000)); // Convert msats → sats
         }

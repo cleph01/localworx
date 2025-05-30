@@ -13,8 +13,8 @@ export default function AuthPage() {
 
   useEffect(() => {
     const pubkey = localStorage.getItem("npub");
-    const privkey = localStorage.getItem("nsec");
-    if (pubkey && privkey) {
+
+    if (pubkey) {
       router.push("/dashboard");
     }
   }, []);

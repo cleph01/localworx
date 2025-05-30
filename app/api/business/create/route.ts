@@ -1,3 +1,5 @@
+// api/business/create/route.ts
+
 import { NextRequest } from "next/server";
 import { addBusinessHandler } from "../businessController";
 

@@ -2,39 +2,25 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useNostrUser } from "@/app/context/NostrUserContext";
 import Card from "../ui/Card";
 
 export default function SignInForm() {
   const [nsec, setNsec] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+
   const router = useRouter();
 
+  const { signIn } = useNostrUser();
+
   const handleSignIn = async () => {
-    const res = await fetch("/api/nostr/auth", {
-      method: "POST",
-      body: JSON.stringify({ nsec }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    const data = await res.json();
-
-    if (data?.user?.pubkey) {
-      localStorage.setItem("nsec", data.user.privkey);
-      localStorage.setItem("npub", data.user.pubkey);
-      setSuccess(true);
-      setError("");
-    } else {
-      setError(data.error || "Invalid key");
-      setSuccess(false);
-    }
+    setLoading(true);
+    const success = await signIn(nsec);
+    if (success) router.push("/dashboard");
+    setLoading(false);
   };
-
-  useEffect(() => {
-    if (success) {
-      router.push("/dashboard");
-    }
-  }, [success, router]);
 
   return (
     <Card
@@ -47,7 +33,7 @@ export default function SignInForm() {
           success={success}
         />
       }
-      Footer={<SignInFooter handleSignIn={handleSignIn} />}
+      Footer={<SignInFooter handleSignIn={handleSignIn} loading={loading} />}
       css="w-full max-w-sm"
     />
   );
@@ -102,15 +88,17 @@ const SignInContent = ({
 
 type SignInFooterProps = {
   handleSignIn: () => void;
+  loading: boolean;
 };
 
-const SignInFooter = ({ handleSignIn }: SignInFooterProps) => {
+const SignInFooter = ({ handleSignIn, loading }: SignInFooterProps) => {
   return (
     <button
       onClick={handleSignIn}
       className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
+      disabled={loading}
     >
-      Sign In
+      {!loading ? "Sign In" : "...loading"}
     </button>
   );
 };

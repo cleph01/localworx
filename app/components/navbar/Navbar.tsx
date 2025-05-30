@@ -2,14 +2,19 @@
 
 import Link from "next/link";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FaBars, FaRegWindowClose } from "react-icons/fa";
 import CartIcon from "../ui/CartIcon";
+import { useNostrUser } from "@/app/context/NostrUserContext";
+import LogOutButton from "../ui/LogOutButton";
+import ProfileStatus from "./ProfileStatus";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const { user } = useNostrUser();
 
   return (
     <nav className="bg-navy-blue-background text-white shadow-lg sticky top-0 z-50">
@@ -75,12 +80,18 @@ const Navbar = () => {
             Should probably use useSession() in the Navbar to toggle "Join LocalWorx" vs. "Signin"
             Which will automatically push to dashboard and pick up the fact that a session is detected
             */}
-            <Link
-              href="/dashboard"
-              className="text-center block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"
-            >
-              Join LocalWorx
-            </Link>
+
+            {/* User Profile Avatar or Join Button */}
+            {user ? (
+              <ProfileStatus user={user} css="flex-row gap-2" />
+            ) : (
+              <Link
+                href="/auth"
+                className="text-center block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"
+              >
+                Join LocalWorx
+              </Link>
+            )}
           </div>
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
@@ -148,16 +159,17 @@ const Navbar = () => {
               <CartIcon />
             </div>
 
-            {/* TODO: should push to Dashboard - Next-Auth will pick up and for signin 
-            Should probably use useSession() in the Navbar to toggle "Join LocalWorx" vs. "Signin"
-            Which will automatically push to dashboard and pick up the fact that a session is detected
-            */}
-            <Link
-              href="/dashboard"
-              className="text-center block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"
-            >
-              Join LocalWorx
-            </Link>
+            {/* Profile Avatar or Join Button */}
+            {user ? (
+              <ProfileStatus user={user} css="flex-col gap-2" />
+            ) : (
+              <Link
+                href="/auth"
+                className="text-center block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md mt-4 md:mt-0 transition duration-300"
+              >
+                Join LocalWorx
+              </Link>
+            )}
           </div>
         </div>
       )}
