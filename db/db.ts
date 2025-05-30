@@ -10,6 +10,12 @@ import knexfile from "./knexfile";
 const environment = process.env.NODE_ENV || "development";
 const config = knexfile[environment as keyof typeof knexfile];
 
+if (!config) {
+  throw new Error(`Knex configuration missing for environment: ${environment}`);
+}
+
+console.log("NODE_ENV is:", process.env.NODE_ENV);
+
 const db = knex(config);
 
 export default db;
