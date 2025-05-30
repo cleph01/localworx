@@ -3,7 +3,8 @@ import { getUserByNpubHandler } from "./userController";
 
 export async function GET(
   req: NextRequest,
-  context: { params: { npub: string } }
+  { params }: { params: Promise<{ npub: string }> }
 ) {
-  return getUserByNpubHandler(context.params.npub);
+  const { npub } = await params;
+  return getUserByNpubHandler(npub);
 }
