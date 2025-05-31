@@ -10,6 +10,7 @@ import { getCurrentLocation } from "../../../lib/business/geoLocationHelper";
 import { reverseGeocode } from "../../../lib/business/reverseGeocode";
 import LazyLoadWrapper from "../../ui/LazyLoadWrapper";
 import PairingNoticeModal from "./PairingNoticeModal";
+import { useNostrUser } from "@/app/context/NostrUserContext";
 
 // add useEffect to pull npub from localStorage
 
@@ -133,17 +134,20 @@ export default function BusinessFormSection() {
    * useEffect to fetch UserId
    */
 
+  const { user } = useNostrUser();
+
   useEffect(() => {
+    if (!user?.npub) return;
+
     async function fetchOwnerId() {
-      const npub = localStorage.getItem("npub");
-      if (!npub) return;
-
       try {
-        const res = await fetch(`/api/users/by-npub/${npub}`);
+        const res = await fetch(`/api/users/by-npub/${user?.npub}`);
 
-        const user = await res.json();
-        if (user?.id) {
-          setFormData((prev) => ({ ...prev, owner_id: user.id }));
+        const userDb = await res.json();
+
+        console.log("local user @ businessForm: ", userDb);
+        if (userDb?.id) {
+          setFormData((prev) => ({ ...prev, owner_id: userDb?.id }));
         }
       } catch (error) {
         console.error("Failed to fetch owner ID", error);
@@ -151,14 +155,16 @@ export default function BusinessFormSection() {
     }
 
     fetchOwnerId();
-  }, []);
+  }, [user]);
 
   // useEffect to fetch categories
   useEffect(() => {
     async function fetchCategories() {
       try {
         const res = await fetch("/api/business-categories");
+
         const data = await res.json();
+
         setCategoryOptions(data.map((cat: { name: string }) => cat.name));
       } catch (err) {
         console.error("Failed to fetch categories", err);

@@ -1,6 +1,8 @@
 // app/context/NostrUserContext.tsx
 "use client";
 
+import { nip19 } from "nostr-tools";
+import { bytesToHex, hexToBytes } from "@noble/hashes/utils";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -14,7 +16,9 @@ type NostrUserContextType = {
   user: NostrUser | null;
   setUser: (user: NostrUser | null) => void;
   signIn: (nsec: string) => Promise<boolean>;
-  signUp: () => Promise<{ pubkey: string; privkey: string } | null>;
+  signUp: (
+    username: string
+  ) => Promise<{ pubkey: string; privkey: string } | null>;
   signOut: () => void;
   isLoading: boolean;
 };
@@ -25,6 +29,7 @@ const NostrUserContext = createContext<NostrUserContextType | undefined>(
 
 export function NostrUserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<NostrUser | null>(null);
+
   const [isLoading, setIsLoading] = useState(true);
 
   // Auto-load user profile from localStorage
@@ -65,27 +70,44 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
 
       const data = await res.json();
 
-      if (data?.user?.pubkey) {
-        localStorage.setItem("npub", data.user.pubkey);
-
-        // 🧠 Immediately fetch and store the profile
-        const profileRes = await fetch(
-          `/api/nostr/profile/${data.user.pubkey}`
-        );
-        const profile = await profileRes.json();
-
-        setUser({
-          npub: data.user.pubkey,
-          name: profile.name,
-          picture: profile.picture,
-        });
-
-        toast.success("Signed in successfully!");
-        return true;
-      } else {
+      if (!data?.user?.pubkey) {
         toast.error(data.error || "Invalid credentials");
         return false;
       }
+
+      // Encode pubkey using NIP-19 (comes as hex)
+      const npub = nip19.npubEncode(data.user.pubkey);
+      localStorage.setItem("npub", npub);
+
+      // Fetch Nostr profile
+      const profileRes = await fetch(`/api/nostr/profile/${npub}`);
+      const profile = await profileRes.json();
+
+      console.log("Fetched Nostr profile @ NostrUserContext:", profile);
+
+      // Ensure user exists in our database
+      const userRes = await fetch(`/api/users/by-npub/${npub}`);
+      // Check if user exists
+      console.log("Check for User in Db fetch response:", userRes);
+      if (userRes.status === 404) {
+        // Create user in DB
+        const newUser = await fetch("/api/users/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            npub,
+            name: profile.name,
+            picture: profile.picture,
+          }),
+        });
+        // Check if the user was created successfully
+        console.log("Created new user in DB:", await newUser.json());
+      }
+
+      // 🧠 Immediately store the Nostr profile
+      setUser({ npub, name: profile.name, picture: profile.picture });
+      toast.success("Signed in successfully!");
+      return true;
     } catch (err) {
       console.error("Sign in error:", err);
       toast.error("Sign in failed. Please try again.");
@@ -93,36 +115,60 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signUp = async (): Promise<{
-    pubkey: string;
-    privkey: string;
-  } | null> => {
+  const signUp = async (
+    username: string
+  ): Promise<{ pubkey: string; privkey: string } | null> => {
     try {
+      // 1. Generate keypair
       const res = await fetch("/api/nostr/keys", { method: "POST" });
       const data = await res.json();
 
-      if (data.pubkey && data.privkey) {
-        localStorage.setItem("npub", data.pubkey);
-
-        // Fetch and hydrate profile
-        const profileRes = await fetch(`/api/nostr/profile/${data.pubkey}`);
-        const profile = await profileRes.json();
-
-        setUser({
-          npub: data.pubkey,
-          name: profile.name,
-          picture: profile.picture,
-        });
-
-        toast.success("Account created successfully!");
-        return data;
-      } else {
+      if (!data.pubkey || !data.privkey) {
         toast.error("Failed to generate keys");
         return null;
       }
+
+      const { pubkey, privkey } = data;
+
+      // Encode keys using NIP-19
+      const pubKeyEncoded = nip19.npubEncode(pubkey);
+      const privKeyBytes = hexToBytes(privkey);
+      const privKeyEncoded = nip19.nsecEncode(privKeyBytes);
+
+      // 2. Publish kind:0 profile event (default)
+      const profileData = {
+        name: username,
+        about: "Excited to be part of LocalWorx!",
+        picture: "", // Optional: provide a default avatar later
+      };
+
+      await fetch("/api/nostr/profile/publish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pubkey, privkey, profile: profileData }),
+      });
+
+      // 3. Save user in our internal DB
+      await fetch("/api/users/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ npub: pubKeyEncoded, name: username }),
+      });
+
+      // 4. Save to localStorage + update context
+      localStorage.setItem("npub", pubKeyEncoded);
+
+      setUser({
+        npub: pubKeyEncoded,
+        name: profileData.name,
+        picture: profileData.picture,
+      });
+
+      toast.success("Account created successfully!");
+      return { pubkey: pubKeyEncoded, privkey: privKeyEncoded };
     } catch (err) {
       console.error("Sign up error:", err);
-      toast.error("Error generating keys");
+      toast.error("Error creating account. Please try again.");
       return null;
     }
   };

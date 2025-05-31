@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { FaBars, FaRegWindowClose } from "react-icons/fa";
 import CartIcon from "../ui/CartIcon";
 import { useNostrUser } from "@/app/context/NostrUserContext";
-import LogOutButton from "../ui/LogOutButton";
+
 import ProfileStatus from "./ProfileStatus";
 
 const Navbar = () => {

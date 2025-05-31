@@ -7,11 +7,12 @@ export async function up(knex: Knex): Promise<void> {
 
     // Basic info
     table.string("first_name").notNullable();
-    table.string("email").notNullable().unique();
+    table.string("email").nullable().unique();
     table.boolean("email_verified").defaultTo(false);
 
     // Nostr identity
     table.string("npub").unique().notNullable();
+    table.string("avatar_url").nullable();
 
     // Optional Lightning wallet details
     table.text("pairing_uri_encrypted").nullable();

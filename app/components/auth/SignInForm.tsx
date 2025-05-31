@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNostrUser } from "@/app/context/NostrUserContext";
 import Card from "../ui/Card";
 

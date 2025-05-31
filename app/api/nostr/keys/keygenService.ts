@@ -1,6 +1,6 @@
 import { generateSecretKey, getPublicKey } from "nostr-tools/pure";
 import { bytesToHex } from "@noble/hashes/utils";
-import { nip19 } from "nostr-tools";
+
 import type { NostrKeypair } from "./keygenTypes";
 
 export function generateKeypairService(): NostrKeypair {
