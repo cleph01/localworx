@@ -203,7 +203,9 @@ const SignUpFooter = ({
       className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded"
       disabled={generating}
     >
-      {!generating ? "Generate Nostr Keys & Sign Up" : "Generating..."}
+      {!generating
+        ? "Generate Nostr Keys & Sign Up"
+        : "Generating, please wait..."}
     </button>
   );
 };

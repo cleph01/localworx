@@ -15,10 +15,12 @@ export default async function ProfilePage({
   let profile;
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/api/nostr/profile/${npub}`
-    );
+    const res = await fetch(`/api/nostr/profile/${npub}`);
 
+    if (res.ok === false) {
+      console.error("Failed to fetch profile:", res.statusText);
+      notFound();
+    }
     profile = await res.json();
 
     console.log("Fetched profile @ Profile main page:", profile);
