@@ -9,5 +9,13 @@ export async function publishProfileService({
   privkey: string;
   profile: { name?: string; about?: string; picture?: string };
 }) {
-  return publishKind0Profile({ pubkey, privkey, profile });
+  return publishKind0Profile({
+    pubkey,
+    privkey,
+    profile: {
+      name: profile.name ?? "",
+      about: profile.about,
+      picture: profile.picture,
+    },
+  });
 }
