@@ -10,7 +10,7 @@ const ProfileStatus = ({ user, css }: ProfileStatusProps) => {
   return (
     <div className={`flex ${css}`}>
       <Link
-        href={`/profile/${user.npub}`}
+        href="/profile/me"
         className="flex items-center gap-2 border border-white/30 px-2 py-1 rounded-md hover:bg-white/10 transition"
       >
         {user.picture ? (

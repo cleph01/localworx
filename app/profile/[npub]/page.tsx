@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation";
 import UserProfileHeader from "../../components/profile/UserProfileHeader";
-import LogOutButton from "../../components/ui/LogOutButton";
+
 import Card from "@/app/components/ui/Card";
 
 export default async function ProfilePage({
@@ -38,7 +38,6 @@ export default async function ProfilePage({
     <main className="max-w-4xl mx-auto p-6">
       <Card
         Header={<UserProfileHeader profile={profile} />}
-        Footer={<LogOutButton />}
         css="w-full max-w-sm"
       />
 
