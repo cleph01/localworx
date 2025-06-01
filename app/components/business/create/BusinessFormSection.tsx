@@ -3,6 +3,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import AddressAutocomplete from "../../maps/AddressAutocomplete";
 import Map from "../../maps/Map";
@@ -11,6 +12,7 @@ import { reverseGeocode } from "../../../lib/business/reverseGeocode";
 import LazyLoadWrapper from "../../ui/LazyLoadWrapper";
 import PairingNoticeModal from "./PairingNoticeModal";
 import { useNostrUser } from "@/app/context/NostrUserContext";
+import { encrypt } from "@/app/lib/security/aesCrypto";
 
 // add useEffect to pull npub from localStorage
 
@@ -31,6 +33,11 @@ export default function BusinessFormSection() {
     category_id: "",
     category_name: "",
   });
+  // State to track form submission status
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  // Use Next.js router for navigation
+
+  const router = useRouter();
 
   // Hold the NWC wallet pairingUri
   const [pairingUri, setPairingUri] = useState("");
@@ -89,44 +96,69 @@ export default function BusinessFormSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      // Step 0: If category_id is set in FormData, then category should be blank
-      if (formData.category_id) {
-        setFormData({
-          ...formData,
-          category_name: "",
-        });
-      }
-      // Step 1: Create business (eventually via real API)
-      console.log("Submitted business:", formData);
-      toast.success("✅ Business submitted (mock only)");
+    if (!user) {
+      toast.error("User not authenticated.");
+      return;
+    }
 
-      // Step 2: Create Lightning subwallet
-      const response = await fetch("/api/lightning/wallet/create-subwallet", {
+    try {
+      setIsSubmitting(true);
+
+      // 1. Request subwallet creation from your backend
+      const walletRes = await fetch("/api/wallets/create-subwallet", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          label: formData.business_name,
-          type: "business",
-          ownerPubkey: localStorage.getItem("npub"),
+          username: formData.business_name, // or user.npub or a sanitized slug
         }),
       });
 
-      const data = await response.json();
+      const walletData = await walletRes.json();
 
-      // Console CreateNewBusiness Response
-      console.log("created New Business @ BusinessFormSection: ", data);
-
-      if (data.pairingUri) {
-        toast.success("🪙 Subwallet created for this business!");
-        setPairingUri(data.pairingUri);
-        setShowPairing(true);
-      } else {
-        toast.error("Failed to create subwallet");
+      if (!walletRes.ok || !walletData?.pairingUri) {
+        throw new Error("Wallet creation failed");
       }
+
+      const encryptedPairingUri = encrypt(walletData.pairingUri);
+
+      // 2. Construct business payload with wallet info
+      const businessPayload = {
+        business_name: formData.business_name,
+        description: formData.description,
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        phone: formData.phone,
+        email: formData.email,
+        email_verified: false,
+        website: formData.website,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
+        owner_id: formData.owner_id,
+        category_id: formData.category_id || null,
+        wallet_id: walletData.username, // same as passed into the service
+        pairing_uri_encrypted: encryptedPairingUri,
+        wallet_created: true,
+      };
+
+      // 3. Send to business creation API
+      const bizRes = await fetch("/api/business/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(businessPayload),
+      });
+
+      if (!bizRes.ok) {
+        throw new Error("Failed to save business");
+      }
+
+      toast.success("🎉 Business created and wallet linked!");
+      router.push("/dashboard");
     } catch (err) {
-      console.error(err);
-      toast.error("An error occurred during registration.");
+      console.error("Error in handleSubmit:", err);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

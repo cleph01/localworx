@@ -1,4 +1,6 @@
+import Link from "next/link";
 import BusinessCard from "../business/BusinessCard";
+import { FaPlusCircle } from "react-icons/fa";
 
 const MyBusinessesSection = () => {
   const myBusinesses = [
@@ -31,7 +33,21 @@ const MyBusinessesSection = () => {
 
   return (
     <section className="max-w-4xl bg-white rounded-lg shadow-sm border border-gray-400 px-4 py-6 mb-6">
-      <h2 className="text-xl font-bold mb-4">🏪 Your Businesses</h2>
+      <div className="flex flex-col mb-4">
+        <h2 className="text-xl font-bold mb-4">
+          🏪 Your Businesses{" "}
+          <span className="text-gray-400">({myBusinesses.length})</span>
+        </h2>
+
+        <Link
+          href="/dashboard/business/create"
+          className="flex flex-row items-center text-sm text-blue-500 hover:text-blue-600 transition-colors"
+        >
+          <FaPlusCircle className="h-4 w-4 mr-1" />
+          Add Business
+        </Link>
+      </div>
+
       {myBusinesses.length ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {myBusinesses.map((biz) => (
