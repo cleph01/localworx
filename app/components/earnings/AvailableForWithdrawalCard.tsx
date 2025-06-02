@@ -30,7 +30,7 @@ const AvailableForWithdrawalCard = () => {
       Header={<WithdrawalHeader {...withdrawalData} />}
       Content={<WithdrawalContent {...withdrawalData} />}
       Footer={<WithdrawalFooter css={buttonData.css} text={buttonData.text} />}
-      css="w-full max-w-sm "
+      css="w-full max-w-sm"
     />
   );
 };

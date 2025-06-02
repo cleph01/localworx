@@ -23,6 +23,8 @@ export async function createSubwalletService(username: string) {
     }),
   });
 
+  console.log("createSubwalletService response:", res);
+
   if (!res.ok) {
     const err = await res.text();
     throw new Error(`Alby app creation failed: ${err}`);

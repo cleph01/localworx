@@ -2,7 +2,7 @@
 export function getHeaders() {
   return {
     Authorization: `Bearer ${process.env.NEXT_PUBLIC_ALBY_AUTH_TOKEN}`,
-    "AlbyHub-Name": process.env.NEXT_PUBLIC_ALBYHUB_APP_NAME || "",
+    "AlbyHub-Name": process.env.NEXT_PUBLIC_ALBYHUB_NAME || "",
     "Content-Type": "application/json",
     Accept: "application/json",
   };

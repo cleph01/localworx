@@ -59,7 +59,7 @@ const AddressAutocomplete = forwardRef<AddressAutocompleteHandle, Props>(
       <input
         ref={inputRef}
         type="text"
-        placeholder="Enter business address"
+        placeholder="Enter business address (auto)"
         className="w-full border px-4 py-2 rounded shadow-sm text-sm"
       />
     );
