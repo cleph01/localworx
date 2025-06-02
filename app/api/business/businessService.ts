@@ -15,6 +15,7 @@ export async function addBusiness(data: Business & { category_name?: string }) {
   if (!categoryId && data.category_name) {
     const normalizedName = data.category_name
       .toLowerCase()
+      .trim()
       .replace(/\s+/g, "_");
     categoryId = await findOrCreateCategory(normalizedName);
   }

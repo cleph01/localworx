@@ -1,59 +1,69 @@
-// components/maps/AddressAutocomplete.tsx
 "use client";
 
-import { useEffect, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef, useEffect } from "react";
 import { initGoogleMaps } from "./initGoogle";
 
-interface AddressAutocompleteProps {
+export interface AddressAutocompleteHandle {
+  clear: () => void;
+}
+
+interface Props {
   onSelect: (address: string, location: { lat: number; lng: number }) => void;
 }
 
-export default function AddressAutocomplete({
-  onSelect,
-}: AddressAutocompleteProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
+const AddressAutocomplete = forwardRef<AddressAutocompleteHandle, Props>(
+  ({ onSelect }, ref) => {
+    const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const initializeAutocomplete = async () => {
-      await initGoogleMaps();
-      await google.maps.importLibrary("places");
+    // expose `clear()` to parent
+    useImperativeHandle(ref, () => ({
+      clear: () => {
+        if (inputRef.current) inputRef.current.value = "";
+      },
+    }));
 
-      if (!inputRef.current) return;
+    useEffect(() => {
+      const initialize = async () => {
+        await initGoogleMaps();
+        await google.maps.importLibrary("places");
 
-      const autocomplete = new google.maps.places.Autocomplete(
-        inputRef.current,
-        {
-          types: ["geocode"],
-        }
-      );
+        if (!inputRef.current) return;
 
-      autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace();
+        const autocomplete = new google.maps.places.Autocomplete(
+          inputRef.current,
+          {
+            types: ["geocode"],
+          }
+        );
 
-        if (
-          !place.geometry ||
-          !place.geometry.location ||
-          !place.formatted_address
-        )
-          return;
+        autocomplete.addListener("place_changed", () => {
+          const place = autocomplete.getPlace();
+          if (
+            !place.geometry ||
+            !place.geometry.location ||
+            !place.formatted_address
+          )
+            return;
 
-        const location = place.geometry.location;
-        onSelect(place.formatted_address, {
-          lat: location.lat(),
-          lng: location.lng(),
+          onSelect(place.formatted_address, {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng(),
+          });
         });
-      });
-    };
+      };
 
-    initializeAutocomplete();
-  }, [onSelect]);
+      initialize();
+    }, [onSelect]);
 
-  return (
-    <input
-      ref={inputRef}
-      type="text"
-      placeholder="Enter business address"
-      className="w-full border px-4 py-2 rounded shadow-sm text-sm"
-    />
-  );
-}
+    return (
+      <input
+        ref={inputRef}
+        type="text"
+        placeholder="Enter business address"
+        className="w-full border px-4 py-2 rounded shadow-sm text-sm"
+      />
+    );
+  }
+);
+
+export default AddressAutocomplete;

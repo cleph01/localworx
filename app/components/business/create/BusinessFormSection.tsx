@@ -1,25 +1,28 @@
-// components/business/BusinessFormSection.tsx
-
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import AddressAutocomplete from "../../maps/AddressAutocomplete";
+import AddressAutocomplete, {
+  AddressAutocompleteHandle,
+} from "../../maps/AddressAutocomplete";
 import Map from "../../maps/Map";
 import { getCurrentLocation } from "../../../lib/business/geoLocationHelper";
 import { reverseGeocode } from "../../../lib/business/reverseGeocode";
 import LazyLoadWrapper from "../../ui/LazyLoadWrapper";
-import PairingNoticeModal from "./PairingNoticeModal";
+
 import { useNostrUser } from "@/app/context/NostrUserContext";
 import { encrypt } from "@/app/lib/security/aesCrypto";
 
-// add useEffect to pull npub from localStorage
+import stateCodes from "@/app/lib/business/stateCodes";
 
 export default function BusinessFormSection() {
+  const { user } = useNostrUser();
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
-    owner_id: "",
     business_name: "",
+    description: "",
     address: "",
     city: "",
     state: "",
@@ -27,70 +30,72 @@ export default function BusinessFormSection() {
     email: "",
     email_verified: false,
     website: "",
-    description: "",
-    latitude: 34.8526, // default: Greenville, SC
+    latitude: 34.8526,
     longitude: -82.394,
     category_id: "",
     category_name: "",
   });
-  // State to track form submission status
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // Use Next.js router for navigation
-
-  const router = useRouter();
-
-  // Hold the NWC wallet pairingUri
-  const [pairingUri, setPairingUri] = useState("");
-  const [showPairing, setShowPairing] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-
-  // Hold Business Category Options
   const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
+
+  const autocompleteRef = useRef<AddressAutocompleteHandle>(null);
+
+  // Show/hide autocomplete field based on location usage
+  const [showAutocomplete, setShowAutocomplete] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/business-categories");
+        const data = await res.json();
+        setCategoryOptions(data.map((cat: { name: string }) => cat.name));
+      } catch (err) {
+        console.error("Failed to fetch categories", err);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleUseMyLocation = async () => {
     try {
-      const coords = await getCurrentLocation();
-      const { latitude, longitude } = coords;
-
-      const addressInfo = await reverseGeocode(latitude, longitude);
-
       setFormData((prev) => ({
         ...prev,
-        latitude,
-        longitude,
-        ...addressInfo,
+        business_name: "",
+        description: "",
+        address: "",
+        city: "",
+        state: "",
+        phone: "",
+        email: "",
+        email_verified: false,
+        website: "",
+        latitude: 0,
+        longitude: 0,
+        category_id: "",
+        category_name: "",
       }));
 
+      // 👇 Clear the autocomplete field visually
+      autocompleteRef.current?.clear();
+
+      const coords = await getCurrentLocation();
+      const { latitude, longitude } = coords;
+      const addressInfo = await reverseGeocode(latitude, longitude);
+      console.log("Reverse geocoded address info:", addressInfo);
+      setFormData((prev) => ({ ...prev, latitude, longitude, ...addressInfo }));
       toast.success("📍 Location captured and address auto-filled!");
-    } catch (err) {
+    } catch {
       toast.error("Failed to get location. Please enter it manually.");
     }
-  };
-
-  const handlePlaceSelected = (
-    address: string,
-    location: { lat: number; lng: number }
-  ) => {
-    setFormData({
-      ...formData,
-      address: address || "",
-      latitude: location.lat,
-      longitude: location.lng,
-    });
-  };
-
-  const handleMarkerDrag = (coords: { lat: number; lng: number }) => {
-    setFormData({
-      ...formData,
-      latitude: coords.lat,
-      longitude: coords.lng,
-    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -101,56 +106,61 @@ export default function BusinessFormSection() {
       return;
     }
 
-    try {
-      setIsSubmitting(true);
+    // Validate State Code
+    const stateKey = formData.state.trim().toLowerCase().replace(/\s+/g, "_");
 
-      // 1. Request subwallet creation from your backend
+    if (
+      !(stateKey in stateCodes) ||
+      !Object.values(stateCodes)
+        .map((stateAbb) => stateAbb.toUpperCase())
+        .includes(stateKey.toUpperCase())
+    ) {
+      toast.error("Invalid state code. Please use a valid state abbreviation.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
       const walletRes = await fetch("/api/wallets/create-subwallet", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: formData.business_name, // or user.npub or a sanitized slug
-        }),
+        body: JSON.stringify({ username: formData.business_name }),
       });
 
       const walletData = await walletRes.json();
-
-      if (!walletRes.ok || !walletData?.pairingUri) {
+      if (!walletRes.ok || !walletData?.pairingUri)
         throw new Error("Wallet creation failed");
-      }
 
       const encryptedPairingUri = encrypt(walletData.pairingUri);
 
-      // 2. Construct business payload with wallet info
-      const businessPayload = {
-        business_name: formData.business_name,
-        description: formData.description,
-        address: formData.address,
-        city: formData.city,
-        state: formData.state,
-        phone: formData.phone,
-        email: formData.email,
-        email_verified: false,
-        website: formData.website,
-        latitude: formData.latitude,
-        longitude: formData.longitude,
-        owner_id: formData.owner_id,
+      // Split address into components
+      const [address, city, state] = formData.address
+        .split(",")
+        .map((s) => s.trim());
+      // Handle cases where address might not have city/state
+      setFormData((prev) => ({
+        ...prev,
+        address,
+        city: city || formData.city,
+        state: state || formData.state,
+      }));
+      // Prepare payload for business creation
+      const payload = {
+        ...formData,
+        owner_id: user.id,
         category_id: formData.category_id || null,
-        wallet_id: walletData.username, // same as passed into the service
+        wallet_id: walletData.username,
         pairing_uri_encrypted: encryptedPairingUri,
         wallet_created: true,
       };
 
-      // 3. Send to business creation API
       const bizRes = await fetch("/api/business/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(businessPayload),
+        body: JSON.stringify(payload),
       });
 
-      if (!bizRes.ok) {
-        throw new Error("Failed to save business");
-      }
+      if (!bizRes.ok) throw new Error("Failed to save business");
 
       toast.success("🎉 Business created and wallet linked!");
       router.push("/dashboard");
@@ -162,50 +172,7 @@ export default function BusinessFormSection() {
     }
   };
 
-  /**
-   * useEffect to fetch UserId
-   */
-
-  const { user } = useNostrUser();
-
-  useEffect(() => {
-    if (!user?.npub) return;
-
-    async function fetchOwnerId() {
-      try {
-        const res = await fetch(`/api/users/by-npub/${user?.npub}`);
-
-        const userDb = await res.json();
-
-        console.log("local user @ businessForm: ", userDb);
-        if (userDb?.id) {
-          setFormData((prev) => ({ ...prev, owner_id: userDb?.id }));
-        }
-      } catch (error) {
-        console.error("Failed to fetch owner ID", error);
-      }
-    }
-
-    fetchOwnerId();
-  }, [user]);
-
-  // useEffect to fetch categories
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const res = await fetch("/api/business-categories");
-
-        const data = await res.json();
-
-        setCategoryOptions(data.map((cat: { name: string }) => cat.name));
-      } catch (err) {
-        console.error("Failed to fetch categories", err);
-      }
-    }
-
-    fetchCategories();
-  }, []);
-
+  console.log("BusinessFormSection rendered with formData:", formData);
   return (
     <form
       onSubmit={handleSubmit}
@@ -214,48 +181,69 @@ export default function BusinessFormSection() {
       <h1 className="text-2xl font-bold">📍 Register Your Business</h1>
 
       <input
-        type="text"
-        name="businessName"
+        name="business_name"
         placeholder="Business Name"
         value={formData.business_name}
         onChange={handleChange}
-        className="w-full border p-2 rounded"
         required
+        className="w-full border p-2 rounded"
       />
-
       <textarea
         name="description"
         placeholder="Business Description"
         value={formData.description}
         onChange={handleChange}
-        className="w-full border p-2 rounded"
         rows={3}
+        className="w-full border p-2 rounded"
       />
 
-      <AddressAutocomplete onSelect={handlePlaceSelected} />
+      {showAutocomplete ? (
+        <AddressAutocomplete
+          ref={autocompleteRef}
+          onSelect={(address, location) => {
+            setFormData((prev) => ({
+              ...prev,
+              address,
+              latitude: location.lat,
+              longitude: location.lng,
+            }));
+          }}
+        />
+      ) : (
+        <input
+          type="text"
+          name="address"
+          placeholder="Address"
+          value={formData.address}
+          onChange={handleChange}
+          className="w-full border p-2 rounded bg-gray-100"
+        />
+      )}
+      <input
+        type="checkbox"
+        checked={showAutocomplete}
+        onChange={(e) => setShowAutocomplete(e.target.checked)}
+      />
 
       <div className="flex gap-4">
         <input
-          type="text"
+          readOnly
           name="latitude"
           placeholder="Latitude"
           value={formData.latitude}
-          readOnly
           className="w-1/2 border p-2 rounded bg-gray-100"
         />
         <input
-          type="text"
+          readOnly
           name="longitude"
           placeholder="Longitude"
           value={formData.longitude}
-          readOnly
           className="w-1/2 border p-2 rounded bg-gray-100"
         />
       </div>
 
       <div className="flex gap-4">
         <input
-          type="text"
           name="city"
           placeholder="City"
           value={formData.city}
@@ -263,7 +251,6 @@ export default function BusinessFormSection() {
           className="w-1/2 border p-2 rounded"
         />
         <input
-          type="text"
           name="state"
           placeholder="State"
           value={formData.state}
@@ -273,25 +260,20 @@ export default function BusinessFormSection() {
       </div>
 
       <input
-        type="text"
         name="phone"
         placeholder="Phone Number"
         value={formData.phone}
         onChange={handleChange}
         className="w-full border p-2 rounded"
       />
-
       <input
-        type="email"
         name="email"
         placeholder="Email"
         value={formData.email}
         onChange={handleChange}
         className="w-full border p-2 rounded"
       />
-
       <input
-        type="url"
         name="website"
         placeholder="Website"
         value={formData.website}
@@ -299,10 +281,8 @@ export default function BusinessFormSection() {
         className="w-full border p-2 rounded"
       />
 
-      {/* TODO: Ensure either a category_id or category_name is passed but not both */}
       <input
-        type="text"
-        name="category"
+        name="category_id"
         placeholder="Category"
         list="category-list"
         value={formData.category_id}
@@ -315,7 +295,6 @@ export default function BusinessFormSection() {
         ))}
       </datalist>
 
-      {/* Map Section */}
       <div>
         <label className="block font-semibold mb-1">Adjust Pin on Map</label>
         <LazyLoadWrapper
@@ -327,7 +306,13 @@ export default function BusinessFormSection() {
         >
           <Map
             center={{ lat: formData.latitude, lng: formData.longitude }}
-            onMove={handleMarkerDrag}
+            onMove={(coords) => {
+              setFormData((prev) => ({
+                ...prev,
+                latitude: coords.lat,
+                longitude: coords.lng,
+              }));
+            }}
           />
         </LazyLoadWrapper>
       </div>
@@ -342,16 +327,11 @@ export default function BusinessFormSection() {
         </button>
         <button
           type="submit"
+          disabled={isSubmitting}
           className="w-1/2 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded"
         >
           ✅ Submit
         </button>
-        {showModal && (
-          <PairingNoticeModal
-            pairingUri={pairingUri}
-            onClose={() => setShowModal(false)}
-          />
-        )}
       </div>
     </form>
   );

@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FaBars, FaRegWindowClose } from "react-icons/fa";
 import CartIcon from "../ui/CartIcon";
 import { useNostrUser } from "@/app/context/NostrUserContext";
 
 import ProfileStatus from "./ProfileStatus";
+import { redirect } from "next/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

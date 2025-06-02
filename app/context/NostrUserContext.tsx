@@ -7,6 +7,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 type NostrUser = {
+  id: string; // Internal user ID in your database
   npub: string;
   name?: string;
   picture?: string;
@@ -85,12 +86,13 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
 
       console.log("Fetched Nostr profile @ NostrUserContext:", profile);
 
-      // Ensure user exists in our database
+      // Check if user exists in our internal DB
       const userRes = await fetch(`/api/users/by-npub/${npub}`);
-      // Check if user exists
-      console.log("Check for User in Db fetch response:", userRes);
+
+      let finalUserData;
+
       if (userRes.status === 404) {
-        // Create user in DB
+        // User doesn't exist — create them
         const newUser = await fetch("/api/users/create", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -100,12 +102,22 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
             picture: profile.picture,
           }),
         });
-        // Check if the user was created successfully
-        console.log("Created new user in DB:", await newUser.json());
+        finalUserData = await newUser.json();
+        console.log("Created new user in DB:", finalUserData);
+      } else {
+        // User exists — use existing data
+        finalUserData = await userRes.json();
+        console.log("Existing user found in DB:", finalUserData);
       }
 
-      // 🧠 Immediately store the Nostr profile
-      setUser({ npub, name: profile.name, picture: profile.picture });
+      // ✅ Store user in context
+      setUser({
+        id: finalUserData.id,
+        npub,
+        name: profile.name,
+        picture: profile.picture,
+      });
+
       toast.success("Signed in successfully!");
       return true;
     } catch (err) {
@@ -149,7 +161,7 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
       });
 
       // 3. Save user in our internal DB
-      await fetch("/api/users/create", {
+      const newUser = await fetch("/api/users/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ npub: pubKeyEncoded, name: username }),
@@ -158,7 +170,10 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
       // 4. Save to localStorage + update context
       localStorage.setItem("npub", pubKeyEncoded);
 
+      const newUserData = await newUser.json();
+      console.log("Created new user in DB:", newUserData);
       setUser({
+        id: newUserData.id, // Assuming the response contains the new user's ID
         npub: pubKeyEncoded,
         name: profileData.name,
         picture: profileData.picture,

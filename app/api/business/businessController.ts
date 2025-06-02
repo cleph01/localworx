@@ -26,6 +26,7 @@ export async function getBusinessByIdHandler(_: NextRequest, id: string) {
 }
 
 // Add a new business
+// TODO: Add Zod validation of incoming data
 export async function addBusinessHandler(req: NextRequest) {
   try {
     const data = await req.json();

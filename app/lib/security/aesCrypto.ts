@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-const keyBase64 = process.env.AES_SECRET_KEY;
+const keyBase64 = process.env.NEXT_PUBLIC_AES_SECRET_KEY;
 if (!keyBase64) throw new Error("Missing AES_SECRET_KEY in environment");
 
 const key = Buffer.from(keyBase64, "base64"); // AES-256 = 32 bytes
