@@ -1,4 +1,15 @@
-import { Coordinates } from "../business/[businessId]/checkin/checkinTypes";
+// This function calculates the Haversine distance between two geographical coordinates.
+// It returns the distance in meters.
+// The Haversine formula is used to find the shortest distance over the earth's surface,
+// giving an "as-the-crow-flies" distance between two points on the globe.
+//// The function takes two coordinates as input, each with latitude and longitude.
+// It converts the degrees to radians, calculates the differences in latitude and longitude,
+// and then applies the Haversine formula to compute the distance.
+
+type Coordinates = {
+  latitude: number;
+  longitude: number;
+};
 
 export function haversineDistance(
   coord1: Coordinates,
