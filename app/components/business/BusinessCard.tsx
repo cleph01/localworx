@@ -9,6 +9,7 @@ import {
 } from "./businessCardTypes";
 import BusinessReviewsSection from "./BusinessReviewsSection";
 import IntroOfferSection from "./IntroOfferSection";
+import LazyLoadWrapper from "../ui/LazyLoadWrapper";
 
 const BusinessCard = ({ business }: BusinessCardProps) => {
   return (
@@ -42,13 +43,21 @@ const BusinessCardHeader = ({
       <BusinessReviewsSection businessId={id} />
     </div>
 
-    {/* User Avatar, name, rating in a row */}
+    {/* Logo Avatar, name, rating in a row */}
     <div className="flex flex-row items-center gap-2 mt-2">
-      <img
-        className="inline-block h-12 w-12 rounded-full ring-2 ring-white shadow-md"
-        src={logo_url}
-        alt={first_name}
-      />
+      <LazyLoadWrapper
+        fallback={
+          <div className="h-12 w-12 rounded-full bg-gray-200 rounded-full" />
+        }
+      >
+        {/* Business Logo Avatar */}
+        <img
+          className="inline-block h-12 w-12 rounded-full ring-2 ring-white shadow-md"
+          src={logo_url}
+          alt={first_name}
+        />
+      </LazyLoadWrapper>
+
       {/* Business Owner FirstName  */}
       <div className="text-sm ml-2 line-clamp-3">{description}</div>
 
