@@ -17,7 +17,6 @@ const BusinessListingsSection = async () => {
     return <div>No businesses found</div>;
   }
 
-  const businessesData = businesses.data;
   return (
     <section className="flex flex-col gap-4 py-12 px-6 ">
       <h2 className="text-2xl font-bold">Service Listings</h2>

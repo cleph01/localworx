@@ -21,7 +21,7 @@ type BusinessCardContentType = {
 
 type BusinessCardFooterType = {
   id: string;
-  categories?: string[];
+  category_id?: string;
 };
 
 type BusinessCardProps = {

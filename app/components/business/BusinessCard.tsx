@@ -112,18 +112,27 @@ const BusinessCardContent = ({
   </div>
 );
 
-const BusinessCardFooter = ({ id, categories }: BusinessCardFooterType) => {
+const BusinessCardFooter = async ({
+  id,
+  category_id,
+}: BusinessCardFooterType) => {
+  // const businesses = await mockFetch("/api/businesses");
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  const response = await fetch(`${baseUrl}/api/category/${category_id}`, {
+    cache: "no-store", // optional: ensure fresh data in Server Components
+  });
+
+  const category = await response.json();
+
+  if (!category) {
+    console.log("No categories found for this business:", id);
+  }
+
   return (
     <div className="flex flex-row items-center justify-between gap-2">
-      <div className="flex flex-wrap gap-1">
-        {categories?.map((category) => (
-          <div
-            key={category}
-            className="inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full"
-          >
-            {category}
-          </div>
-        ))}
+      <div className="flex-1 inline-block text-center bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+        {category.name}
       </div>
       {/* View Item */}
       <BusinessViewButton businessId={id} />
