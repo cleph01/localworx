@@ -24,17 +24,18 @@ const knexfile: { [key: string]: Knex.Config } = {
     useNullAsDefault: true,
   },
   production: {
-    client: "sqlite3", // ✅ Still SQLite for now
-    connection: {
-      filename: path.join(__dirname, "database.db"),
-    },
+    client: "pg",
+    connection: process.env.DATABASE_URL, // e.g., from Vercel env vars
     migrations: {
       directory: path.join(__dirname, "migrations"),
     },
     seeds: {
       directory: path.join(__dirname, "seeds"),
     },
-    useNullAsDefault: true,
+    pool: {
+      min: 2,
+      max: 10,
+    },
   },
 };
 
