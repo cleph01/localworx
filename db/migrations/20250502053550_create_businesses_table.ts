@@ -26,6 +26,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string("email").nullable();
     table.boolean("email_verified").defaultTo(false);
     table.string("website").nullable();
+    table.string("logo_url").nullable();
 
     // Latitude and longitude with 6 decimal places (standard for GPS precision)
     table.decimal("latitude", 9, 6).notNullable();

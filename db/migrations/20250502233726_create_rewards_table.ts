@@ -23,6 +23,8 @@ export async function up(knex: Knex): Promise<void> {
     table.string("name").notNullable();
     // Description of the reward
     table.text("description");
+    // URL of the reward image
+    table.string("image_url").nullable();
     // 'loyalty' or 'in-kind'
     table.string("reward_type").notNullable();
     // Minimum check-ins required to earn the reward

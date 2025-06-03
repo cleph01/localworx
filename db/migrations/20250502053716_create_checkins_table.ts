@@ -34,9 +34,6 @@ export async function up(knex: Knex): Promise<void> {
 
     // created_at, updated_at
     table.timestamps(true, true);
-
-    // Optional: any metadata or notes
-    table.text("notes").nullable();
   });
 }
 

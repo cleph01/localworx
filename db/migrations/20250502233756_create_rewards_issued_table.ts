@@ -6,7 +6,7 @@
 import { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
-  await knex.schema.createTable("reward_grants", (table) => {
+  await knex.schema.createTable("rewards_issued", (table) => {
     // auto-incrementing primary key
     table.increments("id").primary();
     // User who received the reward
@@ -33,6 +33,13 @@ export async function up(knex: Knex): Promise<void> {
       .references("id")
       .inTable("rewards")
       .onDelete("CASCADE");
+
+    // Indicates if the reward has been redeemed
+    table.boolean("redeemed").defaultTo(false);
+
+    // Indicates if the reward has been resold
+    table.boolean("resold").defaultTo(false);
+
     // Timestamp for when the reward was granted
     table.timestamp("granted_at").defaultTo(knex.fn.now());
     // created_at, updated_at
@@ -40,5 +47,5 @@ export async function up(knex: Knex): Promise<void> {
   });
 }
 export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTableIfExists("reward_grants");
+  await knex.schema.dropTableIfExists("rewards_issued");
 }

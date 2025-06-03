@@ -16,13 +16,6 @@ export async function getProfileMetadata(
 
   const { type, data: decodedPubkey } = nip19.decode(pubkey);
 
-  console.log(
-    "Decoded pubkey type: ",
-    type,
-    "Decoded pubkey data: ",
-    decodedPubkey
-  );
-
   // Ensure the pubkey is in a valid format
   let authorPubkey: string | undefined;
   // Handle different types of decoded pubkey
@@ -56,9 +49,6 @@ export async function getProfileMetadata(
   }
 
   try {
-    console.log("Profile event raw content:", event);
-    console.log("Profile event content:", event.content);
-
     const parsed = JSON.parse(event.content);
     return {
       pubkey,

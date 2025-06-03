@@ -7,6 +7,7 @@ import {
   BusinessCardHeaderType,
   BusinessCardProps,
 } from "./businessCardTypes";
+import BusinessReviewsSection from "./BusinessReviewsSection";
 
 const BusinessCard = ({ business }: BusinessCardProps) => {
   return (
@@ -23,7 +24,8 @@ export default BusinessCard;
 //
 
 const BusinessCardHeader = ({
-  businessName,
+  id,
+  business_name,
   firstName,
   rating,
   reviewCount,
@@ -34,15 +36,10 @@ const BusinessCardHeader = ({
     <div className="flex flex-row items-center justify-between gap-2">
       {/* Title */}
       <h3 className="flex-1 text-xl font-extrabold text-slate-800">
-        {businessName}
+        {business_name}
       </h3>
       {/* business review */}
-      <div className="flex flex-row flex-0 items-center gap-1">
-        <span className="text-base ml-2">⭐</span>{" "}
-        {/* <FaStar className="text-yellow-500" /> */}
-        <span className="text-gray-500 font-bold">{rating}</span>
-        <span className="text-gray-400"> ({reviewCount})</span>
-      </div>
+      <BusinessReviewsSection businessId={id} />
     </div>
 
     {/* User Avatar, name, rating in a row */}

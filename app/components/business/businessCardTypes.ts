@@ -1,5 +1,6 @@
 type BusinessCardHeaderType = {
-  businessName?: string;
+  id: string;
+  business_name?: string;
   firstName?: string;
   rating?: number;
   reviewCount?: number;

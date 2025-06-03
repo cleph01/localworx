@@ -10,8 +10,9 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("users")
       .onDelete("CASCADE");
 
-    table.string("title").notNullable(); // Title of the marketplace item
+    table.string("name").notNullable(); // Name of the marketplace item
     table.text("description").nullable(); // Description of the item
+    table.string("image_url").nullable(); // URL of the item's image
     table.decimal("price", 10, 2).notNullable(); // Price of the item (decimal format)
     table.string("category").notNullable(); // Category of the item (e.g., 'service', 'product', etc.)
     table.timestamps(true, true); // Created_at and updated_at timestamps
