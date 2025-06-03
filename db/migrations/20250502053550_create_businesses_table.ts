@@ -36,7 +36,7 @@ export async function up(knex: Knex): Promise<void> {
     table.decimal("longitude", 9, 6).notNullable();
 
     // owner_id
-    table.string("owner_id").notNullable();
+    table.integer("owner_id").notNullable();
 
     // Owner foreign key
     table

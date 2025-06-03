@@ -10,7 +10,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments("id").primary();
 
     // user_id and business_id
-    table.string("user_id").notNullable();
+    table.integer("user_id").notNullable();
     table.integer("business_id").unsigned().notNullable;
 
     // Foreign keys

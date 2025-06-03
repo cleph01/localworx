@@ -3,7 +3,7 @@ import type { Knex } from "knex";
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("marketplace_items", (table) => {
     table.increments("id").primary(); // Primary key: auto-incrementing ID
-    table.string("user_id").notNullable(); // User ID of the person posting the item
+    table.integer("user_id").notNullable(); // User ID of the person posting the item
     table
       .foreign("user_id")
       .references("id")

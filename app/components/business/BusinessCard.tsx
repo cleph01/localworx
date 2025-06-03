@@ -10,6 +10,7 @@ import {
 import BusinessReviewsSection from "./BusinessReviewsSection";
 import IntroOfferSection from "./IntroOfferSection";
 import LazyLoadWrapper from "../ui/LazyLoadWrapper";
+import AvatarWrapper from "../ui/AvatarWrapper";
 
 const BusinessCard = ({ business }: BusinessCardProps) => {
   return (
@@ -47,15 +48,17 @@ const BusinessCardHeader = ({
     <div className="flex flex-row items-center gap-2 mt-2">
       <LazyLoadWrapper
         fallback={
-          <div className="h-12 w-12 rounded-full bg-gray-200 rounded-full" />
+          <div className="h-24 w-24 rounded-full bg-gray-200 rounded-full" />
         }
       >
         {/* Business Logo Avatar */}
-        <img
-          className="inline-block h-12 w-12 rounded-full ring-2 ring-white shadow-md"
-          src={logo_url}
-          alt={first_name}
-        />
+        <AvatarWrapper css="w-24 h-24">
+          <img
+            className="w-full h-full object-cover ring-2 ring-white shadow-md"
+            src={logo_url}
+            alt={first_name}
+          />
+        </AvatarWrapper>
       </LazyLoadWrapper>
 
       {/* Business Owner FirstName  */}

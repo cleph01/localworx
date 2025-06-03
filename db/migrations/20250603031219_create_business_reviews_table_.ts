@@ -12,17 +12,17 @@ export async function up(knex: Knex): Promise<void> {
     table.text("review").nullable();
 
     // Foreign key to businesses
+    table.integer("business_id").notNullable(); // User ID of the person posting the item
     table
-      .string("business_id")
-      .notNullable()
+      .foreign("business_id")
       .references("id")
       .inTable("businesses")
       .onDelete("CASCADE");
 
     // Foreign key to users (reviewer)
+    table.integer("reviewer_id").notNullable(); // User ID of the person posting the item
     table
-      .string("reviewer_id")
-      .notNullable()
+      .foreign("reviewer_id")
       .references("id")
       .inTable("users")
       .onDelete("CASCADE");

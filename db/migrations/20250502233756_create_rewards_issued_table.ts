@@ -10,7 +10,7 @@ export async function up(knex: Knex): Promise<void> {
     // auto-incrementing primary key
     table.increments("id").primary();
     // User who received the reward
-    table.string("user_id").notNullable();
+    table.integer("user_id").notNullable();
     // Foreign key to users table
     table
       .foreign("user_id")
@@ -18,7 +18,7 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("users")
       .onDelete("CASCADE");
     // Business offering the reward
-    table.string("business_id").notNullable();
+    table.integer("business_id").notNullable();
     // Foreign key to businesses table
     table
       .foreign("business_id")
@@ -26,7 +26,7 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("businesses")
       .onDelete("CASCADE");
     // Reward ID
-    table.string("reward_id").notNullable();
+    table.integer("reward_id").notNullable();
     // Foreign key to rewards table
     table
       .foreign("reward_id")

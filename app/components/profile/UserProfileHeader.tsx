@@ -14,7 +14,7 @@ type UserProfileHeaderProps = {
 
 export default function UserProfileHeader({ profile }: UserProfileHeaderProps) {
   return (
-    <header className="flex flex-col items-center gap-4 border-b border-gray-300  00 pb-4">
+    <header className="flex flex-col items-center gap-4 border-b border-gray-300 pb-4">
       {profile.picture ? (
         <div className="aspect-square rounded-full bg-base-100 flex items-center justify-center select-none relative w-64 h-64">
           <div className="w-full rounded-full overflow-hidden aspect-square not-prose">

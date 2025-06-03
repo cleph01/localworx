@@ -11,7 +11,7 @@ export async function up(knex: Knex): Promise<void> {
     // Foreign key to businesses table
 
     // owner_id and category_id
-    table.string("business_id").notNullable();
+    table.integer("business_id").notNullable();
 
     // Foreign keys
     table
