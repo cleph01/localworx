@@ -1,6 +1,6 @@
 import { getUserCheckInHistory } from "./checkinHistoryDAO";
 import { CheckInHistoryEntry } from "./checkinHistoryTypes";
-import { haversineDistance } from "../../../../lib/haversineDistance";
+import { haversineDistance } from "../../../lib/haversineDistance";
 
 export async function fetchCheckInHistory(
   userId: number

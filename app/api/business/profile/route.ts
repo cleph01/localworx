@@ -1,5 +1,5 @@
 // app/api/business/[businessId]/profile/route.ts
-import { getBusinessByIdHandler } from "../../businessController";
+import { getBusinessByIdHandler } from "../businessController";
 import { NextRequest } from "next/server";
 
 export async function GET(

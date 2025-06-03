@@ -1,4 +1,4 @@
-import knex from "../../../../../db/db";
+import knex from "../../../../db/db";
 import { CheckInRequest, Reward } from "./checkinTypes";
 import { Coordinates } from "./checkinTypes"; // Import Coordinates
 
