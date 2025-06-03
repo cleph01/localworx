@@ -24,6 +24,7 @@ export async function seed(knex: Knex): Promise<void> {
       longitude: -82.394,
       owner_id: "1",
       category_id: 1,
+      hiring_promoters: true,
     },
     {
       description: "A boutique barber shop with vintage vibes.",
@@ -38,11 +39,12 @@ export async function seed(knex: Knex): Promise<void> {
       email: "hello@vintagecut.com",
       email_verified: true,
       website: "https://vintagecut.com",
-      logo_url: "https://images.unsplash.com/photo-1588776814546-ec7cf019c07f",
+      logo_url: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70",
       latitude: 34.8541,
       longitude: -82.3923,
       owner_id: "2",
       category_id: 2,
+      hiring_promoters: true,
     },
     {
       description: "Handmade pastries and fresh local bread daily.",
@@ -62,6 +64,7 @@ export async function seed(knex: Knex): Promise<void> {
       longitude: -82.3965,
       owner_id: "3",
       category_id: 3,
+      hiring_promoters: true,
     },
     {
       description: "Local gym with 24/7 access and group classes.",
@@ -76,11 +79,12 @@ export async function seed(knex: Knex): Promise<void> {
       email: "info@irontemplegym.com",
       email_verified: true,
       website: "https://irontemplegym.com",
-      logo_url: "https://images.unsplash.com/photo-1571019613914-85f342c1d14e",
+      logo_url: "https://images.unsplash.com/photo-1716915372382-3c51d0013b56",
       latitude: 34.85,
       longitude: -82.393,
       owner_id: "4",
       category_id: 4,
+      hiring_promoters: true,
     },
     {
       description: "Tech support and gadget repair, fast and friendly.",
@@ -95,11 +99,13 @@ export async function seed(knex: Knex): Promise<void> {
       email: "support@techsavvy.com",
       email_verified: true,
       website: "https://techsavvy.com",
-      logo_url: "https://images.unsplash.com/photo-1581093588401-3a8b4c07fd8a",
+      logo_url:
+        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHRlY2glMjBzdXBwb3J0fGVufDB8fDB8fHww",
       latitude: 34.855,
       longitude: -82.391,
       owner_id: "5",
       category_id: 5,
+      hiring_promoters: true,
     },
     {
       description: "Organic smoothie bar with seasonal ingredients.",
@@ -114,11 +120,13 @@ export async function seed(knex: Knex): Promise<void> {
       email: "fresh@greensip.com",
       email_verified: false,
       website: "https://greensip.com",
-      logo_url: "https://images.unsplash.com/photo-1585238341986-2d2b0e63d3a5",
+      logo_url:
+        "https://images.unsplash.com/photo-1633777050410-4dc5d0b23166?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG9yZ2FuaWMlMjBzbW9vdGhpZXxlbnwwfHwwfHx8MA%3D%3D",
       latitude: 34.857,
       longitude: -82.3955,
       owner_id: "6",
       category_id: 6,
+      hiring_promoters: true,
     },
     {
       description: "Custom woodworking studio and gallery.",
@@ -133,11 +141,13 @@ export async function seed(knex: Knex): Promise<void> {
       email: "hello@grainandglory.com",
       email_verified: true,
       website: "https://grainandglory.com",
-      logo_url: "https://images.unsplash.com/photo-1605810230434-7631b7112a6c",
+      logo_url:
+        "https://images.unsplash.com/photo-1629085281900-455f2f1fc5ab?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGxvY2FsJTIwY2FycGVudGVyfGVufDB8fDB8fHww",
       latitude: 34.8585,
       longitude: -82.3975,
       owner_id: "7",
       category_id: 7,
+      hiring_promoters: false,
     },
     {
       description: "Music lessons and instrument repair for all ages.",
@@ -157,6 +167,7 @@ export async function seed(knex: Knex): Promise<void> {
       longitude: -82.3985,
       owner_id: "8",
       category_id: 8,
+      hiring_promoters: true,
     },
     {
       description: "Locally sourced produce and artisan goods.",
@@ -171,11 +182,13 @@ export async function seed(knex: Knex): Promise<void> {
       email: "info@greenvillemarket.co",
       email_verified: true,
       website: "https://greenvillemarket.co",
-      logo_url: "https://images.unsplash.com/photo-1570197781534-d4f9f3e0dbb0",
+      logo_url:
+        "https://images.unsplash.com/photo-1506484381205-f7945653044d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bG9jYWwlMjBmYXJtZXJzJTIwbWFya2V0fGVufDB8fDB8fHww",
       latitude: 34.86,
       longitude: -82.399,
       owner_id: "9",
       category_id: 9,
+      hiring_promoters: false,
     },
   ]);
 }

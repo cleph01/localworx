@@ -4,21 +4,29 @@ import LoyaltyProgramSection from "./LoyaltyProgramSection";
 // IntroOfferSection.tsx
 const IntroOfferSection = async ({ businessId }: { businessId: string }) => {
   // Simulate fetching from a mock database
-  const item = await mockFetch(`/api/rewards?businessId=${businessId}`);
+  // const item = await mockFetch(`/api/rewards?businessId=${businessId}`);
 
-  // Check if the item exists
-  if (!item) {
-    return <div>Item not found</div>;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  const response = await fetch(
+    `${baseUrl}/api/business/rewards/${businessId}`,
+    {
+      cache: "no-store", // optional: ensure fresh data in Server Components
+    }
+  );
+
+  const rewards = await response.json();
+
+  if (!rewards) {
+    return <div>No reviews found</div>;
   }
-  // Extract the item data
-  const itemData = item.data;
 
   // Assuming itemData is an array of rewards with a 'type' property
-  const { title: introOffer } = itemData.find(
-    (reward: any) => reward.type === "intro"
+  const { name: introOffer } = rewards.find(
+    (reward: any) => reward.reward_type === "intro-offer"
   );
-  const { title: loyaltyReward, threshold } = itemData.find(
-    (reward: any) => reward.type === "loyalty"
+  const { name: loyaltyReward, threshold } = rewards.find(
+    (reward: any) => reward.reward_type === "loyalty"
   );
 
   return (

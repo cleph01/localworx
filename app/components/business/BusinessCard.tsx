@@ -8,6 +8,7 @@ import {
   BusinessCardProps,
 } from "./businessCardTypes";
 import BusinessReviewsSection from "./BusinessReviewsSection";
+import IntroOfferSection from "./IntroOfferSection";
 
 const BusinessCard = ({ business }: BusinessCardProps) => {
   return (
@@ -26,10 +27,9 @@ export default BusinessCard;
 const BusinessCardHeader = ({
   id,
   business_name,
-  firstName,
-  rating,
-  reviewCount,
-  logoUrl,
+  first_name,
+  description,
+  logo_url,
   zapCount,
 }: BusinessCardHeaderType) => (
   <div className="flex flex-col gap-2">
@@ -46,13 +46,13 @@ const BusinessCardHeader = ({
     <div className="flex flex-row items-center gap-2 mt-2">
       <img
         className="inline-block h-12 w-12 rounded-full ring-2 ring-white shadow-md"
-        src={logoUrl}
-        alt={firstName}
+        src={logo_url}
+        alt={first_name}
       />
       {/* Business Owner FirstName  */}
-      <div className="text-lg">{firstName}</div>
+      <div className="text-sm ml-2 line-clamp-3">{description}</div>
 
-      {/* Show Zap Payments to Promoters if zapCount > 0 */}
+      {/* TODO: Show Zap Payments to Promoters if zapCount > 0 */}
       {zapCount && zapCount > 0 && (
         <span className="flex-1 text-sm font-semibold text-orange-500 bg-orange-50 px-1 py-1 rounded-full">
           ⚡️ {zapCount} <span className="text-xs">(Zap payouts)</span>
@@ -63,51 +63,40 @@ const BusinessCardHeader = ({
 );
 
 const BusinessCardContent = ({
-  businessHours,
+  id,
   address,
-  hiringPromoters,
-  hasSpecialOffers,
-  introOffer,
+  city,
+  state,
+  hiring_promoters,
 }: BusinessCardContentType) => (
   <div className="flex flex-col gap-2">
-    {/* Business Hours */}
-    <div className="flex items-center gap-2 text-sm text-gray-600">
-      <span className="text-lg">
-        {/* <FaBriefcase />*/}
-        💼
-      </span>
-      <span>{businessHours}</span>
-    </div>
     {/* Address */}
-    <div className="flex items-center gap-2 text-sm text-gray-600">
+    <div className="flex items-center gap-2 text-sm text-gray-600 px-1 py-1">
       <span className="text-lg">
         {/* <FaMapMarkerAlt /> */}
         📍
       </span>
-      <span>{address}</span>
+      <span>
+        {address}, {city} {state}
+      </span>
     </div>
     {/* Bitcoin Accepted */}
-    <div className="flex items-center gap-2 text-sm text-gray-600">
+    <div className="flex items-center gap-2 text-sm text-gray-600 px-1 py-1">
       <span className="text-lg">
         <FaBtc className="text-orange-500" />
       </span>
-      <span>Hiring Promoters: {hiringPromoters ? "Yes" : "No"}</span>
+
+      <span>Hiring Promoters: {hiring_promoters ? "Yes" : "No"}</span>
     </div>
+    {/* Zap Payouts */}
+
+    <div className="flex items-center gap-2 text-sm font-semibold text-orange-500 bg-orange-50 px-1 py-1 rounded-full">
+      <span className="text-lg">⚡️</span>
+      <span>{`100`} Zap Payouts Made</span>
+    </div>
+
     {/* Special Offers */}
-    <div className="flex items-center gap-2 text-sm text-gray-600">
-      <span className="text-lg">
-        {/* <FaRegHandshake /> */}
-        🎁
-      </span>
-      <span>Currently {hasSpecialOffers ? "has" : "no"} Special Offers</span>
-    </div>
-    {/* Offer Details */}
-    {hasSpecialOffers && (
-      <div className="flex items-center gap-2 text-sm bg-yellow-50 text-yellow-800 px-3 py-2 rounded mb-2">
-        <span className="font-bold flex-1">🎯 Offer:</span>
-        <span className="flex-1">{introOffer}</span>
-      </div>
-    )}
+    <IntroOfferSection businessId={id} />
   </div>
 );
 

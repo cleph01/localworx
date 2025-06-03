@@ -28,6 +28,9 @@ export async function up(knex: Knex): Promise<void> {
     table.string("website").nullable();
     table.string("logo_url").nullable();
 
+    // Is the business hiring promoters?
+    table.boolean("hiring_promoters").defaultTo(false);
+
     // Latitude and longitude with 6 decimal places (standard for GPS precision)
     table.decimal("latitude", 9, 6).notNullable();
     table.decimal("longitude", 9, 6).notNullable();

@@ -1,19 +1,22 @@
 type BusinessCardHeaderType = {
   id: string;
   business_name?: string;
-  firstName?: string;
+  first_name?: string;
   rating?: number;
-  reviewCount?: number;
-  logoUrl?: string;
+  description?: string;
+  logo_url?: string;
   zapCount?: number;
 };
 
 type BusinessCardContentType = {
-  businessHours?: string;
+  id: string;
   address?: string;
-  hiringPromoters?: boolean;
-  hasSpecialOffers?: boolean;
-  introOffer?: string;
+  hiring_promoters?: boolean;
+  city?: string;
+  state?: string;
+  phone?: string;
+  email?: string;
+  website?: string;
 };
 
 type BusinessCardFooterType = {
