@@ -2,6 +2,7 @@ import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 import Button from "../ui/Button";
 import { FaBitcoin, FaBtc } from "react-icons/fa";
 import LazyLoadWrapper from "../ui/LazyLoadWrapper";
+import HeaderImageWrapper from "../ui/HeaderImageWrapper";
 
 // BusinessOverviewSection.tsx
 const BusinessOverviewSection = async ({
@@ -9,8 +10,14 @@ const BusinessOverviewSection = async ({
 }: {
   businessId: string;
 }) => {
-  // Simulate fetching from a mock database
-  const business = await mockFetch(`/api/businesses/${businessId}`);
+  // const businesses = await mockFetch("/api/businesses");
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  const response = await fetch(`${baseUrl}/api/business/${businessId}`, {
+    cache: "no-store", // optional: ensure fresh data in Server Components
+  });
+
+  const business = await response.json();
 
   // Check if the business exists
   if (!business) {
@@ -30,34 +37,35 @@ const BusinessOverviewSection = async ({
           delayMs={200}
           timeoutMs={5000}
         >
-          <img
-            src={
-              businessData.logoUrl ||
-              "https://dn721803.ca.archive.org/0/items/placeholder-image//placeholder-image.jpg"
-            }
-            alt="Business Logo"
-            className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
-          />
+          <HeaderImageWrapper css="h-64 shadow-lg">
+            <img
+              src={
+                business.logo_url ||
+                "https://dn721803.ca.archive.org/0/items/placeholder-image//placeholder-image.jpg"
+              }
+              alt="Business Logo"
+              className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover"
+            />
+          </HeaderImageWrapper>
         </LazyLoadWrapper>
 
         <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold">{businessData.businessName}</h1>
+          <h1 className="text-3xl font-bold">{business.business_name}</h1>
           <p className="text-gray-600">
-            📍 {businessData.address}, {businessData.city}, {businessData.state}
+            📍 {business.address}, {business.city}, {business.state}
           </p>
+          {business.description && (
+            <div className="italic">{business.description}</div>
+          )}
+          {business.email && (
+            <p className="text-gray-600">
+              <span className="font-semibold">✉️ Email:</span> {business.email}
+            </p>
+          )}
           <p className="text-gray-600">
-            <span className="font-semibold">💼 Hours:</span>{" "}
-            {businessData.businessHours}
+            <span className="font-semibold">📱 Phone:</span> {business.phone}
           </p>
-          <p className="text-gray-600">
-            <span className="font-semibold">✉️ Email:</span>{" "}
-            {businessData.email}
-          </p>
-          <p className="text-gray-600">
-            <span className="font-semibold">📱 Phone:</span>{" "}
-            {businessData.phone}
-          </p>
-          {businessData.hiringPromoters ? (
+          {business.hiring_promoters ? (
             <div className="flex flex-col">
               <div className="flex flex-row items-center mb-2">
                 <span className="flex flex-row items-center font-semibold mr-1">
