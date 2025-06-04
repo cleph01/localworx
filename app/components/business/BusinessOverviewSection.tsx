@@ -45,12 +45,13 @@ const BusinessOverviewSection = async ({
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-bold">{business.business_name}</h1>
           <BusinessCategorySection categoryId={business.category_id} />
+          {business.description && (
+            <div className="italic my-2">{business.description}</div>
+          )}
           <p className="text-gray-600">
             📍 {business.address}, {business.city}, {business.state}
           </p>
-          {business.description && (
-            <div className="italic">{business.description}</div>
-          )}
+
           {business.email && (
             <p className="text-gray-600">
               <span className="font-semibold">✉️ Email:</span> {business.email}
@@ -61,7 +62,7 @@ const BusinessOverviewSection = async ({
           </p>
           {business.hiring_promoters ? (
             <div className="flex flex-col">
-              <div className="flex flex-row items-center mb-2">
+              <div className="flex flex-row items-center mb-4">
                 <span className="flex flex-row items-center font-semibold mr-1">
                   <FaBtc className="text-orange-500 mr-1" />
                   Income:
