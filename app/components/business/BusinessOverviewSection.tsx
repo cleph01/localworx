@@ -3,6 +3,7 @@ import Button from "../ui/Button";
 import { FaBitcoin, FaBtc } from "react-icons/fa";
 import LazyLoadWrapper from "../ui/LazyLoadWrapper";
 import HeaderImageWrapper from "../ui/HeaderImageWrapper";
+import db from "@/db/db";
 
 // BusinessOverviewSection.tsx
 const BusinessOverviewSection = async ({
@@ -10,22 +11,14 @@ const BusinessOverviewSection = async ({
 }: {
   businessId: string;
 }) => {
-  // const businesses = await mockFetch("/api/businesses");
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
-
-  const response = await fetch(`${baseUrl}/api/business/${businessId}`, {
-    cache: "no-store", // optional: ensure fresh data in Server Components
-  });
-
-  const business = await response.json();
+  // SSR: Fetch the business details from the database
+  // Fetch the business details from the database
+  const business = await db("businesses").where("id", businessId).first();
 
   // Check if the business exists
   if (!business) {
     return <div>Business not found</div>;
   }
-
-  // Extract the business data
-  const businessData = business.data;
 
   return (
     <section className="w-full py-8 px-6 max-w-4xl">
@@ -51,6 +44,7 @@ const BusinessOverviewSection = async ({
 
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-bold">{business.business_name}</h1>
+          <BusinessCategorySection categoryId={business.category_id} />
           <p className="text-gray-600">
             📍 {business.address}, {business.city}, {business.state}
           </p>
@@ -90,3 +84,24 @@ const BusinessOverviewSection = async ({
   );
 };
 export default BusinessOverviewSection;
+
+const BusinessCategorySection = async ({
+  categoryId,
+}: {
+  categoryId: string;
+}) => {
+  // SSR: Fetch the business category from the database
+  const category = await db("business_categories")
+    .where("id", categoryId)
+    .first();
+
+  if (!category) {
+    return <div>Category not found</div>;
+  }
+
+  return (
+    <div className="flex-1 inline-block text-center bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full capitalize">
+      {category.name}
+    </div>
+  );
+};

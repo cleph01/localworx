@@ -4,23 +4,22 @@ import PromotionListingCard from "../promotions/PromotionCard";
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 import { PromotionCardProps } from "../promotions/promotionTypes";
 import PromotionCard from "../promotions/PromotionCard";
+import db from "@/db/db";
 
 const BusinessPromotionsSection = async ({
   businessId,
 }: {
   businessId: string;
 }) => {
-  const promotions = await mockFetch(
-    `/api/promotions?businessId=${businessId}`
-  );
+  // SSR: Fetch the business details from the database
+  // Fetch the business details from the database
+  const promotions = await db("promotions").where("business_id", businessId);
 
   if (!promotions) {
     return <div>No Promotions Found</div>;
   }
 
-  const promotionsData = promotions.data;
-
-  console.log("PromotionsData @ Business Promotion Section: ", promotionsData);
+  console.log("Promotions @ Business Promotions Section: ", promotions);
 
   return (
     <section className="w-full max-w-4xl flex flex-col gap-4 pb-8 py-6 px-4">
@@ -39,7 +38,7 @@ const BusinessPromotionsSection = async ({
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* Example listing item */}
-        {promotionsData.map((promotion: any) => (
+        {promotions.map((promotion: any) => (
           <PromotionCard key={promotion?.id} promotion={promotion} />
         ))}
       </div>

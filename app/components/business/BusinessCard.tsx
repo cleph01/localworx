@@ -11,6 +11,7 @@ import BusinessReviewsSection from "./BusinessReviewsSection";
 import IntroOfferSection from "./IntroOfferSection";
 import LazyLoadWrapper from "../ui/LazyLoadWrapper";
 import AvatarWrapper from "../ui/AvatarWrapper";
+import db from "@/db/db";
 
 const BusinessCard = ({ business }: BusinessCardProps) => {
   return (
@@ -116,14 +117,11 @@ const BusinessCardFooter = async ({
   id,
   category_id,
 }: BusinessCardFooterType) => {
-  // const businesses = await mockFetch("/api/businesses");
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
-
-  const response = await fetch(`${baseUrl}/api/category/${category_id}`, {
-    cache: "no-store", // optional: ensure fresh data in Server Components
-  });
-
-  const category = await response.json();
+  // SSR: Fetch the business details from the database
+  // Fetch the business category details from the database
+  const category = await db("business_categories")
+    .where("id", category_id)
+    .first();
 
   if (!category) {
     console.log("No categories found for this business:", id);
