@@ -11,6 +11,8 @@ import {
 import PromoterDetailsSection from "./PromoterDetailsSection";
 import PromotionViewButton from "./PromotionViewButton";
 import LazyLoadWrapper from "../ui/LazyLoadWrapper";
+import { renderMediaPreview } from "@/app/lib/media/renderMediaPreview";
+import db from "@/db/db";
 
 const PromotionCard = ({ promotion }: PromotionCardProps) => {
   return (
@@ -28,74 +30,15 @@ export default PromotionCard;
 
 const PromotionHeader = ({
   title,
-  mediaUrl,
-  mediaType,
+  media_url,
+  media_type,
 }: PromotionHeaderType) => {
-  // Determine appropriate media preview component (image or embed)
-  const renderMediaPreview = (mediaUrl: string, mediaType: string) => {
-    if (!mediaUrl) return null;
-
-    if (mediaType === "image") {
-      return (
-        <img
-          src={mediaUrl}
-          alt="Image Preview"
-          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
-        />
-      );
-    }
-
-    // Match common YouTube and Vimeo patterns
-    const youTubeMatch = mediaUrl.match(
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/
-    );
-    const vimeoMatch = mediaUrl.match(/vimeo\.com\/(\d+)/);
-
-    if (youTubeMatch) {
-      const id = youTubeMatch[1];
-      return (
-        <iframe
-          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
-          src={`https://www.youtube.com/embed/${id}`}
-          title="YouTube Preview"
-          allowFullScreen
-        />
-      );
-    }
-
-    if (vimeoMatch) {
-      const id = vimeoMatch[1];
-      return (
-        <iframe
-          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
-          src={`https://player.vimeo.com/video/${id}`}
-          title="Vimeo Preview"
-          allowFullScreen
-        />
-      );
-    }
-
-    // Basic image preview fallback
-    if (mediaUrl.match(/\.(jpeg|jpg|gif|png|webp)$/)) {
-      return (
-        <img
-          src={mediaUrl}
-          alt="Image Preview"
-          className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
-        />
-      );
-    }
-
-    return (
-      <p className="text-sm text-gray-500 mt-2">Unrecognized media format.</p>
-    );
-  };
   //
   // Render the header with business name and media preview
   return (
     <div className="">
       {/* Media preview (image or embed) */}
-      {mediaUrl && mediaType ? (
+      {media_url && media_type ? (
         <LazyLoadWrapper
           fallback={
             <div className="w-full h-64 mt-2 rounded-xl border border-gray-200 bg-gray-200 animate-pulse" />
@@ -103,7 +46,9 @@ const PromotionHeader = ({
           delayMs={200}
           timeoutMs={5000}
         >
-          {renderMediaPreview(mediaUrl, mediaType)}
+          {/* Render media preview based on type - imported from app/lib/media*/}
+          {/* This function will determine if it's an image or video and render accordingly */}
+          {renderMediaPreview(media_url, media_type)}
         </LazyLoadWrapper>
       ) : null}
       {/* Offer Description */}
@@ -116,23 +61,25 @@ const PromotionHeader = ({
 };
 
 /* Service Listing Content */
-const PromotionContent = ({
+const PromotionContent = async ({
   id,
-  promoterId,
-  businessName,
+  promoter_id,
+  business_id,
   description,
-  address,
-  city,
-  state,
-  phone,
-  expiresAt,
+
+  expires_at,
 }: PromotionContentType) => {
-  // Handle View Item
-  const handleViewItem = () => {
-    //
-    // can't use useRouter in a server component
-    redirect(`/promotion/${id}`);
-  };
+  // const businesses = await mockFetch("/api/businesses");
+
+  // SSR: Fetch the business details from the database
+  // Fetch the business details from the database
+  const business = await db("businesses").where("id", business_id).first();
+
+  console.log("Business Data @ Promotion Card Content:", business);
+
+  if (!business) {
+    return <div>No business data found</div>;
+  }
 
   return (
     <div className="flex flex-col gap-2 mt-2">
@@ -142,15 +89,15 @@ const PromotionContent = ({
           {/* Address */}
 
           <p className="flex-1 text-slate-600 text-base font-semibold">
-            {businessName}
+            {business?.business_name}
           </p>
 
           {/* Phone Number */}
-          <p className="text-gray-600 text-xs">{phone}</p>
+          <p className="text-gray-600 text-xs">{business?.phone}</p>
         </div>
         <div className="inline-flex items-center text-xs bg-gray-100 text-gray-700 px-2 py-1 mt-3 rounded-full">
           <FaMapMarkerAlt className="text-red-500 mr-1" />
-          {address}, {city}, {state}
+          {business?.address}, {business?.city}, {business?.state}
         </div>
       </div>
 
@@ -161,16 +108,16 @@ const PromotionContent = ({
 
       <div className="flex flex-row justify-between items-center">
         {/* Expiration Date */}
-        {expiresAt && (
+        {expires_at && (
           <div className="text-xs text-gray-500 ">
-            ⏳ Expires: {new Date(expiresAt).toLocaleDateString()}
+            ⏳ Expires: {new Date(expires_at).toLocaleDateString()}
           </div>
         )}
         {/* View Item */}
         <PromotionViewButton promotionId={id ?? ""} />
       </div>
       {/* Promoter Info */}
-      <PromoterDetailsSection data={{ promoterId: promoterId ?? "" }} />
+      <PromoterDetailsSection data={{ promoter_id: promoter_id ?? "" }} />
     </div>
   );
 };

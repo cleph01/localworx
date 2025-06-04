@@ -7,6 +7,9 @@ import RewardCalloutSection from "../../components/promotions/RewardCalloutSecti
 import Footer from "../../components/Footer";
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 import PromoterDetailsSection from "@/app/components/promotions/PromoterDetailsSection";
+import db from "@/db/db";
+
+import NotFound from "@/app/not-found";
 
 export default async function PromotionProfilePage({
   params,
@@ -15,44 +18,38 @@ export default async function PromotionProfilePage({
 }) {
   const { id } = await params;
 
-  // 🔧 Fetch promotion details (replace with your real API call)
-  //   const res = await fetch(
-  //     `${process.env.NEXT_PUBLIC_API_URL}/api/promotions/${id}`
-  //   );
-  //   const promotion = await res.json();
-
   // Simulate fetching from a mock database
-  const promotion = await mockFetch(`/api/promotions/${id}`);
+  // const promotion = await mockFetch(`/api/promotions/${id}`);
 
-  if (!promotion) {
-    return <div>Promotion not found</div>;
-  }
+  // SSR: Fetch the business details from the database
+  // Fetch the business details from the database
+  const promotion = await db("promotions").where("id", id).first();
 
-  const promotionData = promotion.data;
+  if (!promotion) return NotFound();
 
   // Organize the data I want to pass as props
   const heroSectiondData = {
-    title: promotionData.title,
-    businessName: promotionData.businessName || "Business Name",
-    mediaUrl: promotionData.mediaUrl || "/placeholder-image.jpg",
-    mediaType: promotionData.mediaType || "image",
+    title: promotion.title,
+    business_id: promotion.business_id,
+    media_url: promotion.media_url || "/placeholder-image.jpg",
+    media_type: promotion.media_type || "image",
   };
   const detailsSectionData = {
-    description: promotionData.description,
-    termsAndConditions: promotionData.termsAndConditions,
-    expiresAt: promotionData.expiresAt,
+    description: promotion.description,
+    terms_and_conditions: promotion.terms_and_conditions,
+    expires_at: promotion.expires_at,
   };
   const rewardCalloutSectionData = {
-    rewardId: promotionData.rewardId,
-    businessId: promotionData.businessId,
+    reward_id: promotion.reward_id,
+    business_id: promotion.business_id,
   };
 
   const businessPreviewSectionData = {
-    businessId: promotionData.businessId,
+    business_id: promotion.business_id,
   };
 
   const promoterDetailsSectionData = {
-    promoterId: promotionData.promoterId,
+    promoter_id: promotion.promoter_id,
   };
 
   // Render the promotion details page

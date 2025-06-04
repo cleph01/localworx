@@ -1,7 +1,7 @@
 // app/businesses/[id]/page.tsx
 
-import { notFound } from "next/navigation";
 import db from "@/db/db";
+import NotFound from "@/app/not-found";
 
 export default async function BusinessDetailPage({
   params,
@@ -11,9 +11,11 @@ export default async function BusinessDetailPage({
   // Extract the id from the context
   const { id } = await params;
 
+  // SSR: Fetch the business details from the database
+  // Fetch the business details from the database
   const business = await db("businesses").where("id", id).first();
 
-  if (!business) return notFound();
+  if (!business) return NotFound();
 
   return (
     <div className="p-8">

@@ -4,19 +4,25 @@ import PromotionCard from "../promotions/PromotionCard";
 import { PromotionCardProps } from "../promotions/promotionTypes";
 
 const PromotionsShowAll = async () => {
-  const promotions = await mockFetch("/api/promotions");
+  // const businesses = await mockFetch("/api/businesses");
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  const response = await fetch(`${baseUrl}/api/promotions`, {
+    cache: "no-store", // optional: ensure fresh data in Server Components
+  });
+
+  const promotions = await response.json();
 
   if (!promotions) {
-    return <div>No Promotions Found</div>;
+    return <div>No promotions found</div>;
   }
 
-  const promotionsData = promotions.data;
-
+  console.log("Promotions data:", promotions);
   return (
     <section className="flex flex-col items-center gap-4 pb-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
         {/* Example listing item */}
-        {promotionsData.map((promotion: any) => (
+        {promotions.map((promotion: any) => (
           <PromotionCard key={promotion.id} promotion={promotion} />
         ))}
       </div>

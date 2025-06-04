@@ -5,33 +5,33 @@
 export type PromotionHeroSectionProps = {
   data: {
     title: string;
-    businessName: string;
-    mediaUrl: string;
-    mediaType: string;
+    business_id: string;
+    media_url: string;
+    media_type: string;
   };
 };
 
 export type PromotionDetailsSectionProps = {
   data: {
     description: string;
-    termsAndConditions: string;
-    expiresAt: string;
+    terms_and_conditions: string;
+    expires_at: string;
   };
 };
 
 export type PromotionRewardCalloutSectionProps = {
-  data: { rewardId: string; businessId: string };
+  data: { reward_id: string; business_id: string };
 };
 
 export type PromotionBusinessPreviewSectionProps = {
   data: {
-    businessId: string;
+    business_id: string;
   };
 };
 
 export type promoterDetailsSectionProps = {
   data: {
-    promoterId: string;
+    promoter_id: string;
   };
 };
 
@@ -39,7 +39,7 @@ export type promoterDetailsSectionProps = {
  *  PromoterDetailsSection.tsx
  **/
 export type PromoterDetails = {
-  promoterId: string;
+  promoter_id: string;
   avatarUrl: string;
   firstName: string;
   rating: number;
@@ -51,24 +51,18 @@ export type PromoterDetails = {
  **/
 export type PromotionHeaderType = {
   title?: string;
-  mediaUrl?: string;
-  mediaType?: string;
+  media_url?: string;
+  media_type?: string;
 };
 
 export type PromotionContentType = {
   id: string;
-  promoterId?: string;
-  rating?: string;
-  reviewCount?: string;
+  promoter_id?: string;
+  business_id?: string;
 
-  businessName?: string;
   description?: string;
-  address?: string;
-  city?: string;
-  state?: string;
-  zip?: string;
-  phone?: string;
-  expiresAt?: string;
+
+  expires_at?: string;
 };
 
 export type PromotionFooterType = {
