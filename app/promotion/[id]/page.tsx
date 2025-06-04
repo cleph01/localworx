@@ -40,7 +40,6 @@ export default async function PromotionProfilePage({
     expires_at: promotion.expires_at,
   };
   const rewardCalloutSectionData = {
-    reward_id: promotion.reward_id,
     business_id: promotion.business_id,
   };
 

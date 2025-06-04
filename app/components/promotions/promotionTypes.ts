@@ -20,7 +20,7 @@ export type PromotionDetailsSectionProps = {
 };
 
 export type PromotionRewardCalloutSectionProps = {
-  data: { reward_id: string; business_id: string };
+  data: { business_id: string };
 };
 
 export type PromotionBusinessPreviewSectionProps = {

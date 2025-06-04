@@ -2,23 +2,25 @@
 
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 import { PromotionRewardCalloutSectionProps } from "./promotionTypes";
+import db from "@/db/db";
 
 const RewardCalloutSection = async ({
   data,
 }: PromotionRewardCalloutSectionProps) => {
-  const rewards = await mockFetch(`/api/rewards?${data.businessId}`);
+  // SSR: Fetch the business details from the database
+  // Fetch the business details from the database
+  const rewards = await db("rewards").where("business_id", data.business_id);
+
   if (!rewards) {
     return <div>No rewards available</div>;
   }
 
-  // Find Intro Reward
-  const introOffer = rewards.data.find(
-    (reward: any) => reward.type === "loyalty"
+  // Assuming itemData is an array of rewards with a 'type' property
+  const { name: introOffer } = rewards.find(
+    (reward: any) => reward.reward_type === "intro-offer"
   );
-
-  // Find Loyalty Reward
-  const loyaltyReward = rewards.data.find(
-    (reward: any) => reward.type === "loyalty"
+  const { name: loyaltyReward, threshold } = rewards.find(
+    (reward: any) => reward.reward_type === "loyalty"
   );
 
   // Render the rewards section

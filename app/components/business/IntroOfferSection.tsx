@@ -1,24 +1,19 @@
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 import LoyaltyProgramSection from "./LoyaltyProgramSection";
+import db from "@/db/db";
 
 // IntroOfferSection.tsx
 const IntroOfferSection = async ({ businessId }: { businessId: string }) => {
   // Simulate fetching from a mock database
   // const item = await mockFetch(`/api/rewards?businessId=${businessId}`);
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  // SSR: Fetch the business details from the database
+  // Fetch the business details from the database
+  const rewards = await db("rewards").where("business_id", businessId);
 
-  const response = await fetch(
-    `${baseUrl}/api/business/rewards/${businessId}`,
-    {
-      cache: "no-store", // optional: ensure fresh data in Server Components
-    }
-  );
-
-  const rewards = await response.json();
-
+  console.log("Rewards fetched:", rewards, "for businessId:", businessId);
   if (!rewards) {
-    return <div>No reviews found</div>;
+    return <div>No rewards available</div>;
   }
 
   // Assuming itemData is an array of rewards with a 'type' property
