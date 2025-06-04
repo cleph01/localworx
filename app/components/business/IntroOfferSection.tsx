@@ -25,7 +25,7 @@ const IntroOfferSection = async ({ businessId }: { businessId: string }) => {
   );
 
   return (
-    <section className="bg-yellow-50 py-6 px-4 border border-yellow-300 rounded my-6 mx-4 space-y-2">
+    <section className="bg-yellow-50 py-6 px-4 border border-yellow-300 rounded my-2 mx-4 space-y-2">
       {/* Intro Offer */}
       {introOffer ? (
         <div className="space-y-2">

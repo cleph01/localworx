@@ -19,7 +19,7 @@ const PromotionCard = ({ promotion }: PromotionCardProps) => {
     <Card
       Header={<PromotionHeader {...promotion} />}
       Content={<PromotionContent {...promotion} />}
-      // Footer={<PromotionFooter {...promotion} />}
+      Footer={<PromotionFooter {...promotion} />}
       css="w-full max-w-sm p-0 px-4"
     />
   );
@@ -116,39 +116,13 @@ const PromotionContent = async ({
         {/* View Item */}
         <PromotionViewButton promotionId={id ?? ""} />
       </div>
-      {/* Promoter Info */}
-      <PromoterDetailsSection data={{ promoter_id: promoter_id ?? "" }} />
     </div>
   );
 };
 
-const PromotionFooter = ({ clicks, views, referrals }: PromotionFooterType) => {
+const PromotionFooter = ({ promoter_id }: PromotionFooterType) => {
   return (
-    <div className="flex flex-row sm:flex-col items-center justify-between ">
-      <div className="flex flex-row items-center justify-between mt-2 gap-4 mr-2">
-        {/* Clicks */}
-        <div className="flex flex-col gap-1">
-          Clicks: <span className="font-bold">{clicks}</span>
-        </div>
-        {/* Views */}
-        <div className="flex flex-col gap-1">
-          Views: <span className="font-bold">{views}</span>
-        </div>
-        {/* Referrals */}
-        <div className="flex flex-col gap-1">
-          Referrals: <span className="font-bold">{referrals}</span>
-        </div>
-      </div>
-
-      {/* CTA - Zap Button */}
-      {/* Consider making the Zap Button it's own client component (i think) because 
-      of the interactivity involved */}
-      <Button
-        details={{
-          text: "⚡️ Zap It!",
-          css: "w-full mt-4 py-2 bg-orange-500 hover:bg-orange-600 transition-colors text-white text-base font-semibold rounded-md",
-        }}
-      />
-    </div>
+    /* Promoter Info */
+    <PromoterDetailsSection data={{ promoter_id: promoter_id ?? "" }} />
   );
 };

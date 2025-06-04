@@ -57,7 +57,7 @@ const PromoterProfileSection = async ({ data }: PromoterDetailsHeaderProps) => {
             src={promoter.avatar_url}
             alt={promoter.first_name}
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col flex-1">
             <div className="text-lg sm:text-base font-semibold">
               {promoter.first_name}
             </div>
@@ -107,7 +107,7 @@ const PromoterRatingSection = async ({ data }: PromoterRatingProps) => {
       <span className="text-sm sm:text-base text-gray-500 font-semibold">
         {rating.toString()}
       </span>
-      <span className="text-xs sm:text-sm text-gray-400 ">
+      <span className="text-xs sm:text-sm text-gray-400 flex-1">
         {" "}
         ({reviewCount} {reviewCount > 1 ? "ratings" : "rating"})
       </span>
@@ -134,17 +134,15 @@ const PromoterMetricsSection = async ({ data }: PromoterMetricsProps) => {
   const referrals = "33";
 
   return (
-    <div className="flex flex-row items-center justify-between sm:flex-col sm:items-start text-gray-500 text-sm">
-      <div className="flex flex-row items-center justify-between mt-2 gap-4 mr-4">
-        {/* Clicks */}
-        <div className="flex flex-col gap-1">
-          Clicks: <span className="font-bold">{clicks}</span>
-        </div>
+    <div className="flex flex-row items-center gap-2 text-gray-500 text-xs">
+      {/* Clicks */}
+      <div className="flex flex-col gap-1">
+        Clicks: <span className="font-bold text-right">{clicks}</span>
+      </div>
 
-        {/* Referrals */}
-        <div className="flex flex-col gap-1">
-          Referrals: <span className="font-bold">{referrals}</span>
-        </div>
+      {/* Referrals */}
+      <div className="flex flex-col gap-1">
+        Referrals: <span className="font-bold text-right">{referrals}</span>
       </div>
     </div>
   );

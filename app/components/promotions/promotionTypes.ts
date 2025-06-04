@@ -66,9 +66,7 @@ export type PromotionContentType = {
 };
 
 export type PromotionFooterType = {
-  clicks: string;
-  views: string;
-  referrals: string;
+  promoter_id: string;
 };
 
 export type PromotionCardProps = {
