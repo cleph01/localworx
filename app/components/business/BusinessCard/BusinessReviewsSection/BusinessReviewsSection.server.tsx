@@ -1,20 +1,15 @@
 import { calculateAverageRating } from "@/app/utilities/calculateAverageRating";
+import db from "@/db/db";
 
 const BusinessReviewsSection = async ({
   businessId,
 }: {
   businessId: string;
 }) => {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  // SSR: Fetch the reviews from the database
+  const reviews = await db("business_reviews").where("business_id", businessId);
 
-  const response = await fetch(
-    `${baseUrl}/api/business/reviews/${businessId}`,
-    {
-      cache: "no-store", // optional: ensure fresh data in Server Components
-    }
-  );
-
-  const reviews = await response.json();
+  // If clientSideFetch is true, we can use a different fetching strategy
 
   if (!reviews) {
     return <div>No reviews found</div>;

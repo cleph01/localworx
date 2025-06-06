@@ -1,17 +1,11 @@
-import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
+// Server Component to show all promotions
 import Button from "../ui/Button";
-import PromotionCard from "../promotions/PromotionCard";
+import PromotionCard from "./PromotionCard/PromotionCard";
 import { PromotionCardProps } from "../promotions/promotionTypes";
+import db from "@/db/db";
 
 const PromotionsShowAll = async () => {
-  // const businesses = await mockFetch("/api/businesses");
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
-
-  const response = await fetch(`${baseUrl}/api/promotions`, {
-    cache: "no-store", // optional: ensure fresh data in Server Components
-  });
-
-  const promotions = await response.json();
+  const promotions = await db("promotions").select("*");
 
   if (!promotions) {
     return <div>No promotions found</div>;

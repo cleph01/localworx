@@ -1,161 +1,65 @@
-import PromotionCard from "../promotions/PromotionCard";
+"use client";
+import Link from "next/link";
+//
+// Because it's in the Dashboard, this entry-point component is client-side only,
+// so we can use hooks like useFetchPromotionsByPromoter
+// It has to be a client component because it uses hooks and Next.js 13's new app directory structure requires
+// explicit client components for hooks
+// But more importantly, this component is used in (sits in) the dashboard which is a client-side rendered page,
+// and a server componnet cannot be rendered in a client-side rendered page - but the opposite is allowed,
+// a client component can be rendered in a server-side rendered page.
 
-const MyPromotionsSection = () => {
-  const myPromotions = [
-    {
-      id: "1",
-      businessId: "1",
-      businessName: "Bob's Barbershop",
-      promoterId: "1",
-      title: "Free Shave With Haircut",
-      description: "Come in this weekend and get a free shave.",
-      mediaUrl: "https://youtu.be/5CRIEeP4sGk",
-      mediaType: "video",
-      termsAndConditions: "Valid for new customers only.",
-      expiresAt: "2025-09-13",
+import PromotionCard from "../promotions/PromotionCard/PromotionCard";
+import { useFetchPromotionsByPromoter } from "@/app/hooks/dashboard/MyPromotionsSection/useFetchPromotionsByPromoterId";
+import { FaPlusCircle } from "react-icons/fa";
 
-      rating: "4.7",
-      reviewCount: "12",
-      clicks: "80",
-      views: "150",
-      referrals: "30",
+type MyPromotionSectionProps = {
+  promoterId: number | string;
+  clientSideFetch: boolean; // This prop is not used in this component, but can be used to conditionally fetch data
+};
 
-      address: "123 Main St",
-      city: "Springfield",
-      state: "IL",
-      zip: "62701",
-      phone: "(555) 123-4567",
-    },
+const MyPromotionsSection = ({
+  promoterId,
+  clientSideFetch,
+}: MyPromotionSectionProps) => {
+  // Fetch using client-side fetch
 
-    {
-      id: "2",
-      businessId: "2",
-      promoterId: "1",
-      title: "20% Off Your First Campaign!",
-      businessName: "BrightPath Marketing",
-      description:
-        "We help local businesses grow through targeted marketing strategies.",
+  const { promotions, loading, error } =
+    useFetchPromotionsByPromoter(promoterId);
 
-      rating: "4.5",
-      reviewCount: "10",
-      clicks: "100",
-      views: "200",
-      referrals: "50",
+  if (loading) {
+    return <div className="text-gray-500">Loading promotions...</div>;
+  }
+  if (error) {
+    console.error("Error fetching promotions:", error);
+  }
 
-      mediaUrl:
-        "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      mediaType: "image",
-      address: "123 Main St",
-      city: "Springfield",
-      state: "IL",
-      zip: "62701",
-      phone: "555-123-4567",
-      expiresAt: "2025-12-22",
-    },
-    {
-      id: "3",
-      businessId: "3",
-      promoterId: "1",
-      title: "Free Consultation for New Clients!",
-      businessName: "Tech Innovations",
-      description: "Leading the way in tech solutions for small businesses.",
+  if (!promotions) {
+    return <div>No promotions found</div>;
+  }
 
-      rating: "4.0",
-      reviewCount: "20",
-      clicks: "150",
-      views: "300",
-      referrals: "70",
-
-      mediaUrl: "https://vimeo.com/153173314?&login=true",
-      mediaType: "video",
-      address: "456 Oak Ave",
-      city: "Riverton",
-      state: "CA",
-      zip: "90210",
-      phone: "555-234-5678",
-      expiresAt: "2025-12-22",
-    },
-    {
-      id: "4",
-      businessId: "4",
-      promoterId: "4",
-      title: "Spring Special: Free Garden Assessment",
-      businessName: "Green Thumb Landscaping",
-      description: "Transforming outdoor spaces into beautiful landscapes.",
-
-      rating: "5.0",
-      reviewCount: "30",
-      clicks: "200",
-      views: "400",
-      referrals: "100",
-
-      mediaUrl: "https://youtu.be/ilE0T2H5pF4",
-      mediaType: "video",
-      address: "789 Elm St",
-      city: "Mapleton",
-      state: "TX",
-      zip: "75001",
-      phone: "555-345-6789",
-      expiresAt: "2025-12-22",
-    },
-    {
-      id: "5",
-      businessId: "5",
-      promoterId: "4",
-      title: "10% Off All Repairs This Month!",
-      businessName: "Bob's Auto Repair",
-      description: "Your trusted local auto repair shop.",
-
-      rating: "3.5",
-      reviewCount: "5",
-      clicks: "50",
-      views: "100",
-      referrals: "20",
-
-      mediaUrl:
-        "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      mediaType: "image",
-      address: "321 Pine Rd",
-      city: "Lakeside",
-      state: "FL",
-      zip: "32065",
-      phone: "555-456-7890",
-      expiresAt: "2025-12-22",
-    },
-    {
-      id: "6",
-      businessId: "9",
-      promoterId: "4",
-      title: "Startup Package: Free Strategy Session",
-      businessName: "Charlie & Co. Consulting",
-      description:
-        "Expert consulting services for small businesses and startups.",
-
-      rating: "4.8",
-      reviewCount: "15",
-      clicks: "80",
-      views: "160",
-      referrals: "40",
-
-      mediaUrl:
-        "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      mediaType: "image",
-      address: "654 Cedar Blvd",
-      city: "Brookfield",
-      state: "NY",
-      zip: "10001",
-      phone: "555-567-8901",
-      expiresAt: "2025-12-22",
-    },
-  ]; // Fetch if user is promoting businesses
+  console.log("Fetched promotions:", promotions);
 
   return (
     <section className="max-w-4xl bg-white rounded-lg shadow-sm border border-gray-400 px-4 py-6 mb-6">
-      <h2 className="text-xl font-bold mb-4">📣 Your Active Promotions</h2>
-      {myPromotions.length ? (
+      <div className="flex flex-col mb-4">
+        <h2 className="text-xl font-bold mb-4">📣 Your Active Promotions</h2>
+        <Link
+          href="/dashboard/promotion/create"
+          className="flex flex-row items-center text-sm text-blue-500 hover:text-blue-600 transition-colors"
+        >
+          <FaPlusCircle className="h-4 w-4 mr-1" />
+          Build a Promotion
+        </Link>
+      </div>
+      {promotions.length ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {myPromotions.map((promo) => (
-            <PromotionCard key={promo.id} promotion={promo} />
+          {promotions.map((promo: any) => (
+            <PromotionCard
+              key={promo.id}
+              promotion={promo}
+              clientSideFetch={clientSideFetch}
+            />
           ))}
         </div>
       ) : (

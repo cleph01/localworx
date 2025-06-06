@@ -12,7 +12,7 @@ import Footer from "../components/Footer";
 import MyEarningsSnapshotSection from "../components/dashboard/MyEarningsSummarySection";
 import MyBitcoinWallet from "../components/dashboard/MyBitcoinWallet";
 
-import { useRequireAuth } from "../hooks/useRequireAuth";
+import { useRequireAuth } from "../hooks/auth/useRequireAuth";
 
 export default function DashboardPage() {
   // Ensure the user is authenticated before rendering the dashboard
@@ -20,6 +20,10 @@ export default function DashboardPage() {
   const { user, isLoading } = useRequireAuth();
 
   if (isLoading || !user) return <div>...Loading</div>;
+
+  console.log("User in Dashboard: ", user);
+
+  const tempUserId = 1;
 
   return (
     <main className="min-h-screen flex flex-col items-center px-4 pt-8">
@@ -29,9 +33,9 @@ export default function DashboardPage() {
       <UserSummarySection />
       <MyEarningsSnapshotSection />
       {/* <MyBitcoinWallet /> */}
-      <MyBusinessesSection />
-      {/* <MyPromotionsSection /> */}
-      <MyPostsSection />
+      <MyBusinessesSection clientSideFetch={true} ownerId={tempUserId} />
+      <MyPromotionsSection clientSideFetch={true} promoterId={tempUserId} />
+      {/* <MyPostsSection /> */}
 
       <Footer />
     </main>

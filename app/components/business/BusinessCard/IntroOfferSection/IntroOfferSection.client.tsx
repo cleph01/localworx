@@ -1,17 +1,21 @@
-import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
-import LoyaltyProgramSection from "./LoyaltyProgramSection";
-import db from "@/db/db";
+"use client";
+// This component is client-side only, so we can use hooks like useFetchMyBusinesses
+
+import { useFetchRewardsByBusinessId } from "@/app/hooks/dashboard/MyBusinessesSection/useFetchRewardsByBusinessId";
+import LoyaltyProgramSection from "../../LoyaltyProgramSection";
 
 // IntroOfferSection.tsx
-const IntroOfferSection = async ({ businessId }: { businessId: string }) => {
-  // Simulate fetching from a mock database
-  // const item = await mockFetch(`/api/rewards?businessId=${businessId}`);
+const IntroOfferSection = ({ businessId }: { businessId: string }) => {
+  // Client-side fetching of reviews
+  const { rewards, loading, error } = useFetchRewardsByBusinessId(businessId);
 
-  // SSR: Fetch the business details from the database
-  // Fetch the business details from the database
-  const rewards = await db("rewards").where("business_id", businessId);
+  if (loading) {
+    return <div className="text-gray-500">Loading rewards...</div>;
+  }
+  if (error) {
+    console.error("Error fetching rewards:", error);
+  }
 
-  console.log("Rewards fetched:", rewards, "for businessId:", businessId);
   if (!rewards) {
     return <div>No rewards available</div>;
   }

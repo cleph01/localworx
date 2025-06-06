@@ -3,7 +3,11 @@
 import { useRouter } from "next/navigation";
 import { FaEye } from "react-icons/fa";
 
-const PromotionViewButton = ({ promotionId }: { promotionId: string }) => {
+const PromotionViewButton = ({
+  promotionId,
+}: {
+  promotionId: number | string;
+}) => {
   const router = useRouter();
 
   const handleViewItem = () => {

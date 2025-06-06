@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { getUserByNpubHandler } from "./userController";
+import { getUserByNpubHandler } from "./userByNpubController";
 
 export async function GET(
   req: NextRequest,

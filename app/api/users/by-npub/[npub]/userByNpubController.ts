@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchUserByNpub } from "./userService";
+import { fetchUserByNpub } from "./userByNpubService";
 
 export async function getUserByNpubHandler(npub: string) {
   try {

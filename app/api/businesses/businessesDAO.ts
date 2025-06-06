@@ -1,7 +1,9 @@
 import db from "@/db/db";
 
-export async function listBusinesses() {
-  const query = db("businesses").select("*");
+export function getBusinessesByOwnerIdDAO(ownerId: string) {
+  return db("businesses").where("owner_id", ownerId);
+}
 
-  return query;
+export function getAllBusinessesDAO() {
+  return db("businesses").select("*");
 }

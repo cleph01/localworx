@@ -1,6 +1,7 @@
+// app/api/promotions/route.ts
 import { NextRequest } from "next/server";
-import { getPromotionsHandler } from "./promotionsController";
+import { getPromotionsByPromoterIdHandler } from "./promotionsController";
 
 export async function GET(req: NextRequest) {
-  return getPromotionsHandler(req);
+  return getPromotionsByPromoterIdHandler(req);
 }

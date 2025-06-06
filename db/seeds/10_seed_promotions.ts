@@ -56,7 +56,8 @@ export async function seed(knex: Knex): Promise<void> {
       title: "🔧 Free Screen Protector",
       description:
         "Cracked screen repair comes with a free tempered glass protector.",
-      media_url: "https://images.unsplash.com/photo-1587574293340-ec3e1a49f1c9",
+      media_url:
+        "https://media.istockphoto.com/id/922690800/photo/man-applying-protective-tempered-glass-to-phone-screen.webp?a=1&b=1&s=612x612&w=0&k=20&c=vF333jCRHZbJA3xJj4NV7cBSl9gRJqkraEt5y0yO83I=",
       media_type: "image",
       expires_at: new Date(Date.now() + 5 * 86400000),
       is_active: true,
@@ -69,7 +70,8 @@ export async function seed(knex: Knex): Promise<void> {
       title: "🥐 Morning Special: Free Croissant",
       description:
         "Get a free croissant with any espresso purchase until 11am.",
-      media_url: "https://images.unsplash.com/photo-1509440159598-9530b3c7a5ae",
+      media_url:
+        "https://images.unsplash.com/photo-1612366747681-e4ca6992b1e9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNyb2lzc2FudHxlbnwwfHwwfHx8MA%3D%3D",
       media_type: "image",
       expires_at: new Date(Date.now() + 4 * 86400000),
       is_active: true,
@@ -81,7 +83,8 @@ export async function seed(knex: Knex): Promise<void> {
       promoter_id: promoter_1.id,
       title: "🥤 BOGO Smoothies All Week!",
       description: "Buy one smoothie, get one free. Valid Mon–Fri.",
-      media_url: "https://images.unsplash.com/photo-1551024601-bec78aea704b",
+      media_url:
+        "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHNtb290aGllfGVufDB8fDB8fHww",
       media_type: "image",
       expires_at: new Date(Date.now() + 6 * 86400000),
       is_active: true,
@@ -93,7 +96,7 @@ export async function seed(knex: Knex): Promise<void> {
       promoter_id: promoter_2.id,
       title: "✂️ First Cut Free",
       description: "New customers get their first haircut absolutely free.",
-      media_url: "https://www.youtube.com/watch?v=urU1l0PM_4I",
+      media_url: "https://youtu.be/6jTMYDzoGAo?",
       media_type: "video",
       expires_at: new Date(Date.now() + 10 * 86400000),
       is_active: true,
@@ -105,7 +108,8 @@ export async function seed(knex: Knex): Promise<void> {
       promoter_id: promoter_1.id,
       title: "🎸 Free Guitar Restringing",
       description: "Buy a pack of strings, we’ll restring your guitar free.",
-      media_url: "https://images.unsplash.com/photo-1598387857532-290b61a7b38b",
+      media_url:
+        "https://plus.unsplash.com/premium_photo-1681844014126-5950a9c8060b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z3VpdGFyJTIwcmVzdHJpbmd8ZW58MHx8MHx8fDA%3D",
       media_type: "image",
       expires_at: new Date(Date.now() + 8 * 86400000),
       is_active: true,
@@ -118,7 +122,8 @@ export async function seed(knex: Knex): Promise<void> {
       title: "🎁 Free Gift Wrapping Weekend",
       description:
         "Buy anything in-store this weekend, get it gift-wrapped free!",
-      media_url: "https://images.unsplash.com/photo-1542051841857-3490f9b9f2cc",
+      media_url:
+        "https://images.unsplash.com/photo-1709364528811-5c920cb3adad?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHZlZ2V0YWJsZSUyMHdyYXBwaW5nfGVufDB8fDB8fHww",
       media_type: "image",
       expires_at: new Date(Date.now() + 2 * 86400000),
       is_active: true,

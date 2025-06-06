@@ -1,5 +1,12 @@
-import { listBusinesses } from "./businessesDAO";
+import {
+  getBusinessesByOwnerIdDAO,
+  getAllBusinessesDAO,
+} from "./businessesDAO";
 
-export async function fetchBusinesses() {
-  return listBusinesses();
+export function getBusinessesByOwnerIdService(ownerId: string) {
+  return getBusinessesByOwnerIdDAO(ownerId);
+}
+
+export function getAllBusinessesService() {
+  return getAllBusinessesDAO();
 }

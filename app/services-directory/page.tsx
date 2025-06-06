@@ -14,7 +14,7 @@ const ServicesDirectoryPage = () => {
       <SearchBarSection />
 
       {/* Listings Section */}
-      <BusinessListingsSection />
+      <BusinessListingsSection clientSideFetch={false} />
 
       {/* Call to Action Section */}
       <CallToActionSection />

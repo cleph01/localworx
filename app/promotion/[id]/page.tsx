@@ -6,7 +6,7 @@ import BusinessPreviewSection from "../../components/promotions/BusinessPreviewS
 import RewardCalloutSection from "../../components/promotions/RewardCalloutSection";
 import Footer from "../../components/Footer";
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
-import PromoterDetailsSection from "@/app/components/promotions/PromoterDetailsSection";
+import PromoterDetailsSection from "@/app/components/promotions/PromotionCard/PromoterDetailsSection";
 import db from "@/db/db";
 
 import NotFound from "@/app/not-found";

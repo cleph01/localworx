@@ -1,9 +1,9 @@
 import { FaBitcoin, FaBtc } from "react-icons/fa";
 import Button from "../ui/Button";
-import PromotionListingCard from "../promotions/PromotionCard";
+import PromotionListingCard from "../promotions/PromotionCard/PromotionCard";
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 import { PromotionCardProps } from "../promotions/promotionTypes";
-import PromotionCard from "../promotions/PromotionCard";
+import PromotionCard from "../promotions/PromotionCard/PromotionCard";
 import db from "@/db/db";
 
 const BusinessPromotionsSection = async ({

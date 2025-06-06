@@ -1,15 +1,25 @@
+// app/api/promotions/promotionsController.ts
 import { NextRequest, NextResponse } from "next/server";
-import { fetchPromotions } from "./promotionsService";
+import { getPromotionsByPromoterIdService } from "./promotionsService";
 
-// Fetch all businesses by ownerId
-export async function getPromotionsHandler(req: NextRequest) {
+export async function getPromotionsByPromoterIdHandler(req: NextRequest) {
   try {
-    const promotions = await fetchPromotions();
+    const { searchParams } = new URL(req.url);
+    const promoterId = searchParams.get("promoterId");
+
+    if (!promoterId) {
+      return NextResponse.json(
+        { error: "Missing promoter_id in query params" },
+        { status: 400 }
+      );
+    }
+
+    const promotions = await getPromotionsByPromoterIdService(promoterId);
     return NextResponse.json(promotions);
-  } catch (err) {
-    console.error("Error in getPromotionsHandler:", err);
+  } catch (error) {
+    console.error("Error in getPromotionsByPromoterIdHandler:", error);
     return NextResponse.json(
-      { error: "Failed to fetch Promotions" },
+      { error: "Failed to fetch promotions by promoter_id." },
       { status: 500 }
     );
   }

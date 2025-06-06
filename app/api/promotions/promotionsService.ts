@@ -1,5 +1,8 @@
-import { listPromotions } from "./promotionsDAO";
+// app/api/promotions/promotionsService.ts
+import { getPromotionsByPromoterId } from "./promotionsDAO";
 
-export async function fetchPromotions() {
-  return listPromotions();
+export async function getPromotionsByPromoterIdService(
+  promoterId: string | number
+) {
+  return await getPromotionsByPromoterId(promoterId);
 }

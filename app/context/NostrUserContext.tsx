@@ -1,13 +1,14 @@
 // app/context/NostrUserContext.tsx
+
 "use client";
 
 import { nip19 } from "nostr-tools";
-import { bytesToHex, hexToBytes } from "@noble/hashes/utils";
+import { hexToBytes } from "@noble/hashes/utils";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 type NostrUser = {
-  id: string; // Internal user ID in your database
+  id: string;
   npub: string;
   name?: string;
   picture?: string;
@@ -30,35 +31,27 @@ const NostrUserContext = createContext<NostrUserContextType | undefined>(
 
 export function NostrUserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<NostrUser | null>(null);
-
   const [isLoading, setIsLoading] = useState(true);
 
-  // Auto-load user profile from localStorage
+  // Rehydrate user from localStorage on initial load
   useEffect(() => {
-    const npub = localStorage.getItem("npub");
-    if (!npub) {
+    const userJson = localStorage.getItem("user");
+
+    if (!userJson) {
       setIsLoading(false);
       return;
     }
 
-    async function fetchProfile() {
-      try {
-        const res = await fetch(`/api/nostr/profile/${npub}`);
-        if (!res.ok) throw new Error("Profile fetch failed");
-
-        const profile = await res.json();
-        setUser({ npub, ...profile });
-      } catch (err) {
-        console.error("Failed to fetch Nostr profile", err);
-        // 🚨 Clear broken session
-        localStorage.removeItem("npub");
-        setUser(null);
-      } finally {
-        setIsLoading(false);
-      }
+    try {
+      const storedUser = JSON.parse(userJson);
+      setUser(storedUser);
+    } catch (err) {
+      console.error("Failed to parse stored user:", err);
+      localStorage.removeItem("user");
+      setUser(null);
+    } finally {
+      setIsLoading(false);
     }
-
-    fetchProfile();
   }, []);
 
   const signIn = async (nsec: string): Promise<boolean> => {
@@ -76,23 +69,17 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
         return false;
       }
 
-      // Encode pubkey using NIP-19 (comes as hex)
       const npub = nip19.npubEncode(data.user.pubkey);
-      localStorage.setItem("npub", npub);
 
       // Fetch Nostr profile
       const profileRes = await fetch(`/api/nostr/profile/${npub}`);
       const profile = await profileRes.json();
 
-      console.log("Fetched Nostr profile @ NostrUserContext:", profile);
-
-      // Check if user exists in our internal DB
+      // Check or create internal user
       const userRes = await fetch(`/api/users/by-npub/${npub}`);
-
       let finalUserData;
 
       if (userRes.status === 404) {
-        // User doesn't exist — create them
         const newUser = await fetch("/api/users/create", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -103,20 +90,19 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
           }),
         });
         finalUserData = await newUser.json();
-        console.log("Created new user in DB:", finalUserData);
       } else {
-        // User exists — use existing data
         finalUserData = await userRes.json();
-        console.log("Existing user found in DB:", finalUserData);
       }
 
-      // ✅ Store user in context
-      setUser({
+      const fullUser = {
         id: finalUserData.id,
         npub,
         name: profile.name,
         picture: profile.picture,
-      });
+      };
+
+      setUser(fullUser);
+      localStorage.setItem("user", JSON.stringify(fullUser));
 
       toast.success("Signed in successfully!");
       return true;
@@ -131,7 +117,6 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
     username: string
   ): Promise<{ pubkey: string; privkey: string } | null> => {
     try {
-      // 1. Generate keypair
       const res = await fetch("/api/nostr/keys", { method: "POST" });
       const data = await res.json();
 
@@ -141,17 +126,14 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
       }
 
       const { pubkey, privkey } = data;
-
-      // Encode keys using NIP-19
       const pubKeyEncoded = nip19.npubEncode(pubkey);
       const privKeyBytes = hexToBytes(privkey);
       const privKeyEncoded = nip19.nsecEncode(privKeyBytes);
 
-      // 2. Publish kind:0 profile event (default)
       const profileData = {
         name: username,
         about: "Excited to be part of LocalWorx!",
-        picture: "", // Optional: provide a default avatar later
+        picture: "",
       };
 
       await fetch("/api/nostr/profile/publish", {
@@ -160,24 +142,23 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ pubkey, privkey, profile: profileData }),
       });
 
-      // 3. Save user in our internal DB
       const newUser = await fetch("/api/users/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ npub: pubKeyEncoded, name: username }),
       });
 
-      // 4. Save to localStorage + update context
-      localStorage.setItem("npub", pubKeyEncoded);
-
       const newUserData = await newUser.json();
-      console.log("Created new user in DB:", newUserData);
-      setUser({
-        id: newUserData.id, // Assuming the response contains the new user's ID
+
+      const fullUser = {
+        id: newUserData.id,
         npub: pubKeyEncoded,
         name: profileData.name,
         picture: profileData.picture,
-      });
+      };
+
+      setUser(fullUser);
+      localStorage.setItem("user", JSON.stringify(fullUser));
 
       toast.success("Account created successfully!");
       return { pubkey: pubKeyEncoded, privkey: privKeyEncoded };
@@ -189,7 +170,7 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = () => {
-    localStorage.removeItem("npub");
+    localStorage.removeItem("user");
     setUser(null);
     toast("Signed out successfully.");
   };

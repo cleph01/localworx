@@ -4,7 +4,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { useNostrUser } from "../context/NostrUserContext";
+import { useNostrUser } from "../../context/NostrUserContext";
 
 /**
  * A hook to enforce authenticated access to a page.
