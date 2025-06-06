@@ -8,7 +8,7 @@ import LogOutButton from "../../components/ui/LogOutButton";
 import Card from "../../components/ui/Card";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
-import { useRequireAuth } from "@/app/hooks/useRequireAuth";
+import { useRequireAuth } from "@/app/hooks/auth/useRequireAuth";
 
 export default function MyProfilePage() {
   const [profile, setProfile] = useState<any>(null);

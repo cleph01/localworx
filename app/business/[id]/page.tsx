@@ -2,7 +2,7 @@ import PageHeader from "../../components/ui/PageHeader";
 import BusinessOverviewSection from "../../components/business/BusinessOverviewSection";
 import BusinessPromotionsSection from "../../components/business/BusinessPromotionsSection";
 import LoyaltyProgramSection from "../../components/business/LoyaltyProgramSection";
-import IntroOfferSection from "../../components/business/IntroOfferSection";
+import IntroOfferSection from "../../components/business/BusinessCard/IntroOfferSection";
 import CallToActionSection from "../../components/CallToActionSection";
 import Footer from "../../components/Footer";
 
@@ -27,7 +27,7 @@ export default async function BusinessProfilePage({
       <BusinessOverviewSection businessId={id} />
 
       {/* Introductory Offer Section (if applicable) */}
-      <IntroOfferSection businessId={id} />
+      <IntroOfferSection businessId={id} clientSideFetch={false} />
 
       {/* Promotions tied to this business */}
       <BusinessPromotionsSection businessId={id} />
