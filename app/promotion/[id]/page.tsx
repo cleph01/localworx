@@ -47,10 +47,6 @@ export default async function PromotionProfilePage({
     business_id: promotion.business_id,
   };
 
-  const promoterDetailsSectionData = {
-    promoter_id: promotion.promoter_id,
-  };
-
   // Render the promotion details page
   return (
     <main className="min-h-screen flex flex-col items-center justify-center">
@@ -58,7 +54,11 @@ export default async function PromotionProfilePage({
       <PromotionDetailsSection data={detailsSectionData} />
       <RewardCalloutSection data={rewardCalloutSectionData} />
       <BusinessPreviewSection data={businessPreviewSectionData} />
-      <PromoterDetailsSection data={promoterDetailsSectionData} />
+      {/* Component coming from promotion/components/PromotionCard */}
+      <PromoterDetailsSection
+        promoterId={promotion.promoter_id}
+        clientSideFetch={false}
+      />
       <Footer />
     </main>
   );
