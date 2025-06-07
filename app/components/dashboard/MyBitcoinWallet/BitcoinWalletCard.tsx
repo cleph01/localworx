@@ -1,7 +1,7 @@
 "use client";
 
-import FundWalletButton from "../lightning/FundWalletButton";
-import MiniWalletBalance from "../lightning/MiniWalletBalance";
+import FundWalletButton from "../../lightning/FundWalletButton";
+import MiniWalletBalance from "../../lightning/MiniWalletBalance";
 
 type BitcoinWalletCardProps = {
   walletId: string;
