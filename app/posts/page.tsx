@@ -6,7 +6,7 @@ export default function PostsPage() {
   return (
     <main className="min-h-screen flex flex-col">
       <PageHeader />
-      <PostsGridSection />
+      <PostsGridSection clientSideFetch={false} />
       <Footer />
     </main>
   );
