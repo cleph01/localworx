@@ -4,7 +4,12 @@ import PostCardContent from "./PostCardContent";
 import PostCardFooter from "./PostCardFooter";
 import PostCardHeader from "./PostCardHeader";
 
-const PostCard = ({ post }: { post: Post }) => {
+type PostCardProps = {
+  post: Post;
+  clientSideFetch?: boolean; // Optional prop for client-side fetching
+};
+
+const PostCard = ({ post, clientSideFetch }: PostCardProps) => {
   return (
     <Card
       Header={
@@ -19,6 +24,7 @@ const PostCard = ({ post }: { post: Post }) => {
           id={post.id}
           userId={post.user_id}
           description={post.description}
+          clientSideFetch={clientSideFetch} // Pass the prop to PostCardContent
         />
       }
       Footer={

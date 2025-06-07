@@ -1,10 +1,13 @@
 import { useFetchUserById } from "@/app/hooks/users/useFetchUserById";
 import db from "@/db/db";
+import PostEngagementSection from "../PostEngagementSection/PostEngagementSection";
 
 type AuthorProfileSectionProps = {
+  id: number | string;
   authorId: number | string;
 };
 const AuthorProfileSection = async ({
+  id,
   authorId,
 }: AuthorProfileSectionProps) => {
   const user = await db("users").where({ id: authorId }).select("*").first();
@@ -21,8 +24,11 @@ const AuthorProfileSection = async ({
         src={user.avatar_url ?? ""}
         alt={user.first_name}
       />
-      <div className="text-base font-semibold text-slate-700">
-        {user.first_name}
+      <div className="flex flex-col">
+        <div className="text-base font-semibold text-slate-700">
+          {user.first_name}
+        </div>
+        <PostEngagementSection userId={authorId} postId={id} />
       </div>
     </div>
   );

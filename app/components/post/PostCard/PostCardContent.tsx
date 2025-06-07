@@ -1,13 +1,19 @@
-import AuthorProfileSection from "./AuthorProfileSection/AuthorProfileSection";
+import AuthorProfileSection from "./AuthorProfileSection/AuthorProfileSection.client";
 import PostEngagementSection from "./PostEngagementSection/PostEngagementSection";
 
 type PostContentType = {
   id: number;
   userId: number | string;
-
   description: string;
+  clientSideFetch?: boolean; // Optional prop to determine if client-side fetch is needed
 };
-const PostCardContent = ({ id, userId, description }: PostContentType) => {
+
+const PostCardContent = ({
+  id,
+  userId,
+  description,
+  clientSideFetch,
+}: PostContentType) => {
   return (
     <div className="flex flex-col">
       {/* Description */}
@@ -19,10 +25,12 @@ const PostCardContent = ({ id, userId, description }: PostContentType) => {
           🧠 Community Creator
         </span>
 
-        <div className="flex flex-row items-center justify-between mt-2">
-          <AuthorProfileSection authorId={userId} />
-
-          <PostEngagementSection userId={userId} postId={id} />
+        <div className="flex flex-col mt-2">
+          <AuthorProfileSection
+            id={id}
+            authorId={userId}
+            clientSideFetch={clientSideFetch}
+          />
         </div>
       </div>
     </div>

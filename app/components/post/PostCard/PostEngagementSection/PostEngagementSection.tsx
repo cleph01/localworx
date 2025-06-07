@@ -20,7 +20,7 @@ const PostEngagementSection = ({
   ];
 
   return (
-    <div className="flex flex-row gap-2 text-xs text-gray-600">
+    <div className="flex flex-row gap-2 text-xs text-gray-600 mt-2">
       <ZapsCountSection userId={userId} />
       <PostLikesCountSection postId={postId} />
       <PostCommentsSection

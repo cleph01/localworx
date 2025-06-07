@@ -37,7 +37,7 @@ export default function DashboardPage() {
       <MyRewardsVaultSection userId={tempUserId} />
       <MyBusinessesSection clientSideFetch={true} ownerId={tempUserId} />
       <MyPromotionsSection clientSideFetch={true} promoterId={tempUserId} />
-      {/* <MyPostsSection /> */}
+      <MyPostsSection clientSideFetch={true} authorId={tempUserId} />
 
       <Footer />
     </main>
