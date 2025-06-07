@@ -1,7 +1,12 @@
 // ZapStatsSection.tsx
 
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
-import { PostZapSectionProps } from "../posts/postTypes";
+
+type PostZapSectionProps = {
+  data: {
+    userId: number | string;
+  };
+};
 
 const ZapStatsSection = async ({ data }: PostZapSectionProps) => {
   // mock fetch

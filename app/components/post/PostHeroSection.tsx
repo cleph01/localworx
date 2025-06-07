@@ -1,6 +1,12 @@
 // PostHeroSection.tsx
 
-import { PostHeroSectionProps } from "../posts/postTypes";
+type PostHeroSectionProps = {
+  data: {
+    title: string;
+    mediaUrl?: string;
+    mediaType?: string; // "image", "youtube", "vimeo", etc.
+  };
+};
 
 const PostHeroSection = ({ data }: PostHeroSectionProps) => {
   // Determine appropriate media preview component (image or embed)
