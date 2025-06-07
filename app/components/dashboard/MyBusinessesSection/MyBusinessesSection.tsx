@@ -9,7 +9,7 @@
 // a client component can be rendered in a server-side rendered page.
 
 import Link from "next/link";
-import BusinessCard from "../business/BusinessCard/BusinessCard";
+import BusinessCard from "../../business/BusinessCard/BusinessCard";
 import { FaPlusCircle } from "react-icons/fa";
 import { useFetchMyBusinesses } from "@/app/hooks/dashboard/MyBusinessesSection/useFetchMyBusinesses";
 

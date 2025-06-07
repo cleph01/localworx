@@ -7,6 +7,8 @@ const BusinessListingsSection = async ({
 }: {
   clientSideFetch: boolean;
 }) => {
+  // If clientSideFetch is true, we will use the custom hook to fetch businesses
+  // based on this pattern:
   // const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
   // const response = await fetch(`${baseUrl}/api/businesses`, {

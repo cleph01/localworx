@@ -46,6 +46,12 @@ const Navbar = () => {
               About
             </Link>
             <Link
+              href="/posts"
+              className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
+            >
+              Community Posts
+            </Link>
+            <Link
               href="/services-directory"
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
@@ -124,6 +130,12 @@ const Navbar = () => {
               className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
             >
               About
+            </Link>
+            <Link
+              href="/posts"
+              className="block mt-4 md:mt-0 hover:text-blue-500 transition duration-300"
+            >
+              Community Posts
             </Link>
             <Link
               href="/services-directory"

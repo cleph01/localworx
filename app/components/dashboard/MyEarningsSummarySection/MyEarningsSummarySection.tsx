@@ -1,7 +1,6 @@
 import AvailableForWithdrawalCard from "../earnings/AvailableForWithdrawalCard";
 import LifetimeEarningsCard from "../earnings/LifetimeEarningsCard";
 import PendingPayoutCard from "../earnings/PendingPayoutCard";
-import InKindPayoutCard from "../earnings/InKindPayoutCard";
 
 const MyEarningsSnapshotSection = () => {
   return (
@@ -11,7 +10,6 @@ const MyEarningsSnapshotSection = () => {
         <AvailableForWithdrawalCard />
         <LifetimeEarningsCard />
         <PendingPayoutCard />
-        <InKindPayoutCard />
       </div>
     </section>
   );

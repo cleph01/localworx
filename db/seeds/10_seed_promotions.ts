@@ -31,7 +31,8 @@ export async function seed(knex: Knex): Promise<void> {
       promoter_id: promoter_1.id,
       title: "☕ Free Coffee Friday!",
       description: "Buy any pastry, get a free small coffee this Friday only.",
-      media_url: "https://images.unsplash.com/photo-1511920170033-f8396924c348",
+      media_url:
+        "https://plus.unsplash.com/premium_photo-1722686494449-7a00200fa5f2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGZyZWUlMjBjb2ZmZWV8ZW58MHx8MHx8fDA%3D",
       media_type: "image",
       expires_at: new Date(Date.now() + 3 * 86400000),
       is_active: true,

@@ -9,7 +9,7 @@ import Link from "next/link";
 // and a server componnet cannot be rendered in a client-side rendered page - but the opposite is allowed,
 // a client component can be rendered in a server-side rendered page.
 
-import PromotionCard from "../promotions/PromotionCard/PromotionCard";
+import PromotionCard from "../../promotions/PromotionCard/PromotionCard";
 import { useFetchPromotionsByPromoter } from "@/app/hooks/dashboard/MyPromotionsSection/useFetchPromotionsByPromoterId";
 import { FaPlusCircle } from "react-icons/fa";
 

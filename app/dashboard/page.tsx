@@ -4,15 +4,16 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useNostrUser } from "@/app/context/NostrUserContext";
-import UserSummarySection from "../components/dashboard/UserSummarySection";
-import MyBusinessesSection from "../components/dashboard/MyBusinessesSection";
-import MyPromotionsSection from "../components/dashboard/MyPromotionsSection";
-import MyPostsSection from "../components/dashboard/MyPostsSection";
+import UserSummarySection from "../components/dashboard/UserSummarySection/UserSummarySection";
+import MyBusinessesSection from "../components/dashboard/MyBusinessesSection/MyBusinessesSection";
+import MyPromotionsSection from "../components/dashboard/MyPromotionsSection/MyPromotionsSection";
+import MyPostsSection from "../components/dashboard/MyPostsSection/MyPostsSection";
 import Footer from "../components/Footer";
-import MyEarningsSnapshotSection from "../components/dashboard/MyEarningsSummarySection";
-import MyBitcoinWallet from "../components/dashboard/MyBitcoinWallet";
+import MyEarningsSnapshotSection from "../components/dashboard/MyEarningsSummarySection/MyEarningsSummarySection";
+import MyBitcoinWallet from "../components/dashboard/MyBitcoinWallet/MyBitcoinWallet";
 
 import { useRequireAuth } from "../hooks/auth/useRequireAuth";
+import MyRewardsVaultSection from "../components/dashboard/MyRewardsVaultSection/MyRewardsVaultSection";
 
 export default function DashboardPage() {
   // Ensure the user is authenticated before rendering the dashboard
@@ -33,6 +34,7 @@ export default function DashboardPage() {
       <UserSummarySection />
       <MyEarningsSnapshotSection />
       {/* <MyBitcoinWallet /> */}
+      <MyRewardsVaultSection userId={tempUserId} />
       <MyBusinessesSection clientSideFetch={true} ownerId={tempUserId} />
       <MyPromotionsSection clientSideFetch={true} promoterId={tempUserId} />
       {/* <MyPostsSection /> */}

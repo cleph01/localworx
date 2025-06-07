@@ -41,15 +41,6 @@ type PendingPayoutContentType = {
   description: string;
 };
 
-/*** IN-Kind Payout Card ***/
-
-type InKindPayoutHeaderType = {
-  amount: string;
-};
-type InKindPayoutContentType = {
-  description: string;
-};
-
 export type {
   WithdrawalHeaderType,
   WithdrawalContentType,
@@ -59,6 +50,4 @@ export type {
   LifetimeEarningsContentType,
   PendingPayoutHeaderType,
   PendingPayoutContentType,
-  InKindPayoutHeaderType,
-  InKindPayoutContentType,
 };

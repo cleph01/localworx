@@ -3,7 +3,11 @@
 import { useRouter } from "next/navigation";
 import { FaEye } from "react-icons/fa";
 
-const PostViewButton = ({ postId }: { postId: string }) => {
+type PostViewButtonProps = {
+  postId: number | string;
+};
+
+const PostViewButton = ({ postId }: PostViewButtonProps) => {
   const router = useRouter();
 
   const handleViewItem = () => {
@@ -15,7 +19,7 @@ const PostViewButton = ({ postId }: { postId: string }) => {
       onClick={handleViewItem}
       className="bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm flex items-center gap-1 hover:bg-gray-300 cursor-pointer"
     >
-      <FaEye /> View
+      <FaEye /> View Post
     </button>
   );
 };

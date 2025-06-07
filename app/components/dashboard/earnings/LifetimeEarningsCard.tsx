@@ -1,6 +1,6 @@
 // LifetimeEarningsCard.tsx
 import { FaBtc } from "react-icons/fa";
-import Card from "../ui/Card";
+import Card from "../../ui/Card";
 import {
   LifetimeEarningsContentType,
   LifetimeEarningsHeaderType,

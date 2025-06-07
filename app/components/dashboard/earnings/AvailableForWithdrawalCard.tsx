@@ -1,7 +1,7 @@
 // AvailableForWithdrawalCard.tsx
 import { FaBtc } from "react-icons/fa";
-import Button from "../ui/Button";
-import Card from "../ui/Card";
+import Button from "../../ui/Button";
+import Card from "../../ui/Card";
 import {
   WithdrawalContentType,
   WithdrawalFooterType,
