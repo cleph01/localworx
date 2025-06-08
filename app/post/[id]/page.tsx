@@ -3,9 +3,9 @@
 import PostHeroSection from "../../components/post/PostHeroSection";
 import PostBodySection from "../../components/post/PostBodySection";
 import ZapStatsSection from "../../components/post/ZapStatsSection";
-import AuthorPreviewSection from "../../components/post/AuthorPreviewSection";
+import PostFooterSection from "@/app/components/post/PostFooterSection";
 import Footer from "../../components/Footer";
-import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
+import db from "@/db/db";
 
 export default async function PostPage({
   params,
@@ -14,42 +14,27 @@ export default async function PostPage({
 }) {
   const { id } = await params;
 
-  const post = await mockFetch(`/api/posts/${id}`);
+  const post = await db("posts")
+    .where({ id: Number(id) })
+    .select("*")
+    .first();
 
   if (!post) {
     return <div>No Post Found</div>;
   }
 
-  const postData = await post.data;
-
-  // Organize the data I want to pass as props
-  const heroSectiondData = {
-    title: postData.title,
-    firstName: postData.businessName || "Business Name",
-    mediaUrl: postData.mediaUrl || "/placeholder-image.jpg",
-    mediaType: postData.mediaType || "image",
-  };
-
-  const bodySectionData = {
-    description: postData.description,
-  };
-
-  const zapsSectionData = {
-    userId: postData.userId,
-  };
-
-  const authorPreviewSectionData = {
-    userId: postData.userId,
-  };
-
-  console.log("PostData @ post/[id]: ", postData);
+  const { title, description, media_url, media_type, user_id } = post;
 
   return (
     <main className="min-h-screen flex flex-col items-center">
-      <PostHeroSection data={heroSectiondData} />
-      <PostBodySection data={bodySectionData} />
-      <ZapStatsSection data={zapsSectionData} />
-      <AuthorPreviewSection data={authorPreviewSectionData} />
+      <PostHeroSection
+        title={title}
+        mediaUrl={media_url}
+        mediaType={media_type}
+      />
+      <PostBodySection description={description} />
+      <ZapStatsSection userId={user_id} />
+      <PostFooterSection postId={id} authorId={user_id} />
       <Footer />
     </main>
   );

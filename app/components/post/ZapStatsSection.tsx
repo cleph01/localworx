@@ -3,20 +3,13 @@
 import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 
 type PostZapSectionProps = {
-  data: {
-    userId: number | string;
-  };
+  userId: number | string;
 };
 
-const ZapStatsSection = async ({ data }: PostZapSectionProps) => {
-  // mock fetch
-  const zaps = await mockFetch(`/api/zaps?toUserId=${data.userId}`);
+const ZapStatsSection = async ({ userId }: PostZapSectionProps) => {
+  // TODO: Replace with actual Zap fetch logic
 
-  if (!zaps) {
-    return <div>No Zaps Found</div>;
-  }
-
-  let zapCount = zaps.data.length;
+  let zapCount = 139;
 
   return (
     <section className="max-w-4xl bg-yellow-50 border border-yellow-200 rounded mx-4 px-4 py-4 my-6">
