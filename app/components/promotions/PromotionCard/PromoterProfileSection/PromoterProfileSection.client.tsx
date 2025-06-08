@@ -24,7 +24,7 @@ const PromoterProfileSection = ({
       <div className="flex flex-row items-center justify-between">
         <div className="flex flex-row items-center mr-1 mt-1 gap-2">
           <img
-            className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+            className="inline-block h-16 w-16 rounded-full ring-2 ring-white"
             src={user.avatar_url ?? ""}
             alt={user.first_name}
           />
