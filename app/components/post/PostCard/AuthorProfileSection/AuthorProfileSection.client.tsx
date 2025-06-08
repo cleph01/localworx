@@ -25,12 +25,12 @@ const AuthorProfileSection = ({ id, authorId }: AuthorProfileSectionProps) => {
   return (
     <div className="flex flex-row items-center gap-2">
       <img
-        className="inline-block h-12 w-12 rounded-full ring-2 ring-white shadow-sm"
+        className="inline-block h-16 w-16 rounded-full ring-2 ring-white shadow-sm"
         src={user.avatar_url ?? ""}
         alt={user.first_name}
       />
       <div className="flex flex-col ">
-        <div className="text-base font-semibold text-slate-700 pt-2 pl-2">
+        <div className="text-lg font-semibold text-slate-700 pt-2 pl-2">
           {user.first_name}
         </div>
         <PostEngagementSection userId={authorId} postId={id} />
