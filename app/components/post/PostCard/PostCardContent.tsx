@@ -1,5 +1,4 @@
-import AuthorProfileSection from "./AuthorProfileSection/AuthorProfileSection.client";
-import PostEngagementSection from "./PostEngagementSection/PostEngagementSection";
+import AuthorProfileSection from "./AuthorProfileSection";
 
 type PostContentType = {
   id: number;
@@ -29,7 +28,7 @@ const PostCardContent = ({
           <AuthorProfileSection
             id={id}
             authorId={userId}
-            clientSideFetch={clientSideFetch}
+            clientSideFetch={clientSideFetch ?? false}
           />
         </div>
       </div>

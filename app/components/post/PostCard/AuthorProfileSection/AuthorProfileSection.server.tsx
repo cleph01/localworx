@@ -1,4 +1,3 @@
-import { useFetchUserById } from "@/app/hooks/users/useFetchUserById";
 import db from "@/db/db";
 import PostEngagementSection from "../PostEngagementSection/PostEngagementSection";
 
@@ -16,7 +15,6 @@ const AuthorProfileSection = async ({
     return <div className="text-gray-500">Author not found</div>;
   }
 
-  console.log("Fetched user @ AuthorProfile:", user);
   return (
     <div className="flex flex-row items-center gap-2 mt-1">
       <img

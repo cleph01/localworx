@@ -1,6 +1,5 @@
 import Button from "../../ui/Button";
 
-import PostEngagementSection from "./PostEngagementSection/PostEngagementSection";
 import PostViewButton from "./PostViewButton";
 
 type PostFooterType = {
