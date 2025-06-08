@@ -22,8 +22,8 @@ const AuthorProfileSection = async ({
         src={user.avatar_url ?? ""}
         alt={user.first_name}
       />
-      <div className="flex flex-col">
-        <div className="text-xl font-semibold text-slate-700 pt-2 pl-2">
+      <div className="flex flex-col justify-center">
+        <div className="text-xl font-semibold text-slate-700 pl-2">
           {user.first_name}
         </div>
         <PostEngagementSection userId={authorId} postId={id} />
