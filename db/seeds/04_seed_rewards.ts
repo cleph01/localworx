@@ -5,29 +5,30 @@ export async function seed(knex: Knex): Promise<void> {
   await knex("rewards").del();
 
   // Fetch existing businesses to map their IDs
-  const businesses = await knex("businesses")
-    .select("id", "business_name")
-    .whereIn("business_name", [
-      "Bean & Brew",
-      "The Vintage Cut",
-      "Rise & Shine Bakery",
-      "Iron Temple",
-      "Tech Savvy",
-      "Green Sip",
-      "Grain & Glory",
-      "Sound Roots",
-      "Greenville Market Co.",
-    ]);
+  // const businesses = await knex("businesses")
+  //   .select("id", "business_name")
+  //   .whereIn("business_name", [
+  //     "Bean & Brew",
+  //     "The Vintage Cut",
+  //     "Rise & Shine Bakery",
+  //     "Iron Temple",
+  //     "Tech Savvy",
+  //     "Green Sip",
+  //     "Grain & Glory",
+  //     "Sound Roots",
+  //     "Greenville Market Co.",
+  //   ]);
 
-  // Helper map
-  const businessIdMap = Object.fromEntries(
-    businesses.map((b) => [b.business_name, b.id])
-  );
+  // // Helper map
+  // const businessIdMap = Object.fromEntries(
+  //   businesses.map((b) => [b.business_name, b.id])
+  // );
 
   await knex("rewards").insert([
     // Bean & Brew (business_id: 1)
     {
-      business_id: businessIdMap["Bean & Brew"],
+      id: 1,
+      business_id: 1,
       name: "Free Small Coffee",
       description: "Enjoy a free small organic coffee on your first visit.",
       image_url:
@@ -36,7 +37,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: null,
     },
     {
-      business_id: businessIdMap["Bean & Brew"],
+      id: 2,
+      business_id: 1,
       name: "Free Muffin with Coffee",
       description: "Receive a fresh muffin with any coffee order.",
       image_url:
@@ -45,7 +47,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: 4,
     },
     {
-      business_id: businessIdMap["Bean & Brew"],
+      id: 3,
+      business_id: 1,
       name: "Free Bag of Beans",
       description: "Get a free bag of our house blend beans.",
       image_url:
@@ -56,7 +59,8 @@ export async function seed(knex: Knex): Promise<void> {
 
     // The Vintage Cut (business_id: 2)
     {
-      business_id: businessIdMap["The Vintage Cut"],
+      id: 4,
+      business_id: 2,
       name: "First Cut Free",
       description: "Enjoy your first haircut on the house.",
       image_url:
@@ -65,7 +69,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: null,
     },
     {
-      business_id: businessIdMap["The Vintage Cut"],
+      id: 5,
+      business_id: 2,
       name: "10% Off Your Next Haircut",
       description:
         "Show your loyalty and receive a 10% discount on your next cut.",
@@ -75,7 +80,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: 5,
     },
     {
-      business_id: businessIdMap["The Vintage Cut"],
+      id: 6,
+      business_id: 2,
       name: "Free Shave with Haircut",
       description: "Get a complimentary shave with your haircut.",
       image_url:
@@ -86,7 +92,8 @@ export async function seed(knex: Knex): Promise<void> {
 
     // Rise & Shine Bakery (business_id: 3)
     {
-      business_id: businessIdMap["Rise & Shine Bakery"],
+      id: 7,
+      business_id: 3,
       name: "Free Croissant on First Visit",
       description: "Try our flaky croissant, free for first-time visitors.",
       image_url:
@@ -95,7 +102,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: null,
     },
     {
-      business_id: businessIdMap["Rise & Shine Bakery"],
+      id: 8,
+      business_id: 3,
       name: "Buy 4 Pastries, Get 1 Free",
       description: "Loyalty reward for our pastry lovers.",
       image_url:
@@ -104,7 +112,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: 5,
     },
     {
-      business_id: businessIdMap["Rise & Shine Bakery"],
+      id: 9,
+      business_id: 3,
       name: "Free Loaf of Bread",
       description: "Take home a fresh artisan loaf of your choice.",
       image_url:
@@ -115,7 +124,8 @@ export async function seed(knex: Knex): Promise<void> {
 
     // Iron Temple (business_id: 4)
     {
-      business_id: businessIdMap["Iron Temple"],
+      id: 10,
+      business_id: 4,
       name: "Free Gym Day Pass",
       description: "Access all facilities with a complimentary day pass.",
       image_url:
@@ -124,7 +134,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: null,
     },
     {
-      business_id: businessIdMap["Iron Temple"],
+      id: 11,
+      business_id: 4,
       name: "Free Dessert",
       description:
         "Get a healthy dessert of your choice free with your workout.",
@@ -134,7 +145,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: 3,
     },
     {
-      business_id: businessIdMap["Iron Temple"],
+      id: 12,
+      business_id: 4,
       name: "Free Personal Training Session",
       description:
         "Claim a complimentary one-on-one session with a certified coach.",
@@ -145,7 +157,8 @@ export async function seed(knex: Knex): Promise<void> {
 
     // Tech Savvy (business_id: 5)
     {
-      business_id: businessIdMap["Tech Savvy"],
+      id: 13,
+      business_id: 5,
       name: "Free Phone Diagnostic",
       description: "Get a full phone diagnostic free on your first visit.",
       image_url:
@@ -154,7 +167,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: null,
     },
     {
-      business_id: businessIdMap["Tech Savvy"],
+      id: 14,
+      business_id: 5,
       name: "Free Screen Protector with Repair",
       description: "Receive a free screen protector after 3 paid services.",
       image_url:
@@ -163,7 +177,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: 3,
     },
     {
-      business_id: businessIdMap["Tech Savvy"],
+      id: 15,
+      business_id: 5,
       name: "One Free Memory Migration & Wash",
       description: "Enjoy a free high-speed memory transfer on us.",
       image_url:
@@ -174,7 +189,8 @@ export async function seed(knex: Knex): Promise<void> {
 
     // Green Sip (business_id: 6)
     {
-      business_id: businessIdMap["Green Sip"],
+      id: 16,
+      business_id: 6,
       name: "Free Smoothie on First Visit",
       description: "Your first smoothie is on the house!",
       image_url:
@@ -183,7 +199,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: null,
     },
     {
-      business_id: businessIdMap["Green Sip"],
+      id: 17,
+      business_id: 6,
       name: "Buy 5 Smoothies, Get 1 Free",
       description: "Earn a free smoothie after your fifth purchase.",
       image_url:
@@ -192,7 +209,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: 5,
     },
     {
-      business_id: businessIdMap["Green Sip"],
+      id: 18,
+      business_id: 6,
       name: "Free Reusable Bottle",
       description: "Get a branded reusable bottle with your order.",
       image_url:
@@ -203,7 +221,8 @@ export async function seed(knex: Knex): Promise<void> {
 
     // Grain & Glory (business_id: 7)
     {
-      business_id: businessIdMap["Grain & Glory"],
+      id: 19,
+      business_id: 7,
       name: "Free Wood Coaster Set",
       description: "Get a handcrafted coaster set on your first purchase.",
       image_url:
@@ -212,7 +231,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: null,
     },
     {
-      business_id: businessIdMap["Grain & Glory"],
+      id: 20,
+      business_id: 7,
       name: "10% Off Custom Orders",
       description: "Loyal customers get 10% off every 3rd custom order.",
       image_url:
@@ -221,7 +241,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: 3,
     },
     {
-      business_id: businessIdMap["Grain & Glory"],
+      id: 21,
+      business_id: 7,
       name: "Free Engraving",
       description: "Get a free engraving on your next purchase.",
       image_url:
@@ -232,7 +253,8 @@ export async function seed(knex: Knex): Promise<void> {
 
     // Sound Roots (business_id: 8)
     {
-      business_id: businessIdMap["Sound Roots"],
+      id: 22,
+      business_id: 8,
       name: "Free Intro Music Lesson",
       description: "Get a 30-minute intro lesson on any instrument.",
       image_url:
@@ -241,7 +263,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: null,
     },
     {
-      business_id: businessIdMap["Sound Roots"],
+      id: 23,
+      business_id: 8,
       name: "5th Lesson Free",
       description: "Loyal students receive their 5th lesson free.",
       image_url:
@@ -250,7 +273,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: 5,
     },
     {
-      business_id: businessIdMap["Sound Roots"],
+      id: 24,
+      business_id: 8,
       name: "Free String Replacement",
       description: "One-time free replacement for guitar or violin strings.",
       image_url:
@@ -261,7 +285,8 @@ export async function seed(knex: Knex): Promise<void> {
 
     // Greenville Market Co. (business_id: 9)
     {
-      business_id: businessIdMap["Greenville Market Co."],
+      id: 25,
+      business_id: 9,
       name: "Free Tote Bag",
       description: "Get a branded reusable tote on your first visit.",
       image_url:
@@ -270,7 +295,8 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: null,
     },
     {
-      business_id: businessIdMap["Greenville Market Co."],
+      id: 26,
+      business_id: 9,
       name: "Loyalty Produce Pack",
       description: "Receive a special produce pack after 6 visits.",
       image_url:
@@ -279,11 +305,43 @@ export async function seed(knex: Knex): Promise<void> {
       threshold: 6,
     },
     {
-      business_id: businessIdMap["Greenville Market Co."],
+      id: 27,
+      business_id: 9,
       name: "Free Gift Wrapping",
       description: "Get one item wrapped professionally for free.",
       image_url:
         "https://images.unsplash.com/photo-1709364528811-5c920cb3adad?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHZlZ2V0YWJsZSUyMHdyYXBwaW5nfGVufDB8fDB8fHww",
+      reward_type: "in-kind",
+      threshold: null,
+    },
+    // Jack's Garage (business_id: 10)
+    {
+      id: 28,
+      business_id: 10,
+      name: "Free Oil Change Inspection",
+      description: "Get a complimentary inspection with your first oil change.",
+      image_url:
+        "https://plus.unsplash.com/premium_photo-1682147578664-b944bf7cde8e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXV0byUyMGluc3BlY3Rpb258ZW58MHx8MHx8fDA%3D",
+      reward_type: "intro-offer",
+      threshold: null,
+    },
+    {
+      id: 29,
+      business_id: 10,
+      name: "Free Tire Rotation After 4 Visits",
+      description: "Loyal customers get a free tire rotation after 4 services.",
+      image_url:
+        "https://plus.unsplash.com/premium_photo-1661717332817-7e668ac1c6fe?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dGlyZSUyMHJlcGxhY2VtZW50fGVufDB8fDB8fHww",
+      reward_type: "loyalty",
+      threshold: 4,
+    },
+    {
+      id: 30,
+      business_id: 10,
+      name: "Free Air Freshener",
+      description: "Receive a complimentary air freshener with any service.",
+      image_url:
+        "https://media.istockphoto.com/id/1300792141/photo/car-air-freshener-mounted-to-ventilation-panel.webp?a=1&b=1&s=612x612&w=0&k=20&c=joqwZ14_bBVTh_sZVp7vyb5WBECl8IUBzKLJgJof-Z4=",
       reward_type: "in-kind",
       threshold: null,
     },

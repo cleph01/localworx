@@ -4,31 +4,11 @@ import { Knex } from "knex";
 export async function seed(knex: Knex): Promise<void> {
   await knex("promotions").del();
 
-  const businesses = await knex("businesses")
-    .select("id", "business_name")
-    .whereIn("business_name", [
-      "Bean & Brew",
-      "Iron Temple",
-      "Tech Savvy",
-      "Rise & Shine Bakery",
-      "Green Sip",
-      "The Vintage Cut",
-      "Sound Roots",
-      "Greenville Market Co.",
-    ]);
-
-  const business_map = Object.fromEntries(
-    businesses.map((b) => [b.business_name, b.id])
-  );
-
-  const promoters = await knex("users").select("id").orderBy("id");
-  const promoter_1 = promoters[0];
-  const promoter_2 = promoters[1];
-
   await knex("promotions").insert([
     {
-      business_id: business_map["Bean & Brew"],
-      promoter_id: promoter_1.id,
+      id: 1,
+      business_id: 1,
+      promoter_id: 1,
       title: "☕ Free Coffee Friday!",
       description: "Buy any pastry, get a free small coffee this Friday only.",
       media_url:
@@ -40,8 +20,9 @@ export async function seed(knex: Knex): Promise<void> {
         "Offer valid this Friday only. One free small coffee per customer. Must purchase a pastry.",
     },
     {
-      business_id: business_map["Iron Temple"],
-      promoter_id: promoter_2.id,
+      id: 2,
+      business_id: 4,
+      promoter_id: 2,
       title: "💪 One Week Free Gym Trial",
       description: "No contracts. No catch. Just sweat. Try us for a week!",
       media_url: "https://www.youtube.com/watch?v=ml6cT4AZdqI",
@@ -52,8 +33,9 @@ export async function seed(knex: Knex): Promise<void> {
         "Valid for new members only. Trial must be used within 30 days of claim.",
     },
     {
-      business_id: business_map["Tech Savvy"],
-      promoter_id: promoter_1.id,
+      id: 3,
+      business_id: 5,
+      promoter_id: 1,
       title: "🔧 Free Screen Protector",
       description:
         "Cracked screen repair comes with a free tempered glass protector.",
@@ -66,8 +48,9 @@ export async function seed(knex: Knex): Promise<void> {
         "Protector must be claimed at time of service. Cannot be redeemed separately.",
     },
     {
-      business_id: business_map["Rise & Shine Bakery"],
-      promoter_id: promoter_2.id,
+      id: 4,
+      business_id: 3,
+      promoter_id: 2,
       title: "🥐 Morning Special: Free Croissant",
       description:
         "Get a free croissant with any espresso purchase until 11am.",
@@ -80,8 +63,9 @@ export async function seed(knex: Knex): Promise<void> {
         "Valid 7–11am only. One per customer. Espresso purchase required.",
     },
     {
-      business_id: business_map["Green Sip"],
-      promoter_id: promoter_1.id,
+      id: 5,
+      business_id: 6,
+      promoter_id: 1,
       title: "🥤 BOGO Smoothies All Week!",
       description: "Buy one smoothie, get one free. Valid Mon–Fri.",
       media_url:
@@ -93,8 +77,9 @@ export async function seed(knex: Knex): Promise<void> {
         "Free smoothie must be of equal or lesser value. Offer valid weekdays only.",
     },
     {
-      business_id: business_map["The Vintage Cut"],
-      promoter_id: promoter_2.id,
+      id: 6,
+      business_id: 2,
+      promoter_id: 2,
       title: "✂️ First Cut Free",
       description: "New customers get their first haircut absolutely free.",
       media_url: "https://youtu.be/6jTMYDzoGAo?",
@@ -105,8 +90,9 @@ export async function seed(knex: Knex): Promise<void> {
         "Must be a new customer. Appointment required. No walk-ins for this promo.",
     },
     {
-      business_id: business_map["Sound Roots"],
-      promoter_id: promoter_1.id,
+      id: 7,
+      business_id: 8,
+      promoter_id: 1,
       title: "🎸 Free Guitar Restringing",
       description: "Buy a pack of strings, we’ll restring your guitar free.",
       media_url:
@@ -118,8 +104,9 @@ export async function seed(knex: Knex): Promise<void> {
         "Applies to standard 6-string acoustic or electric guitars. Strings must be purchased in-store.",
     },
     {
-      business_id: business_map["Greenville Market Co."],
-      promoter_id: promoter_2.id,
+      id: 8,
+      business_id: 9,
+      promoter_id: 2,
       title: "🎁 Free Gift Wrapping Weekend",
       description:
         "Buy anything in-store this weekend, get it gift-wrapped free!",

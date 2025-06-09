@@ -8,6 +8,7 @@ export async function seed(knex: Knex): Promise<void> {
   // Insert sample reviews
   await knex("promoter_reviews").insert([
     {
+      id: 1,
       business_id: 1,
       promoter_id: 1,
       rating: 5,
@@ -16,6 +17,7 @@ export async function seed(knex: Knex): Promise<void> {
       is_public: true,
     },
     {
+      id: 2,
       business_id: 2,
       promoter_id: 2,
       rating: 4,
@@ -23,6 +25,7 @@ export async function seed(knex: Knex): Promise<void> {
       is_public: true,
     },
     {
+      id: 3,
       business_id: 3,
       promoter_id: 3,
       rating: 3,
@@ -30,6 +33,7 @@ export async function seed(knex: Knex): Promise<void> {
       is_public: false,
     },
     {
+      id: 4,
       business_id: 1,
       promoter_id: 2,
       rating: 2,
@@ -38,6 +42,7 @@ export async function seed(knex: Knex): Promise<void> {
       is_public: true,
     },
     {
+      id: 5,
       business_id: 2,
       promoter_id: 3,
       rating: 5,

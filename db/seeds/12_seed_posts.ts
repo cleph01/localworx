@@ -5,6 +5,7 @@ export async function seed(knex: Knex): Promise<void> {
 
   await knex("posts").insert([
     {
+      id: 1,
       user_id: 1,
       title: "How I Built My Tiny Home",
       description:
@@ -18,6 +19,7 @@ export async function seed(knex: Knex): Promise<void> {
       category_id: null,
     },
     {
+      id: 2,
       user_id: 1,
       title: "Tiny Home Life",
       description:
@@ -31,6 +33,7 @@ export async function seed(knex: Knex): Promise<void> {
       category_id: null,
     },
     {
+      id: 3,
       user_id: 2,
       title: "Crafting With Wood",
       description:
@@ -44,6 +47,7 @@ export async function seed(knex: Knex): Promise<void> {
       category_id: null,
     },
     {
+      id: 4,
       user_id: 3,
       title: "Homesteading in Motion",
       description:
@@ -56,6 +60,7 @@ export async function seed(knex: Knex): Promise<void> {
       category_id: null,
     },
     {
+      id: 5,
       user_id: 4,
       title: "Weekend Gardening Update",
       description:
@@ -69,6 +74,7 @@ export async function seed(knex: Knex): Promise<void> {
       category_id: null,
     },
     {
+      id: 6,
       user_id: 5,
       title: "Decentralize Everything",
       description:
@@ -82,6 +88,7 @@ export async function seed(knex: Knex): Promise<void> {
       category_id: null,
     },
     {
+      id: 7,
       user_id: 5,
       title: "Reflections on Natural Law",
       description: "An open post on sovereignty, morality, and freedom.",

@@ -34,11 +34,19 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("rewards")
       .onDelete("CASCADE");
 
-    // Indicates if the reward has been redeemed
-    table.boolean("redeemed").defaultTo(false);
-
-    // Indicates if the reward has been resold
-    table.boolean("resold").defaultTo(false);
+    // Status of the issued reward
+    table
+      .enu("status", [
+        "active",
+        "redeemed",
+        "selling",
+        "sold",
+        "transferred",
+        "expired",
+        "revoked",
+      ])
+      .defaultTo("active")
+      .notNullable();
 
     // Timestamp for when the reward was granted
     table.timestamp("granted_at").defaultTo(knex.fn.now());

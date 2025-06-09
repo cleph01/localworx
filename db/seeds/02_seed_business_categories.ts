@@ -14,5 +14,6 @@ export async function seed(knex: Knex): Promise<void> {
     { id: 7, name: "woodworking" },
     { id: 8, name: "music school" },
     { id: 9, name: "market" },
+    { id: 10, name: "auto repair" },
   ]);
 }

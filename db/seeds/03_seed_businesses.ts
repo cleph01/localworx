@@ -7,6 +7,7 @@ export async function seed(knex: Knex): Promise<void> {
   // Inserts seed entries
   await knex("businesses").insert([
     {
+      id: 1,
       description: "A cozy family-owned coffee shop serving organic brews.",
       pairing_uri_encrypted: null,
       wallet_created: false,
@@ -27,6 +28,7 @@ export async function seed(knex: Knex): Promise<void> {
       hiring_promoters: true,
     },
     {
+      id: 2,
       description: "A boutique barber shop with vintage vibes.",
       pairing_uri_encrypted: null,
       wallet_created: false,
@@ -47,6 +49,7 @@ export async function seed(knex: Knex): Promise<void> {
       hiring_promoters: true,
     },
     {
+      id: 3,
       description: "Handmade pastries and fresh local bread daily.",
       pairing_uri_encrypted: null,
       wallet_created: false,
@@ -67,6 +70,7 @@ export async function seed(knex: Knex): Promise<void> {
       hiring_promoters: true,
     },
     {
+      id: 4,
       description: "Local gym with 24/7 access and group classes.",
       pairing_uri_encrypted: null,
       wallet_created: false,
@@ -87,6 +91,7 @@ export async function seed(knex: Knex): Promise<void> {
       hiring_promoters: true,
     },
     {
+      id: 5,
       description: "Tech support and gadget repair, fast and friendly.",
       pairing_uri_encrypted: null,
       wallet_created: false,
@@ -108,6 +113,7 @@ export async function seed(knex: Knex): Promise<void> {
       hiring_promoters: true,
     },
     {
+      id: 6,
       description: "Organic smoothie bar with seasonal ingredients.",
       pairing_uri_encrypted: null,
       wallet_created: false,
@@ -129,6 +135,7 @@ export async function seed(knex: Knex): Promise<void> {
       hiring_promoters: true,
     },
     {
+      id: 7,
       description: "Custom woodworking studio and gallery.",
       pairing_uri_encrypted: null,
       wallet_created: false,
@@ -150,6 +157,7 @@ export async function seed(knex: Knex): Promise<void> {
       hiring_promoters: false,
     },
     {
+      id: 8,
       description: "Music lessons and instrument repair for all ages.",
       pairing_uri_encrypted: null,
       wallet_created: false,
@@ -170,6 +178,7 @@ export async function seed(knex: Knex): Promise<void> {
       hiring_promoters: true,
     },
     {
+      id: 9,
       description: "Locally sourced produce and artisan goods.",
       pairing_uri_encrypted: null,
       wallet_created: false,
@@ -189,6 +198,28 @@ export async function seed(knex: Knex): Promise<void> {
       owner_id: 9,
       category_id: 9,
       hiring_promoters: false,
+    },
+    {
+      id: 10,
+      description:
+        "Full-service auto repair shop specializing in domestic and import vehicles.",
+      pairing_uri_encrypted: null,
+      wallet_created: false,
+      wallet_id: null,
+      business_name: "Jack's Garage",
+      address: "666 Mechanic Dr",
+      city: "Greenville",
+      state: "SC",
+      phone: "864-555-0100",
+      email: "service@jacksgarage.com",
+      email_verified: true,
+      website: "https://jacksgarage.com",
+      logo_url: "https://images.unsplash.com/photo-1511918984145-48de785d4c4e",
+      latitude: 34.861,
+      longitude: -82.4005,
+      owner_id: 10,
+      category_id: 10,
+      hiring_promoters: true,
     },
   ]);
 }
