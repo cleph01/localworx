@@ -19,8 +19,6 @@ const BusinessPromotionsSection = async ({
     return <div>No Promotions Found</div>;
   }
 
-  console.log("Promotions @ Business Promotions Section: ", promotions);
-
   return (
     <section className="w-full max-w-4xl flex flex-col gap-4 pb-8 py-6 px-4">
       <h2 className="text-2xl font-bold mb-2">📢 Current Promotions</h2>

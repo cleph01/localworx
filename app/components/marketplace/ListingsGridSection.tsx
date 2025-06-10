@@ -1,8 +1,7 @@
 // ListingsGridSection.tsx
-import Image from "next/image";
-import ButtonLink from "../ButtonLink";
+
 import MarketplaceItemCard from "./MarketplaceItemCard/MarketplaceItemCard";
-import { Zap } from "nostr-tools/kinds";
+
 import Button from "../ui/Button";
 import SearchBarSection from "../ui/SearchBarSection";
 import db from "@/db/db";

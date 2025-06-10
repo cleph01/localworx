@@ -17,6 +17,12 @@ const AddToCartCTASection = ({
   rewardId,
   price,
 }: AddToCartCTASectionProps) => {
+  console.log(
+    "AddToCartCTASection type of price:",
+    typeof price,
+    "price: ",
+    price
+  );
   const { reward, loading, error } = useFetchRewardById(rewardId);
   if (loading) {
     return <div className="text-gray-500">Loading...</div>;
