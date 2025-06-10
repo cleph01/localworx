@@ -1,5 +1,5 @@
 // db/seeds/08_seed_rewards_issued.ts
-import { Knex } from "knex";
+import type { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
   await knex("rewards_issued").del();

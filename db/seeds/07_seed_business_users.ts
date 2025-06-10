@@ -1,5 +1,5 @@
 // db/seeds/06_seed_business_users.ts
-import { Knex } from "knex";
+import type { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
   // Deletes ALL existing entries

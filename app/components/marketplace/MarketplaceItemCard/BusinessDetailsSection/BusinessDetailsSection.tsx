@@ -1,32 +1,36 @@
 import db from "@/db/db";
 import BusinessCategorySection from "../BusinessCategorySection/BusinessCategorySection";
+import BusinessReviewsSection from "../BusinessReviewsSection/BusinsessReviewsSection";
 
 type BusinessDetailsSectionProps = {
   businessId: number | string;
-  categoryId: number | string;
 };
 
 const BusinessDetailsSection = async ({
   businessId,
-  categoryId,
 }: BusinessDetailsSectionProps) => {
   const business = await db("businesses").where("id", businessId).first();
 
   if (!business) {
     return <div className="text-gray-500">Business not found</div>;
   }
-  const { name: businessName, category, address, city, state } = business;
+  const { business_name, category_id, address, city, state } = business;
 
   return (
     <div className="flex flex-col justify-center gap-2 mt-2">
       {/* Business Name */}
       <p className="flex-1 text-lg font-semibold text-gray-800 ">
-        {businessName}
+        {business_name}
       </p>
-      {/* Business Category  */}
-      <BusinessCategorySection categoryId={categoryId} />
+      <div className="flex flex-row items-center justify-between gap-2">
+        {/* Business Category  */}
+        <BusinessCategorySection categoryId={category_id} />
 
-      <p className="">
+        {/* Business Rating/Reviews */}
+        <BusinessReviewsSection businessId={businessId} />
+      </div>
+
+      <p className="text-gray-600 text-sm">
         <span>📍</span> {address} {city}, {state}
       </p>
     </div>

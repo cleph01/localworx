@@ -1,7 +1,5 @@
 // db/seeds/05_seed_marketplace_items.ts
-import { Knex } from "knex";
-import { use } from "react";
-import { ids } from "webpack";
+import type { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
   await knex("marketplace_items").del();

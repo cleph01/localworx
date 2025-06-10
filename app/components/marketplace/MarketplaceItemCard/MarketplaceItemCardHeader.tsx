@@ -1,24 +1,27 @@
 import { renderMediaPreview } from "@/app/lib/media/renderMediaPreview";
+import db from "@/db/db";
+import LazyLoadWrapper from "../../ui/LazyLoadWrapper";
 
 type MarketplaceItemCardHeaderType = {
-  title: string;
-  mediaUrl: string;
+  imageUrl: string;
+  rewardName: string;
 };
 
-const MarketplaceItemCardHeader = ({
-  title,
-  mediaUrl,
+const MarketplaceItemCardHeader = async ({
+  imageUrl,
+  rewardName,
 }: MarketplaceItemCardHeaderType) => {
   //
-  // Render the header with business name and media preview
+
   return (
     <div className="">
-      {/* Media preview (image or embed) */}
-      {mediaUrl && renderMediaPreview(mediaUrl, "image")}
-
+      <LazyLoadWrapper>
+        {/* Media preview (image or embed) */}
+        {imageUrl && renderMediaPreview(imageUrl, "image")}
+      </LazyLoadWrapper>
       {/* Title */}
       <h3 className="text-2xl font-extrabold text-slate-800 mt-4 mb-2 leading-tight">
-        {title}
+        {rewardName}
       </h3>
     </div>
   );

@@ -1,5 +1,4 @@
-// db/migrations/YYYYMMDDHHMMSS_create_promoter_reviews_table.ts
-import { Knex } from "knex";
+import type { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable("promoter_reviews", (table) => {

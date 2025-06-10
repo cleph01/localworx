@@ -1,10 +1,10 @@
 import MarketplaceItemHeroSection from "../../components/marketplace/MarketplaceItemHeroSection";
-import MarketplaceItemDetailsSection from "../../components/marketplace/MarketplaceItemDetailsSection";
+import MarketplaceItemDetailsSection from "../../components/marketplace/MarketplaceZapCountSection";
 import SellerPreviewSection from "../../components/marketplace/SellerPreviewSection";
-import BusinessContextSection from "../../components/marketplace/BusinessContextSection";
 import AddToCartCTASection from "../../components/marketplace/AddToCartCTASection";
 import Footer from "../../components/Footer";
-import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
+import db from "@/db/db";
+import MarketplaceItemBusinessDetailsSection from "@/app/components/marketplace/MarketplaceItemBusinessDetailsSection";
 
 export default async function MarketplaceItemPage({
   params,
@@ -13,8 +13,7 @@ export default async function MarketplaceItemPage({
 }) {
   const { id } = await params;
 
-  const res = await mockFetch(`/api/marketplace/${id}`);
-  const item = await res.data;
+  const item = await db("marketplace_items").where("id", id).first();
 
   if (!item) {
     return <div> Item Not Found </div>;
@@ -22,15 +21,16 @@ export default async function MarketplaceItemPage({
 
   return (
     <main className="min-h-screen flex flex-col items-center">
-      <MarketplaceItemHeroSection item={item} />
-      <MarketplaceItemDetailsSection item={item} />
-      <AddToCartCTASection item={item} />
-      <SellerPreviewSection
-        seller={item.firstName}
-        avatarUrl={item.avatarUrl}
-        zapCount={item.zapCount}
+      <MarketplaceItemHeroSection rewardId={item.reward_id} />
+      <MarketplaceItemBusinessDetailsSection businessId={item.business_id} />
+
+      <AddToCartCTASection
+        id={item.id}
+        rewardId={item.reward_id}
+        price={item.price}
       />
-      <BusinessContextSection item={item} />
+      <SellerPreviewSection sellerId={item.user_id} />
+
       <Footer />
     </main>
   );

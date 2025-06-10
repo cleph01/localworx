@@ -14,9 +14,11 @@ const BusinessCategorySection = async ({
   }
   const { name: categoryName } = category;
   return (
-    <p className="bg-indigo-100 text-indigo-700 text-xs font-semibold px-2 py-0.5 rounded-full">
-      {categoryName}
-    </p>
+    <div className="flex items-center">
+      <p className="flex-shrink capitalize bg-indigo-100 text-indigo-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+        {categoryName}
+      </p>
+    </div>
   );
 };
 

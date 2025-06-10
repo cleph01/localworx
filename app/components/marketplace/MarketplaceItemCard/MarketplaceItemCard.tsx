@@ -5,40 +5,40 @@ import Card from "../../ui/Card";
 import MarketplaceItemCardHeader from "./MarketplaceItemCardHeader";
 import MarketplaceItemCardContent from "./MarketplaceItemCardContent";
 import MarketPlaceItemCardFooter from "./MarketPlaceItemCardFooter";
+import db from "@/db/db";
+import { Reward } from "@/types/reward/rewardType";
 
 type MarketplaceItemCardProps = {
   item: MarketplaceItem;
 };
 
-const MarketplaceItemCard = ({ item }: MarketplaceItemCardProps) => {
-  const {
-    id,
-    user_id,
-    business_id,
-    reward_issued_id,
-    reward_id,
-    status,
-    name,
-    description,
-    image_url,
-    price,
-    category,
-    created_at,
-    updated_at,
-  } = item;
+const MarketplaceItemCard = async ({ item }: MarketplaceItemCardProps) => {
+  const reward = await db("rewards").where({ id: item.reward_id }).first();
+
+  if (!reward) {
+    return <div className="text-red-500">Reward not found</div>;
+  }
+  const { image_url, name, description } = reward;
 
   return (
     <Card
       Header={
-        <MarketplaceItemCardHeader title={name} mediaUrl={image_url ?? ""} />
+        <MarketplaceItemCardHeader imageUrl={image_url} rewardName={name} />
       }
       Content={
         <MarketplaceItemCardContent
-          businessId={business_id}
-          sellerId={user_id}
+          businessId={item.business_id}
+          sellerId={item.user_id}
+          description={description}
         />
       }
-      Footer={<MarketPlaceItemCardFooter id={id} name={name} price={price} />}
+      Footer={
+        <MarketPlaceItemCardFooter
+          id={item.id}
+          name={name}
+          price={item.price}
+        />
+      }
       css="w-full max-w-sm"
     />
   );

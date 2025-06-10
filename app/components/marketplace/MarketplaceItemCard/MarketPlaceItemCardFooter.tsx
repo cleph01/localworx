@@ -1,7 +1,7 @@
 "use client";
 
 import { CartItem } from "@/types/cart/cartType";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { FaEye, FaShoppingCart } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -54,7 +54,7 @@ const MarketPlaceItemCardFooter = ({
     <div className="flex flex-row items-center justify-between gap-4 mt-1">
       {/* Price */}
       <div className="text-blue-600 font-bold text-lg">
-        <span className="text-orange-500">₿</span> {price}
+        <span className="text-orange-500">₿</span> {price.toFixed(2)}
       </div>
 
       <div className="flex gap-2">

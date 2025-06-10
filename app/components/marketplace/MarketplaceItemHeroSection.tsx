@@ -1,23 +1,38 @@
 // MarketplaceItemHeroSection.tsx
-import Image from "next/image";
 
-const MarketplaceItemHeroSection = ({ item }: { item: any }) => {
+import LazyLoadWrapper from "../ui/LazyLoadWrapper";
+import { renderMediaPreview } from "@/app/lib/media/renderMediaPreview";
+import db from "@/db/db";
+
+type MarketplaceItemHeroSectionProps = {
+  rewardId: number | string;
+};
+
+const MarketplaceItemHeroSection = async ({
+  rewardId,
+}: MarketplaceItemHeroSectionProps) => {
+  // Fetch the reward details using the rewardId
+  const reward = await db("rewards").where({ id: rewardId }).first();
+
+  if (!reward) {
+    return <div className="text-red-500">Reward not found</div>;
+  }
+
+  const { image_url, name, description } = reward;
+
   return (
     <section className="w-full max-w-4xl px-4">
-      <img
-        src={item.mediaUrl}
-        alt={item.title}
-        width={1200}
-        height={500}
-        className="w-full h-64 mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
-      />
-      <div className="py-4">
-        <h1 className="text-3xl font-bold">{item.title}</h1>
-        <p className="text-gray-500">
-          {item.category} • {item.businessName}
-        </p>
+      <LazyLoadWrapper>
+        {/* Media preview (image or embed) */}
+        {image_url && renderMediaPreview(image_url, "image")}
+      </LazyLoadWrapper>
+      <div className="flex flex-col gap-2 py-4">
+        <h1 className="text-3xl font-bold">{name}</h1>
+        <h2 className="text-xl font-bold my-4">📄 Description</h2>
+        <p className="text-base text-gray-600">{description}</p>
       </div>
     </section>
   );
 };
+
 export default MarketplaceItemHeroSection;

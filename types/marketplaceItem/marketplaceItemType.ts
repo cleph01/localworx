@@ -12,12 +12,8 @@ export type MarketplaceItem = {
   // Status lifecycle
   status: "live" | "sold" | "deleted" | "expired" | "reserved";
 
-  // Core item details
-  name: string;
-  description?: string | null;
-  image_url?: string | null;
   price: number; // Ensure your decimal gets parsed properly in app logic
-  category: string;
+  notes?: string; // Optional notes about the item
 
   // Timestamps
   created_at: string; // ISO string

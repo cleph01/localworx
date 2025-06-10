@@ -8,31 +8,17 @@ import SellerZapCountSection from "./SellerZapCountSection/SellerZapCountSection
 type MarketplaceItemCardContentProps = {
   businessId: number | string;
   sellerId: number | string;
-  categoryId?: number | string;
-  description?: string | null;
+  description: string;
 };
 const MarketplaceItemCardContent = ({
   businessId,
   sellerId,
-  categoryId,
   description,
 }: MarketplaceItemCardContentProps) => {
-  console.log("MarketplaceItemCardContent Props:", {
-    businessId,
-    sellerId,
-    categoryId,
-    description,
-  });
   return (
     <div className="flex flex-col justify-center gap-2 mt-2">
       {/* Business Details */}
-      <BusinessDetailsSection
-        businessId={businessId}
-        categoryId={categoryId ?? ""}
-      />
-
-      {/* Business Rating/Reviews */}
-      <BusinessReviewsSection businessId={businessId} />
+      <BusinessDetailsSection businessId={businessId} />
 
       {/* Item Description */}
       <p className="text-sm sm:text-lg text-gray-600 line-clamp-3 mt-2">

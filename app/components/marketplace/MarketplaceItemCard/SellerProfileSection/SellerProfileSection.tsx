@@ -20,7 +20,7 @@ const SellerProfileSection = async ({
         alt={user.first_name}
       />
       <div className="flex flex-col justify-center">
-        <div className="text-xl font-semibold text-slate-700 pl-2">
+        <div className="text-xl font-semibold text-slate-700">
           {user.first_name}
         </div>
         <div className="text-xs text-gray-500">Community Seller</div>
