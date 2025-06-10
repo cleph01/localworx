@@ -79,7 +79,10 @@ export default function CartPage() {
           ))}
 
           <div className="text-right mt-6 text-lg font-bold">
-            Total: ₿ {Number(total).toFixed(4)}
+            Total: ₿{" "}
+            {typeof total === "number"
+              ? total.toFixed(2)
+              : Number(total).toFixed(2)}
           </div>
         </div>
       )}

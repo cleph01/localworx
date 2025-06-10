@@ -60,7 +60,10 @@ const MarketPlaceItemCardFooter = ({
     <div className="flex flex-row items-center justify-between gap-4 mt-1">
       {/* Price */}
       <div className="text-blue-600 font-bold text-lg">
-        <span className="text-orange-500">₿</span> {price.toFixed(2)}
+        <span className="text-orange-500">₿</span>{" "}
+        {typeof price === "number"
+          ? price.toFixed(2)
+          : Number(price).toFixed(2)}
       </div>
 
       <div className="flex gap-2">
