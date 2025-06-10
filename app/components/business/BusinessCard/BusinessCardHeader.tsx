@@ -21,7 +21,7 @@ const BusinessCardHeader = ({
   <div className="flex flex-col gap-2">
     <div className="flex flex-row items-center justify-between gap-2">
       {/* Title */}
-      <h3 className="flex-1 text-xl font-extrabold text-slate-800">
+      <h3 className="flex-1 text-xl sm:text-2xl font-extrabold text-slate-800">
         {business_name}
       </h3>
       {/* business review */}
@@ -49,7 +49,9 @@ const BusinessCardHeader = ({
       </LazyLoadWrapper>
 
       {/* Business Owner FirstName  */}
-      <div className="text-sm ml-2 line-clamp-3">{description}</div>
+      <div className="text-sm sm:text-base ml-2 line-clamp-3">
+        {description}
+      </div>
     </div>
   </div>
 );

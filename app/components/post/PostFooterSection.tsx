@@ -8,7 +8,7 @@ type PostFooterSectionProps = {
 
 const PostFooterSection = ({ postId, authorId }: PostFooterSectionProps) => {
   return (
-    <div className="w-full max-w-sm px-4 mb-8 flex flex-col gap-2">
+    <div className="w-full max-w-4xl sm:min-w-225 px-4 mb-8 flex flex-col gap-2">
       <p className="text-sm text-gray-500">Community contributor</p>
       <AuthorProfileSection id={postId} authorId={authorId} />
       {/* CTA - Zap Button */}

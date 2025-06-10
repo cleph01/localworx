@@ -214,7 +214,8 @@ export async function seed(knex: Knex): Promise<void> {
       email: "service@jacksgarage.com",
       email_verified: true,
       website: "https://jacksgarage.com",
-      logo_url: "https://images.unsplash.com/photo-1511918984145-48de785d4c4e",
+      logo_url:
+        "https://images.unsplash.com/photo-1631972241361-330c704b90f1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGF1dG8lMjByZXBhaXIlMjBzaG9wfGVufDB8fDB8fHww",
       latitude: 34.861,
       longitude: -82.4005,
       owner_id: 10,

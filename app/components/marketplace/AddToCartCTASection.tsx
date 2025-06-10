@@ -3,7 +3,7 @@
 
 import { toast } from "react-toastify";
 import { CartItem } from "@/types/cart/cartType";
-import db from "@/db/db";
+
 import { useFetchRewardById } from "@/app/hooks/reward/useFetchRewardById";
 
 type AddToCartCTASectionProps = {

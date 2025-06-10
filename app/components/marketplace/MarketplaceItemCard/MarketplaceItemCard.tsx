@@ -6,7 +6,6 @@ import MarketplaceItemCardHeader from "./MarketplaceItemCardHeader";
 import MarketplaceItemCardContent from "./MarketplaceItemCardContent";
 import MarketPlaceItemCardFooter from "./MarketPlaceItemCardFooter";
 import db from "@/db/db";
-import { Reward } from "@/types/reward/rewardType";
 
 type MarketplaceItemCardProps = {
   item: MarketplaceItem;
@@ -23,13 +22,16 @@ const MarketplaceItemCard = async ({ item }: MarketplaceItemCardProps) => {
   return (
     <Card
       Header={
-        <MarketplaceItemCardHeader imageUrl={image_url} rewardName={name} />
+        <MarketplaceItemCardHeader
+          imageUrl={image_url}
+          rewardName={name}
+          description={description}
+        />
       }
       Content={
         <MarketplaceItemCardContent
           businessId={item.business_id}
           sellerId={item.user_id}
-          description={description}
         />
       }
       Footer={

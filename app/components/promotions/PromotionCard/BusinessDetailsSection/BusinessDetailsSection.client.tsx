@@ -23,7 +23,7 @@ export default function BusinessDetailsSection({
     <div className="flex flex-col justify-between">
       <div className="flex flex-row items-center justify-between">
         {/* Business Name */}
-        <p className="flex-1 text-slate-600 text-base font-semibold">
+        <p className="flex-1 text-gray-600 text-lg sm:text-xl font-semibold">
           {business?.business_name}
         </p>
 

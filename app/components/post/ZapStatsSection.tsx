@@ -12,7 +12,7 @@ const ZapStatsSection = async ({ userId }: PostZapSectionProps) => {
   let zapCount = 139;
 
   return (
-    <section className="max-w-4xl bg-yellow-50 border border-yellow-200 rounded mx-4 px-4 py-4 my-6">
+    <section className="max-w-4xl sm:min-w-225 bg-yellow-50 border border-yellow-200 rounded mx-4 px-4 py-4 my-6">
       <h2 className="text-xl font-bold mb-2">⚡ Zaps Received</h2>
       <p className="text-gray-700 text-lg font-semibold">
         {/* if zapCount === 0 then at least display 1 */}

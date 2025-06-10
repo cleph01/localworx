@@ -27,7 +27,7 @@ const PromotionCard = ({ promotion, clientSideFetch }: PromotionCardProps) => {
           clientSideFetch={clientSideFetch ?? false}
         />
       }
-      css="w-full max-w-sm p-0 px-4"
+      css="w-full max-w-sm border border-gray-200 transition-shadow hover:shadow-xl"
     />
   );
 };

@@ -17,7 +17,7 @@ const BusinessDetailsSection = async ({
   const { business_name, category_id, address, city, state } = business;
 
   return (
-    <div className="flex flex-col justify-center gap-2 mt-2">
+    <div className="flex flex-col justify-center gap-2">
       {/* Business Name */}
       <p className="flex-1 text-lg font-semibold text-gray-800 ">
         {business_name}

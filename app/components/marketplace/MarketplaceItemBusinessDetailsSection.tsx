@@ -15,7 +15,7 @@ const MarketplaceItemBusinessDetailsSection = async ({
   return (
     <div className="w-full max-w-4xl px-4 flex flex-col justify-center gap-2 mb-4">
       {/* Business Name */}
-      <p className="flex-1 text-lg font-semibold text-gray-800 ">
+      <p className="flex-1 text-lg sm:text-xl font-semibold text-gray-800 ">
         {business.business_name}
       </p>
       <div className="flex flex-row items-center justify-between gap-2">

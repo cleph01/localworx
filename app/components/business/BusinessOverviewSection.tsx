@@ -1,9 +1,9 @@
-import { mockFetch } from "@/app/utilities/mockDatabase/mockFetch";
 import Button from "../ui/Button";
 import { FaBitcoin, FaBtc } from "react-icons/fa";
 import LazyLoadWrapper from "../ui/LazyLoadWrapper";
 import HeaderImageWrapper from "../ui/HeaderImageWrapper";
 import db from "@/db/db";
+import BusinessCategorySection from "./BusinessCategorySection";
 
 // BusinessOverviewSection.tsx
 const BusinessOverviewSection = async ({
@@ -46,23 +46,25 @@ const BusinessOverviewSection = async ({
           <h1 className="text-3xl font-bold">{business.business_name}</h1>
           <BusinessCategorySection categoryId={business.category_id} />
           {business.description && (
-            <div className="italic my-2">{business.description}</div>
+            <div className="text-base sm:text-lg text-gray-600 my-2">
+              {business.description}
+            </div>
           )}
-          <p className="text-gray-600">
+          <p className="text-sm sm:text-base text-gray-600">
             📍 {business.address}, {business.city}, {business.state}
           </p>
 
           {business.email && (
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               <span className="font-semibold">✉️ Email:</span> {business.email}
             </p>
           )}
-          <p className="text-gray-600">
+          <p className="text-sm sm:text-base text-gray-600">
             <span className="font-semibold">📱 Phone:</span> {business.phone}
           </p>
           {business.hiring_promoters ? (
             <div className="flex flex-col">
-              <div className="flex flex-row items-center mb-4">
+              <div className="flex flex-row items-center mb-4 text-sm sm:text-base text-gray-600">
                 <span className="flex flex-row items-center font-semibold mr-1">
                   <FaBtc className="text-orange-500 mr-1" />
                   Income:
@@ -85,24 +87,3 @@ const BusinessOverviewSection = async ({
   );
 };
 export default BusinessOverviewSection;
-
-const BusinessCategorySection = async ({
-  categoryId,
-}: {
-  categoryId: string;
-}) => {
-  // SSR: Fetch the business category from the database
-  const category = await db("business_categories")
-    .where("id", categoryId)
-    .first();
-
-  if (!category) {
-    return <div>Category not found</div>;
-  }
-
-  return (
-    <div className="flex-1 inline-block text-center bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full capitalize">
-      {category.name}
-    </div>
-  );
-};

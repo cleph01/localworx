@@ -1,10 +1,9 @@
 import MarketplaceItemHeroSection from "../../components/marketplace/MarketplaceItemHeroSection";
-import MarketplaceItemDetailsSection from "../../components/marketplace/MarketplaceZapCountSection";
+import MarketplaceItemBusinessDetailsSection from "../../components/marketplace/MarketplaceItemBusinessDetailsSection";
 import SellerPreviewSection from "../../components/marketplace/SellerPreviewSection";
 import AddToCartCTASection from "../../components/marketplace/AddToCartCTASection";
 import Footer from "../../components/Footer";
 import db from "@/db/db";
-import MarketplaceItemBusinessDetailsSection from "@/app/components/marketplace/MarketplaceItemBusinessDetailsSection";
 
 export default async function MarketplaceItemPage({
   params,

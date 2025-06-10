@@ -16,15 +16,21 @@ const BusinessPreviewSection = async ({
 
   return (
     <section className="w-full max-w-4xl flex flex-col px-4 py-4 mt-4 mb-1 border-t border-gray-200">
-      <h2 className="text-xl font-bold mb-2">
+      <h2 className="text-xl sm:text-2xl font-bold mb-2">
         🏢 About {business?.business_name}
       </h2>
-      <p className="text-gray-600 mb-1">{business?.description}</p>
-      <p className="text-gray-500 text-sm">
-        📍 {business?.address}, {business?.city}, {business?.state}
+      <p className="text-base sm:text-lg text-gray-600 mb-2">
+        {business?.description}
+      </p>
+      <p className="text-gray-500 text-sm sm:text-base">
+        <span className="text-sm sm:text-lg mr-1">📍</span>
+        {business?.address}, {business?.city}, {business?.state}
       </p>
 
-      <p className="text-gray-500 text-sm">📧 {business?.email}</p>
+      <p className="text-gray-500 text-sm sm:text-base">
+        <span className="text-sm sm:text-lg mr-1">📧</span>
+        {business?.email}
+      </p>
     </section>
   );
 };

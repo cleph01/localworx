@@ -28,8 +28,8 @@ const MarketplaceItemHeroSection = async ({
       </LazyLoadWrapper>
       <div className="flex flex-col gap-2 py-4">
         <h1 className="text-3xl font-bold">{name}</h1>
-        <h2 className="text-xl font-bold my-4">📄 Description</h2>
-        <p className="text-base text-gray-600">{description}</p>
+
+        <p className="text-base sm:text-lg text-gray-600">{description}</p>
       </div>
     </section>
   );

@@ -32,7 +32,7 @@ const PromotionCardHeader = ({
       ) : null}
       {/* Offer Description */}
       {/* Business Name */}
-      <h3 className="text-xl sm:text-2xl font-extrabold text-slate-800 mt-4">
+      <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-800 mt-4">
         {title}
       </h3>
     </div>
