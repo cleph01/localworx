@@ -60,7 +60,8 @@ const AddToCartCTASection = ({
     <section className="w-full max-w-4xl px-4 py-6 bg-blue-50 border-t border-b border-blue-200">
       <div className="flex justify-between items-center">
         <span className="text-xl font-bold text-blue-700">
-          <span className="text-orange-500">₿</span> {price.toFixed(2)} BTC
+          <span className="text-orange-500">₿</span> {Number(price).toFixed(2)}{" "}
+          BTC
         </span>
         <button
           onClick={handleAddToCart}
