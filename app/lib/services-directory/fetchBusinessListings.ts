@@ -21,7 +21,14 @@ export async function fetchBusinessListings(
       hiring: hiring.toString(),
       sortBy,
     });
-    const res = await fetch(`/api/search/services?${params.toString()}`);
+    // Next.js has a glitch where it complains about
+    // CORS when not using the full URL in a client-side fetch
+
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+    const res = await fetch(
+      `${baseUrl}/api/search/services?${params.toString()}`
+    );
     const data: FetchBusinessListingsResponse = await res.json();
     setResults(data.results || []);
   } catch (err) {
