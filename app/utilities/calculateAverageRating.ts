@@ -1,7 +1,10 @@
 import { BusinessReview } from "@/types/business-review/businessReviewType";
 import { roundToDecimal } from "./roundToDecimal";
+import { PromoterReview } from "@/types/promoter/promoterReviews";
 
-export function calculateAverageRating(reviews: BusinessReview[]): {
+export function calculateAverageRating(
+  reviews: BusinessReview[] | PromoterReview[]
+): {
   rating: number;
   reviewCount: number;
 } {
