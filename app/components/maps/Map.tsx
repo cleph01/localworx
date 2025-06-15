@@ -20,24 +20,17 @@ export default function Map({ center, onMove }: MapProps) {
     if (mapInitialized) return;
 
     const initializeMap = async () => {
-      await initGoogleMaps();
-
-      const mapsLib = (await google.maps.importLibrary(
-        "maps"
-      )) as google.maps.MapsLibrary;
-      const markerLib = (await google.maps.importLibrary(
-        "marker"
-      )) as google.maps.MarkerLibrary;
+      const maps = await initGoogleMaps(); // Now includes marker + maps
 
       if (!mapRef.current) return;
 
-      const mapInstance = new mapsLib.Map(mapRef.current, {
+      const mapInstance = new maps.Map(mapRef.current, {
         center,
         zoom: 15,
         mapId: "DEMO_MAP_ID",
       });
 
-      const marker = new markerLib.AdvancedMarkerElement({
+      const marker = new maps.marker.AdvancedMarkerElement({
         position: center,
         map: mapInstance,
         gmpDraggable: true,

@@ -1,5 +1,4 @@
-import PromotionsShowAll from "../components/promotions/PromotionsShowAll";
-import SearchBarSection from "../components/ui/SearchBarSection";
+import PromotionListingsGridSection from "../components/promotions/PromotionListingsGridSection";
 import PageHeader from "../components/ui/PageHeader";
 import CallToActionSection from "../components/CallToActionSection";
 import Footer from "../components/Footer";
@@ -10,11 +9,8 @@ const PromotionsPage = () => {
       {/* Page Header */}
       <PageHeader />
 
-      {/* Search Section */}
-      <SearchBarSection />
-
-      {/* Show All Promotions Section */}
-      <PromotionsShowAll />
+      {/* Promotion Listings Section */}
+      <PromotionListingsGridSection />
 
       {/* Call to Action Section */}
       <CallToActionSection />

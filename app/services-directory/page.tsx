@@ -1,8 +1,7 @@
-import SearchBarSection from "../components/ui/SearchBarSection";
 import PageHeader from "../components/ui/PageHeader";
 import CallToActionSection from "../components/CallToActionSection";
 import Footer from "../components/Footer";
-import BusinessListingsSection from "../components/services-directory/BusinessListingsSection";
+import BusinessListingsGridSection from "../components/services-directory/BusinessListingsGridSection";
 
 const ServicesDirectoryPage = () => {
   return (
@@ -10,11 +9,8 @@ const ServicesDirectoryPage = () => {
       {/* Page Header */}
       <PageHeader />
 
-      {/* Search Section */}
-      <SearchBarSection />
-
-      {/* Listings Section */}
-      <BusinessListingsSection clientSideFetch={false} />
+      {/* Business Listings Section */}
+      <BusinessListingsGridSection />
 
       {/* Call to Action Section */}
       <CallToActionSection />

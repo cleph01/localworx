@@ -1,4 +1,4 @@
-import db from "@/db/db";
+import { useFetchBusinessById } from "@/app/hooks/business/useFetchBusinessById";
 import BusinessCategorySection from "../BusinessCategorySection/BusinessCategorySection";
 import BusinessReviewsSection from "../BusinessReviewsSection/BusinsessReviewsSection";
 
@@ -6,10 +6,21 @@ type BusinessDetailsSectionProps = {
   businessId: number | string;
 };
 
-const BusinessDetailsSection = async ({
+const BusinessDetailsSection = ({
   businessId,
 }: BusinessDetailsSectionProps) => {
-  const business = await db("businesses").where("id", businessId).first();
+  const { business, loading, error } = useFetchBusinessById(Number(businessId));
+
+  if (loading) {
+    return <div className="text-gray-500">Loading...</div>;
+  }
+  if (error) {
+    return (
+      <div className="text-red-500">
+        Error loading business: {error.message}
+      </div>
+    );
+  }
 
   if (!business) {
     return <div className="text-gray-500">Business not found</div>;
@@ -24,7 +35,7 @@ const BusinessDetailsSection = async ({
       </p>
       <div className="flex flex-row items-center justify-between gap-2">
         {/* Business Category  */}
-        <BusinessCategorySection categoryId={category_id} />
+        <BusinessCategorySection categoryId={category_id ?? ""} />
 
         {/* Business Rating/Reviews */}
         <BusinessReviewsSection businessId={businessId} />

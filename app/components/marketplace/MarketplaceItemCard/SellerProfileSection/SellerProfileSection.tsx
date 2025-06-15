@@ -1,13 +1,23 @@
-import db from "@/db/db";
+"use client";
+
+import { useFetchUserById } from "@/app/hooks/users/useFetchUserById";
 
 type SellerProfileSectionProps = {
   sellerId: number | string;
 };
-const SellerProfileSection = async ({
-  sellerId,
-}: SellerProfileSectionProps) => {
-  const user = await db("users").where({ id: sellerId }).select("*").first();
+const SellerProfileSection = ({ sellerId }: SellerProfileSectionProps) => {
+  const { user, loading, error } = useFetchUserById(sellerId);
 
+  if (loading) {
+    return <div className="text-gray-500">Loading seller...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="text-red-500">Error loading seller: {error.message}</div>
+    );
+  }
+  // If user is not found, return a message
   if (!user) {
     return <div className="text-gray-500">Seller not found</div>;
   }

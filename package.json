@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@getalby/sdk": "^5.1.0",
+    "@googlemaps/js-api-loader": "^1.16.8",
     "@react-google-maps/api": "^2.20.6",
     "authjs-knexjs-adapter": "^3.0.0",
     "canvas-confetti": "^1.9.3",

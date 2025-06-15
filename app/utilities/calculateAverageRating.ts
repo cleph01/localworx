@@ -1,6 +1,7 @@
+import { BusinessReview } from "@/types/business-review/businessReviewType";
 import { roundToDecimal } from "./roundToDecimal";
 
-export function calculateAverageRating(reviews: any[]): {
+export function calculateAverageRating(reviews: BusinessReview[]): {
   rating: number;
   reviewCount: number;
 } {

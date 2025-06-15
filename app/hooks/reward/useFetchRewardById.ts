@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Reward } from "@/types/reward/rewardType";
 
-export function useFetchRewardById(rewardId: string | number | undefined) {
+export function useFetchRewardById(rewardId: string | number) {
   const [reward, setReward] = useState<Reward | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -19,6 +19,7 @@ export function useFetchRewardById(rewardId: string | number | undefined) {
         if (!response.ok) throw new Error("Failed to fetch reward");
 
         const rewardData = await response.json();
+
         setReward(rewardData);
       } catch (err) {
         setError(err as Error);

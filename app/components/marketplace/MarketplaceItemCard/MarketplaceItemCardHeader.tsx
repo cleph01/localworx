@@ -8,7 +8,7 @@ type MarketplaceItemCardHeaderType = {
   description: string; // Optional description for future use
 };
 
-const MarketplaceItemCardHeader = async ({
+const MarketplaceItemCardHeader = ({
   imageUrl,
   rewardName,
   description,

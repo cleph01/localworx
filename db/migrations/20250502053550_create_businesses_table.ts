@@ -23,6 +23,10 @@ export async function up(knex: Knex): Promise<void> {
     table.boolean("email_verified").defaultTo(false);
     table.string("website").nullable();
     table.string("logo_url").nullable();
+    // is_active indicates if the business is currently active
+    // This can be used to hide businesses without deleting them
+    // if they are temporarily closed or haven't paid for their listing
+    table.boolean("is_active").defaultTo(true);
 
     // Is the business hiring promoters?
     table.boolean("hiring_promoters").defaultTo(false);

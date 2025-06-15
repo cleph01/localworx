@@ -1,17 +1,27 @@
-import db from "@/db/db";
+import { useFetchBusinessCategory } from "@/app/hooks/dashboard/MyBusinessesSection/useFetchCategoryByBusinessId";
 
 type BusinessCategorySectionProps = { categoryId: number | string };
 
-const BusinessCategorySection = async ({
+const BusinessCategorySection = ({
   categoryId,
 }: BusinessCategorySectionProps) => {
-  const category = await db("business_categories")
-    .where("id", categoryId)
-    .first();
+  const { category, loading, error } = useFetchBusinessCategory(
+    Number(categoryId)
+  );
+
+  if (loading) {
+    return <p className="text-gray-500">Loading category...</p>;
+  }
+  if (error) {
+    return (
+      <p className="text-red-500">Error loading category: {error.message}</p>
+    );
+  }
 
   if (!category) {
     return <p className="text-gray-500">Category not found</p>;
   }
+
   const { name: categoryName } = category;
   return (
     <div className="flex items-center">

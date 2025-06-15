@@ -16,12 +16,6 @@ const MarketPlaceItemCardFooter = ({
   name,
   price,
 }: MarketPlaceItemCardFooterProps) => {
-  console.log(
-    "MarketPlaceItemCardFooter type of priece:",
-    typeof price,
-    "price: ",
-    price
-  );
   const router = useRouter();
 
   // Handle Add to Cart

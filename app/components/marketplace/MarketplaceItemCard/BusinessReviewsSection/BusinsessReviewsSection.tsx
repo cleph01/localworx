@@ -1,23 +1,34 @@
+"use client";
+
+import { useFetchReviewsByBusinessId } from "@/app/hooks/reviews/useFetchReviewsByBusinessId";
 import { calculateAverageRating } from "@/app/utilities/calculateAverageRating";
-import db from "@/db/db";
 
 type BusinessReviewsSectionProps = {
   businessId: number | string;
 };
 
-const BusinessReviewsSection = async ({
+const BusinessReviewsSection = ({
   businessId,
 }: BusinessReviewsSectionProps) => {
   // SSR: Fetch the reviews from the database
-  const reviews = await db("business_reviews").where("business_id", businessId);
+  const { reviews, loading, error } = useFetchReviewsByBusinessId(businessId);
 
-  // If clientSideFetch is true, we can use a different fetching strategy
+  if (loading) {
+    return <div className="text-gray-500">Loading reviews...</div>;
+  }
+  if (error) {
+    return (
+      <div className="text-red-500">Error loading reviews: {error.message}</div>
+    );
+  }
 
   if (!reviews) {
     return <div>No reviews found</div>;
   }
 
-  const { rating, reviewCount } = calculateAverageRating(reviews);
+  const { rating, reviewCount } = calculateAverageRating(
+    Array.isArray(reviews) ? reviews : [reviews]
+  );
 
   return (
     <div className="flex flex-row flex-0 items-center gap-1">

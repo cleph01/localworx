@@ -1,6 +1,12 @@
 "use client";
 
-import { forwardRef, useImperativeHandle, useRef, useEffect } from "react";
+import {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import { initGoogleMaps } from "./initGoogle";
 
 export interface AddressAutocompleteHandle {
@@ -13,53 +19,60 @@ interface Props {
 
 const AddressAutocomplete = forwardRef<AddressAutocompleteHandle, Props>(
   ({ onSelect }, ref) => {
-    const inputRef = useRef<HTMLInputElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const autocompleteRef = useRef<HTMLElement | null>(null); // Reference to the Google element
 
-    // expose `clear()` to parent
+    // Expose clear() to parent
     useImperativeHandle(ref, () => ({
       clear: () => {
-        if (inputRef.current) inputRef.current.value = "";
+        if (
+          autocompleteRef.current &&
+          "value" in autocompleteRef.current &&
+          typeof autocompleteRef.current["value"] === "string"
+        ) {
+          (autocompleteRef.current as any).value = "";
+        }
       },
     }));
 
-    useEffect(() => {
-      const initialize = async () => {
-        await initGoogleMaps();
-        await google.maps.importLibrary("places");
+    const initialize = useCallback(async () => {
+      const maps = await initGoogleMaps();
 
-        if (!inputRef.current) return;
+      const element = new maps.places.PlaceAutocompleteElement({
+        // Optional: you can set locationRestriction, types, etc.
+        // locationRestriction: { west: ..., east: ..., north: ..., south: ... }
+      });
 
-        const autocomplete = new google.maps.places.Autocomplete(
-          inputRef.current,
-          {
-            types: ["geocode"],
-          }
-        );
+      element.id = "place-autocomplete-input";
 
-        autocomplete.addListener("place_changed", () => {
-          const place = autocomplete.getPlace();
-          if (
-            !place.geometry ||
-            !place.geometry.location ||
-            !place.formatted_address
-          )
-            return;
-
-          onSelect(place.formatted_address, {
-            lat: place.geometry.location.lat(),
-            lng: place.geometry.location.lng(),
-          });
+      element.addEventListener("gmp-place-select", async (event: any) => {
+        const place = event.place;
+        await place.fetchFields({
+          fields: ["formattedAddress", "location"],
         });
-      };
 
-      initialize();
+        if (place.formattedAddress && place.location) {
+          onSelect(place.formattedAddress, {
+            lat: place.location.lat,
+            lng: place.location.lng,
+          });
+        }
+      });
+
+      if (containerRef.current) {
+        containerRef.current.innerHTML = ""; // Clear prior children
+        containerRef.current.appendChild(element);
+        autocompleteRef.current = element;
+      }
     }, [onSelect]);
 
+    useEffect(() => {
+      initialize();
+    }, [initialize]);
+
     return (
-      <input
-        ref={inputRef}
-        type="text"
-        placeholder="Enter business address (auto)"
+      <div
+        ref={containerRef}
         className="w-full border px-4 py-2 rounded shadow-sm text-sm"
       />
     );

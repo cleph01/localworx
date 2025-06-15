@@ -1,31 +1,27 @@
 // lib/maps/initGoogle.ts
-export function initGoogleMaps(): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (typeof window === "undefined") return reject("Not in browser");
+import { Loader } from "@googlemaps/js-api-loader";
 
-    if (window.google && window.google.maps) {
-      resolve();
-      return;
-    }
+export async function initGoogleMaps(): Promise<typeof google.maps> {
+  if (typeof window === "undefined") {
+    throw new Error("Google Maps can only be initialized in the browser");
+  }
 
-    // Check if script already exists
-    const existingScript = document.querySelector(
-      'script[src^="https://maps.googleapis.com/maps/api/js"]'
-    );
-    if (existingScript) {
-      existingScript.addEventListener("load", () => resolve());
-      existingScript.addEventListener("error", (e) => reject(e));
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places,marker,maps`;
-    script.async = true;
-    script.defer = true;
-
-    script.onload = () => resolve();
-    script.onerror = (e) => reject(e);
-
-    document.head.appendChild(script);
+  const loader = new Loader({
+    apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+    version: "weekly",
   });
+
+  try {
+    // ✅ Load the core Maps library (you can await others in parallel if needed)
+    await Promise.all([
+      loader.importLibrary("maps"),
+      loader.importLibrary("places"),
+      loader.importLibrary("marker"),
+    ]);
+
+    return google.maps;
+  } catch (error) {
+    console.error("Google Maps failed to load", error);
+    throw error;
+  }
 }

@@ -21,6 +21,7 @@ const Footer = () => {
           <h5 className="text-white font-bold text-xl">Navigation</h5>
           <p>Home</p>
           <p>About</p>
+          <p>Community Posts</p>
           <p>Services Directory</p>
           <p>Promoter Hub</p>
           <p>Marketplace</p>
