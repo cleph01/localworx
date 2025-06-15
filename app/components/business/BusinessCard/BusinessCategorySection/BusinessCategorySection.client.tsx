@@ -13,7 +13,7 @@ const BusinessCategorySection = ({ categoryId }: { categoryId: string }) => {
 
   const searchUrl = `/api/business/category/${categoryId}`;
 
-  const { data, error, isLoading } = useSWR(searchUrl, fetcher);
+  const { data: category, error, isLoading } = useSWR(searchUrl, fetcher);
 
   if (isLoading) {
     return <div className="text-gray-500">Loading category...</div>;
@@ -22,15 +22,15 @@ const BusinessCategorySection = ({ categoryId }: { categoryId: string }) => {
     console.error("Error fetching category:", error);
   }
 
-  if (!data) {
+  if (!category) {
     return <div>No category found</div>;
   }
 
-  console.log("Fetched category:", data);
+  const { name: categoryName } = category;
 
   return (
     <div className="flex-1 inline-block text-center bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full">
-      {data.name}
+      {categoryName}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useFetchBusinessById } from "@/app/hooks/dashboard/MyPromotionsSection/useFetchBusinessById";
+import useSWR from "swr";
 
 type RewardsIssuedCardContentProps = {
   businessId: number | string;
@@ -7,9 +7,20 @@ type RewardsIssuedCardContentProps = {
 const RewardsIssuedCardContent = ({
   businessId,
 }: RewardsIssuedCardContentProps) => {
-  const { business, loading, error } = useFetchBusinessById(businessId);
+  // Client-side fetching of business by business ID
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok)
+        throw new Error("Promtion card business response was not ok");
+      return res.json();
+    });
 
-  if (loading) {
+  const searchUrl = `/api/business/${businessId}`;
+
+  const { data: business, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
     return (
       <div className="w-full h-64 mt-2 rounded-xl border border-gray-200 bg-gray-200 animate-pulse" />
     );

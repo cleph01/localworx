@@ -1,6 +1,6 @@
-import { useFetchBusinessById } from "@/app/hooks/business/useFetchBusinessById";
 import BusinessCategorySection from "../BusinessCategorySection/BusinessCategorySection";
 import BusinessReviewsSection from "../BusinessReviewsSection/BusinsessReviewsSection";
+import useSWR from "swr";
 
 type BusinessDetailsSectionProps = {
   businessId: number | string;
@@ -9,9 +9,22 @@ type BusinessDetailsSectionProps = {
 const BusinessDetailsSection = ({
   businessId,
 }: BusinessDetailsSectionProps) => {
-  const { business, loading, error } = useFetchBusinessById(Number(businessId));
+  // Client-side fetching of business by businessId
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok) throw new Error("Business details response was not ok");
+      return res.json();
+    });
 
-  if (loading) {
+  const searchUrl = `/api/business/${businessId}`;
+
+  const { data: business, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
+    return <div className="text-gray-500">Loading category...</div>;
+  }
+  if (isLoading) {
     return <div className="text-gray-500">Loading...</div>;
   }
   if (error) {

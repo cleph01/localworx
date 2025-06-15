@@ -1,6 +1,7 @@
 import { renderMediaPreview } from "@/app/lib/media/renderMediaPreview";
 import LazyLoadWrapper from "../ui/LazyLoadWrapper";
-import { useFetchRewardById } from "@/app/hooks/reward/useFetchRewardById";
+
+import useSWR from "swr";
 
 type RewardsIssuedCardHeaderProps = {
   rewardId: number | string;
@@ -9,14 +10,25 @@ type RewardsIssuedCardHeaderProps = {
 const RewardsIssuedCardHeader = ({
   rewardId,
 }: RewardsIssuedCardHeaderProps) => {
-  // Import the custom hook to fetch reward details
-  const { reward, loading, error } = useFetchRewardById(rewardId);
+  // Client-side fetching of reward by reward ID
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok)
+        throw new Error("Promtion card business response was not ok");
+      return res.json();
+    });
 
-  if (loading) {
+  const searchUrl = `/api/reward/${rewardId}`;
+
+  const { data: reward, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
     return (
       <div className="w-full h-64 mt-2 rounded-xl border border-gray-200 bg-gray-200 animate-pulse" />
     );
   }
+
   if (error) {
     console.error("Error fetching reward:", error);
     return <div className="text-red-500">Error loading reward</div>;

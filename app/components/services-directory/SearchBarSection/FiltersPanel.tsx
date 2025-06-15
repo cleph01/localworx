@@ -2,6 +2,7 @@
 
 import { useFetchAllBusinessCategories } from "@/app/hooks/business-categories/useFetchAllBusinessCategories";
 import { FiFilter, FiUserCheck, FiArrowDownCircle } from "react-icons/fi";
+import useSWR from "swr";
 
 type FiltersPanelProps = {
   category: string;
@@ -27,14 +28,34 @@ const FiltersPanel = ({
   sortBy,
   onSortByChange,
 }: FiltersPanelProps) => {
-  const { businessCategories, loading, error } =
-    useFetchAllBusinessCategories();
+  // Client-side fetching of all businessCategories
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok)
+        throw new Error("Promtion card business response was not ok");
+      return res.json();
+    });
 
-  if (loading) return <div>Loading categories...</div>;
+  const searchUrl = `/api/business-categories`;
+
+  const {
+    data: businessCategories,
+    error,
+    isLoading,
+  } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-64 mt-2 rounded-xl border border-gray-200 bg-gray-200 animate-pulse" />
+    );
+  }
+
+  if (isLoading) return <div>Loading categories...</div>;
   if (error) return <div>Error loading categories: {error.message}</div>;
 
   const categoryOptions = [
-    ...businessCategories.map((cat) => cat.name),
+    ...businessCategories.map((cat: any) => cat.name),
     "All",
   ].sort((a, b) => a.localeCompare(b));
 

@@ -1,17 +1,26 @@
-import { useFetchBusinessCategory } from "@/app/hooks/dashboard/MyBusinessesSection/useFetchCategoryByBusinessId";
+import useSWR from "swr";
 
 type BusinessCategorySectionProps = { categoryId: number | string };
 
 const BusinessCategorySection = ({
   categoryId,
 }: BusinessCategorySectionProps) => {
-  const { category, loading, error } = useFetchBusinessCategory(
-    Number(categoryId)
-  );
+  // Client-side fetching of category
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok) throw new Error("Business Category response was not ok");
+      return res.json();
+    });
 
-  if (loading) {
-    return <p className="text-gray-500">Loading category...</p>;
+  const searchUrl = `/api/business/category/${categoryId}`;
+
+  const { data: category, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
+    return <div className="text-gray-500">Loading category...</div>;
   }
+
   if (error) {
     return (
       <p className="text-red-500">Error loading category: {error.message}</p>

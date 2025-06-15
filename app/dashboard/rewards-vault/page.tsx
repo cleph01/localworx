@@ -2,17 +2,27 @@
 "use client";
 
 import { useRequireAuth } from "@/app/hooks/auth/useRequireAuth";
-import { useFetchRewardsOwnedByUserId } from "@/app/hooks/rewards/useFetchRewardsOwnedByUserId";
+
 import RewardsIssuedCard from "@/app/components/rewards-vault/RewardsIssuedCard";
+import useSWR from "swr";
 
 export default function RewardsVaultPage() {
   const { user } = useRequireAuth();
 
-  // const { rewards, loading, error } = useFetchRewardsOwnedByUserId(user?.id);
-  // MockFetch with user ID 1 for demonstration purposes
-  const { rewards, loading, error } = useFetchRewardsOwnedByUserId(1);
+  // Client-side fetching of rewards by user ID
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok) throw new Error("rewards-issued response was not ok");
+      return res.json();
+    });
 
-  if (loading) {
+  // const searchUrl = `/api/rewards-issued/user/${user?.id}`;
+  const searchUrl = `/api/rewards-issued/user/1`; // For testing purposes, replace with user?.id when auth is set up
+
+  const { data: rewards, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
     return <div className="p-6">Loading rewards...</div>;
   }
   if (error) {
@@ -37,9 +47,10 @@ export default function RewardsVaultPage() {
     <main className="p-6">
       <h1 className="text-2xl font-bold mb-4">My Rewards Vault</h1>
       <div className="grid place-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {rewards.map((reward) => (
-          <RewardsIssuedCard key={reward.id} {...reward} />
-        ))}
+        {rewards &&
+          rewards.map((reward: any) => (
+            <RewardsIssuedCard key={reward.id} {...reward} />
+          ))}
       </div>
     </main>
   );
