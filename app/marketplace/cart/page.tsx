@@ -2,10 +2,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MarketplaceItem } from "../marketplaceTypes";
+
 import { FaTrash } from "react-icons/fa";
 
-type CartItem = MarketplaceItem & { quantity: number };
+type CartItem = {
+  id: number | string;
+  name: string;
+  price: number;
+  quantity: number;
+};
 
 export default function CartPage() {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -15,13 +20,13 @@ export default function CartPage() {
     setCart(storedCart);
   }, []);
 
-  const handleRemoveItem = (id: string) => {
+  const handleRemoveItem = (id: number | string) => {
     const updated = cart.filter((item) => item.id !== id);
     setCart(updated);
     localStorage.setItem("cart", JSON.stringify(updated));
   };
 
-  const handleQuantityChange = (id: string, delta: number) => {
+  const handleQuantityChange = (id: number | string, delta: number) => {
     const updated = cart.map((item) =>
       item.id === id
         ? { ...item, quantity: Math.max(1, item.quantity + delta) }
@@ -47,8 +52,7 @@ export default function CartPage() {
               className="border rounded p-4 flex justify-between items-center"
             >
               <div>
-                <h3 className="font-bold text-lg">{item.title}</h3>
-                <p className="text-sm text-gray-500">{item.category}</p>
+                <h3 className="font-bold text-lg">{item.name}</h3>
                 <p className="text-gray-600">
                   ₿ {item.price} x {item.quantity}
                 </p>
