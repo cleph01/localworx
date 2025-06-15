@@ -1,24 +1,43 @@
 "use client";
 
+import useSWR from "swr";
+
 import { calculateAverageRating } from "@/app/utilities/calculateAverageRating";
-import { useFetchBusinessReviews } from "@/app/hooks/dashboard/MyBusinessesSection/useFetchReviewsByBusinessId";
 
 const BusinessReviewsSection = ({ businessId }: { businessId: string }) => {
   // Client-side fetching of business reviews
-  const { reviews, loading, error } = useFetchBusinessReviews(businessId);
+  // const { reviews, loading, error } = useFetchBusinessReviews(businessId);
 
-  if (loading) {
+  // Client-side fetching of rewards
+
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok)
+        throw new Error("Business Card Business Reviews response was not ok");
+      return res.json();
+    });
+
+  // Construct the API URL for fetching rewards
+  const searchUrl = `/api/business/reviews/${businessId}`;
+
+  // Use SWR for data fetching
+  const { data, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
     return <div className="text-gray-500">Loading reviews...</div>;
   }
   if (error) {
     console.error("Error fetching reviews:", error);
   }
 
-  if (!reviews) {
+  if (!data) {
     return <div>No reviews found</div>;
   }
 
-  const { rating, reviewCount } = calculateAverageRating(reviews);
+  console.log("Fetched reviews:", data);
+
+  const { rating, reviewCount } = calculateAverageRating(data);
 
   return (
     <div className="flex flex-row flex-0 items-center gap-1">

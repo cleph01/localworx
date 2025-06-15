@@ -1,30 +1,43 @@
 "use client";
 // This component is client-side only, so we can use hooks like useFetchMyBusinesses
 
-import { useFetchRewardsByBusinessId } from "@/app/hooks/dashboard/MyBusinessesSection/useFetchRewardsByBusinessId";
 import LoyaltyProgramSection from "../../LoyaltyProgramSection";
+import useSWR from "swr";
 
 // IntroOfferSection.tsx
 const IntroOfferSection = ({ businessId }: { businessId: string }) => {
-  // Client-side fetching of reviews
-  const { rewards, loading, error } = useFetchRewardsByBusinessId(businessId);
+  // Client-side fetching of rewards
 
-  if (loading) {
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok) throw new Error("Rewards response was not ok");
+      return res.json();
+    });
+
+  // Construct the API URL for fetching rewards
+  const searchUrl = `/api/business/rewards/${businessId}`;
+
+  // Use SWR for data fetching
+  const { data, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
     return <div className="text-gray-500">Loading rewards...</div>;
   }
   if (error) {
     console.error("Error fetching rewards:", error);
   }
 
-  if (!rewards) {
+  if (!data) {
     return <div>No rewards available</div>;
   }
 
+  console.log("Fetched rewards:", data);
   // Assuming itemData is an array of rewards with a 'type' property
-  const { name: introOffer } = rewards.find(
+  const { name: introOffer } = data.find(
     (reward: any) => reward.reward_type === "intro-offer"
   );
-  const { name: loyaltyReward, threshold } = rewards.find(
+  const { name: loyaltyReward, threshold } = data.find(
     (reward: any) => reward.reward_type === "loyalty"
   );
 
