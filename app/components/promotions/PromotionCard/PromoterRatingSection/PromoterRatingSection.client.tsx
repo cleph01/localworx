@@ -1,28 +1,38 @@
 "use client";
-import { useFetchPromoterReviewsByPromoter } from "@/app/hooks/promoters/useFetchPromoterReviewsById";
+
 // This component is client-side only, so we can use hooks like useFetchMyBusinesses
 
 import { calculateAverageRating } from "@/app/utilities/calculateAverageRating";
+import useSWR from "swr";
 
 const PromoterRatingSection = ({
   promoterId,
 }: {
   promoterId: number | string;
 }) => {
-  // SSR: Fetch the business details from the database
-  // Fetch the business details from the database
-  const { reviews, loading, error } =
-    useFetchPromoterReviewsByPromoter(promoterId);
+  // Client-side fetching of user by promoter ID
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok)
+        throw new Error("Promotion card promoter reviews response was not ok");
+      return res.json();
+    });
 
-  if (loading) return <div className="text-gray-500">Loading...</div>;
+  const searchUrl = `/api/promoter/promoter-reviews/${promoterId}`;
+
+  const { data, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) return <div className="text-gray-500">Loading...</div>;
+
   if (error) {
     console.error("Error loading promoter ratings:", error);
   }
-  if (!reviews) {
+  if (!data) {
     return <div>No reviews found</div>;
   }
 
-  const { rating, reviewCount } = calculateAverageRating(reviews);
+  const { rating, reviewCount } = calculateAverageRating(data);
 
   return (
     <div className="flex flex-row items-center gap-1">

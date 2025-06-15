@@ -1,7 +1,7 @@
 "use client";
 
-import { useFetchUserById } from "@/app/hooks/users/useFetchUserById";
 import PostEngagementSection from "../PostEngagementSection/PostEngagementSection";
+import useSWR from "swr";
 
 type AuthorProfileSectionProps = {
   id: number | string;
@@ -9,11 +9,21 @@ type AuthorProfileSectionProps = {
   clientSideFetch?: boolean; // Optional prop to determine if client-side fetch is needed
 };
 const AuthorProfileSection = ({ id, authorId }: AuthorProfileSectionProps) => {
-  const { user, loading, error } = useFetchUserById(authorId);
+  // Client-side fetching of user by promoter ID
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok)
+        throw new Error("Promotion card promoter details response was not ok");
+      return res.json();
+    });
 
-  if (loading) {
-    return <div className="text-gray-500">Loading...</div>;
-  }
+  const searchUrl = `/api/users/${authorId}`;
+
+  const { data: user, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) return <div className="text-gray-500">Loading...</div>;
+
   if (error) {
     console.error("Error fetching author:", error);
     return <div className="text-red-500">Error loading author</div>;

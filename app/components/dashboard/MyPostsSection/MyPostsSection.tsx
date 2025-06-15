@@ -1,30 +1,48 @@
 "use client";
 
-import { useFetchPostsByAuthorId } from "@/app/hooks/dashboard/MyPostsSection/useFetchPostsByAuthorId";
 import PostCard from "../../post/PostCard/PostCard";
+import useSWR from "swr";
 
 type MyPostsSectionProps = {
   authorId: number | string; // The ID of the author whose posts to fetch
   clientSideFetch?: boolean; // Optional prop to determine if client-side fetch is needed
 };
 const MyPostsSection = ({ authorId, clientSideFetch }: MyPostsSectionProps) => {
-  const { posts, loading, error } = useFetchPostsByAuthorId("1"); // Replace "1" with the actual user ID
+  // Client-side fetching of Posts by Author ID
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok) throw new Error("My posts response was not ok");
+      return res.json();
+    });
 
-  if (loading) {
+  const searchUrl = `/api/posts?authorId=${authorId}`;
+
+  const { data: posts, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
     return (
-      <div className="text-center text-gray-500">Loading your posts...</div>
+      <section className="flex flex-col items-center justify-center gap-6 px-4 my-12">
+        <h2 className="text-3xl font-bold text-center">Loading Listings...</h2>
+        <p className="text-gray-500">
+          Please wait while we fetch the listings.
+        </p>
+      </section>
     );
   }
+
   if (error) {
     console.error("Error fetching My posts:", error);
   }
 
-  const myPosts = posts.filter((post) => post.is_active && !post.expires_at);
+  const myPosts = posts?.filter(
+    (post: any) => post.is_active && !post.expires_at
+  );
 
   return (
     <section className="max-w-4xl bg-white rounded-lg shadow-sm border p-6 mb-6">
       <h2 className="text-xl font-bold mb-4">📝 Your Posts</h2>
-      {myPosts.length ? (
+      {myPosts?.length ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {myPosts.map((post: any) => (
             <PostCard

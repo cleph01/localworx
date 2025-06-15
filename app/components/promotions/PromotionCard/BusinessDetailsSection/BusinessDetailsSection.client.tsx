@@ -1,16 +1,30 @@
 "use client";
 // This component is client-side only, so we can use hooks like useFetchMyBusinesses
-import { useFetchBusinessById } from "@/app/hooks/dashboard/MyPromotionsSection/useFetchBusinessById";
+
 import { FaMapMarkerAlt } from "react-icons/fa";
+import useSWR from "swr";
 
 export default function BusinessDetailsSection({
   businessId,
 }: {
   businessId: number | string;
 }) {
-  const { business, loading, error } = useFetchBusinessById(businessId);
+  // Client-side fetching of business by business ID
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok)
+        throw new Error("Promtion card business response was not ok");
+      return res.json();
+    });
 
-  if (loading) return <div className="text-gray-500 text-sm">Loading...</div>;
+  const searchUrl = `/api/business/${businessId}`;
+
+  const { data: business, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
+    return <p className="text-gray-500">Loading business...</p>;
+  }
   if (error)
     return (
       <div className="text-red-500 text-sm">Error loading business details</div>

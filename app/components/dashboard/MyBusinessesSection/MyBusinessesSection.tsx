@@ -11,7 +11,8 @@
 import Link from "next/link";
 import BusinessCard from "../../business/BusinessCard/BusinessCard";
 import { FaPlusCircle } from "react-icons/fa";
-import { useFetchMyBusinesses } from "@/app/hooks/dashboard/MyBusinessesSection/useFetchMyBusinesses";
+
+import useSWR from "swr";
 
 const MyBusinessesSection = ({
   clientSideFetch,
@@ -24,13 +25,27 @@ const MyBusinessesSection = ({
   // If false, we will use server-side fetch to get the businesses
   // This allows us to control where the data fetching happens based on the context
 
-  const { businesses, loading, error } = useFetchMyBusinesses(ownerId);
+  // Client-side fetching of category
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok) throw new Error("My Businesses response was not ok");
+      return res.json();
+    });
 
-  if (loading) {
+  const searchUrl = `/api/businesses?ownerId=${ownerId}`;
+
+  const { data: businesses, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
     return <div className="text-gray-500">Loading businesses...</div>;
   }
   if (error) {
     console.error("Error fetching businesses:", error);
+  }
+
+  if (!businesses || businesses.length === 0) {
+    return <div>No businesses found</div>;
   }
 
   return (
@@ -38,7 +53,7 @@ const MyBusinessesSection = ({
       <div className="flex flex-col mb-4">
         <h2 className="text-xl font-bold mb-4">
           🏪 Your Businesses{" "}
-          <span className="text-gray-400">({businesses.length})</span>
+          <span className="text-gray-400">({businesses?.length})</span>
         </h2>
 
         <Link
@@ -50,9 +65,9 @@ const MyBusinessesSection = ({
         </Link>
       </div>
 
-      {businesses.length ? (
+      {businesses?.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {businesses?.map((business: any) => (
+          {businesses.map((business: any) => (
             <BusinessCard
               key={business.id}
               business={business}

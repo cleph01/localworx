@@ -10,8 +10,9 @@ import Link from "next/link";
 // a client component can be rendered in a server-side rendered page.
 
 import PromotionCard from "../../promotions/PromotionCard/PromotionCard";
-import { useFetchPromotionsByPromoter } from "@/app/hooks/dashboard/MyPromotionsSection/useFetchPromotionsByPromoterId";
+
 import { FaPlusCircle } from "react-icons/fa";
+import useSWR from "swr";
 
 type MyPromotionSectionProps = {
   promoterId: number | string;
@@ -24,21 +25,38 @@ const MyPromotionsSection = ({
 }: MyPromotionSectionProps) => {
   // Fetch using client-side fetch
 
-  const { promotions, loading, error } =
-    useFetchPromotionsByPromoter(promoterId);
+  // Client-side fetching of Promotion by Promoter ID
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok) throw new Error("My promotions response was not ok");
+      return res.json();
+    });
 
-  if (loading) {
-    return <div className="text-gray-500">Loading promotions...</div>;
+  const searchUrl = `/api/promotions?promoterId=${promoterId}`;
+
+  const { data: promotions, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
+    return (
+      <section className="flex flex-col items-center justify-center gap-6 px-4 my-12">
+        <h2 className="text-3xl font-bold text-center">
+          Loading my promotions...
+        </h2>
+        <p className="text-gray-500">
+          Please wait while we fetch the listings.
+        </p>
+      </section>
+    );
   }
+
   if (error) {
     console.error("Error fetching promotions:", error);
   }
 
-  if (!promotions) {
+  if (!promotions || promotions.length === 0) {
     return <div>No promotions found</div>;
   }
-
-  console.log("Fetched promotions:", promotions);
 
   return (
     <section className="max-w-4xl bg-white rounded-lg shadow-sm border border-gray-400 px-4 py-6 mb-6">
@@ -52,7 +70,7 @@ const MyPromotionsSection = ({
           Build a Promotion
         </Link>
       </div>
-      {promotions.length ? (
+      {promotions?.length ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {promotions.map((promo: any) => (
             <PromotionCard

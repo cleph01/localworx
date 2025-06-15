@@ -1,22 +1,36 @@
 "use client";
-// This component is client-side only, so we can use hooks like useFetchUserById
+// This component is client-side only,
 
 import Button from "@/app/components/ui/Button";
-import { useFetchUserById } from "@/app/hooks/users/useFetchUserById";
+
 import PromoterRatingSection from "../PromoterRatingSection";
 import PromoterMetricsSection from "../PromoterMetricsSection";
 import { PromoterProfileSectionProps } from ".";
+import useSWR from "swr";
 
 const PromoterProfileSection = ({
   promoterId,
   clientSideFetch,
 }: PromoterProfileSectionProps) => {
-  const { user, loading, error } = useFetchUserById(promoterId);
+  // Client-side fetching of user by promoter ID
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok)
+        throw new Error("Promotion card promoter details response was not ok");
+      return res.json();
+    });
 
-  if (loading) return <div className="text-gray-500">Loading...</div>;
+  const searchUrl = `/api/users/${promoterId}`;
+
+  const { data: promoter, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) return <div className="text-gray-500">Loading...</div>;
+
   if (error)
     return <div className="text-red-500">Error loading promoter profile</div>;
-  if (!user) return <div className="text-gray-500">Promoter not found</div>;
+
+  if (!promoter) return <div className="text-gray-500">Promoter not found</div>;
 
   return (
     <div className="flex flex-col mt-2 gap-2">
@@ -25,12 +39,12 @@ const PromoterProfileSection = ({
         <div className="flex flex-row items-center mr-1 mt-1 gap-2">
           <img
             className="inline-block h-16 w-16 rounded-full ring-2 ring-white"
-            src={user.avatar_url ?? ""}
-            alt={user.first_name}
+            src={promoter?.avatar_url ?? ""}
+            alt={promoter?.first_name}
           />
           <div className="flex flex-col flex-1">
             <div className="text-lg sm:text-base font-semibold">
-              {user.first_name}
+              {promoter?.first_name}
             </div>
             <PromoterRatingSection
               promoterId={promoterId}
