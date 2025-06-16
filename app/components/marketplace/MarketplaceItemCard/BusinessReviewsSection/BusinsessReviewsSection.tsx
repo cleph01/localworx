@@ -1,7 +1,7 @@
 "use client";
 
-import { useFetchReviewsByBusinessId } from "@/app/hooks/reviews/useFetchReviewsByBusinessId";
 import { calculateAverageRating } from "@/app/utilities/calculateAverageRating";
+import useSWR from "swr";
 
 type BusinessReviewsSectionProps = {
   businessId: number | string;
@@ -10,10 +10,22 @@ type BusinessReviewsSectionProps = {
 const BusinessReviewsSection = ({
   businessId,
 }: BusinessReviewsSectionProps) => {
-  // SSR: Fetch the reviews from the database
-  const { reviews, loading, error } = useFetchReviewsByBusinessId(businessId);
+  // Client-side fetching of reviews
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok)
+        throw new Error(
+          "Marketplace card business review fetch response was not ok"
+        );
+      return res.json();
+    });
 
-  if (loading) {
+  const searchUrl = `/api/business/reviews/${businessId}`;
+
+  const { data: reviews, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
     return <div className="text-gray-500">Loading reviews...</div>;
   }
   if (error) {
