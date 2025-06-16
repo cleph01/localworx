@@ -3,8 +3,7 @@
 
 import { toast } from "react-toastify";
 import { CartItem } from "@/types/cart/cartType";
-
-import { useFetchRewardById } from "@/app/hooks/reward/useFetchRewardById";
+import useSWR from "swr";
 
 type AddToCartCTASectionProps = {
   id: number | string;
@@ -17,15 +16,21 @@ const AddToCartCTASection = ({
   rewardId,
   price,
 }: AddToCartCTASectionProps) => {
-  console.log(
-    "AddToCartCTASection type of price:",
-    typeof price,
-    "price: ",
-    price
-  );
-  const { reward, loading, error } = useFetchRewardById(rewardId);
-  if (loading) {
-    return <div className="text-gray-500">Loading...</div>;
+  // Client-side fetching of all businessCategories
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok)
+        throw new Error("Add to cart get reward by Id response was not ok");
+      return res.json();
+    });
+
+  const searchUrl = `/api/reward/${rewardId}`;
+
+  const { data: reward, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
+    return <div className="text-gray-500">Loading reward...</div>;
   }
   if (error) {
     console.error("Error fetching reward:", error);
