@@ -1,6 +1,5 @@
 "use client";
 
-import { useFetchAllBusinessCategories } from "@/app/hooks/business-categories/useFetchAllBusinessCategories";
 import { FiFilter, FiUserCheck, FiArrowDownCircle } from "react-icons/fi";
 import useSWR from "swr";
 
@@ -33,7 +32,9 @@ const FiltersPanel = ({
   const fetcher = (url: string) =>
     fetch(url, { credentials: "same-origin" }).then((res) => {
       if (!res.ok)
-        throw new Error("Promtion card business response was not ok");
+        throw new Error(
+          "Services directory filters all business categories response was not ok"
+        );
       return res.json();
     });
 

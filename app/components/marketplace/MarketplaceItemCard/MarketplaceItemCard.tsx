@@ -5,17 +5,29 @@ import Card from "../../ui/Card";
 import MarketplaceItemCardHeader from "./MarketplaceItemCardHeader";
 import MarketplaceItemCardContent from "./MarketplaceItemCardContent";
 import MarketPlaceItemCardFooter from "./MarketPlaceItemCardFooter";
-import { useFetchRewardById } from "@/app/hooks/reward/useFetchRewardById";
+
+import useSWR from "swr";
 
 type MarketplaceItemCardProps = {
   item: MarketplaceItem;
 };
 
 const MarketplaceItemCard = ({ item }: MarketplaceItemCardProps) => {
-  console.log("item at card: ", item);
-  const { reward, loading, error } = useFetchRewardById(item.reward_id ?? "");
-  if (loading) {
-    return <div className="text-gray-500">Loading...</div>;
+  // Client-side fetching of category
+  // Generic fetcher function
+  const fetcher = (url: string) =>
+    fetch(url, { credentials: "same-origin" }).then((res) => {
+      if (!res.ok)
+        throw new Error("Marketplace item fetch response was not ok");
+      return res.json();
+    });
+
+  const searchUrl = `/api/reward/${item.reward_id}`;
+
+  const { data: reward, error, isLoading } = useSWR(searchUrl, fetcher);
+
+  if (isLoading) {
+    return <div className="text-gray-500">Loading category...</div>;
   }
   if (error) {
     return (
@@ -28,7 +40,6 @@ const MarketplaceItemCard = ({ item }: MarketplaceItemCardProps) => {
 
   const { image_url, name, description } = reward;
 
-  console.log("item @ marketplace card: ", item, "Rewards: ", reward);
   return (
     <Card
       Header={
