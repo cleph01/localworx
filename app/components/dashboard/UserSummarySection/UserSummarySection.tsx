@@ -10,7 +10,7 @@ const UserSummarySection = () => {
   }
 
   return (
-    <section className="sm:min-w-225 max-w-4xl bg-white rounded-lg shadow-sm border border-gray-200 p-6 my-6">
+    <section className="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       <h2 className="text-2xl font-bold mb-2 truncate">
         👋 Welcome back, <br />{" "}
         {user?.name ? user?.name : user?.npub.slice(0, 18) + "…"}

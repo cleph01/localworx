@@ -1,5 +1,4 @@
 // app/api/search/services/searchService.ts
-import { lazy } from "react";
 import { queryServiceDirectory } from "./searchDAO";
 
 type SearchParams = {
@@ -12,14 +11,10 @@ type SearchParams = {
 export async function searchServices(params: SearchParams) {
   const rawResults = await queryServiceDirectory(params);
 
-  // Optionally transform results (e.g., truncate description, format imageUrl)
   return rawResults.map((row: any) => ({
     id: row.id,
-    name: row.name,
+    category_name: row.category_name,
     description: row.description,
-    pairing_uri_encrypted: row.pairing_uri_encrypted,
-    wallet_created: row.wallet_created,
-    wallet_id: row.wallet_id,
     business_name: row.business_name,
     address: row.address,
     city: row.city,

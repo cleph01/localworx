@@ -19,7 +19,15 @@ const SellerProfileSection = ({ sellerId }: SellerProfileSectionProps) => {
 
   const { data: user, error, isLoading } = useSWR(searchUrl, fetcher);
 
-  if (isLoading) return <div className="text-gray-500">Loading seller...</div>;
+  if (isLoading) return (
+    <div className="flex items-center gap-2 animate-pulse">
+      <div className="h-16 w-16 bg-gray-200 rounded-full shrink-0" />
+      <div className="space-y-2">
+        <div className="h-4 w-28 bg-gray-200 rounded" />
+        <div className="h-3 w-20 bg-gray-200 rounded" />
+      </div>
+    </div>
+  );
 
   if (error) {
     return (

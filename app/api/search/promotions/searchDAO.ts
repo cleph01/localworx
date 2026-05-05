@@ -2,7 +2,24 @@ import db from "@/db/db";
 
 export async function queryPromotions({ q, category, sortBy }: any) {
   const query = db("promotions")
-    .select("*")
+    .select(
+      "promotions.id",
+      "promotions.business_id",
+      "promotions.promoter_id",
+      "promotions.title",
+      "promotions.description",
+      "promotions.media_url",
+      "promotions.media_type",
+      "promotions.expires_at",
+      "promotions.is_active",
+      "promotions.terms_and_conditions",
+      "promotions.created_at",
+      "promotions.updated_at",
+      "businesses.business_name",
+      "businesses.logo_url",
+      "businesses.category_id",
+      "business_categories.name as category_name"
+    )
     .leftJoin("businesses", "promotions.business_id", "businesses.id")
     .leftJoin(
       "business_categories",
@@ -12,31 +29,19 @@ export async function queryPromotions({ q, category, sortBy }: any) {
     .where("promotions.is_active", true)
     .where("businesses.is_active", true);
 
-  // If using SQLite, we might need to adjust the query for case-insensitive search
-  const isSQLite = db.client.config.client === "sqlite3";
-
   if (q) {
-    const lowerQ = `%${q.toLowerCase()}%`;
-
+    const lowerQ = `%${q}%`;
     query.where((builder) => {
-      if (isSQLite) {
-        builder
-          .whereRaw("LOWER(businesses.business_name) LIKE ?", [lowerQ])
-          .orWhereRaw("LOWER(businesses.description) LIKE ?", [lowerQ])
-          .orWhereRaw("LOWER(promotions.title) LIKE ?", [lowerQ])
-          .orWhereRaw("LOWER(promotions.description) LIKE ?", [lowerQ]);
-      } else {
-        builder
-          .whereILike("businesses.business_name", lowerQ)
-          .orWhereILike("businesses.description", lowerQ)
-          .orWhereILike("promotions.title", lowerQ)
-          .orWhereILike("promotions.description", lowerQ);
-      }
+      builder
+        .whereILike("businesses.business_name", lowerQ)
+        .orWhereILike("businesses.description", lowerQ)
+        .orWhereILike("promotions.title", lowerQ)
+        .orWhereILike("promotions.description", lowerQ);
     });
   }
 
   if (category) {
-    query.andWhere("business_categories.name", category);
+    query.andWhereILike("business_categories.name", category);
   }
 
   switch (sortBy) {

@@ -34,7 +34,7 @@ const PostCard = ({ post, clientSideFetch }: PostCardProps) => {
           publishDate={post.created_at}
         />
       }
-      css="w-full max-w-sm"
+      css="w-full max-w-sm hover:-translate-y-1 hover:shadow-md transition-all duration-200"
     />
   );
 };

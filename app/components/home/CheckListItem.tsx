@@ -1,5 +1,3 @@
-import { FaCheck } from "react-icons/fa";
-
 type ChecklistProps = {
   number: string;
   text: string;
@@ -7,14 +5,11 @@ type ChecklistProps = {
 
 const CheckList: React.FC<ChecklistProps> = ({ number, text }) => {
   return (
-    <div className="flex flex-row items-center justify-center mt-10 gap-6 sm:flex-row sm:gap-8">
-      <div className="mr-2">
-        <FaCheck className="h-6 w-6 text-blue-500" />
-      </div>
-      <div>
-        <span className="font-bold">{number}</span> {text}
-      </div>
+    <div className="flex flex-col items-start p-6 bg-gray-50 rounded-xl border border-gray-100">
+      <span className="text-4xl font-bold text-brand-orange mb-2">{number}</span>
+      <span className="text-gray-600 text-sm">{text}</span>
     </div>
   );
 };
+
 export default CheckList;

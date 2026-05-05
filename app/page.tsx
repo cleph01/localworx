@@ -13,7 +13,7 @@ import GithubSection from "./components/GithubSection";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col justify-center pb-12 ">
+    <main className="min-h-screen flex flex-col">
       {/* Header */}
       <PageHeader />
 
@@ -50,11 +50,6 @@ export default function Home() {
       {/* GitHub CTA */}
       {/* <GithubSection /> */}
 
-      {/* Under Construction Note */}
-      <section className="mt-4 flex flex-col items-center justify-center space-y-2 text-sm text-red-500 italic">
-        <p>This site is under active construction</p>
-        <p>Enjoy the journey ✨</p>
-      </section>
     </main>
   );
 }

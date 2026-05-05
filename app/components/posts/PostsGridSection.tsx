@@ -14,11 +14,10 @@ const PostsGridSection = async ({ clientSideFetch }: PostsGridSectionProps) => {
   if (!posts) {
     return <div>No Posts Found</div>;
   }
-  console.log("Posts fetched:", posts);
 
   return (
-    <section className="px-6 py-10">
-      <h2 className="text-3xl font-bold mb-6">📝 Community Posts</h2>
+    <section className="px-4 sm:px-6 py-10 max-w-6xl mx-auto w-full">
+      <h2 className="text-3xl font-bold mb-6">Community Posts</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post: Post) => (
           <PostCard

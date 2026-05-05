@@ -57,7 +57,7 @@ const BusinessCard = ({ business, clientSideFetch }: BusinessCardProps) => {
           category_id={business.category_id ?? ""}
         />
       }
-      css="w-full max-w-sm border border-gray-200 transition-shadow hover:shadow-xl"
+      css="w-full max-w-sm border border-gray-100 transition-shadow hover:shadow-lg hover:-translate-y-0.5 duration-200"
     />
   );
 };

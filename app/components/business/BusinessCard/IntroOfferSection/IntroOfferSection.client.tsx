@@ -22,7 +22,11 @@ const IntroOfferSection = ({ businessId }: { businessId: string }) => {
   const { data, error, isLoading } = useSWR(searchUrl, fetcher);
 
   if (isLoading) {
-    return <div className="text-gray-500">Loading rewards...</div>;
+    return <div className="space-y-2 animate-pulse p-4 bg-gray-100 rounded-lg mx-4">
+      <div className="h-5 w-32 bg-gray-200 rounded" />
+      <div className="h-4 w-full bg-gray-200 rounded" />
+      <div className="h-4 w-3/4 bg-gray-200 rounded" />
+    </div>;
   }
   if (error) {
     console.error("Error fetching rewards:", error);

@@ -31,6 +31,10 @@
 # misc
 .DS_Store
 *.pem
+CLAUDE.md
+
+# local dev docs (may contain credentials or sensitive setup notes)
+/docs/
 
 # debug
 npm-debug.log*

@@ -24,7 +24,7 @@ const PostCardHeader = ({ mediaUrl, mediaType, title }: PostCardHeaderType) => {
         </LazyLoadWrapper>
       ) : null}
       {/* Title */}
-      <h3 className="text-xl sm:text-2xl font-extrabold text-slate-800 mt-4">
+      <h3 className="text-lg font-bold text-foreground mt-4">
         {title}
       </h3>
     </div>

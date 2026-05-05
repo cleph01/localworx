@@ -33,13 +33,13 @@ const stepCards = [
 
 const SignupStepsSection = () => {
   return (
-    <section className=" min-w-screen mt-10 bg-slate-gray-background flex-col items-center justify-center text-lg px-4 py-8">
+    <section className="w-full bg-slate-gray-background flex flex-col items-center justify-center text-lg px-4 sm:px-6 py-16 sm:py-24">
       <h2 className="text-5xl sm:text-6xl font-semibold text-white mb-6">
         Turn your skills into local{" "}
         <span className="font-serif italic">impact</span> in three simple steps
       </h2>
       <p className="text-base sm:text-lg font-semibold text-white mb-4">
-        ◻️ Join, Share, Thrive
+        Join, Share, Thrive
       </p>
       <p className="text-gray-200">
         Discover how quickly you can connect with your community, promote your

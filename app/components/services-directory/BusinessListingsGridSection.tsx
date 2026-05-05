@@ -1,18 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 
 import SearchBarSection from "./SearchBarSection/SearchBarSection";
 import BusinessCard from "../business/BusinessCard/BusinessCard";
 import Button from "../ui/Button";
-
 import useSearch from "@/app/hooks/search/useSearch";
+
+// Dynamically import the map so it never SSR-renders (Google Maps requires browser)
+const BusinessDiscoveryMap = dynamic(
+  () => import("../maps/BusinessDiscoveryMap"),
+  { ssr: false, loading: () => <div className="w-full rounded-xl bg-gray-100 animate-pulse" style={{ height: "420px" }} /> }
+);
 
 const BusinessListingsGridSection = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
   const [hiring, setHiring] = useState(false);
   const [sortBy, setSortBy] = useState("relevance");
+  const [showMap, setShowMap] = useState(true);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | undefined>();
+
+  // Ask for geolocation once on mount to center the map
+  useEffect(() => {
+    if (!navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(
+      (pos) => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+      () => {} // silently fall back to FALLBACK_CENTER in the map component
+    );
+  }, []);
 
   const { data, isLoading, error } = useSearch({
     resourceType: "services",
@@ -25,9 +42,28 @@ const BusinessListingsGridSection = () => {
     console.error("Error fetching data:", error);
   }
 
+  const results = data?.results ?? [];
+
   return (
-    <section className="flex flex-col gap-4 py-12 px-6 ">
-      <h2 className="text-2xl font-bold">Service Listings</h2>
+    <section className="flex flex-col gap-4 py-12 px-6">
+      {/* Map */}
+      <div className="flex items-center justify-between mb-1">
+        <h2 className="text-2xl font-bold">Find Local Services</h2>
+        <button
+          onClick={() => setShowMap((v) => !v)}
+          className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
+        >
+          {showMap ? "Hide Map" : "Show Map"}
+        </button>
+      </div>
+
+      {showMap && (
+        <BusinessDiscoveryMap
+          businesses={results}
+          defaultCenter={userLocation}
+        />
+      )}
+
       {/* Search Section */}
       <SearchBarSection
         searchTerm={searchTerm}
@@ -41,29 +77,25 @@ const BusinessListingsGridSection = () => {
       />
 
       {isLoading && (
-        <section className="flex flex-col items-center justify-center gap-6 px-4 my-12">
-          <h2 className="text-3xl font-bold text-center">
-            Loading Listings...
-          </h2>
-          <p className="text-gray-500">
-            Please wait while we fetch the listings.
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="h-48 bg-gray-100 rounded-xl animate-pulse" />
+          ))}
+        </div>
+      )}
+
+      {!isLoading && results.length === 0 && (
+        <section className="flex flex-col items-center justify-center gap-4 py-16">
+          <h2 className="text-2xl font-bold text-center">No Listings Found</h2>
+          <p className="text-gray-500 text-sm text-center">
+            Try adjusting your search or check back later for new listings.
           </p>
         </section>
       )}
 
-      {(!data?.results || (data?.results.length === 0 && !isLoading)) && (
-        <section className="flex flex-col items-center justify-center gap-6 px-4 my-12">
-          <h2 className="text-3xl font-bold text-center">No Listings Found</h2>
-          <p className="text-gray-500">Check back later for new listings, or</p>
-          <p className="text-gray-500">Try adjusting your search criteria.</p>
-        </section>
-      )}
-
-      {/* Listings Grid */}
-      {data?.results && (
+      {results.length > 0 && (
         <div className="grid place-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* Example listing item */}
-          {data.results.map((business: any) => (
+          {results.map((business: any) => (
             <BusinessCard
               key={business.id}
               business={business}
@@ -73,7 +105,6 @@ const BusinessListingsGridSection = () => {
         </div>
       )}
 
-      {/* Load More Results Button */}
       <Button
         details={{
           text: "Load more results",
@@ -83,5 +114,5 @@ const BusinessListingsGridSection = () => {
     </section>
   );
 };
+
 export default BusinessListingsGridSection;
-// This component is a placeholder for the listings section of the services directory page.

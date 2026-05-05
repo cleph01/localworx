@@ -2,7 +2,23 @@ import db from "@/db/db";
 
 export async function queryMarketplace({ q, category, sortBy }: any) {
   const query = db("marketplace_items")
-    .select("*")
+    .select(
+      "marketplace_items.id",
+      "marketplace_items.user_id",
+      "marketplace_items.business_id",
+      "marketplace_items.reward_id",
+      "marketplace_items.reward_issued_id",
+      "marketplace_items.status",
+      "marketplace_items.price",
+      "marketplace_items.notes",
+      "marketplace_items.created_at",
+      "marketplace_items.updated_at",
+      "rewards.name as reward_name",
+      "rewards.description as reward_description",
+      "businesses.business_name",
+      "businesses.description as business_description",
+      "business_categories.name as category_name"
+    )
     .leftJoin("rewards", "marketplace_items.reward_id", "rewards.id")
     .leftJoin("businesses", "marketplace_items.business_id", "businesses.id")
     .leftJoin(
@@ -12,31 +28,19 @@ export async function queryMarketplace({ q, category, sortBy }: any) {
     )
     .where("marketplace_items.status", "live");
 
-  // If using SQLite, we might need to adjust the query for case-insensitive search
-  const isSQLite = db.client.config.client === "sqlite3";
-
   if (q) {
-    const lowerQ = `%${q.toLowerCase()}%`;
-
+    const lowerQ = `%${q}%`;
     query.where((builder) => {
-      if (isSQLite) {
-        builder
-          .whereRaw("LOWER(businesses.business_name) LIKE ?", [lowerQ])
-          .orWhereRaw("LOWER(businesses.description) LIKE ?", [lowerQ])
-          .orWhereRaw("LOWER(rewards.name) LIKE ?", [lowerQ])
-          .orWhereRaw("LOWER(rewards.description) LIKE ?", [lowerQ]);
-      } else {
-        builder
-          .whereILike("businesses.business_name", lowerQ)
-          .orWhereILike("businesses.description", lowerQ)
-          .orWhereILike("rewards.name", lowerQ)
-          .orWhereILike("rewards.description", lowerQ);
-      }
+      builder
+        .whereILike("businesses.business_name", lowerQ)
+        .orWhereILike("businesses.description", lowerQ)
+        .orWhereILike("rewards.name", lowerQ)
+        .orWhereILike("rewards.description", lowerQ);
     });
   }
 
   if (category) {
-    query.andWhere("business_categories.name", category);
+    query.andWhereILike("business_categories.name", category);
   }
 
   switch (sortBy) {

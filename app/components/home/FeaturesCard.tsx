@@ -13,7 +13,7 @@ const FeaturesCard: React.FC<FeaturesCardProps> = ({
   icon,
 }) => {
   return (
-    <div className="p-6 relative bg-white rounded-lg shadow-lg overflow-hidden w-88 sm:w-96 md:w-102">
+    <div className="p-6 relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden w-88 sm:w-96 md:w-102">
       {/* Icon */}
       <div className="mb-6">{icon}</div>
 

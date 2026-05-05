@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 import type { Configuration } from "webpack";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    viewTransition: true,
+  },
   webpack: (config: Configuration, { isServer }) => {
     // 👇 Your existing externals logic for server build
     if (isServer && config.externals) {

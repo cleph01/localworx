@@ -1,23 +1,16 @@
-// app/profile/me/page.tsx
-
 "use client";
 
-import { useNostrUser } from "../../context/NostrUserContext";
+import { useEffect, useState } from "react";
+import { useRequireAuth } from "@/app/hooks/auth/useRequireAuth";
 import UserProfileHeader from "../../components/profile/UserProfileHeader";
 import LogOutButton from "../../components/ui/LogOutButton";
 import Card from "../../components/ui/Card";
-import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
-import { useRequireAuth } from "@/app/hooks/auth/useRequireAuth";
 
 export default function MyProfilePage() {
   const [profile, setProfile] = useState<any>(null);
-  // Ensure the user is authenticated before rendering the dashboard
-  // This will redirect to /auth if the user is not authenticated
   const { user, isLoading } = useRequireAuth();
 
-  if (isLoading || !user) return <div>...Loading</div>;
-
+  // useEffect must be at the top level — before any conditional returns
   useEffect(() => {
     if (!user?.npub) return;
 
@@ -25,17 +18,17 @@ export default function MyProfilePage() {
       try {
         const res = await fetch(`/api/nostr/profile/${user?.npub}`);
         if (!res.ok) throw new Error("Failed to fetch profile");
-        const data = await res.json();
-        setProfile(data);
-      } catch (error) {
+        setProfile(await res.json());
+      } catch (err) {
+        console.error("Error loading profile:", err);
         setProfile(null);
-        // Optionally log error or show a message
-        console.error("Error loading profile:", error);
       }
     }
 
     loadProfile();
   }, [user?.npub]);
+
+  if (isLoading || !user) return <div className="p-6 animate-pulse">Loading profile...</div>;
 
   return (
     <main className="max-w-4xl mx-auto p-6">

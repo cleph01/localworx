@@ -18,6 +18,7 @@ type NostrUserContextType = {
   user: NostrUser | null;
   setUser: (user: NostrUser | null) => void;
   signIn: (nsec: string) => Promise<boolean>;
+  signInWithExtension: () => Promise<boolean>;
   signUp: (
     username: string
   ) => Promise<{ pubkey: string; privkey: string } | null>;
@@ -113,6 +114,60 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const signInWithExtension = async (): Promise<boolean> => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const nostr = (window as any).nostr;
+      if (!nostr) {
+        toast.error("No Nostr extension found. Install Alby or nos2x.");
+        return false;
+      }
+
+      const hexPubkey: string = await nostr.getPublicKey();
+      const npub = nip19.npubEncode(hexPubkey);
+
+      // Fetch Nostr profile
+      const profileRes = await fetch(`/api/nostr/profile/${npub}`);
+      const profile = await profileRes.json();
+
+      // Check or create internal user
+      const userRes = await fetch(`/api/users/by-npub/${npub}`);
+      let finalUserData;
+
+      if (userRes.status === 404) {
+        const newUser = await fetch("/api/users/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            npub,
+            name: profile.name,
+            picture: profile.picture,
+          }),
+        });
+        finalUserData = await newUser.json();
+      } else {
+        finalUserData = await userRes.json();
+      }
+
+      const fullUser = {
+        id: finalUserData.id,
+        npub,
+        name: profile.name,
+        picture: profile.picture,
+      };
+
+      setUser(fullUser);
+      localStorage.setItem("user", JSON.stringify(fullUser));
+
+      toast.success("Signed in with extension!");
+      return true;
+    } catch (err) {
+      console.error("Extension sign in error:", err);
+      toast.error("Extension sign in failed. Please try again.");
+      return false;
+    }
+  };
+
   const signUp = async (
     username: string
   ): Promise<{ pubkey: string; privkey: string } | null> => {
@@ -177,7 +232,7 @@ export function NostrUserProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <NostrUserContext.Provider
-      value={{ user, setUser, signIn, signUp, signOut, isLoading }}
+      value={{ user, setUser, signIn, signInWithExtension, signUp, signOut, isLoading }}
     >
       {children}
     </NostrUserContext.Provider>

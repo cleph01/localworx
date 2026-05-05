@@ -17,8 +17,7 @@ export default function RewardsVaultPage() {
       return res.json();
     });
 
-  // const searchUrl = `/api/rewards-issued/user/${user?.id}`;
-  const searchUrl = `/api/rewards-issued/user/1`; // For testing purposes, replace with user?.id when auth is set up
+  const searchUrl = user ? `/api/rewards-issued/user/${user.id}` : null;
 
   const { data: rewards, error, isLoading } = useSWR(searchUrl, fetcher);
 

@@ -39,13 +39,13 @@ const MyPromotionsSection = ({
 
   if (isLoading) {
     return (
-      <section className="flex flex-col items-center justify-center gap-6 px-4 my-12">
-        <h2 className="text-3xl font-bold text-center">
-          Loading my promotions...
-        </h2>
-        <p className="text-gray-500">
-          Please wait while we fetch the listings.
-        </p>
+      <section className="w-full bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-6 animate-pulse">
+        <div className="h-6 w-48 bg-gray-200 rounded mb-4" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-32 bg-gray-200 rounded-lg" />
+          ))}
+        </div>
       </section>
     );
   }
@@ -59,7 +59,7 @@ const MyPromotionsSection = ({
   }
 
   return (
-    <section className="max-w-4xl bg-white rounded-lg shadow-sm border border-gray-400 px-4 py-6 mb-6">
+    <section className="w-full bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-6">
       <div className="flex flex-col mb-4">
         <h2 className="text-xl font-bold mb-4">📣 Your Active Promotions</h2>
         <Link

@@ -1,68 +1,94 @@
-// components/home/HeroSection.tsx
+"use client";
+
 import Image from "next/image";
-import ButtonLink from "../ButtonLink";
-import { FaUser, FaBriefcase, FaBullhorn } from "react-icons/fa";
-import LazyLoadWrapper from "../ui/LazyLoadWrapper";
+import Link from "next/link";
+import { FaPlay } from "react-icons/fa";
+import { useState } from "react";
+import VideoModal from "./VideoModal";
 
 const HeroSection = () => {
+  const [videoOpen, setVideoOpen] = useState(false);
+
   return (
-    <section className="flex flex-col items-center justify-center text-lg p-4">
-      {/* Hero Image */}
-      <LazyLoadWrapper
-        fallback={
-          <div className="w-full h-64 w-64 mt-2 rounded-xl border border-gray-200 bg-gray-200 animate-pulse" />
-        }
-        delayMs={200}
-        timeoutMs={5000}
-        className="w-full flex flex-col items-center h-96 w-78 mt-2 rounded-xl mb-2"
+    <>
+      {/* Dark gradient hero banner */}
+      <section
+        className="w-full flex flex-col items-center justify-center px-6 py-20 text-center"
+        style={{
+          background:
+            "linear-gradient(135deg, #091f36 0%, #0d2d50 60%, #0f3660 100%)",
+        }}
       >
-        <iframe
-          className="w-full h-88 max-w-3xl mt-2 rounded-xl border border-gray-200 object-cover shadow-sm"
-          src="https://www.youtube.com/embed/P2phABZ8_88"
-          title="YouTube Preview"
-          allowFullScreen
-        />
-        {/* <Image
+        <Image
           src="/localworx-logo.png"
-          alt="LocalWorx Logo"
-          className="w-48 h-auto my-6 "
-          width={192}
-          height={192}
-        /> */}
-      </LazyLoadWrapper>
+          alt="LocalWorx"
+          width={220}
+          height={220}
+          className="mb-8 drop-shadow-xl bg-white rounded-full p-1"
+          priority
+        />
 
-      <p className="max-w-4xl sm:text-2xl text-gray-500 mb-4">
-        We are the <span className="font-bold">Main Street First</span> platform
-        that is putting <span className="font-bold">LOCAL</span> businesses
-        ahead of global ones.
-      </p>
-      <p className="max-w-4xl font-bold capitalize text-gray-500 mb-4">
-        LocalWorx.io is a decentralized platform powered by{" "}
-        <span className="font-bold">Lightning</span> and{" "}
-        <span className="font-bold">Nostr</span>.
-      </p>
-      <p className="max-w-4xl text-gray-500 mb-4">
-        Our focus is to fire up local economies through word-of-mouth marketing,
-        decentralized social media, and Bitcoin micro-payments.
-      </p>
+        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 max-w-3xl leading-tight">
+          The{" "}
+          <span className="font-serif italic text-brand-orange">
+            local economy
+          </span>{" "}
+          platform powered by Bitcoin
+        </h1>
 
-      <p className="font-bold capitalize text-gray-500 mb-4">
-        Empowerment not enslavement.
-      </p>
+        <p className="text-white/70 text-lg max-w-xl mb-8">
+          Connect with local businesses, earn Bitcoin for promoting your
+          community, and take back your digital economy.
+        </p>
 
-      <p className="max-w-4xl text-gray-500 mb-8">
-        We are all influencers. Our friends and families want to know what we
-        think about <span className="font-semibold">this</span> restaurant or
-        <span className="font-semibold"> that</span> mechanic. We tell the world
-        what we think all the time. But the gatekeepers keep the lion's share of
-        the advertiser money. LocalWorx.io is here to flip that paradigm on its
-        head.
-      </p>
+        <div className="flex flex-col sm:flex-row gap-4 items-center">
+          <Link
+            href="/auth"
+            className="px-8 py-3 bg-brand-orange text-white font-semibold rounded-xl hover:bg-orange-600 transition duration-300 shadow-lg"
+          >
+            Get Started — It&apos;s Free
+          </Link>
+          <button
+            onClick={() => setVideoOpen(true)}
+            className="inline-flex items-center gap-2 px-6 py-3 text-white/80 hover:text-white border border-white/30 hover:border-white/60 rounded-xl transition duration-300"
+          >
+            <FaPlay className="text-brand-orange text-sm" />
+            Watch how it works
+          </button>
+        </div>
+      </section>
 
-      <p className="text-2xl font-bold font-italic mb-8">
-        It's OUR data, OUR content, OUR livelihood, OUR money
-      </p>
-    </section>
+      {/* Copy section */}
+      <section className="flex flex-col items-center justify-center text-lg px-6 py-12 max-w-4xl mx-auto text-center">
+        <p className="text-gray-600 mb-4 text-xl">
+          We are the{" "}
+          <span className="font-bold text-foreground">Main Street First</span>{" "}
+          platform that puts{" "}
+          <span className="font-bold text-foreground">LOCAL</span> businesses
+          ahead of global ones.
+        </p>
+        <p className="text-gray-500 mb-4">
+          LocalWorx.io is a decentralized platform powered by{" "}
+          <span className="font-semibold text-foreground">Lightning</span> and{" "}
+          <span className="font-semibold text-foreground">Nostr</span>.
+        </p>
+        <p className="text-gray-500 mb-6">
+          Fire up local economies through word-of-mouth marketing, decentralized
+          social media, and Bitcoin micro-payments.
+        </p>
+        <p className="text-2xl font-bold">
+          It&apos;s{" "}
+          <span className="font-serif italic text-brand-orange">OUR</span> data,{" "}
+          <span className="font-serif italic text-brand-orange">OUR</span>{" "}
+          content,{" "}
+          <span className="font-serif italic text-brand-orange">OUR</span>{" "}
+          livelihood,{" "}
+          <span className="font-serif italic text-brand-orange">OUR</span> money
+        </p>
+      </section>
+
+      <VideoModal open={videoOpen} onClose={() => setVideoOpen(false)} />
+    </>
   );
 };
 

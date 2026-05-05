@@ -30,7 +30,12 @@ const AddToCartCTASection = ({
   const { data: reward, error, isLoading } = useSWR(searchUrl, fetcher);
 
   if (isLoading) {
-    return <div className="text-gray-500">Loading reward...</div>;
+    return (
+      <div className="flex justify-between items-center px-4 py-6 animate-pulse">
+        <div className="h-8 w-24 bg-gray-200 rounded" />
+        <div className="h-10 w-32 bg-gray-200 rounded" />
+      </div>
+    );
   }
   if (error) {
     console.error("Error fetching reward:", error);

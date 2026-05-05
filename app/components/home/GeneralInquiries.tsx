@@ -1,8 +1,6 @@
-// components/home/GeneralInquiriesSection.tsx
 import FaqCard from "./FaqCard";
 import { FaRegEnvelope } from "react-icons/fa";
 
-// Faq Cards to test data
 const faqs = [
   {
     title: "What is LocalWorx.io and who is it for?",
@@ -33,28 +31,28 @@ const faqs = [
 
 const GeneralInquiriesSection = () => {
   return (
-    <section className="min-w-screen px-4 py-8 mt-10 bg-gray-200 flex-col justify-center text-lg">
-      <h2 className="text-2xl sm:text-6xl font-semibold mb-6">
-        General inquiries
-      </h2>
-      <div className="grid place-items-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-        {faqs.map((faq, index) => (
-          <FaqCard
-            key={index}
-            title={faq.title}
-            description={faq.description}
-          />
-        ))}
-      </div>
-      <div className="mt-12 space-y-4">
-        <p className="font-bold text-lg">Got more questions?</p>
-        <p className="text-gray-500 text-base">Send us an email at</p>
-        <p className="font-bold text-lg">
+    <section className="w-full px-4 sm:px-6 py-16 sm:py-24">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-4xl sm:text-5xl font-semibold mb-10">
+          General inquiries
+        </h2>
+        <div className="divide-y divide-gray-100">
+          {faqs.map((faq, index) => (
+            <FaqCard key={index} title={faq.title} description={faq.description} />
+          ))}
+        </div>
+        <div className="mt-12 flex items-center gap-3 text-gray-500">
+          <FaRegEnvelope className="text-brand-orange shrink-0" />
           <span>
-            <FaRegEnvelope className="inline-flex" />
-          </span>{" "}
-          support@LocalWorx.io
-        </p>
+            Got more questions?{" "}
+            <a
+              href="mailto:support@localworx.io"
+              className="text-brand-orange font-medium hover:opacity-80 transition"
+            >
+              support@LocalWorx.io
+            </a>
+          </span>
+        </div>
       </div>
     </section>
   );

@@ -4,57 +4,31 @@ import { usePathname } from "next/navigation";
 import headerValues from "../../lib/header/headerValues";
 
 const PageHeader = () => {
-  const pathname = usePathname(); // e.g. "/dashboard" or "/promoter/settings"
-
+  const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
-  const directory = segments[0]; // could be undefined or empty
+  const directory = segments[0];
 
-  let title: keyof typeof headerValues | null = null;
   let contentKey: keyof typeof headerValues | null = null;
 
   if (!directory) {
     contentKey = "home";
-    title = "home";
   } else {
-    switch (directory) {
-      case "/":
-        contentKey = "home";
-        title = "home";
-        break;
-
-      default:
-        // Convert the directory name to a more readable format
-        // e.g. "promoter-hub" becomes "Promoter Hub"
-        const formattedKey = directory.split("-").join(" ");
-
-        title = formattedKey as keyof typeof headerValues;
-        // Convert the formatted key to a valid key for headerValues
-        contentKey = title.split(" ").join("_") as keyof typeof headerValues;
-        break;
-    }
+    const formattedKey = directory.split("-").join("_") as keyof typeof headerValues;
+    contentKey = formattedKey in headerValues ? formattedKey : null;
   }
 
+  if (!contentKey) return null;
+
+  const { headLine, tagLine } = headerValues[contentKey];
+  const [firstWord, ...rest] = headLine.split(" ");
+
   return (
-    <section className="flex flex-col justify-center text-lg px-4">
-      <p className="my-6 text-base capitalize">🟦 {title}</p>
-      <h1 className="text-5xl sm:text-4xl md:text-5xl font-bold">
-        <span className="font-serif italic">
-          {contentKey &&
-            headerValues[contentKey].headLine.substring(
-              0,
-              headerValues[contentKey].headLine.indexOf(" ")
-            )}
-        </span>{" "}
-        <span className="capitalize">
-          {contentKey &&
-            headerValues[contentKey].headLine.substring(
-              headerValues[contentKey].headLine.indexOf(" ") + 1
-            )}
-        </span>
+    <section className="px-6 pt-10 pb-6 max-w-4xl">
+      <h1 className="text-4xl sm:text-5xl font-bold leading-tight tracking-tight">
+        <span className="font-serif italic text-brand-orange">{firstWord}</span>{" "}
+        <span>{rest.join(" ")}</span>
       </h1>
-      <h3 className="mt-2 text-lg sm:text-base md:text-lg text-gray-500">
-        {contentKey && headerValues[contentKey].tagLine}
-      </h3>
+      <p className="mt-3 text-base text-gray-500 max-w-xl">{tagLine}</p>
     </section>
   );
 };

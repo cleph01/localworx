@@ -137,43 +137,37 @@ export async function submitBusinessForm(
     return;
   }
 
+  if (!formData.business_name) {
+    toast.error("Business name is required.");
+    return;
+  }
+
   setIsSubmitting(true);
   try {
-    const walletRes = await fetch("/api/lightning/wallet/create-subwallet", {
+    // Step 1: Create the business record. This must succeed.
+    const businessRes = await fetch("/api/business/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: formData.business_name }),
+      body: JSON.stringify({ ...formData, owner_id: user.id }),
     });
 
-    const walletData = await walletRes.json();
-    if (!walletRes.ok || !walletData?.pairingUri)
-      throw new Error("Wallet creation failed");
+    if (!businessRes.ok) throw new Error("Business creation failed");
 
-    const encryptedPairingUri = encrypt(walletData.pairingUri);
+    const [business] = await businessRes.json();
+    const businessId = business.id;
 
-    if (!encryptedPairingUri) {
-      throw new Error("Failed to encrypt pairing URI");
-    }
-    // Prepare payload for business creation
-    const payload = {
-      ...formData,
-      owner_id: user.id,
-      category_id: formData.category_id || null,
-      wallet_id: walletData.username,
-      pairing_uri_encrypted: encryptedPairingUri,
-      wallet_created: true,
-    };
-
-    const bizRes = await fetch("/api/business/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    if (!bizRes.ok) throw new Error("Failed to save business");
-
-    toast.success("🎉 Business created and wallet linked!");
+    toast.success("Business created!");
     router.push("/dashboard");
+
+    // Step 2: Attempt wallet creation. Failure is non-blocking — the business
+    // already exists and the wallet can be linked later from the dashboard.
+    fetch("/api/lnbits/wallet/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ businessId, userId: user.id }),
+    }).catch((err) => {
+      console.warn("Wallet creation failed (non-blocking):", err);
+    });
   } catch (err) {
     console.error("Error in handleSubmit:", err);
     toast.error("Something went wrong. Please try again.");

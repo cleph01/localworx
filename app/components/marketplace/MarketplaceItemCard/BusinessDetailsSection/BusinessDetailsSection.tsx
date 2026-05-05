@@ -22,10 +22,16 @@ const BusinessDetailsSection = ({
   const { data: business, error, isLoading } = useSWR(searchUrl, fetcher);
 
   if (isLoading) {
-    return <div className="text-gray-500">Loading category...</div>;
-  }
-  if (isLoading) {
-    return <div className="text-gray-500">Loading...</div>;
+    return (
+      <div className="flex flex-col gap-2 animate-pulse">
+        <div className="h-5 w-40 bg-gray-200 rounded" />
+        <div className="flex gap-2">
+          <div className="h-5 w-20 bg-gray-200 rounded-full" />
+          <div className="h-4 w-24 bg-gray-200 rounded" />
+        </div>
+        <div className="h-4 w-32 bg-gray-200 rounded" />
+      </div>
+    );
   }
   if (error) {
     return (

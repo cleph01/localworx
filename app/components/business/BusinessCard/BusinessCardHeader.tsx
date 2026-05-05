@@ -11,6 +11,7 @@ type BusinessCardHeaderType = {
   logo_url?: string;
   clientSideFetch?: boolean;
 };
+
 const BusinessCardHeader = ({
   id,
   business_name,
@@ -19,27 +20,12 @@ const BusinessCardHeader = ({
   clientSideFetch,
 }: BusinessCardHeaderType) => (
   <div className="flex flex-col gap-2">
-    <div className="flex flex-row items-center justify-between gap-2">
-      {/* Title */}
-      <h3 className="flex-1 text-xl sm:text-2xl font-extrabold text-slate-800">
-        {business_name}
-      </h3>
-      {/* business review */}
-      <BusinessReviewsSection
-        businessId={id}
-        clientSideFetch={clientSideFetch ?? false}
-      />
-    </div>
-
-    {/* Logo Avatar, name, rating in a row */}
-    <div className="flex flex-row items-center gap-2 mt-2">
+    {/* Logo + name + rating stacked */}
+    <div className="flex flex-row items-start gap-3">
       <LazyLoadWrapper
-        fallback={
-          <div className="h-24 w-24 rounded-full bg-gray-200 rounded-full" />
-        }
+        fallback={<div className="h-16 w-16 rounded-full bg-gray-200 shrink-0" />}
       >
-        {/* Business Logo Avatar */}
-        <AvatarWrapper css="w-24 h-24">
+        <AvatarWrapper css="w-16 h-16 shrink-0">
           <img
             className="w-full h-full object-cover ring-2 ring-white shadow-md"
             src={logo_url}
@@ -48,11 +34,23 @@ const BusinessCardHeader = ({
         </AvatarWrapper>
       </LazyLoadWrapper>
 
-      {/* Business Owner FirstName  */}
-      <div className="text-sm sm:text-base ml-2 line-clamp-3">
-        {description}
+      <div className="flex flex-col gap-1 min-w-0">
+        <h3 className="text-xl font-extrabold text-slate-800 leading-tight truncate">
+          {business_name}
+        </h3>
+        {/* Star rating — prominent, directly under name */}
+        <BusinessReviewsSection
+          businessId={id}
+          clientSideFetch={clientSideFetch ?? false}
+          showSnippet={true}
+        />
       </div>
     </div>
+
+    {/* Description */}
+    {description && (
+      <p className="text-sm text-gray-600 line-clamp-2">{description}</p>
+    )}
   </div>
 );
 

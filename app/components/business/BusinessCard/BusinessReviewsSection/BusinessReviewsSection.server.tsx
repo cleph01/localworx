@@ -1,28 +1,29 @@
 import { calculateAverageRating } from "@/app/utilities/calculateAverageRating";
+import StarRating from "@/app/components/ui/StarRating";
 import db from "@/db/db";
 
 const BusinessReviewsSection = async ({
   businessId,
+  showSnippet = false,
 }: {
   businessId: string;
+  showSnippet?: boolean;
 }) => {
-  // SSR: Fetch the reviews from the database
   const reviews = await db("business_reviews").where("business_id", businessId);
+  const { rating, reviewCount } = calculateAverageRating(reviews ?? []);
 
-  // If clientSideFetch is true, we can use a different fetching strategy
-
-  if (!reviews) {
-    return <div>No reviews found</div>;
-  }
-
-  const { rating, reviewCount } = calculateAverageRating(reviews);
+  const latestReview = [...(reviews ?? [])]
+    .reverse()
+    .find((r: any) => r.review?.trim());
 
   return (
-    <div className="flex flex-row flex-0 items-center gap-1">
-      <span className="text-base ml-2">⭐</span>{" "}
-      {/* <FaStar className="text-yellow-500" /> */}
-      <span className="text-gray-500 font-bold">{rating}</span>
-      <span className="text-gray-400"> ({reviewCount})</span>
+    <div className="flex flex-col gap-1">
+      <StarRating rating={rating} reviewCount={reviewCount} />
+      {showSnippet && latestReview && (
+        <p className="text-xs text-gray-500 italic line-clamp-2">
+          &ldquo;{latestReview.review}&rdquo;
+        </p>
+      )}
     </div>
   );
 };

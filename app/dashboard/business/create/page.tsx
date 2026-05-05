@@ -2,7 +2,7 @@
 
 "use client";
 
-import BusinessFormSection from "../../../components/business/create/BusinessFormSection";
+import BusinessFormSection from "../../../components/business/create/BusinessFormSection/BusinessFormSection";
 
 export default function CreateBusinessPage() {
   return (

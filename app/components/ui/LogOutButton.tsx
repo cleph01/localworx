@@ -1,18 +1,15 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useNostrUser } from "@/app/context/NostrUserContext";
-import { toast } from "react-toastify";
 
 export default function LogOutButton() {
-  const router = useRouter();
-  const { user, signOut } = useNostrUser();
+  const { signOut } = useNostrUser();
 
   return (
     <button
       onClick={signOut}
-      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md shadow"
+      className="text-xs text-gray-400 hover:text-white border border-white/20 hover:border-white/40 px-3 py-1.5 rounded-lg transition-colors"
     >
-      {user ? "Log Out" : "...Logging Out"}
+      Log out
     </button>
   );
 }

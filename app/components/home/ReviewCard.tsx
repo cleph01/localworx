@@ -17,30 +17,30 @@ const ReviewCard: React.FC<ReviewProps> = ({
   avatarUrl,
 }) => {
   return (
-    <div className="flex flex-col mb-4 w-full min-h-76 p-4 bg-white rounded-lg shadow-md">
-      <div className="flex flex-row my-4">
-        {/* render the rating stars  */}
+    <div className="flex flex-col w-full p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+      <div className="flex flex-row gap-0.5 mb-4">
         {Array(rating)
           .fill(null)
           .map((_, index) => (
-            <FaStar key={index} className="text-yellow-500" />
+            <FaStar key={index} className="text-brand-orange" />
           ))}
       </div>
-      <div className="text-gray-400 mt-8">{review}</div>
-      {/* wrapper to control spacing b/w children */}
-      <div className="flex flex-row mt-6">
+      <p className="text-gray-500 flex-1 leading-relaxed">
+        &ldquo;{review}&rdquo;
+      </p>
+      <div className="flex flex-row items-center mt-6 gap-3">
         <img
-          className="inline-block size-15 rounded-full ring-2 ring-white"
+          className="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow-sm"
           src={avatarUrl}
-          alt=""
+          alt={name}
         />
-
-        <div className="flex flex-col justify-center ml-2">
-          <div className="font-bold capitalize">{name}</div>
-          <div className="text-gray-400 capitalize">{businessName}</div>
+        <div className="flex flex-col">
+          <span className="font-semibold capitalize text-sm">{name}</span>
+          <span className="text-gray-400 capitalize text-xs">{businessName}</span>
         </div>
       </div>
     </div>
   );
 };
+
 export default ReviewCard;

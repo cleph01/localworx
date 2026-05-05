@@ -1,51 +1,31 @@
 "use client";
 
-// This component is client-side only, so we can use hooks like useFetchMyBusinesses
-
-import { calculateAverageRating } from "@/app/utilities/calculateAverageRating";
 import useSWR from "swr";
+import { calculateAverageRating } from "@/app/utilities/calculateAverageRating";
+import StarRating from "@/app/components/ui/StarRating";
+
+const fetcher = (url: string) =>
+  fetch(url, { credentials: "same-origin" }).then((res) => {
+    if (!res.ok) throw new Error("Promoter reviews response was not ok");
+    return res.json();
+  });
 
 const PromoterRatingSection = ({
   promoterId,
 }: {
   promoterId: number | string;
 }) => {
-  // Client-side fetching of user by promoter ID
-  // Generic fetcher function
-  const fetcher = (url: string) =>
-    fetch(url, { credentials: "same-origin" }).then((res) => {
-      if (!res.ok)
-        throw new Error("Promotion card promoter reviews response was not ok");
-      return res.json();
-    });
+  const { data, error, isLoading } = useSWR(
+    `/api/promoter/promoter-reviews/${promoterId}`,
+    fetcher
+  );
 
-  const searchUrl = `/api/promoter/promoter-reviews/${promoterId}`;
-
-  const { data, error, isLoading } = useSWR(searchUrl, fetcher);
-
-  if (isLoading) return <div className="text-gray-500">Loading...</div>;
-
-  if (error) {
-    console.error("Error loading promoter ratings:", error);
-  }
-  if (!data) {
-    return <div>No reviews found</div>;
-  }
+  if (isLoading) return <div className="h-4 w-24 bg-gray-200 rounded animate-pulse" />;
+  if (error || !data) return null;
 
   const { rating, reviewCount } = calculateAverageRating(data);
 
-  return (
-    <div className="flex flex-row items-center gap-1">
-      <span className="text-sm sm:text-base">⭐</span>
-      <span className="text-sm sm:text-base text-gray-500 font-semibold">
-        {rating.toString()}
-      </span>
-      <span className="text-xs sm:text-sm text-gray-400 flex-1">
-        {" "}
-        ({reviewCount} {reviewCount > 1 ? "ratings" : "rating"})
-      </span>
-    </div>
-  );
+  return <StarRating rating={rating} reviewCount={reviewCount} />;
 };
 
 export default PromoterRatingSection;

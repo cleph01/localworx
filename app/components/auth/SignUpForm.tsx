@@ -189,10 +189,10 @@ const SignUpFooter = ({
     <button
       onClick={() => router.push("/dashboard")}
       disabled={!hasConfirmed}
-      className={`w-full py-2 rounded ${
+      className={`w-full py-2 rounded-xl font-semibold transition-colors ${
         hasConfirmed
-          ? "bg-blue-600 hover:bg-blue-700 text-white"
-          : "bg-gray-400 text-white cursor-not-allowed"
+          ? "bg-brand-orange hover:bg-orange-500 text-white"
+          : "bg-gray-300 text-gray-500 cursor-not-allowed"
       }`}
     >
       Continue to Dashboard
@@ -200,7 +200,7 @@ const SignUpFooter = ({
   ) : (
     <button
       onClick={handleSignUp}
-      className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded"
+      className="w-full bg-brand-orange hover:bg-orange-500 text-white py-2 rounded-xl font-semibold transition-colors"
       disabled={generating}
     >
       {!generating

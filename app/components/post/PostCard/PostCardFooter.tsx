@@ -1,6 +1,5 @@
-import Button from "../../ui/Button";
-
-import PostViewButton from "./PostViewButton";
+import Link from "next/link";
+import { FaEye, FaBolt } from "react-icons/fa";
 
 type PostFooterType = {
   userId: number | string;
@@ -10,23 +9,25 @@ type PostFooterType = {
 
 const PostCardFooter = ({ postId, publishDate }: PostFooterType) => {
   return (
-    <div className="flex flex-col">
-      <div className="flex flew-row items-center justify-between">
-        {/* View Item */}
-        <PostViewButton postId={postId ?? ""} />
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center gap-2">
+        <Link
+          href={`/post/${postId}`}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 text-gray-600 hover:border-brand-orange hover:text-brand-orange text-sm transition-colors"
+        >
+          <FaEye className="h-3.5 w-3.5" />
+          View Post
+        </Link>
 
-        <Button
-          details={{
-            text: "⚡️ Zap It!",
-            css: "flex-1 ml-2 my-6 py-2 px-4 bg-orange-500 hover:bg-orange-600 transition-all text-white text-base font-bold rounded-md",
-          }}
-        />
+        <button className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-brand-orange hover:bg-orange-600 text-white text-sm font-semibold rounded-xl transition-colors">
+          <FaBolt className="h-3.5 w-3.5" />
+          Zap It
+        </button>
       </div>
-      {/* Post created_at field */}
-      <div className="text-sm text-gray-500">
-        Published on:{" "}
-        {publishDate ? new Date(publishDate).toLocaleDateString() : "Unknown"}
-      </div>
+
+      <p className="text-xs text-gray-400">
+        {publishDate ? new Date(publishDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : ""}
+      </p>
     </div>
   );
 };

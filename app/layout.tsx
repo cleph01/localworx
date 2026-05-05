@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Lora } from "next/font/google";
 import "./globals.css";
 // Toastify imports
 
@@ -20,9 +20,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+});
+
 export const metadata: Metadata = {
   icons: {
-    icon: "/localworx-logo.jpg",
+    icon: "/localworx-logo.png",
   },
   title: "LocalWorx | Empowering Local Businesses with Peer-Powered Promotion",
   description:
@@ -55,7 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${lora.variable} antialiased`}
       >
         <NostrUserProvider>
           <ToastContainer position="top-right" />

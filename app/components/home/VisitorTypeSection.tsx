@@ -1,31 +1,32 @@
-// VisitorTypeSection.tsx
-
-import { FaBriefcase, FaBullhorn, FaTags, FaUser } from "react-icons/fa";
-import ButtonLink from "../ButtonLink";
+import Link from "next/link";
+import { FaBriefcase, FaTags, FaUser } from "react-icons/fa";
 
 const VisitorTypeSection = () => {
   return (
-    <section className="flex flex-col sm:flex-row justify-center items-center gap-4">
-      <ButtonLink
-        text="I'm looking for services"
-        icon={<FaUser className="h-5 w-5 text-white " />}
-        link="/services-directory"
-        color="bg-blue-500" // Custom color for this button
-      />
+    <section className="flex flex-col sm:flex-row justify-center items-center gap-4 px-4 py-12">
+      <Link
+        href="/services-directory"
+        className="inline-flex items-center justify-center gap-2 w-72 px-6 py-3 text-lg font-semibold text-white bg-brand-orange rounded-xl shadow-lg hover:bg-orange-600 transition duration-300"
+      >
+        <FaUser className="h-5 w-5" />
+        I'm looking for services
+      </Link>
 
-      <ButtonLink
-        text="I'm a business owner"
-        icon={<FaBriefcase className="h-5 w-5 text-white" />}
-        color="bg-slate-700"
-        link=""
-      />
+      <Link
+        href="/auth"
+        className="inline-flex items-center justify-center gap-2 w-72 px-6 py-3 text-lg font-semibold text-white bg-navy-blue-background rounded-xl shadow-lg hover:opacity-80 transition duration-300"
+      >
+        <FaBriefcase className="h-5 w-5" />
+        I'm a business owner
+      </Link>
 
-      <ButtonLink
-        text="Browse the Marketplace"
-        link="/marketplace"
-        icon={<FaTags className="h-5 w-5 text-white" />}
-        color="bg-green-600"
-      />
+      <Link
+        href="/marketplace"
+        className="inline-flex items-center justify-center gap-2 w-72 px-6 py-3 text-lg font-semibold text-white bg-navy-blue-background rounded-xl shadow-lg hover:opacity-80 transition duration-300"
+      >
+        <FaTags className="h-5 w-5" />
+        Browse the Marketplace
+      </Link>
     </section>
   );
 };

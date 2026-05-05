@@ -7,13 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate:neon": "dotenv -e .env.local -- node -r ts-node/register ./node_modules/knex/bin/cli.js --knexfile app/db/knexfile.ts migrate:latest",
-    "seed:neon": "dotenv -e .env.local -- node -r ts-node/register ./node_modules/knex/bin/cli.js --knexfile app/db/knexfile.ts seed:run"
+    "migrate": "dotenv -e .env.local -- node -r ts-node/register ./node_modules/knex/bin/cli.js --knexfile db/knexfile.ts --env migrate migrate:latest",
+    "migrate:rollback": "dotenv -e .env.local -- node -r ts-node/register ./node_modules/knex/bin/cli.js --knexfile db/knexfile.ts --env migrate migrate:rollback",
+    "seed": "dotenv -e .env.local -- node -r ts-node/register ./node_modules/knex/bin/cli.js --knexfile db/knexfile.ts --env migrate seed:run"
   },
   "dependencies": {
     "@getalby/sdk": "^5.1.0",
     "@googlemaps/js-api-loader": "^1.16.8",
     "@react-google-maps/api": "^2.20.6",
+    "@supabase/supabase-js": "^2.105.0",
     "authjs-knexjs-adapter": "^3.0.0",
     "canvas-confetti": "^1.9.3",
     "knex": "^3.1.0",
@@ -28,7 +30,6 @@
     "react-intersection-observer": "^9.16.0",
     "react-qr-code": "^2.0.15",
     "react-toastify": "^11.0.5",
-    "sqlite3": "^5.1.7",
     "swr": "^2.3.3",
     "use-debounce": "^10.0.5"
   },

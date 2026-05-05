@@ -22,7 +22,15 @@ const AuthorProfileSection = ({ id, authorId }: AuthorProfileSectionProps) => {
 
   const { data: user, error, isLoading } = useSWR(searchUrl, fetcher);
 
-  if (isLoading) return <div className="text-gray-500">Loading...</div>;
+  if (isLoading) return (
+    <div className="flex items-center gap-2 animate-pulse">
+      <div className="h-16 w-16 bg-gray-200 rounded-full shrink-0" />
+      <div className="space-y-2">
+        <div className="h-4 w-28 bg-gray-200 rounded" />
+        <div className="h-3 w-20 bg-gray-200 rounded" />
+      </div>
+    </div>
+  );
 
   if (error) {
     console.error("Error fetching author:", error);
@@ -35,12 +43,12 @@ const AuthorProfileSection = ({ id, authorId }: AuthorProfileSectionProps) => {
   return (
     <div className="flex flex-row items-center gap-2">
       <img
-        className="inline-block h-16 w-16 rounded-full ring-2 ring-white shadow-sm"
+        className="inline-block h-9 w-9 rounded-full ring-2 ring-white shadow-sm shrink-0"
         src={user.avatar_url ?? ""}
         alt={user.first_name}
       />
       <div className="flex flex-col justify-center">
-        <div className="text-lg font-semibold text-slate-700 pl-2">
+        <div className="text-sm font-semibold text-foreground pl-2">
           {user.first_name}
         </div>
         <PostEngagementSection userId={authorId} postId={id} />

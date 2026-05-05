@@ -30,5 +30,5 @@ export async function findOrCreateCategory(name: string): Promise<number> {
     .insert({ name })
     .returning("id");
 
-  return inserted.id ?? inserted; // SQLite returns number directly
+  return inserted.id;
 }

@@ -18,7 +18,7 @@ const BusinessCategorySection = ({
   const { data: category, error, isLoading } = useSWR(searchUrl, fetcher);
 
   if (isLoading) {
-    return <div className="text-gray-500">Loading category...</div>;
+    return <div className="h-5 w-20 bg-gray-200 rounded-full animate-pulse" />;
   }
 
   if (error) {

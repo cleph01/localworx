@@ -16,45 +16,45 @@ const features = [
     title: "Bitcoin Zap Integration",
     description:
       "Send and receive instant payments for community engagement and service promotion.",
-    icon: <FaBtc className="h-12 w-12 text-blue-400" />,
+    icon: <FaBtc className="h-12 w-12 text-brand-orange" />,
   },
   {
     title: "Promoter Hub",
     description:
       "Earn by promoting local businesses and services or sharing community-powered deals with your friends.",
-    icon: <FaVolumeUp className="h-10 w-10 text-blue-400" />,
+    icon: <FaVolumeUp className="h-10 w-10 text-brand-orange" />,
   },
   {
     title: "Service Directory",
     description:
       "Quickly find local offerings that match your needs using intuitive filters and categories.",
-    icon: <FaAddressCard className="h-10 w-10 text-blue-400" />,
+    icon: <FaAddressCard className="h-10 w-10 text-brand-orange" />,
   },
   {
     title: "Role Based User Profiles",
     description:
       "Easily showcase your skills and service with tools tailored for freelancers, promoters, and business owners.",
-    icon: <FaUsers className="h-10 w-10 text-blue-400" />,
+    icon: <FaUsers className="h-10 w-10 text-brand-orange" />,
   },
   {
     title: "Reward Dashboard",
     description:
       "Stay motivated with real-time insights into your earnings, milestones, and progress through gamified tracking.",
-    icon: <FaColumns className="h-10 w-10 text-blue-400" />,
+    icon: <FaColumns className="h-10 w-10 text-brand-orange" />,
   },
   {
     title: "Community Check-Ins",
     description:
       "Share your wins, track local impact, and stay connected with the businesses that matter most to you.",
-    icon: <FaQrcode className="h-10 w-10 text-blue-400" />,
+    icon: <FaQrcode className="h-10 w-10 text-brand-orange" />,
   },
 ];
 
 const FeaturesSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center text-lg px-4">
+    <section className="w-full bg-gray-50 flex flex-col items-center justify-center text-lg px-4 sm:px-6 py-16 sm:py-24">
       <p className="my-4 font-bold text-base">
-        🟦 Tools to grow within your local network.
+        Tools to grow within your local network.
       </p>
       <p className="max-w-4xl text-gray-500">
         From listing your services to getting paid for promoting your community,

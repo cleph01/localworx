@@ -1,24 +1,27 @@
-import Button from "../ui/Button";
-import { FaBitcoin, FaBtc } from "react-icons/fa";
+import { FaBtc } from "react-icons/fa";
 import LazyLoadWrapper from "../ui/LazyLoadWrapper";
 import HeaderImageWrapper from "../ui/HeaderImageWrapper";
 import db from "@/db/db";
 import BusinessCategorySection from "./BusinessCategorySection";
+import { calculateAverageRating } from "@/app/utilities/calculateAverageRating";
+import StarRating from "@/app/components/ui/StarRating";
+import ContactActions from "./ContactActions";
 
-// BusinessOverviewSection.tsx
 const BusinessOverviewSection = async ({
   businessId,
 }: {
   businessId: string;
 }) => {
-  // SSR: Fetch the business details from the database
-  // Fetch the business details from the database
-  const business = await db("businesses").where("id", businessId).first();
+  const [business, reviews] = await Promise.all([
+    db("businesses").where("id", businessId).first(),
+    db("business_reviews").where("business_id", businessId),
+  ]);
 
-  // Check if the business exists
   if (!business) {
     return <div>Business not found</div>;
   }
+
+  const { rating, reviewCount } = calculateAverageRating(reviews ?? []);
 
   return (
     <section className="w-full py-8 px-6 max-w-4xl">
@@ -42,48 +45,58 @@ const BusinessOverviewSection = async ({
           </HeaderImageWrapper>
         </LazyLoadWrapper>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <h1 className="text-3xl font-bold">{business.business_name}</h1>
-          <BusinessCategorySection categoryId={business.category_id} />
+
+          <div className="flex items-center gap-3 flex-wrap">
+            <BusinessCategorySection categoryId={business.category_id} />
+            <a
+              href="#reviews"
+              className="text-xs text-brand-orange hover:underline"
+            >
+              {reviewCount > 0
+                ? `${reviewCount} review${reviewCount !== 1 ? "s" : ""}`
+                : "No reviews yet"}
+            </a>
+          </div>
+
+          <StarRating rating={rating} reviewCount={reviewCount} />
+
           {business.description && (
-            <div className="text-base sm:text-lg text-gray-600 my-2">
+            <p className="text-base sm:text-lg text-gray-600">
               {business.description}
-            </div>
+            </p>
           )}
-          <p className="text-sm sm:text-base text-gray-600">
+
+          <p className="text-sm text-gray-600">
             📍 {business.address}, {business.city}, {business.state}
           </p>
 
-          {business.email && (
-            <p className="text-sm sm:text-base text-gray-600">
-              <span className="font-semibold">✉️ Email:</span> {business.email}
+          {business.phone && (
+            <p className="text-sm text-gray-600">
+              📱 {business.phone}
             </p>
           )}
-          <p className="text-sm sm:text-base text-gray-600">
-            <span className="font-semibold">📱 Phone:</span> {business.phone}
-          </p>
+
           {business.hiring_promoters ? (
-            <div className="flex flex-col">
-              <div className="flex flex-row items-center mb-4 text-sm sm:text-base text-gray-600">
-                <span className="flex flex-row items-center font-semibold mr-1">
-                  <FaBtc className="text-orange-500 mr-1" />
-                  Income:
-                </span>
-                <div className="text-gray-600"> HIRING Promoters!</div>
+            <div className="flex flex-col gap-3 mt-1">
+              <div className="inline-flex items-center gap-2 text-xs font-semibold text-brand-orange bg-orange-50 px-3 py-1.5 rounded-full w-fit">
+                <FaBtc />
+                Hiring Promoters
               </div>
-              <Button
-                details={{
-                  css: "bg-green-600 px-4 py-2 text-gray-100 font-bold",
-                  text: "Reach out 🤝",
-                }}
-              />{" "}
+              {business.email ? (
+                <ContactActions email={business.email} />
+              ) : (
+                <p className="text-sm text-gray-400">No contact email listed.</p>
+              )}
             </div>
           ) : (
-            <div>❌ Currently not hiring promoters</div>
+            <p className="text-sm text-gray-400">Not currently hiring promoters.</p>
           )}
         </div>
       </div>
     </section>
   );
 };
+
 export default BusinessOverviewSection;

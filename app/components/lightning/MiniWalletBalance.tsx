@@ -1,65 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 
 interface WalletBalanceProps {
-  walletId: string;
-  pairingUri: string;
+  businessId: number;
 }
 
-const MiniWalletBalance = ({ walletId, pairingUri }: WalletBalanceProps) => {
-  const [sats, setSats] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
+const MiniWalletBalance = ({ businessId }: WalletBalanceProps) => {
+  const fetcher = async (url: string) => {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ businessId }),
+    });
+    if (!res.ok) throw new Error("Failed to fetch wallet balance");
+    return res.json();
+  };
 
-  useEffect(() => {
-    const fetchBalance = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(`/api/lightning/wallet/get-balance`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ walletId: walletId, pairingUri: pairingUri }),
-        });
+  const { data, error, isLoading } = useSWR(
+    `/api/lightning/check-balance?businessId=${businessId}`,
+    fetcher
+  );
 
-        const data = await res.json();
-        if (!data.invoice) throw new Error("No invoice returned");
+  if (isLoading) {
+    return <div className="h-8 w-32 bg-white/10 rounded animate-pulse" />;
+  }
+  if (error) {
+    return <p className="text-red-400 text-xs">Failed to load balance</p>;
+  }
 
-        if (res.ok && data.balance) {
-          setSats(Math.floor(data.balance / 1000)); // Convert msats → sats
-        }
-      } catch (err) {
-        console.error("Wallet balance fetch failed", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const sats = data?.balance ?? 0;
 
-    fetchBalance();
-  }, [walletId]);
-
-  if (loading) return null;
-
-  return sats !== null ? (
-    <p className="text-sm text-green-700 font-medium mt-2">
-      💰 Wallet Balance: {sats.toLocaleString()} sats
-    </p>
-  ) : (
-    <p className="text-sm text-red-600">Wallet not found</p>
+  return (
+    <div>
+      <p className="text-2xl font-bold text-white tracking-tight">
+        {sats.toLocaleString()}
+        <span className="text-sm font-normal text-white/50 ml-1">sats</span>
+      </p>
+    </div>
   );
 };
 
 export default MiniWalletBalance;
-
-/**
- * 
- * Integration Plan
-Pass walletId directly to the <WalletBalance /> component
-
-import WalletBalance from "@/components/wallet/WalletBalance";
-
-<WalletBalance walletId={business.subwalletId} />
-
-If you're rendering a business profile or dashboard, just make sure the walletId is loaded alongside the rest of the data.
- */

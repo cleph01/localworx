@@ -34,7 +34,7 @@ const reviews = [
 
 const ReviewsSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center mt-10 text-lg px-4">
+    <section className="w-full bg-gray-50 flex flex-col items-center justify-center text-lg px-4 sm:px-6 py-16 sm:py-24">
       <h2 className="max-w-4xl text-5xl sm:text-6xl font-semibold mb-6">
         Don't take our word for it, here's what our{" "}
         <span className="font-serif italic">users</span> say:

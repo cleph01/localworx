@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { FaBtc } from "react-icons/fa";
 import IntroOfferSection from "./IntroOfferSection";
 
-// Define the prop types for BusinessCardContent
 type BusinessCardContentType = {
   id: string;
   address: string;
@@ -22,29 +22,20 @@ const BusinessCardContent = ({
   <div className="flex flex-col gap-2">
     {/* Address */}
     <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 px-1 py-1">
-      <span className="text-lg sm:text-xl">
-        {/* <FaMapMarkerAlt /> */}
-        📍
-      </span>
-      <span>
-        {address}, {city} {state}
-      </span>
-    </div>
-    {/* Bitcoin Accepted */}
-    <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 px-1 py-1">
-      <span className="text-lg sm:text-xl">
-        <FaBtc className="text-orange-500" />
-      </span>
-
-      <span>Hiring Promoters: {hiring_promoters ? "Yes" : "No"}</span>
+      <span className="text-lg">📍</span>
+      <span>{address}, {city} {state}</span>
     </div>
 
-    {/* TODO: Make Zap Payouts Component */}
-
-    <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-orange-500 bg-orange-50 px-1 py-1 rounded-full">
-      <span className="text-lg sm:text-xl">⚡️</span>
-      <span>{`100`} Zap Payouts Made</span>
-    </div>
+    {/* Hiring promoters badge */}
+    {hiring_promoters && (
+      <Link
+        href={`/business/${id}`}
+        className="flex items-center gap-2 text-xs font-semibold text-brand-orange bg-orange-50 px-2 py-1 rounded-full w-fit hover:bg-orange-100 transition-colors"
+      >
+        <FaBtc />
+        <span>Hiring Promoters</span>
+      </Link>
+    )}
 
     {/* Special Offers */}
     <IntroOfferSection

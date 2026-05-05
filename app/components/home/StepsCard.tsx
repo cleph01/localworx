@@ -14,7 +14,7 @@ const StepsCard: React.FC<StepsProps> = ({
   description,
 }) => {
   return (
-    <div className="flex flex-col justify-center w-full h-full p-4 bg-white rounded-lg shadow-md">
+    <div className="flex flex-col justify-center w-full h-full p-4 bg-white rounded-xl shadow-sm border border-gray-100">
       <div className="min-h-32 flex flex-row justify-center items-center  bg-background my-4">
         {header}
       </div>

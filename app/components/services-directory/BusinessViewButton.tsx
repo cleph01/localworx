@@ -13,7 +13,7 @@ const BusinessViewButton = ({ businessId }: { businessId: string }) => {
   return (
     <button
       onClick={handleViewItem}
-      className="bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm flex items-center gap-1 hover:bg-gray-300 cursor-pointer"
+      className="bg-navy-blue-background text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 hover:bg-opacity-80 cursor-pointer transition-colors"
     >
       <FaEye /> View
     </button>

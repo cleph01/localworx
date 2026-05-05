@@ -9,9 +9,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       id: 1,
       description: "A cozy family-owned coffee shop serving organic brews.",
-      pairing_uri_encrypted: null,
-      wallet_created: false,
-      wallet_id: null,
+
       business_name: "Bean & Brew",
       address: "123 Main St",
       city: "Greenville",
@@ -30,9 +28,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       id: 2,
       description: "A boutique barber shop with vintage vibes.",
-      pairing_uri_encrypted: null,
-      wallet_created: false,
-      wallet_id: null,
+
       business_name: "The Vintage Cut",
       address: "456 Barber Blvd",
       city: "Greenville",
@@ -51,9 +47,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       id: 3,
       description: "Handmade pastries and fresh local bread daily.",
-      pairing_uri_encrypted: null,
-      wallet_created: false,
-      wallet_id: null,
+
       business_name: "Rise & Shine Bakery",
       address: "789 Dough St",
       city: "Greenville",
@@ -72,9 +66,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       id: 4,
       description: "Local gym with 24/7 access and group classes.",
-      pairing_uri_encrypted: null,
-      wallet_created: false,
-      wallet_id: null,
+
       business_name: "Iron Temple",
       address: "321 Fitness Ln",
       city: "Greenville",
@@ -93,9 +85,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       id: 5,
       description: "Tech support and gadget repair, fast and friendly.",
-      pairing_uri_encrypted: null,
-      wallet_created: false,
-      wallet_id: null,
+
       business_name: "Tech Savvy",
       address: "111 Tech Ave",
       city: "Greenville",
@@ -115,9 +105,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       id: 6,
       description: "Organic smoothie bar with seasonal ingredients.",
-      pairing_uri_encrypted: null,
-      wallet_created: false,
-      wallet_id: null,
+
       business_name: "Green Sip",
       address: "222 Vitality Blvd",
       city: "Greenville",
@@ -137,9 +125,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       id: 7,
       description: "Custom woodworking studio and gallery.",
-      pairing_uri_encrypted: null,
-      wallet_created: false,
-      wallet_id: null,
+
       business_name: "Grain & Glory",
       address: "333 Artisan Way",
       city: "Greenville",
@@ -159,9 +145,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       id: 8,
       description: "Music lessons and instrument repair for all ages.",
-      pairing_uri_encrypted: null,
-      wallet_created: false,
-      wallet_id: null,
+
       business_name: "Sound Roots",
       address: "444 Harmony Rd",
       city: "Greenville",
@@ -180,9 +164,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       id: 9,
       description: "Locally sourced produce and artisan goods.",
-      pairing_uri_encrypted: null,
-      wallet_created: false,
-      wallet_id: null,
+
       business_name: "Greenville Market Co.",
       address: "555 Fresh St",
       city: "Greenville",
@@ -203,9 +185,7 @@ export async function seed(knex: Knex): Promise<void> {
       id: 10,
       description:
         "Full-service auto repair shop specializing in domestic and import vehicles.",
-      pairing_uri_encrypted: null,
-      wallet_created: false,
-      wallet_id: null,
+
       business_name: "Jack's Garage",
       address: "666 Mechanic Dr",
       city: "Greenville",

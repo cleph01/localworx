@@ -1,8 +1,8 @@
 "use client";
 
 // MarketplaceItemListingsGridSection.tsx
-import { useEffect, useState } from "react";
-import { fetchMarketplaceItems } from "@/app/lib/marketplace/fetchMarketplaceItems";
+import { useState } from "react";
+import useSearch from "@/app/hooks/search/useSearch";
 
 import MarketplaceItemCard from "./MarketplaceItemCard/MarketplaceItemCard";
 import Button from "../ui/Button";
@@ -12,23 +12,15 @@ const MarketplaceItemListingsGridSection = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
   const [sortBy, setSortBy] = useState("relevance");
-  const [results, setResults] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
 
-  // Debounced effect
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      fetchMarketplaceItems(
-        searchTerm,
-        category,
-        sortBy,
-        setResults,
-        setLoading
-      );
-    }, 300);
+  const { data, isLoading, error } = useSearch({
+    resourceType: "marketplace",
+    query: searchTerm,
+    category,
+    sortBy,
+  });
 
-    return () => clearTimeout(timeout);
-  }, [searchTerm, category, sortBy]);
+  const results = data?.results ?? [];
 
   return (
     <section className="flex flex-col items-center justify-center gap-6 px-4 my-12">
@@ -44,18 +36,19 @@ const MarketplaceItemListingsGridSection = () => {
         setSortBy={setSortBy}
       />
 
-      {loading && (
-        <section className="flex flex-col items-center justify-center gap-6 px-4 my-12">
-          <h2 className="text-3xl font-bold text-center">
-            Loading Listings...
-          </h2>
-          <p className="text-gray-500">
-            Please wait while we fetch the listings.
-          </p>
-        </section>
+      {isLoading && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="rounded-lg border border-gray-200 p-4 animate-pulse space-y-3">
+              <div className="h-5 w-3/4 bg-gray-200 rounded" />
+              <div className="h-4 w-1/2 bg-gray-200 rounded" />
+              <div className="h-20 w-full bg-gray-200 rounded" />
+            </div>
+          ))}
+        </div>
       )}
 
-      {(!results || (results.length === 0 && !loading)) && (
+      {!isLoading && results.length === 0 && (
         <section className="flex flex-col items-center justify-center gap-6 px-4 my-12">
           <h2 className="text-3xl font-bold text-center">No Listings Found</h2>
           <p className="text-gray-500">Check back later for new listings, or</p>
@@ -63,9 +56,8 @@ const MarketplaceItemListingsGridSection = () => {
         </section>
       )}
 
-      {/* Listings Grid */}
-      {results && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {!isLoading && results.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {results.map((item: any) => (
             <MarketplaceItemCard key={item.id} item={item} />
           ))}

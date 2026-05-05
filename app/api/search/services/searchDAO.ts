@@ -15,34 +15,45 @@ export async function queryServiceDirectory({
   sortBy,
 }: SearchParams) {
   const query = db("businesses")
-    .select("*")
+    .select(
+      "businesses.id",
+      "businesses.description",
+      "businesses.business_name",
+      "businesses.address",
+      "businesses.city",
+      "businesses.state",
+      "businesses.phone",
+      "businesses.email",
+      "businesses.email_verified",
+      "businesses.website",
+      "businesses.logo_url",
+      "businesses.is_active",
+      "businesses.hiring_promoters",
+      "businesses.latitude",
+      "businesses.longitude",
+      "businesses.owner_id",
+      "businesses.category_id",
+      "businesses.created_at",
+      "businesses.updated_at",
+      "business_categories.name as category_name"
+    )
     .leftJoin(
       "business_categories",
       "business_categories.id",
       "businesses.category_id"
     );
 
-  // If using SQLite, we might need to adjust the query for case-insensitive search
-  const isSQLite = db.client.config.client === "sqlite3";
-
   if (q) {
-    const lowerQ = `%${q.toLowerCase()}%`;
-
+    const lowerQ = `%${q}%`;
     query.where((builder) => {
-      if (isSQLite) {
-        builder
-          .whereRaw("LOWER(businesses.business_name) LIKE ?", [lowerQ])
-          .orWhereRaw("LOWER(businesses.description) LIKE ?", [lowerQ]);
-      } else {
-        builder
-          .whereILike("businesses.business_name", lowerQ)
-          .orWhereILike("businesses.description", lowerQ);
-      }
+      builder
+        .whereILike("businesses.business_name", lowerQ)
+        .orWhereILike("businesses.description", lowerQ);
     });
   }
 
   if (category) {
-    query.andWhere("business_categories.name", category);
+    query.andWhereILike("business_categories.name", category);
   }
 
   if (hiring) {

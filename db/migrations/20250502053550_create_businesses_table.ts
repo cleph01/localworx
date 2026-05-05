@@ -8,11 +8,6 @@ export async function up(knex: Knex): Promise<void> {
     // business description
     table.text("description").nullable();
 
-    // Wallet-related fields
-    table.text("pairing_uri_encrypted").nullable();
-    table.boolean("wallet_created").defaultTo(false);
-    table.string("wallet_id").nullable();
-
     // Basic info
     table.string("business_name").notNullable();
     table.string("address").notNullable();
@@ -26,7 +21,7 @@ export async function up(knex: Knex): Promise<void> {
     // is_active indicates if the business is currently active
     // This can be used to hide businesses without deleting them
     // if they are temporarily closed or haven't paid for their listing
-    table.boolean("is_active").defaultTo(true);
+    table.boolean("is_active").defaultTo(false);
 
     // Is the business hiring promoters?
     table.boolean("hiring_promoters").defaultTo(false);

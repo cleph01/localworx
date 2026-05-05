@@ -6,6 +6,7 @@ import EarnedRewardsSection from "../components/marketplace/EarnedRewardsSection
 import MarketplaceItemListingsGridSection from "../components/marketplace/MarketplaceItemListingsGridSection";
 import CallToActionSection from "../components/CallToActionSection";
 import Footer from "../components/Footer";
+import GuestBanner from "../components/ui/GuestBanner";
 
 export default function MarketplacePage() {
   return (
@@ -27,6 +28,7 @@ export default function MarketplacePage() {
       {/* Call to Action Section */}
       <CallToActionSection />
       <Footer />
+      <GuestBanner />
     </main>
   );
 }

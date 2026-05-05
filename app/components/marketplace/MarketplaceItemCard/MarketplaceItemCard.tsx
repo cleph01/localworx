@@ -27,7 +27,13 @@ const MarketplaceItemCard = ({ item }: MarketplaceItemCardProps) => {
   const { data: reward, error, isLoading } = useSWR(searchUrl, fetcher);
 
   if (isLoading) {
-    return <div className="text-gray-500">Loading category...</div>;
+    return (
+      <div className="rounded-lg border border-gray-200 p-4 animate-pulse space-y-3">
+        <div className="h-5 w-3/4 bg-gray-200 rounded" />
+        <div className="h-4 w-1/2 bg-gray-200 rounded" />
+        <div className="h-20 w-full bg-gray-200 rounded" />
+      </div>
+    );
   }
   if (error) {
     return (
@@ -62,7 +68,7 @@ const MarketplaceItemCard = ({ item }: MarketplaceItemCardProps) => {
           price={item.price}
         />
       }
-      css="w-full max-w-sm"
+      css="w-full max-w-sm hover:-translate-y-1 hover:shadow-md transition-all duration-200"
     />
   );
 };

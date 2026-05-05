@@ -95,7 +95,7 @@ const SignInFooter = ({ handleSignIn, loading }: SignInFooterProps) => {
   return (
     <button
       onClick={handleSignIn}
-      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
+      className="w-full bg-brand-orange hover:bg-orange-500 text-white py-2 rounded-xl font-semibold transition-colors"
       disabled={loading}
     >
       {!loading ? "Sign In" : "...loading"}

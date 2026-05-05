@@ -2,6 +2,7 @@ import PromotionListingsGridSection from "../components/promotions/PromotionList
 import PageHeader from "../components/ui/PageHeader";
 import CallToActionSection from "../components/CallToActionSection";
 import Footer from "../components/Footer";
+import GuestBanner from "../components/ui/GuestBanner";
 
 const PromotionsPage = () => {
   return (
@@ -17,6 +18,7 @@ const PromotionsPage = () => {
 
       {/* Footer */}
       <Footer />
+      <GuestBanner />
     </main>
   );
 };

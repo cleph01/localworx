@@ -13,6 +13,7 @@ interface UseSearchParams {
   query: string;
   category?: string;
   isHiring?: boolean; // only used for services
+  sortBy?: string; // used for marketplace / promotions
 }
 
 const useSearch = ({
@@ -20,20 +21,20 @@ const useSearch = ({
   query,
   category = "",
   isHiring = false,
+  sortBy = "",
 }: UseSearchParams) => {
   const [debouncedQuery] = useDebounce(query, 300);
   const [debouncedCategory] = useDebounce(category, 300);
+  const [debouncedSortBy] = useDebounce(sortBy, 300);
 
   // Build dynamic query string
   const params = new URLSearchParams();
-  // If query term is provided, add it to the params
   if (debouncedQuery) params.append("q", debouncedQuery);
-  // Only add category if it's provided
   if (debouncedCategory) params.append("category", debouncedCategory);
-  // Only add isHiring if the resource type is services
   if (resourceType === "services") {
     params.append("hiring", isHiring.toString());
   }
+  if (debouncedSortBy) params.append("sortBy", debouncedSortBy);
 
   const searchUrl = `/api/search/${resourceType}?${params.toString()}`;
   const { data, error, isLoading } = useSWR(searchUrl, fetcher);

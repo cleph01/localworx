@@ -23,7 +23,9 @@ const ProfileStatus = ({ user, css }: ProfileStatusProps) => {
             />
           </AvatarWrapper>
         ) : (
-          <div className="h-8 w-8 rounded-full bg-gray-500" />
+          <div className="h-8 w-8 rounded-full bg-navy-blue-background flex items-center justify-center text-white text-sm font-bold">
+            {(user.name?.[0] ?? user.npub[0]).toUpperCase()}
+          </div>
         )}
         <span className="text-sm font-medium">
           {user.name || `${user.npub.slice(0, 12)}…`}

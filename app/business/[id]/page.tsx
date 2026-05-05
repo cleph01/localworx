@@ -3,6 +3,7 @@ import BusinessOverviewSection from "../../components/business/BusinessOverviewS
 import BusinessPromotionsSection from "../../components/business/BusinessPromotionsSection";
 import LoyaltyProgramSection from "../../components/business/LoyaltyProgramSection";
 import IntroOfferSection from "../../components/business/BusinessCard/IntroOfferSection";
+import BusinessReviewsFullSection from "../../components/business/BusinessReviewsFullSection";
 import CallToActionSection from "../../components/CallToActionSection";
 import Footer from "../../components/Footer";
 
@@ -31,6 +32,9 @@ export default async function BusinessProfilePage({
 
       {/* Promotions tied to this business */}
       <BusinessPromotionsSection businessId={id} />
+
+      {/* Reviews */}
+      <BusinessReviewsFullSection businessId={id} />
 
       {/* CTA + Footer */}
       <CallToActionSection />
