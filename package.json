@@ -20,7 +20,7 @@
     "canvas-confetti": "^1.9.3",
     "knex": "^3.1.0",
     "light-bolt11-decoder": "^3.2.0",
-    "next": "15.3.1",
+    "next": "15.3.9",
     "nostr-tools": "^2.13.0",
     "pg": "^8.15.6",
     "pg-query-stream": "^4.9.6",
