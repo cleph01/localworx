@@ -1,7 +1,6 @@
 import PageHeader from "./components/ui/PageHeader";
 import HeroSection from "./components/home/HeroSection";
 import VisitorTypeSection from "./components/home/VisitorTypeSection";
-import ProfilesCarouselSection from "./components/home/ProfileCarouselSection";
 import FeaturesSection from "./components/home/FeaturesSection";
 import VisionMissionSection from "./components/home/VisionMissionSection";
 import SignupStepsSection from "./components/home/SignupStepsSection";
@@ -22,9 +21,6 @@ export default function Home() {
 
       {/* Visitor Type Buttons */}
       <VisitorTypeSection />
-
-      {/* Carousel */}
-      <ProfilesCarouselSection />
 
       {/* Features Header*/}
       <FeaturesSection />

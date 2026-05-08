@@ -23,7 +23,7 @@ const PageHeader = () => {
   const [firstWord, ...rest] = headLine.split(" ");
 
   return (
-    <section className="px-6 pt-10 pb-6 max-w-4xl">
+    <section className="w-full max-w-7xl mx-auto px-4 lg:px-6 pt-10 pb-6">
       <h1 className="text-4xl sm:text-5xl font-bold leading-tight tracking-tight">
         <span className="font-serif italic text-brand-orange">{firstWord}</span>{" "}
         <span>{rest.join(" ")}</span>

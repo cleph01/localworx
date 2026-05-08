@@ -9,11 +9,11 @@ import { useNostrUser } from "@/app/context/NostrUserContext";
 import ProfileStatus from "./ProfileStatus";
 
 const NAV_LINKS = [
+  { href: "/about", label: "About" },
   { href: "/services-directory", label: "Services" },
   { href: "/promotions", label: "Promotions" },
   { href: "/marketplace", label: "Marketplace" },
   { href: "/posts", label: "Community" },
-  { href: "/about", label: "About" },
 ];
 
 const Navbar = () => {
