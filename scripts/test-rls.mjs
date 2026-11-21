@@ -24,8 +24,8 @@ await db.exec(`
   grant usage on schema public to anon, authenticated, service_role;
   create schema extensions;
   grant usage on schema extensions to anon, authenticated, service_role;
-  alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
-  alter default privileges in schema public grant all on sequences to anon, authenticated, service_role;
+  -- Matches the project setting "grant API access to new tables automatically: OFF":
+  -- no automatic table grants, so the migration must grant everything explicitly.
   alter default privileges in schema public grant all on functions to anon, authenticated, service_role;
 `);
 
@@ -87,7 +87,8 @@ await check("alice (staff) reads the check-in secret", () => as("alice", async (
 }));
 await check("bob and anon cannot read the check-in secret", async () => {
   assert((await as("bob", () => q(`select * from checkin_secrets`))).rows.length === 0, "bob read secret");
-  assert((await as("anon", () => q(`select * from checkin_secrets`))).rows.length === 0, "anon read secret");
+  // anon has no grant at all on this table: permission denied is the expected (stricter) answer
+  await as("anon", () => denied(() => q(`select * from checkin_secrets`)));
 });
 await check("anon sees the active business", () => as("anon", async () => {
   assert((await q(`select id from businesses`)).rows.length === 1, "not visible");
@@ -225,6 +226,23 @@ await check("a challenge is consumed exactly once", () => as("service", async ()
   await q(`insert into auth_challenges (challenge) values ('c1')`);
   assert((await q(`select consume_challenge('c1') as ok`)).rows[0].ok === true, "first");
   assert((await q(`select consume_challenge('c1') as ok`)).rows[0].ok === false, "replay");
+}));
+
+console.log("\nExplicit grants (auto-grant is OFF)");
+await check("anon can read the public tables the site shows", () => as("anon", async () => {
+  for (const t of ["profiles","categories","businesses","reward_programs","listings","promotions","posts","business_reviews","promoter_reviews"]) {
+    await q(`select 1 from ${t} limit 1`);
+  }
+}));
+await check("anon cannot read private tables", () => as("anon", async () => {
+  for (const t of ["checkins","sales","promotion_claims","promoter_payouts","business_staff"]) {
+    await denied(() => q(`select 1 from ${t} limit 1`));
+  }
+}));
+await check("service role can read and write every table", () => as("service", async () => {
+  for (const t of ["profiles","businesses","checkins","rewards","listings","sales","auth_challenges","promoter_payouts"]) {
+    await q(`select 1 from ${t} limit 1`);
+  }
 }));
 
 console.log(`\n${pass} passed, ${fail} failed`);

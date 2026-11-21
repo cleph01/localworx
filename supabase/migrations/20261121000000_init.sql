@@ -526,6 +526,36 @@ grant execute on function public.record_checkin(uuid, uuid, double precision, do
   to service_role;
 alter default privileges in schema public revoke execute on functions from public, anon, authenticated;
 
+-- ─────────────────────────────────────────────────────────────── table grants
+-- The project has "grant API access to new tables automatically" OFF, so every
+-- privilege is listed here on purpose. Grants say what a role MAY touch; RLS
+-- policies above decide which ROWS. Column-limited updates are granted earlier
+-- (profiles, businesses, promotion_claims, posts).
+grant all on all tables in schema public to service_role;
+grant usage, select on all sequences in schema public to service_role;
+
+-- Public reads (anon + signed-in)
+grant select on public.profiles, public.categories, public.businesses, public.reward_programs,
+                public.rewards, public.listings, public.promotions, public.posts,
+                public.business_reviews, public.promoter_reviews
+  to anon, authenticated;
+
+-- Signed-in only reads
+grant select on public.business_staff, public.checkin_secrets, public.checkins, public.sales,
+                public.promotion_claims, public.promoter_payouts
+  to authenticated;
+
+-- Signed-in writes (RLS policies limit them to the user's own rows / own business)
+grant insert on public.businesses, public.reward_programs, public.promotions, public.posts,
+                public.business_reviews, public.promoter_reviews
+  to authenticated;
+grant insert, delete on public.business_staff to authenticated;
+grant update on public.reward_programs, public.promotions, public.business_reviews,
+                public.promoter_reviews
+  to authenticated;
+grant delete on public.posts, public.business_reviews to authenticated;
+-- auth_challenges: no grants. Service role only.
+
 -- ─────────────────────────────────────────────────────────────── seed: categories
 insert into public.categories (name, slug) values
   ('Food & Drink', 'food-drink'), ('Coffee', 'coffee'), ('Retail', 'retail'),

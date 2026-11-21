@@ -8,7 +8,8 @@ The legacy code is a spec only. Product spec + decisions live in the Claude Doc
 - **Non-custodial.** No table, env var or code path may hold a wallet secret or user funds.
   Payments are wallet→wallet; the server only verifies proofs (preimage / LUD-21).
 - **Keys never leave the device.** Never send an nsec to the server. Sign-in = signed challenge.
-- **RLS on every table.** New table → enable RLS, write policies, add cases to `scripts/test-rls.mjs`.
+- **RLS on every table.** New table → enable RLS, write policies, add explicit GRANTs (the Supabase project
+  has auto-grant OFF; see the "table grants" block), add cases to `scripts/test-rls.mjs`.
   Writes with business rules go through SECURITY DEFINER functions; server-only ones are granted to
   `service_role` alone (see the grants block at the end of the migration).
 - `pnpm test:rls` and `pnpm check:env` must pass before commit.
