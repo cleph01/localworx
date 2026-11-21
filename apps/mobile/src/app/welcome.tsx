@@ -30,7 +30,7 @@ export default function Welcome() {
         <ScrollView contentContainerStyle={{ padding: 24, gap: 20, flexGrow: 1, justifyContent: "center" }} keyboardShouldPersistTaps="handled">
           <Image source={require("@/assets/images/icon.png")} style={{ width: 88, height: 88, borderRadius: 44 }} />
           <Eyebrow>Main Street first</Eyebrow>
-          <H1>Keep your town&apos;s money in your town.</H1>
+          <H1>Build a stronger town, one paid shoutout at a time.</H1>
           <Muted>Check in at local shops, earn rewards you own, and get paid in sats for spreading the word.</Muted>
 
           {mode === "start" && (

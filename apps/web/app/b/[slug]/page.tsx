@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Container } from "@/components/ui";
 import { ReviewForm } from "@/components/review-form";
 import { ClaimButton } from "@/components/claim-button";
+import { formatWait } from "@localworx/shared";
 
 async function load(slug: string) {
   const supabase = await createClient();
@@ -109,7 +110,7 @@ export default async function BusinessPage({ params }: PageProps<"/b/[slug]">) {
             )}
             <div className="mt-5 rounded-xl bg-paper-2 p-4 text-sm">
               <p className="font-semibold">How to check in</p>
-              <p className="mt-1 text-muted">Scan the LocalWorx code at the counter with your phone camera. One check-in per day.</p>
+              <p className="mt-1 text-muted">Scan the LocalWorx code at the counter with your phone camera. Visits count once every {formatWait(biz.checkin_cooldown_minutes ?? 180)}.</p>
             </div>
           </div>
           {biz.hiring_promoters && (

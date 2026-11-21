@@ -22,7 +22,7 @@ function Hero() {
         <div className="rise">
           <p className="eyebrow">Main Street first · Powered by Bitcoin</p>
           <h1 className="h-display mt-4 text-[2.6rem] leading-[1.05] sm:text-6xl">
-            Keep your town&apos;s money <em className="font-display text-orange-dark not-italic">in your town.</em>
+            Build a stronger town, <em className="font-display text-orange-dark not-italic">one paid shoutout at a time.</em>
           </h1>
           <p className="mt-6 max-w-xl text-lg text-ink-2">
             LocalWorx pays neighbors in Bitcoin for bringing customers to local shops. Check in where
@@ -219,7 +219,7 @@ function PartnerBand() {
 const FAQ = [
   ["Do I need Bitcoin to use LocalWorx?", "No. Checking in and earning rewards is free and needs no wallet. You only need a Lightning wallet to send or receive sats."],
   ["Is my location tracked?", "Only at the moment you check in, to confirm you're at the shop. We store that one point with your check-in and nothing else."],
-  ["What does it cost a business?", "We're setting pricing together with our pilot towns. Promoter payouts are set by the business and go straight to the promoter's wallet; LocalWorx never takes a cut of them."],
+  ["What does it cost?", "Members are free. A few things carry a small fee (in sats, or dollars by card) to keep bots out, and business pricing is being set with our pilot towns. Promoter payouts and tips go straight to the person earning them; LocalWorx never takes a cut. See About for the full breakdown."],
   ["What if I lose my phone?", "Your account is your key. If you backed it up when you signed up, sign in on any device with it."],
 ];
 

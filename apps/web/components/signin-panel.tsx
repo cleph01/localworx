@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { CopyButton } from "@/components/copy-button";
 import {
   createDeviceKey, extensionAvailable, extensionSigner, hasDeviceKey,
   importDeviceKey, signInWith, unlockDeviceKey,
@@ -150,7 +151,7 @@ function BackupStep({ nsec, npub, onDone }: { nsec: string; npub: string; onDone
       </div>
       <div className="flex gap-2">
         <button className="btn-ghost flex-1" onClick={() => setShown((s) => !s)}>{shown ? "Hide" : "Show"}</button>
-        <button className="btn-ghost flex-1" onClick={() => navigator.clipboard.writeText(nsec)}>Copy</button>
+        <CopyButton text={nsec} className="btn-ghost flex-1" />
       </div>
       <p className="text-xs text-muted">Your public ID (safe to share): <span className="font-mono break-all">{npub}</span></p>
       <label className="flex items-start gap-2 text-sm">

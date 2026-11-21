@@ -78,6 +78,12 @@ export function unlockDeviceKey(passcode: string): Signer {
   return deviceSigner(unlocked);
 }
 
+/** The signer to use right now without asking: a browser extension, or a key already unlocked in this tab. */
+export function readySigner(): Signer | null {
+  if (extensionAvailable()) return extensionSigner();
+  return unlocked ? deviceSigner(unlocked) : null;
+}
+
 /** Lock the key (sign-out). The encrypted copy stays so the user can unlock again. */
 export function forgetKey() {
   unlocked = null;

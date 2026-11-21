@@ -5,9 +5,10 @@ import { SignOutButton } from "./sign-out-button";
 
 const NAV = [
   { href: "/directory", label: "Directory" },
+  { href: "/community", label: "Community" },
   { href: "/promotions", label: "Promotions" },
   { href: "/marketplace", label: "Marketplace" },
-  { href: "/help", label: "Help" },
+  { href: "/about", label: "About" },
 ];
 
 async function currentProfileOrNull() {

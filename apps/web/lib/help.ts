@@ -50,7 +50,7 @@ export const HELP: HelpSection[] = [
         body: [
           "Participating shops display a LocalWorx code by the register. Point your phone camera at it and open the link.",
           "Your phone asks for your location once, to confirm you're at the shop. Allow it, and you're checked in.",
-          "You can check in at each shop once per day.",
+          "Each shop sets how often a visit counts, for example once every 3 hours. If you scan again too soon, the app tells you when your next visit will count.",
           "The code changes every 30 seconds, so a photo of it won't work later. That keeps rewards fair for everyone.",
         ],
       },
@@ -110,6 +110,33 @@ export const HELP: HelpSection[] = [
     ],
   },
   {
+    title: "Community posts and tips",
+    articles: [
+      {
+        slug: "write-post",
+        title: "Writing a community post",
+        summary: "Share what's worth knowing in your town. Readers can tip you in sats.",
+        body: [
+          "Go to Community and tap Write a post. Add a title, your words, and optionally a photo link, a topic and your town.",
+          "Your post is signed with your own key on your device, then published to the LocalWorx feed and to the open Nostr network, so it can be read in any Nostr app.",
+          "Posting carries a small fee, paid in sats or in dollars by card. It keeps bots and spam out of the feed. During the pilot, posting is free with a limit of a few posts a day.",
+          "Signed posts can't be edited. If you need to change something, delete it and post again.",
+        ],
+      },
+      {
+        slug: "tips",
+        title: "Tips and zaps",
+        summary: "Readers send sats straight to your wallet. LocalWorx takes no cut.",
+        body: [
+          "To receive tips, add a Lightning address in Profile & wallet.",
+          "On a post, pick an amount and tap Tip. The invoice comes from the author's own wallet, so the sats go straight from the reader to the author.",
+          "If the author's wallet supports Nostr zaps, the tip also shows as a public zap on Nostr.",
+          "The tip total on a post counts tips confirmed through LocalWorx.",
+        ],
+      },
+    ],
+  },
+  {
     title: "Businesses",
     articles: [
       {
@@ -117,8 +144,9 @@ export const HELP: HelpSection[] = [
         title: "Listing your business",
         summary: "Two minutes: name, address, category.",
         body: [
-          "Go to List your business, fill in the basics, and tap Look up next to your address so we can place you on the map.",
-          "Make sure the pin is your front door. Check-ins only count within about 60 meters of it.",
+          "Go to List your business, fill in the basics, type your street address and tap Find.",
+          "A map appears. Drag the pin to where your counter QR will stand (or tap the map). Check-ins count within 60 meters of it by default; you can widen that later in Manage, up to 250 meters, for big stores or markets.",
+          "Another shop somewhere else can have the same name. Your name shows exactly as you typed it, with your town next to it, and we pick a free page address for you (for example adding your town). You can type your own instead.",
           "You become the owner of the listing. You can add staff later.",
         ],
       },
@@ -182,6 +210,8 @@ export const HELP: HelpSection[] = [
         summary: "Your public key, your name, and your check-ins. No email, no tracking.",
         body: [
           "We store your public key (your Nostr ID), the display name you chose, your Lightning address if you add one, and a record of each check-in: which shop, when, and the location your phone reported at that moment.",
+          "Community posts you publish are public, on LocalWorx and on Nostr. Tips you send or receive are visible only to you and the other person; posts show a total.",
+          "If you pay a fee by card, Stripe handles the card. We never see or store card numbers.",
           "We don't track your location outside check-ins, and we don't run ads.",
           "Shops see check-ins at their own shop. Other members can't see your check-ins.",
         ],

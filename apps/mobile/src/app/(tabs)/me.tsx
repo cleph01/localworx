@@ -3,7 +3,7 @@ import { Alert, Linking, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from "expo-router";
 import * as Clipboard from "expo-clipboard";
-import { lightningAddress } from "@localworx/shared";
+import { lightningAddress, withTown } from "@localworx/shared";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { loadKey, npubOf, nsecOf } from "@/lib/keys";
@@ -17,7 +17,7 @@ export default function Me() {
   const [name, setName] = useState("");
   const [ln, setLn] = useState("");
   const [npub, setNpub] = useState("");
-  const [businesses, setBusinesses] = useState<{ name: string; slug: string }[]>([]);
+  const [businesses, setBusinesses] = useState<{ name: string; slug: string; city: string }[]>([]);
   const [msg, setMsg] = useState<string | null>(null);
 
   useFocusEffect(useCallback(() => {
@@ -27,8 +27,8 @@ export default function Me() {
       setId(u.user.id);
       const { data: p } = await supabase.from("profiles").select("display_name, lightning_address").eq("id", u.user.id).single();
       setName(p?.display_name ?? ""); setLn(p?.lightning_address ?? "");
-      const { data: b } = await supabase.from("business_staff").select("businesses(name, slug)").eq("profile_id", u.user.id);
-      setBusinesses((b ?? []).map((r) => r.businesses as unknown as { name: string; slug: string }));
+      const { data: b } = await supabase.from("business_staff").select("businesses(name, slug, city)").eq("profile_id", u.user.id);
+      setBusinesses((b ?? []).map((r) => r.businesses as unknown as { name: string; slug: string; city: string }));
       const sk = await loadKey(); if (sk) setNpub(npubOf(sk));
     })();
   }, []));
@@ -65,7 +65,7 @@ export default function Me() {
             <Text style={{ fontWeight: "700", fontSize: 17, color: C.ink }}>My businesses</Text>
             <Muted style={{ fontSize: 14 }}>Use the Scan tab to mark customers&apos; rewards as used.</Muted>
             {businesses.map((b) => (
-              <Button key={b.slug} title={`Manage ${b.name}`} kind="ghost" onPress={() => Linking.openURL(`${API_URL}/business/${b.slug}/manage`)} />
+              <Button key={b.slug} title={`Manage ${withTown(b.name, b.city)}`} kind="ghost" onPress={() => Linking.openURL(`${API_URL}/business/${b.slug}/manage`)} />
             ))}
           </Card>
         )}

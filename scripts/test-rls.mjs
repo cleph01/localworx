@@ -125,9 +125,26 @@ await check("3rd visit via server issues a reward and resets the card", () => as
   assert(r.ok && r.reward_id && r.visits === 0, JSON.stringify(r));
   reward = r.reward_id;
 }));
-await check("second check-in the same day is refused", () => as("service", async () => {
+await check("a scan inside the shop's gap (default 3 h) is refused with a wait time", () => as("service", async () => {
   const r = (await q(`select record_checkin($1,$2,41,-73.66,null) as r`, [U.bob, biz])).rows[0].r;
-  assert(!r.ok && r.reason === "already_checked_in_today", JSON.stringify(r));
+  assert(!r.ok && r.reason === "too_soon" && r.wait_minutes > 170 && r.wait_minutes <= 180, JSON.stringify(r));
+}));
+await check("a second visit the same day counts once the gap has passed", () => as("service", async () => {
+  await q(`update checkins set created_at = now() - interval '3 hours 1 minute' where profile_id = $1 and business_id = $2 and created_at > now() - interval '1 minute'`, [U.bob, biz]);
+  const r = (await q(`select record_checkin($1,$2,41,-73.66,null) as r`, [U.bob, biz])).rows[0].r;
+  assert(r.ok && r.visits === 1, JSON.stringify(r));
+}));
+await check("alice (owner) sets a 1 h gap and a 150 m radius", () => as("alice", async () => {
+  const r = await q(`update businesses set checkin_cooldown_minutes = 60, checkin_radius_m = 150 where id = $1 returning id`, [biz]);
+  assert(r.rows.length === 1);
+}));
+await check("radius above 250 m or gap under 15 min is rejected", () => as("alice", async () => {
+  await denied(() => q(`update businesses set checkin_radius_m = 1000 where id = $1`, [biz]), /check constraint/);
+  await denied(() => q(`update businesses set checkin_cooldown_minutes = 1 where id = $1`, [biz]), /check constraint/);
+}));
+await check("mallory cannot change alice's check-in rules", () => as("mallory", async () => {
+  const r = await q(`update businesses set checkin_radius_m = 250 where id = $1 returning id`, [biz]);
+  assert(r.rows.length === 0, "update should match no rows");
 }));
 await check("bob sees his reward; alice (staff) sees it; mallory does not", async () => {
   assert((await as("bob", () => q(`select id from rewards`))).rows.length === 1, "bob");
@@ -207,14 +224,66 @@ await check("alice approves; cannot change the referral code", () => as("alice",
   assert((await q(`update promotion_claims set status='approved' where id=$1`, [claim.id])).affectedRows === 1, "approve");
   await denied(() => q(`update promotion_claims set referral_code='mine' where id=$1`, [claim.id]));
 }));
-await check("a promotion post must be labelled paid", () => as("carol", () => denied(() =>
+await check("a promotion post must be labelled paid (even from the server)", () => as("service", () => denied(() =>
   q(`insert into posts (author_id,title,promotion_id,is_paid_promotion) values ($1,'Great coffee',$2,false)`, [U.carol, promo]),
   /check constraint/)));
-await check("mallory cannot post as carol", () => as("mallory", () => denied(() =>
-  q(`insert into posts (author_id,title) values ($1,'I am carol')`, [U.carol]))));
+await check("users cannot insert posts directly, not even as themselves (server checks fee + signature)", async () => {
+  await as("carol", () => denied(() => q(`insert into posts (author_id,title) values ($1,'Skip the fee')`, [U.carol])));
+  await as("mallory", () => denied(() => q(`insert into posts (author_id,title) values ($1,'I am carol')`, [U.carol])));
+});
 await check("mallory (never visited) cannot review; bob (visited) can", async () => {
   await as("mallory", () => denied(() => q(`insert into business_reviews (business_id,reviewer_id,rating) values ($1,$2,1)`, [biz, U.mallory])));
   await as("bob", () => q(`insert into business_reviews (business_id,reviewer_id,rating) values ($1,$2,5)`, [biz, U.bob]));
+});
+
+console.log("\nCommunity posts, fees and tips");
+let draft, live, payment, tip;
+await as("service", async () => {
+  draft = (await q(`insert into posts (author_id,title,status) values ($1,'Awaiting fee','awaiting_payment') returning id`, [U.carol])).rows[0].id;
+  live = (await q(`insert into posts (author_id,title,published_at) values ($1,'Best tacos in town',now()) returning id`, [U.carol])).rows[0].id;
+  payment = (await q(`insert into post_payments (post_id,payer_id,method,amount,invoice,payment_hash) values ($1,$2,'sats',1000,'lnbc1',$3) returning id`,
+    [draft, U.carol, "a".repeat(64)])).rows[0].id;
+  tip = (await q(`insert into post_tips (post_id,tipper_id,amount_sats,invoice,payment_hash) values ($1,$2,210,'lnbc2',$3) returning id`,
+    [live, U.bob, "b".repeat(64)])).rows[0].id;
+});
+await check("anon sees the published post, not the one awaiting its fee", () => as("anon", async () => {
+  const ids = (await q(`select id from posts where id in ($1,$2)`, [draft, live])).rows.map((r) => r.id);
+  assert(ids.includes(live) && !ids.includes(draft), JSON.stringify(ids));
+}));
+await check("carol sees her own draft", () => as("carol", async () => {
+  assert((await q(`select 1 from posts where id=$1`, [draft])).rows.length === 1, "own draft hidden");
+}));
+await check("carol cannot publish her draft or edit her post or tip totals", () => as("carol", async () => {
+  await denied(() => q(`update posts set status='published' where id=$1`, [draft]));
+  await denied(() => q(`update posts set tips_sats=1000000 where id=$1`, [live]));
+}));
+await check("only the server marks a fee paid or settles a tip", async () => {
+  await as("carol", () => denied(() => q(`select mark_post_paid($1)`, [payment])));
+  await as("bob", () => denied(() => q(`select settle_post_tip($1,'x')`, [tip])));
+  await as("carol", () => denied(() => q(`insert into post_tips (post_id,tipper_id,amount_sats,invoice,payment_hash) values ($1,$2,5,'x',$3)`, [live, U.carol, "c".repeat(64)])));
+});
+await check("fee paid → post published", () => as("service", async () => {
+  await q(`select mark_post_paid($1)`, [payment]);
+  const p = (await q(`select status, published_at from posts where id=$1`, [draft])).rows[0];
+  assert(p.status === "published" && p.published_at, JSON.stringify(p));
+}));
+await check("a tip settles once and adds to the post total", () => as("service", async () => {
+  assert((await q(`select settle_post_tip($1,'pre') as ok`, [tip])).rows[0].ok === true, "first");
+  assert((await q(`select settle_post_tip($1,'pre') as ok`, [tip])).rows[0].ok === false, "replay");
+  const p = (await q(`select tips_sats, tips_count from posts where id=$1`, [live])).rows[0];
+  assert(Number(p.tips_sats) === 210 && p.tips_count === 1, JSON.stringify(p));
+}));
+await check("tips and fees are private: tipper and author see the tip, mallory sees nothing", async () => {
+  await as("bob", async () => assert((await q(`select 1 from post_tips where id=$1`, [tip])).rows.length === 1, "tipper"));
+  await as("carol", async () => assert((await q(`select 1 from post_tips where id=$1`, [tip])).rows.length === 1, "author"));
+  await as("mallory", async () => {
+    assert((await q(`select 1 from post_tips`)).rows.length === 0, "tips leak");
+    assert((await q(`select 1 from post_payments`)).rows.length === 0, "payments leak");
+  });
+  await as("anon", () => denied(() => q(`select 1 from post_tips`)));
+});
+await check("carol can delete her own post; mallory cannot", async () => {
+  await as("mallory", async () => assert((await q(`delete from posts where id=$1`, [live])).affectedRows === 0, "mallory deleted"));
 });
 
 console.log("\nAuth challenges");

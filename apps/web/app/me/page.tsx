@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { Container, Empty, PageTitle, SignInPrompt } from "@/components/ui";
 import { RewardCard } from "@/components/reward-card";
+import { withTown } from "@localworx/shared";
 
 export const metadata: Metadata = { title: "My rewards" };
 
@@ -12,10 +13,10 @@ export default async function MyRewardsPage() {
 
   const [{ data: rewards }, { data: listings }, { data: recent }] = await Promise.all([
     supabase.from("rewards")
-      .select("id, status, issued_at, redeemed_at, businesses(name, slug), reward_programs(name)")
+      .select("id, status, issued_at, redeemed_at, businesses(name, slug, city), reward_programs(name)")
       .eq("owner_id", auth.user.id).order("issued_at", { ascending: false }),
     supabase.from("listings").select("id, reward_id, price_sats").eq("seller_id", auth.user.id).eq("status", "open"),
-    supabase.from("checkins").select("created_at, businesses(name, slug)").eq("profile_id", auth.user.id)
+    supabase.from("checkins").select("created_at, businesses(name, slug, city)").eq("profile_id", auth.user.id)
       .order("created_at", { ascending: false }).limit(10),
   ]);
   const listingFor = new Map((listings ?? []).map((l) => [l.reward_id, l]));
@@ -35,7 +36,7 @@ export default async function MyRewardsPage() {
             <RewardCard key={r.id} reward={{
               id: r.id, status: r.status,
               name: (r.reward_programs as unknown as { name: string }).name,
-              business: (r.businesses as unknown as { name: string; slug: string }),
+              business: (r.businesses as unknown as { name: string; slug: string; city: string }),
             }} listing={listingFor.get(r.id) ?? null} />
           ))}
         </div>
@@ -47,7 +48,7 @@ export default async function MyRewardsPage() {
           <ul className="mt-4 divide-y divide-line rounded-2xl border border-line bg-white">
             {(recent ?? []).map((c, i) => (
               <li key={i} className="flex justify-between p-4 text-sm">
-                <span className="font-medium">{(c.businesses as unknown as { name: string }).name}</span>
+                <span className="font-medium">{(() => { const b = c.businesses as unknown as { name: string; city: string }; return withTown(b.name, b.city); })()}</span>
                 <span className="text-muted">{new Date(c.created_at).toLocaleDateString()}</span>
               </li>
             ))}
@@ -59,7 +60,7 @@ export default async function MyRewardsPage() {
           <ul className="mt-4 divide-y divide-line rounded-2xl border border-line bg-white">
             {used.map((r) => (
               <li key={r.id} className="flex justify-between p-4 text-sm text-muted">
-                <span>{(r.reward_programs as unknown as { name: string }).name} · {(r.businesses as unknown as { name: string }).name}</span>
+                <span>{(r.reward_programs as unknown as { name: string }).name} · {(() => { const b = r.businesses as unknown as { name: string; city: string }; return withTown(b.name, b.city); })()}</span>
                 <span>{r.redeemed_at && new Date(r.redeemed_at).toLocaleDateString()}</span>
               </li>
             ))}

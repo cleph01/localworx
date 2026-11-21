@@ -72,3 +72,27 @@ test("commission tiers", () => {
   assert.equal(commissionRateForNth(50), 0.25);
   assert.equal(commissionRateForNth(51), 0.5);
 });
+
+import { buildPostEventTemplate, checkPostEvent, buildZapRequestTemplate, checkZapRequest, postDraft } from "./index";
+
+test("community post: a signed note matches its draft; tampering is caught", () => {
+  const sk = generateSecretKey();
+  const pk = getPublicKey(sk);
+  const draft = postDraft.parse({ title: "Best tacos on Main", body: "Go on Tuesdays.", city: "Hendersonville" });
+  const ev = finalizeEvent(buildPostEventTemplate(draft), sk);
+  assert.equal(checkPostEvent(ev, draft, pk).ok, true);
+  assert.equal(checkPostEvent(ev, { ...draft, title: "Different" }, pk).ok, false);
+  assert.equal(checkPostEvent(ev, draft, getPublicKey(generateSecretKey())).ok, false);
+  const forged = { ...ev, content: ev.content + "!" };
+  assert.equal(checkPostEvent(forged, { ...draft, body: draft.body + "!" }, pk).ok, false);
+});
+
+test("zap request: must name the post, author and exact amount", () => {
+  const tipper = generateSecretKey();
+  const author = getPublicKey(generateSecretKey());
+  const p = { authorPubkey: author, eventId: "e".repeat(64), amountSats: 500 };
+  const zr = finalizeEvent(buildZapRequestTemplate(p), tipper);
+  assert.equal(checkZapRequest(zr, { ...p, tipperPubkey: getPublicKey(tipper) }).ok, true);
+  assert.equal(checkZapRequest(zr, { ...p, amountSats: 5000, tipperPubkey: getPublicKey(tipper) }).ok, false);
+  assert.equal(checkZapRequest(zr, { ...p, eventId: "f".repeat(64), tipperPubkey: getPublicKey(tipper) }).ok, false);
+});

@@ -3,9 +3,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
 import { createClient } from "@/lib/supabase/browser";
+import { withTown } from "@localworx/shared";
 
 type Props = {
-  reward: { id: string; status: string; name: string; business: { name: string; slug: string } };
+  reward: { id: string; status: string; name: string; business: { name: string; slug: string; city?: string } };
   listing: { id: string; price_sats: number } | null;
 };
 
@@ -18,7 +19,7 @@ export function RewardCard({ reward, listing }: Props) {
 
   return (
     <div className="card flex flex-col p-5">
-      <p className="text-sm text-muted">{reward.business.name}</p>
+      <p className="text-sm text-muted">{withTown(reward.business.name, reward.business.city)}</p>
       <p className="h-display mt-1 text-xl">{reward.name}</p>
       {listing ? (
         <p className="mt-2 text-sm font-semibold text-orange-dark">For sale · {listing.price_sats.toLocaleString()} sats</p>

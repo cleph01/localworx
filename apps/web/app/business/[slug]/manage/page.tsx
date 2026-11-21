@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Container, SignInPrompt } from "@/components/ui";
-import { ProgramForm, PromotionForm, ClaimActions, RedeemBox, PromotionToggle } from "@/components/manage-tools";
+import { ProgramForm, PromotionForm, ClaimActions, RedeemBox, PromotionToggle, CheckinRulesForm } from "@/components/manage-tools";
 
 export const metadata: Metadata = { title: "Manage" };
 
@@ -16,7 +16,7 @@ export default async function ManagePage({ params, searchParams }: PageProps<"/b
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user) return <Container narrow><SignInPrompt next={`/business/${slug}/manage`} what="manage this business" /></Container>;
 
-  const { data: biz } = await supabase.from("businesses").select("id, name, slug").eq("slug", slug).maybeSingle();
+  const { data: biz } = await supabase.from("businesses").select("id, name, slug, lat, lng, checkin_radius_m, checkin_cooldown_minutes").eq("slug", slug).maybeSingle();
   if (!biz) notFound();
   const { data: staff } = await supabase.rpc("is_staff", { b: biz.id });
   if (!staff) notFound(); // don't reveal that the page exists
@@ -71,6 +71,11 @@ export default async function ManagePage({ params, searchParams }: PageProps<"/b
         <section className="card p-6">
           <h2 className="h-display text-2xl">Punch card</h2>
           <ProgramForm businessId={biz.id} current={program} />
+        </section>
+
+        <section className="card p-6">
+          <h2 className="h-display text-2xl">Check-in rules</h2>
+          <CheckinRulesForm businessId={biz.id} current={biz} />
         </section>
 
         <section className="card p-6">

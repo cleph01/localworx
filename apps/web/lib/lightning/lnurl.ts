@@ -23,13 +23,35 @@ async function getJson(url: string): Promise<Json> {
  * payment hash and amount (decoded by us, not trusted from the endpoint) and
  * the LUD-21 verify URL when the wallet provides one.
  */
-export async function invoiceFromLightningAddress(address: string, sats: number, comment?: string) {
+export type PayMeta = { callback: string; minSats: number; maxSats: number; commentAllowed: number; allowsNostr: boolean; nostrPubkey: string | null };
+
+/** LUD-16 metadata for a Lightning address: limits, and whether it accepts NIP-57 zaps. */
+export async function lightningAddressMeta(address: string): Promise<PayMeta> {
   const wellKnown = lightningAddressUrl(address);
   if (!wellKnown) throw new Error("Invalid Lightning address");
   const meta = await getJson(wellKnown);
   if (meta.tag !== "payRequest" || typeof meta.callback !== "string") {
     throw new Error("That Lightning address can't receive payments");
   }
+  const nostrPubkey = typeof meta.nostrPubkey === "string" && /^[0-9a-f]{64}$/.test(meta.nostrPubkey) ? meta.nostrPubkey : null;
+  return {
+    callback: meta.callback,
+    minSats: Math.ceil(Number(meta.minSendable) / 1000),
+    maxSats: Math.floor(Number(meta.maxSendable) / 1000),
+    commentAllowed: Number(meta.commentAllowed ?? 0),
+    allowsNostr: meta.allowsNostr === true && !!nostrPubkey,
+    nostrPubkey,
+  };
+}
+
+export async function invoiceFromLightningAddress(address: string, sats: number, comment?: string, opts: { zapRequest?: object } = {}) {
+  const wellKnown = lightningAddressUrl(address);
+  if (!wellKnown) throw new Error("Invalid Lightning address");
+  const meta = await getJson(wellKnown);
+  if (meta.tag !== "payRequest" || typeof meta.callback !== "string") {
+    throw new Error("That Lightning address can't receive payments");
+  }
+  if (opts.zapRequest && meta.allowsNostr !== true) throw new Error("This wallet doesn't accept zaps");
   const msat = sats * 1000;
   if (msat < Number(meta.minSendable) || msat > Number(meta.maxSendable)) {
     throw new Error("Amount is outside what this wallet accepts");
@@ -37,7 +59,8 @@ export async function invoiceFromLightningAddress(address: string, sats: number,
   const cb = new URL(meta.callback);
   cb.searchParams.set("amount", String(msat));
   const allowed = Number(meta.commentAllowed ?? 0);
-  if (comment && allowed > 0) cb.searchParams.set("comment", comment.slice(0, allowed));
+  if (opts.zapRequest) cb.searchParams.set("nostr", JSON.stringify(opts.zapRequest));
+  else if (comment && allowed > 0) cb.searchParams.set("comment", comment.slice(0, allowed));
   const res = await getJson(cb.toString());
   if (typeof res.pr !== "string") throw new Error(typeof res.reason === "string" ? res.reason : "Wallet did not return an invoice");
 

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { CopyButton } from "@/components/copy-button";
 import { QRCodeSVG } from "qrcode.react";
 
 type WebLN = { enable(): Promise<void>; sendPayment(pr: string): Promise<{ preimage: string }> };
@@ -59,7 +60,7 @@ export function BuyButton({ listingId, signedIn }: { listingId: string; signedIn
         <p className="text-center text-xs text-muted">Scan with any Lightning wallet. This listing is held for you for 10 minutes.</p>
         <div className="flex gap-2">
           <a href={`lightning:${sale.invoice}`} className="btn-primary flex-1 !py-2 text-sm">Open wallet</a>
-          <button className="btn-ghost flex-1 !py-2 text-sm" onClick={() => navigator.clipboard.writeText(sale.invoice)}>Copy invoice</button>
+          <CopyButton text={sale.invoice} label="Copy invoice" className="btn-ghost flex-1 !py-2 text-sm" />
         </div>
         {!sale.can_auto_verify && (
           <form className="flex gap-2" onSubmit={(e) => { e.preventDefault(); confirm(sale.sale_id, String(new FormData(e.currentTarget).get("pre")).trim()); }}>

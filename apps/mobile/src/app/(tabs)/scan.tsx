@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as Location from "expo-location";
 import { useIsFocused } from "expo-router";
-import { parseCheckinUrl } from "@localworx/shared";
+import { parseCheckinUrl, withTown } from "@localworx/shared";
 import { api } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
 import { Button, Card, H1, Muted, s } from "@/components/ui";
@@ -35,7 +35,7 @@ export default function Scan() {
           body: { slug: checkin.slug, code: checkin.code, lat: pos.coords.latitude, lng: pos.coords.longitude } });
         setOutcome(r.reward_id
           ? { ok: true, title: "You earned a reward! 🎉", body: `${r.program_name} is in your Rewards.` }
-          : { ok: true, title: `Checked in at ${r.business}`, body: r.visits_required ? `${r.program_name}: ${r.visits} of ${r.visits_required} visits` : undefined });
+          : { ok: true, title: `Checked in at ${withTown(r.business, r.business_city)}`, body: r.visits_required ? `${r.program_name}: ${r.visits} of ${r.visits_required} visits` : undefined });
       } else if (data.startsWith("localworx:reward:")) {
         const { error } = await supabase.rpc("redeem_reward", { p_reward: data.slice("localworx:reward:".length) });
         if (error) throw new Error(/not allowed/.test(error.message) ? "Only staff of this shop can use this reward." : error.message);

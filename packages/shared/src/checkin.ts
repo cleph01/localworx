@@ -7,8 +7,18 @@ import { utf8ToBytes, hexToBytes } from "@noble/hashes/utils.js";
 export const CODE_STEP_SECONDS = 30;
 /** Accept the current code and the one before it (scan + network delay). */
 export const CODE_ACCEPTED_STEPS_BACK = 1;
-/** Max distance between phone and business for a valid check-in. */
-export const MAX_CHECKIN_DISTANCE_M = 60;
+/** Check-in radius around the shop's pin. Each shop picks within these bounds (DB enforces them too). */
+export const DEFAULT_CHECKIN_RADIUS_M = 60;
+export const CHECKIN_RADIUS_OPTIONS_M = [30, 60, 100, 150, 250] as const;
+/** Minimum gap between two check-ins by one member at one shop. */
+export const DEFAULT_CHECKIN_COOLDOWN_MIN = 180;
+export const CHECKIN_COOLDOWN_OPTIONS_MIN = [15, 30, 60, 120, 180, 360, 720, 1440] as const;
+
+export function formatWait(minutes: number): string {
+  if (minutes < 60) return `${minutes} min`;
+  const h = Math.floor(minutes / 60), m = minutes % 60;
+  return m ? `${h} h ${m} min` : `${h} h`;
+}
 
 export function codeForStep(secretHex: string, step: number): string {
   const mac = hmac(sha256, hexToBytes(secretHex), utf8ToBytes(String(step)));

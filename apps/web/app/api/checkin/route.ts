@@ -1,6 +1,6 @@
 // Member scans the counter QR. We verify the rotating code and the distance,
 // then the database records the visit and fills the punch card.
-import { checkinRequest, isValidCode, haversineMeters, MAX_CHECKIN_DISTANCE_M } from "@localworx/shared";
+import { checkinRequest, isValidCode, haversineMeters, DEFAULT_CHECKIN_RADIUS_M, formatWait } from "@localworx/shared";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getRequestUser, json } from "@/lib/auth";
 
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   const admin = createAdminClient();
   const { data: biz } = await admin
     .from("businesses")
-    .select("id, name, lat, lng, checkin_secrets(secret_hex)")
+    .select("id, name, city, lat, lng, checkin_radius_m, checkin_secrets(secret_hex)")
     .eq("slug", slug)
     .eq("is_active", true)
     .maybeSingle();
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     return json({ error: "That code has expired. Scan the QR at the counter again." }, 400);
   }
   const meters = haversineMeters({ lat, lng }, { lat: biz.lat, lng: biz.lng });
-  if (meters > MAX_CHECKIN_DISTANCE_M) {
+  if (meters > (biz.checkin_radius_m ?? DEFAULT_CHECKIN_RADIUS_M)) {
     return json({ error: `You need to be at ${biz.name} to check in (you're about ${Math.round(meters)} m away).` }, 400);
   }
 
@@ -47,6 +47,11 @@ export async function POST(req: Request) {
     p_profile: me.userId, p_business: biz.id, p_lat: lat, p_lng: lng, p_ref: referral,
   });
   if (error) return json({ error: "Could not record check-in" }, 500);
-  if (!data.ok) return json({ error: "You've already checked in here today. Come back tomorrow!" }, 409);
-  return json({ business: biz.name, ...data });
+  if (!data.ok) {
+    if (data.reason === "too_soon") {
+      return json({ error: `You already checked in here recently. Your next visit counts in about ${formatWait(data.wait_minutes)}.` }, 409);
+    }
+    return json({ error: "Business not found" }, 404);
+  }
+  return json({ business: biz.name, business_city: biz.city, ...data });
 }

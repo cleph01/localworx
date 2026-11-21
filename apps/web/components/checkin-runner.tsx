@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { withTown } from "@localworx/shared";
 
-type Result = { business: string; visits: number; visits_required: number | null; program_name: string | null; reward_id: string | null };
+type Result = { business: string; business_city?: string; visits: number; visits_required: number | null; program_name: string | null; reward_id: string | null };
 
 export function CheckinRunner({ slug, code, referral }: { slug: string; code: string; referral?: string }) {
   const [state, setState] = useState<"locating" | "sending" | "done" | "error">("locating");
@@ -68,7 +69,7 @@ export function CheckinRunner({ slug, code, referral }: { slug: string; code: st
   return (
     <div className="card p-8 text-center">
       <p className="text-4xl">{r.reward_id ? "🎉" : "✅"}</p>
-      <p className="h-display mt-3 text-3xl">{r.reward_id ? "You earned a reward!" : `Checked in at ${r.business}`}</p>
+      <p className="h-display mt-3 text-3xl">{r.reward_id ? "You earned a reward!" : `Checked in at ${withTown(r.business, r.business_city)}`}</p>
       {r.reward_id && <p className="mt-2 text-ink-2">{r.program_name} is waiting in your rewards.</p>}
       {!r.reward_id && r.visits_required && (
         <div className="mx-auto mt-6 max-w-xs">

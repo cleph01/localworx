@@ -9,7 +9,7 @@ const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], axe
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
-  title: { default: "LocalWorx — Keep your town's money in your town", template: "%s · LocalWorx" },
+  title: { default: "LocalWorx — Build a stronger town, one paid shoutout at a time", template: "%s · LocalWorx" },
   description:
     "LocalWorx pays neighbors in Bitcoin for bringing customers to Main Street. Check in at local shops, earn rewards you own, and get paid for spreading the word.",
   openGraph: { siteName: "LocalWorx", type: "website" },
