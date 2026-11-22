@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { Container, Empty, PageTitle, SignInPrompt } from "@/components/ui";
-import { RewardCard } from "@/components/reward-card";
+import { RewardCard, CloseReportButton } from "@/components/reward-card";
 import { withTown } from "@localworx/shared";
 
 export const metadata: Metadata = { title: "My rewards" };
@@ -11,14 +11,16 @@ export default async function MyRewardsPage() {
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user) return <Container narrow><SignInPrompt next="/me" what="see your rewards" /></Container>;
 
-  const [{ data: rewards }, { data: listings }, { data: recent }] = await Promise.all([
+  const [{ data: rewards }, { data: listings }, { data: recent }, { data: reports }] = await Promise.all([
     supabase.from("rewards")
-      .select("id, status, issued_at, redeemed_at, businesses(name, slug, city), reward_programs(name)")
+      .select("id, status, issued_at, redeemed_at, businesses(name, slug, city), kind, title, details")
       .eq("owner_id", auth.user.id).order("issued_at", { ascending: false }),
     supabase.from("listings").select("id, reward_id, price_sats").eq("seller_id", auth.user.id).eq("status", "open"),
     supabase.from("checkins").select("created_at, businesses(name, slug, city)").eq("profile_id", auth.user.id)
       .order("created_at", { ascending: false }).limit(10),
+    supabase.from("honor_reports").select("id, reward_id").eq("reporter_id", auth.user.id).is("resolved_at", null),
   ]);
+  const reportFor = new Map((reports ?? []).map((r) => [r.reward_id, r]));
   const listingFor = new Map((listings ?? []).map((l) => [l.reward_id, l]));
   const ready = (rewards ?? []).filter((r) => r.status !== "redeemed");
   const used = (rewards ?? []).filter((r) => r.status === "redeemed");
@@ -26,7 +28,7 @@ export default async function MyRewardsPage() {
   return (
     <Container>
       <PageTitle eyebrow="Your wallet" title="My rewards">
-        Show a reward to staff to use it, or sell it to someone else for sats.
+        Rewards from punch cards and IOUs you earned promoting shops. Show one to staff to use it, or sell it to someone else for sats.
       </PageTitle>
       {ready.length === 0 ? (
         <Empty title="No rewards yet" body="Check in at shops in the directory to start filling punch cards." action={["/directory", "Find shops"]} />
@@ -35,9 +37,9 @@ export default async function MyRewardsPage() {
           {ready.map((r) => (
             <RewardCard key={r.id} reward={{
               id: r.id, status: r.status,
-              name: (r.reward_programs as unknown as { name: string }).name,
+              name: r.title, details: r.details, kind: r.kind,
               business: (r.businesses as unknown as { name: string; slug: string; city: string }),
-            }} listing={listingFor.get(r.id) ?? null} />
+            }} listing={listingFor.get(r.id) ?? null} report={reportFor.get(r.id) ?? null} />
           ))}
         </div>
       )}
@@ -60,8 +62,11 @@ export default async function MyRewardsPage() {
           <ul className="mt-4 divide-y divide-line rounded-2xl border border-line bg-white">
             {used.map((r) => (
               <li key={r.id} className="flex justify-between p-4 text-sm text-muted">
-                <span>{(r.reward_programs as unknown as { name: string }).name} · {(() => { const b = r.businesses as unknown as { name: string; city: string }; return withTown(b.name, b.city); })()}</span>
-                <span>{r.redeemed_at && new Date(r.redeemed_at).toLocaleDateString()}</span>
+                <span>{r.title} · {(() => { const b = r.businesses as unknown as { name: string; city: string }; return withTown(b.name, b.city); })()}</span>
+                <span className="flex items-center gap-3">
+                  {reportFor.get(r.id) && <CloseReportButton reportId={reportFor.get(r.id)!.id} />}
+                  {r.redeemed_at && new Date(r.redeemed_at).toLocaleDateString()}
+                </span>
               </li>
             ))}
             {!used.length && <li className="p-4 text-sm text-muted">None yet.</li>}

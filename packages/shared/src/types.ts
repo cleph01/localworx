@@ -34,6 +34,8 @@ export interface Business {
   lightning_address: string | null;
   hiring_promoters: boolean;
   is_active: boolean;
+  /** When the owner signed the honor pledge (required before offering any reward or promotion). */
+  honor_pledge_at: string | null;
   created_at: string;
 }
 
@@ -50,9 +52,16 @@ export interface RewardProgram {
 
 export type RewardStatus = "earned" | "listed" | "redeemed";
 
+export type RewardKind = "punch_card" | "promoter_payout";
+
+// Every reward is an IOU from the shop: a filled punch card, or a promoter's in-kind payout.
 export interface Reward {
   id: Uuid;
-  program_id: Uuid;
+  kind: RewardKind;
+  program_id: Uuid | null;
+  promotion_id: Uuid | null;
+  title: string;
+  details: string | null;
   business_id: Uuid;
   owner_id: Uuid;
   status: RewardStatus;
@@ -76,6 +85,9 @@ export interface Promotion {
   media_url: string | null;
   terms: string | null;
   sats_per_visit: number;
+  inkind_item: string | null;
+  inkind_details: string | null;
+  inkind_visits: number;
   starts_at: string;
   ends_at: string | null;
   is_active: boolean;
@@ -113,4 +125,15 @@ export interface Post {
   nostr_event_id: string | null;
   is_paid_promotion: boolean;
   created_at: string;
+}
+
+export interface HonorReport {
+  id: Uuid;
+  reward_id: Uuid;
+  business_id: Uuid;
+  reporter_id: Uuid;
+  note: string;
+  created_at: string;
+  resolved_at: string | null;
+  resolution: "made_right" | "dismissed" | null;
 }

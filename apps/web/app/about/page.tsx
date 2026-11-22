@@ -16,6 +16,7 @@ export default function AboutPage() {
     <>
       <Hero />
       <Stack />
+      <Reciprocity />
       <Beliefs />
       <Costs fees={fees} />
       <Cta />
@@ -110,6 +111,43 @@ function Stack() {
   );
 }
 
+/* ───────────────────────────── Reciprocity */
+function Reciprocity() {
+  return (
+    <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr]">
+        <div>
+          <p className="eyebrow">The engine</p>
+          <h2 className="h-display mt-3 text-4xl">Paid in sats, or in kind. Promises kept.</h2>
+          <p className="mt-4 text-ink-2">
+            A shop can pay the neighbors who bring in customers with what it already makes: a meal, a haircut, a coffee.
+            The promoter gets an IOU they own. They can use it, give it away, or sell it on the marketplace for sats.
+            Shops that want to cut to the chase can pay sats instead, or both.
+          </p>
+          <p className="mt-4 text-ink-2">
+            It only works if every IOU is honored. So every shop signs a pledge before it can offer one, and a shop that
+            refuses one carries a public <strong>Unpaid IOU</strong> badge until it makes it right.
+          </p>
+        </div>
+        <ol className="grid gap-3 sm:grid-cols-2">
+          {[
+            ["A shop pays in goods", "Ana's Barbershop gives a free cut for every 3 customers a promoter sends."],
+            ["The promoter owns the IOU", "Leo earns one. It sits in his rewards like cash in a drawer."],
+            ["It circulates", "Leo doesn't need a haircut, so he sells it on the marketplace for sats to a neighbor who does."],
+            ["The shop keeps its word", "The neighbor walks in, Ana honors it, and Leo goes back to promoting her. That trust is the loop."],
+          ].map(([t, b], i) => (
+            <li key={t} className="card p-5">
+              <p className="font-display text-sm text-orange-dark">{i + 1}</p>
+              <p className="mt-1 font-semibold">{t}</p>
+              <p className="mt-1.5 text-sm text-muted">{b}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
 /* ───────────────────────────── Beliefs */
 const BELIEFS = [
   ["Main Street first", "Marketing money should reach the regulars who bring in their friends, not an ad network in another state."],
@@ -146,7 +184,7 @@ function Costs({ fees }: { fees: ReturnType<typeof publicFeeInfo> }) {
   const postingLive = fees.methods.length > 0;
   const rows: [string, string, string, string][] = [
     ["Members", "Sign up, check in, earn and use rewards", "Free", "Being a customer should never cost you anything."],
-    ["Promoters", "Claim promotions, send friends to shops", "Free · you keep 100% of payouts", "Shops pay you directly, wallet to wallet."],
+    ["Promoters", "Claim promotions, send friends to shops", "Free · you keep 100% of payouts", "Shops pay you directly: sats wallet to wallet, or goods as IOUs you own."],
     ["Tips & sales", "Tips on posts, reselling a reward", "No LocalWorx cut", "It's your money; it goes straight to you."],
     ["Community posts", "Publish to your town's feed",
       postingLive ? `${sats} or ${usd} by card` : `Proposed: ${sats} or ${usd} by card · free now (${FREE_POSTS_PER_DAY} a day)`,
@@ -196,11 +234,12 @@ function Costs({ fees }: { fees: ReturnType<typeof publicFeeInfo> }) {
           </table>
         </div>
       </div>
-      <div className="mt-10 grid gap-4 sm:grid-cols-3">
+      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
           ["Fake check-ins", "The counter code changes every 30 seconds and your phone must be at the shop. Each shop also sets how often a visit counts."],
           ["Fake accounts", "A posting fee makes spam expensive. Keys are free to make, but a key alone can't post or farm rewards."],
           ["Fake shops", "Listings will carry a Verified badge once the owner proves they run the shop at that address."],
+          ["Broken promises", "Every shop pledges to honor its rewards and IOUs. One that refuses and doesn't make it right within 7 days gets a public Unpaid IOU badge."],
         ].map(([t, b]) => (
           <div key={t} className="card p-5">
             <p className="font-semibold">{t}</p>

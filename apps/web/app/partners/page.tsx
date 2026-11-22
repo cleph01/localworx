@@ -13,7 +13,8 @@ export default function PartnersPage() {
       <h1 className="h-display mt-2 text-5xl">Help a town go Bitcoin, one shop at a time.</h1>
       <p className="mt-6 text-lg text-ink-2">
         Bitcoiners stack sats but rarely spend or earn them locally. LocalWorx fixes that from the
-        business side: shops pay neighbors in sats for real foot traffic, so sats land in local hands first.
+        business side: shops pay neighbors for real foot traffic, in sats or in their own goods (IOUs anyone can resell
+        for sats), so value lands in local hands first and keeps moving.
       </p>
       <div className="mt-10 grid gap-4 sm:grid-cols-3">
         {[

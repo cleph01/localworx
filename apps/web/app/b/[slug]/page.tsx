@@ -5,7 +5,9 @@ import { createClient } from "@/lib/supabase/server";
 import { Container } from "@/components/ui";
 import { ReviewForm } from "@/components/review-form";
 import { ClaimButton } from "@/components/claim-button";
-import { formatWait, withTown } from "@localworx/shared";
+import { formatWait, withTown, inkindLabel } from "@localworx/shared";
+import { getUnhonored } from "@/lib/honor";
+import { UnpaidIouBadge, PledgedNote } from "@/components/honor-badge";
 
 async function load(slug: string) {
   const supabase = await createClient();
@@ -36,13 +38,15 @@ export default async function BusinessPage({ params }: PageProps<"/b/[slug]">) {
 
   const { data: auth } = await supabase.auth.getUser();
   const me = auth.user?.id ?? null;
-  const [{ data: program }, { data: promotions }, { data: reviews }, staff, visited] = await Promise.all([
+  const [{ data: program }, { data: promotions }, { data: reviews }, staff, visited, unhonored] = await Promise.all([
     supabase.from("reward_programs").select("name, description, visits_required").eq("business_id", biz.id).eq("is_active", true).maybeSingle(),
-    supabase.from("promotions").select("id, title, body, sats_per_visit, ends_at").eq("business_id", biz.id).eq("is_active", true).order("created_at", { ascending: false }),
+    supabase.from("promotions").select("id, title, body, sats_per_visit, inkind_item, inkind_details, inkind_visits, ends_at").eq("business_id", biz.id).eq("is_active", true).order("created_at", { ascending: false }),
     supabase.from("business_reviews").select("rating, body, created_at, profiles(display_name)").eq("business_id", biz.id).order("created_at", { ascending: false }).limit(20),
     me ? supabase.rpc("is_staff", { b: biz.id }) : Promise.resolve({ data: false }),
     me ? supabase.from("checkins").select("id", { count: "exact", head: true }).eq("business_id", biz.id).eq("profile_id", me) : Promise.resolve({ count: 0 }),
+    getUnhonored(supabase),
   ]);
+  const flag = unhonored.get(biz.id);
   const avg = reviews?.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : null;
   const myVisits = (visited as { count: number | null }).count ?? 0;
 
@@ -56,6 +60,10 @@ export default async function BusinessPage({ params }: PageProps<"/b/[slug]">) {
             {biz.address}, {biz.city}, {biz.state}
             {avg && <> · <span className="text-ink">★ {avg.toFixed(1)}</span> ({reviews!.length})</>}
           </p>
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <UnpaidIouBadge info={flag} detailed />
+            {!flag && biz.honor_pledge_at && <PledgedNote />}
+          </div>
           {biz.description && <p className="mt-6 max-w-2xl whitespace-pre-line text-ink-2">{biz.description}</p>}
           <div className="mt-6 flex flex-wrap gap-3 text-sm">
             {biz.website && <a className="btn-ghost" href={biz.website} target="_blank" rel="noreferrer">Website</a>}
@@ -76,10 +84,14 @@ export default async function BusinessPage({ params }: PageProps<"/b/[slug]">) {
                         <p className="font-semibold">{p.title}</p>
                         {p.body && <p className="mt-1 text-sm text-muted">{p.body}</p>}
                       </div>
-                      {p.sats_per_visit > 0 && (
-                        <span className="shrink-0 font-mono text-sm font-semibold text-orange-dark">{p.sats_per_visit.toLocaleString()} sats/visit</span>
-                      )}
+                      <div className="shrink-0 space-y-1 text-right">
+                        {p.sats_per_visit > 0 && (
+                          <p className="font-mono text-sm font-semibold text-orange-dark">{p.sats_per_visit.toLocaleString()} sats/visit</p>
+                        )}
+                        {p.inkind_item && <p className="text-sm font-semibold text-orange-dark">{inkindLabel(p)}</p>}
+                      </div>
                     </div>
+                    {p.inkind_details && <p className="mt-2 text-xs text-muted">{p.inkind_item}: {p.inkind_details}</p>}
                     <div className="mt-4"><ClaimButton promotionId={p.id} signedIn={!!me} /></div>
                   </li>
                 ))}
@@ -123,7 +135,7 @@ export default async function BusinessPage({ params }: PageProps<"/b/[slug]">) {
           {biz.hiring_promoters && (
             <div className="card border-orange/40 bg-orange-light/40 p-6">
               <p className="font-semibold">{biz.name} is hiring promoters</p>
-              <p className="mt-1 text-sm text-ink-2">Claim a promotion above and earn sats for every visit you send.</p>
+              <p className="mt-1 text-sm text-ink-2">Claim a promotion above and earn sats or goods from the shop for every visit you send. Goods come as IOUs you can use or sell.</p>
             </div>
           )}
         </aside>

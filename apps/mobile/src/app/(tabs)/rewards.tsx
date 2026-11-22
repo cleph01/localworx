@@ -8,7 +8,7 @@ import { Button, Card, Eyebrow, H1, Muted, s } from "@/components/ui";
 import { C } from "@/lib/theme";
 import { withTown } from "@localworx/shared";
 
-type R = { id: string; status: string; reward_programs: { name: string }; businesses: { name: string; city: string } };
+type R = { id: string; status: string; kind: string; title: string; details: string | null; businesses: { name: string; city: string } };
 
 export default function Rewards() {
   const [items, setItems] = useState<R[]>([]);
@@ -19,7 +19,7 @@ export default function Rewards() {
     setLoading(true);
     const { data: u } = await supabase.auth.getUser();
     const { data } = await supabase.from("rewards")
-      .select("id, status, reward_programs(name), businesses(name, city)")
+      .select("id, status, kind, title, details, businesses(name, city)")
       .eq("owner_id", u.user?.id ?? "").neq("status", "redeemed").order("issued_at", { ascending: false });
     setItems((data ?? []) as unknown as R[]);
     setLoading(false);
@@ -38,7 +38,9 @@ export default function Rewards() {
         renderItem={({ item: r }) => (
           <Card style={{ gap: 6 }}>
             <Muted style={{ fontSize: 14 }}>{withTown(r.businesses.name, r.businesses.city)}</Muted>
-            <Text style={{ fontSize: 20, fontWeight: "700", color: C.ink }}>{r.reward_programs.name}</Text>
+            <Text style={{ fontSize: 20, fontWeight: "700", color: C.ink }}>{r.title}</Text>
+            {!!r.details && <Muted style={{ fontSize: 14 }}>{r.details}</Muted>}
+            {r.kind === "promoter_payout" && <Text style={{ fontSize: 12, fontWeight: "600", color: C.ink2 }}>Earned promoting this shop · sell it on localworx.io</Text>}
             {r.status === "listed"
               ? <Text style={{ color: C.orangeDark, fontWeight: "600" }}>Listed for sale (manage on localworx.io)</Text>
               : <View style={{ marginTop: 6 }}><Button title="Use it" onPress={() => setShowing(r)} /></View>}
@@ -49,7 +51,7 @@ export default function Rewards() {
         {showing && (
           <View style={{ flex: 1, backgroundColor: C.paper, padding: 24, alignItems: "center", justifyContent: "center", gap: 20 }}>
             <Eyebrow>{withTown(showing.businesses.name, showing.businesses.city)}</Eyebrow>
-            <H1>{showing.reward_programs.name}</H1>
+            <H1>{showing.title}</H1>
             <View style={{ padding: 16, backgroundColor: C.white, borderRadius: 20 }}>
               <QRCode value={`localworx:reward:${showing.id}`} size={240} />
             </View>

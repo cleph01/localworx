@@ -96,3 +96,10 @@ test("zap request: must name the post, author and exact amount", () => {
   assert.equal(checkZapRequest(zr, { ...p, amountSats: 5000, tipperPubkey: getPublicKey(tipper) }).ok, false);
   assert.equal(checkZapRequest(zr, { ...p, eventId: "f".repeat(64), tipperPubkey: getPublicKey(tipper) }).ok, false);
 });
+
+test("payoutLabel covers sats, in-kind and both", async () => {
+  const { payoutLabel } = await import("./format");
+  assert.equal(payoutLabel({ sats_per_visit: 500 }), "500 sats per visit");
+  assert.equal(payoutLabel({ sats_per_visit: 0, inkind_item: "Free haircut", inkind_visits: 3 }), "Free haircut every 3 visits");
+  assert.equal(payoutLabel({ sats_per_visit: 2000, inkind_item: "Free meal", inkind_visits: 1 }), "2,000 sats per visit + Free meal per visit");
+});

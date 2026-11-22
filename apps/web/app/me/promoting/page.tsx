@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { publicEnv } from "@/lib/env";
 import { Container, Empty, PageTitle, SignInPrompt } from "@/components/ui";
 import { CopyButton } from "@/components/copy-button";
-import { withTown } from "@localworx/shared";
+import { withTown, payoutLabel } from "@localworx/shared";
 
 export const metadata: Metadata = { title: "Promoting" };
 
@@ -13,26 +13,26 @@ export default async function PromotingPage() {
   if (!auth.user) return <Container narrow><SignInPrompt next="/me/promoting" what="see your promotions" /></Container>;
   const { data: claims } = await supabase
     .from("promotion_claims")
-    .select("id, status, referral_code, created_at, promotions(title, sats_per_visit, businesses(name, slug, city))")
+    .select("id, status, referral_code, created_at, promotions(title, sats_per_visit, inkind_item, inkind_visits, businesses(name, slug, city))")
     .eq("promoter_id", auth.user.id)
     .order("created_at", { ascending: false });
 
   return (
     <Container narrow>
       <PageTitle eyebrow="Promoter" title="Promoting">
-        Share your link. When someone you sent checks in, the shop pays you in sats.
+        Share your link. When someone you sent checks in, the shop pays you in sats, or with an IOU for its goods that lands in My rewards (use it or sell it).
       </PageTitle>
       {!claims?.length ? (
         <Empty title="You're not promoting anything yet" body="Pick a promotion from a shop you love." action={["/promotions", "Browse promotions"]} />
       ) : (
         <ul className="space-y-3">
           {claims.map((c) => {
-            const p = c.promotions as unknown as { title: string; sats_per_visit: number; businesses: { name: string; city: string } };
+            const p = c.promotions as unknown as { title: string; sats_per_visit: number; inkind_item: string | null; inkind_visits: number; businesses: { name: string; city: string } };
             const link = `${publicEnv.siteUrl()}/r/${c.referral_code}`;
             return (
               <li key={c.id} className="card p-5">
                 <div className="flex items-start justify-between gap-3">
-                  <div><p className="font-semibold">{p.title}</p><p className="text-sm text-muted">{withTown(p.businesses.name, p.businesses.city)} · {p.sats_per_visit.toLocaleString()} sats per visit</p></div>
+                  <div><p className="font-semibold">{p.title}</p><p className="text-sm text-muted">{withTown(p.businesses.name, p.businesses.city)} · {payoutLabel(p)}</p></div>
                   <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${c.status === "approved" ? "bg-good/10 text-good" : c.status === "rejected" ? "bg-bad/10 text-bad" : "bg-paper-2 text-muted"}`}>{c.status}</span>
                 </div>
                 {c.status === "approved" && (

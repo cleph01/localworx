@@ -22,7 +22,7 @@ businesses only pay for customers who actually walk in.
 ```bash
 pnpm install
 pnpm test            # shared logic
-pnpm test:rls        # 45 permission checks against the real migration
+pnpm test:rls        # 75 permission checks against the real migration
 pnpm check:env       # no secrets behind NEXT_PUBLIC_/EXPO_PUBLIC_
 pnpm --filter @localworx/web dev -- -p 3020
 ```

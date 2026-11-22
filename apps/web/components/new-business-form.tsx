@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { businessInput } from "@localworx/shared";
 import { createClient } from "@/lib/supabase/browser";
 import { AddressPicker, type PickedPlace } from "@/components/address-picker";
+import { HonorPledgeFields } from "@/components/honor-pledge";
 
 const toSlug = (s: string) => s.toLowerCase().replace(/['’]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60).replace(/-$/, "");
 const validSlug = (s: string) => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(s) && s.length >= 3 && s.length <= 60;
@@ -70,8 +71,14 @@ export function NewBusinessForm({ categories, userId }: { categories: { id: numb
       // A hidden (inactive) listing can still hold an address, so retry automatic ones with a number.
       const tries = customSlug !== null ? [parsed.data.slug] : [parsed.data.slug, ...Array.from({ length: 5 }, (_, i) => `${parsed.data.slug}-${i + 2}`.slice(0, 60))];
       for (const attempt of tries) {
-        const { error } = await createClient().from("businesses").insert({ ...parsed.data, slug: attempt, created_by: userId });
-        if (!error) return router.push(`/business/${attempt}/manage?new=1`);
+        const supabase = createClient();
+        const { data: created, error } = await supabase.from("businesses")
+          .insert({ ...parsed.data, slug: attempt, created_by: userId }).select("id").single();
+        if (!error) {
+          // The pledge box is required, so sign it now; the manage page asks again if this fails.
+          if (f.get("pledge") === "on") await supabase.rpc("sign_honor_pledge", { p_business: created.id });
+          return router.push(`/business/${attempt}/manage?new=1`);
+        }
         if (!/duplicate/.test(error.message)) break;
         if (customSlug !== null) { setBusy(false); return setError("That page address is taken. Pick another, or clear it to choose one for you."); }
       }
@@ -133,6 +140,7 @@ export function NewBusinessForm({ categories, userId }: { categories: { id: numb
       <label className="flex items-center gap-2 text-sm">
         <input type="checkbox" name="hiring" /> We&apos;d like local promoters to help bring in customers
       </label>
+      <HonorPledgeFields />
       {error && <p role="alert" className="rounded-xl bg-bad/10 p-3 text-sm text-bad">{error}</p>}
       <button className="btn-primary w-full" disabled={busy}>{busy ? "Saving…" : "Create my listing"}</button>
     </form>

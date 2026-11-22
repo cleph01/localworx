@@ -14,7 +14,8 @@ export const HELP: HelpSection[] = [
         summary: "A Main Street app that pays neighbors in Bitcoin for bringing customers to local shops.",
         body: [
           "LocalWorx connects three groups: neighbors who shop locally, promoters who recommend local shops, and the shops themselves.",
-          "When you check in at a shop, you fill a punch card toward a reward. If a promoter sent you, the shop pays that promoter in sats (small amounts of Bitcoin), directly from its wallet to theirs.",
+          "When you check in at a shop, you fill a punch card toward a reward. If a promoter sent you, the shop pays that promoter: in sats (small amounts of Bitcoin) straight from its wallet to theirs, in goods from the shop (a meal, a haircut) as an IOU the promoter can use or sell, or both.",
+          "Every shop signs an honor pledge to keep those IOUs. That trust is what keeps neighbors promoting, and what keeps value moving around town.",
           "The result: money a shop would have spent on online ads goes to people in its own town instead.",
         ],
       },
@@ -75,12 +76,26 @@ export const HELP: HelpSection[] = [
       {
         slug: "sell-reward",
         title: "Selling or buying a reward",
-        summary: "Won't use a reward? Sell it to a neighbor for sats.",
+        summary: "Won't use a reward or IOU? Sell it to a neighbor for sats.",
         body: [
+          "Anything in My rewards can be sold: punch-card rewards, and IOUs promoters earned from shops (a free meal, a haircut).",
           "To sell: in My rewards, tap Sell and set a price in sats. You need a Lightning address in Profile & wallet so buyers can pay you.",
           "To buy: open the Marketplace and tap Buy. Pay the invoice with any Lightning wallet. The listing is held for you for 10 minutes while you pay.",
           "The buyer pays the seller directly. As soon as the payment lands, the reward moves to the buyer. LocalWorx never holds the money.",
           "You can take a listing off the market any time, unless a buyer is in the middle of paying.",
+          "Every shop has pledged to honor its rewards and IOUs for whoever holds them, including a buyer.",
+        ],
+      },
+      {
+        slug: "unhonored",
+        title: "A shop won't honor my reward or IOU",
+        summary: "Report it from My rewards. The shop has 7 days to make it right.",
+        body: [
+          "Every shop on LocalWorx signs a pledge to honor every reward and IOU it issues, for whoever holds it.",
+          "If a shop refuses one, open My rewards, tap \"Shop won't honor this?\" on that reward and tell us what happened.",
+          "The shop sees your report. If it's still open after 7 days, the shop's page, promotions and marketplace listings show an \"Unpaid IOU\" badge.",
+          "Once the shop makes it right, tap \"They made it right\" on the reward to close your report. Only you can close it. The shop marking the reward used doesn't, so a shop can't clear its own badge.",
+          "Please report only real refusals. LocalWorx can dismiss reports that turn out to be false.",
         ],
       },
     ],
@@ -91,12 +106,14 @@ export const HELP: HelpSection[] = [
       {
         slug: "become-promoter",
         title: "Earning as a promoter",
-        summary: "Claim a promotion, share your link, get paid per visit.",
+        summary: "Claim a promotion, share your link, get paid per visit in sats or goods.",
         body: [
           "Browse Promotions and tap Promote this on a shop you'd happily recommend. The shop approves you.",
           "Once approved, you'll find your personal link under Promoting. Share it however you like.",
-          "When someone opens your link and then checks in at that shop, the visit is credited to you, and the shop pays you the amount shown on the promotion.",
-          "Add a Lightning address in Profile & wallet so shops can pay you.",
+          "When someone opens your link and then checks in at that shop, the visit is credited to you, and the shop pays you what the promotion shows.",
+          "Sats go straight to your Lightning address. Add one in Profile & wallet.",
+          "Goods (a meal, a haircut) arrive as an IOU in My rewards, for example one free haircut every 3 visits you send. Use it yourself, give it away, or sell it on the Marketplace for sats.",
+          "Your own visits through your own link don't count.",
         ],
       },
       {
@@ -142,12 +159,25 @@ export const HELP: HelpSection[] = [
       {
         slug: "list-business",
         title: "Listing your business",
-        summary: "Two minutes: name, address, category.",
+        summary: "Two minutes: name, address, category, and the honor pledge.",
         body: [
           "Go to List your business, fill in the basics, type your street address and tap Find.",
           "A map appears. Drag the pin to where your counter QR will stand (or tap the map). Check-ins count within 60 meters of it by default; you can widen that later in Manage, up to 250 meters, for big stores or markets.",
           "Another shop somewhere else can have the same name. Your name shows exactly as you typed it, with your town next to it, and we pick a free page address for you (for example adding your town). You can type your own instead.",
+          "Tick the honor pledge at the bottom. It's required before you can offer a punch card or promotion.",
           "You become the owner of the listing. You can add staff later.",
+        ],
+      },
+      {
+        slug: "honor-pledge",
+        title: "The honor pledge",
+        summary: "Your rewards and IOUs are promises. Keep them, or your page shows a badge.",
+        body: [
+          "Punch-card rewards and in-kind promoter payouts are IOUs from your shop. Customers and promoters own them, trade them and sell them to each other, so they only have value if you always honor them.",
+          "Before offering any, the owner ticks the pledge: honor every reward and IOU for whoever holds it, and if you stop offering an item, give the holder something of equal value.",
+          "If a holder reports that you refused one, you'll see it at the top of Manage. Make it right and they'll close the report.",
+          "A report still open after 7 days puts an \"Unpaid IOU\" badge on your page, your promotions and your marketplace listings until the holder closes it.",
+          "Keeping your word is what makes people want to promote you. It's the whole engine.",
         ],
       },
       {
@@ -166,16 +196,20 @@ export const HELP: HelpSection[] = [
         summary: "Pick something simple: a free coffee after 5 visits.",
         body: [
           "In Manage, under Punch card, enter the reward and how many visits earn it.",
-          "Customers can check in once a day, so 5 visits means at least 5 different days.",
+          "A visit counts once per gap you set under Check-in rules (3 hours by default), so 5 visits means 5 separate trips.",
+          "Each reward is an IOU covered by your honor pledge. Pick something you'll always be happy to give.",
           "When a customer shows you a reward, scan it with the LocalWorx app or paste its code under Use a reward.",
         ],
       },
       {
         slug: "hire-promoters",
         title: "Working with promoters",
-        summary: "Post a promotion, approve promoters, pay per verified visit.",
+        summary: "Post a promotion, approve promoters, pay per verified visit in goods, sats or both.",
         body: [
-          "In Manage, tap New promotion. Say what promoters should tell people and how many sats you'll pay per new visit.",
+          "In Manage, tap New promotion. Say what promoters should tell people and how you'll pay them.",
+          "Something from your shop: a meal, a haircut, a coffee, every so many visits they send. They get an IOU they can use or sell for sats. It costs you your cost of goods, not cash, and it brings promoters back through your door.",
+          "Sats: a set amount per visit, paid straight to the promoter's Lightning address. Quickest if you'd rather settle in money.",
+          "Or both.",
           "Promoters who want to work with you show up under Promoters. Approve the ones you trust.",
           "You only owe a promoter when someone they sent actually checks in at your counter.",
         ],

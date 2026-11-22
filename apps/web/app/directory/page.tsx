@@ -3,6 +3,8 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { BusinessMap } from "@/components/map/business-map";
 import { Container, Empty, PageTitle } from "@/components/ui";
+import { getUnhonored } from "@/lib/honor";
+import { UnpaidIouBadge } from "@/components/honor-badge";
 
 export const metadata: Metadata = { title: "Directory" };
 
@@ -15,12 +17,12 @@ export default async function DirectoryPage({ searchParams }: PageProps<"/direct
   const { data: categories } = await supabase.from("categories").select("id, name, slug").order("name");
   let query = supabase
     .from("businesses")
-    .select("slug, name, description, city, state, lat, lng, hiring_promoters, categories!inner(name, slug), reward_programs(name, visits_required, is_active)")
+    .select("id, slug, name, description, city, state, lat, lng, hiring_promoters, categories!inner(name, slug), reward_programs(name, visits_required, is_active)")
     .order("name")
     .limit(200);
   if (q) query = query.or(`name.ilike.%${q.replace(/[%,()]/g, "")}%,city.ilike.%${q.replace(/[%,()]/g, "")}%`);
   if (cat) query = query.eq("categories.slug", cat);
-  const { data: businesses } = await query;
+  const [{ data: businesses }, unhonored] = await Promise.all([query, getUnhonored(supabase)]);
   const list = businesses ?? [];
 
   return (
@@ -53,6 +55,7 @@ export default async function DirectoryPage({ searchParams }: PageProps<"/direct
                       <div>
                         <p className="font-semibold">{b.name}</p>
                         <p className="text-sm text-muted">{category.name} · {b.city}, {b.state}</p>
+                        {unhonored.has(b.id) && <p className="mt-1"><UnpaidIouBadge info={unhonored.get(b.id)} /></p>}
                       </div>
                       {b.hiring_promoters && (
                         <span className="shrink-0 rounded-full bg-orange-light px-2.5 py-1 text-xs font-semibold text-orange-dark">Hiring promoters</span>

@@ -29,9 +29,10 @@ async function loadShop(slug: string) {
   if (!shop) return null;
   const [{ data: program }, { data: promos }] = await Promise.all([
     sb.from("reward_programs").select("name, visits_required").eq("business_id", shop.id).eq("is_active", true).maybeSingle(),
-    sb.from("promotions").select("sats_per_visit").eq("business_id", shop.id).eq("is_active", true).order("sats_per_visit", { ascending: false }).limit(1),
+    sb.from("promotions").select("sats_per_visit, inkind_item").eq("business_id", shop.id).eq("is_active", true).order("sats_per_visit", { ascending: false }).limit(20),
   ]);
-  return { shop, program, topSats: promos?.[0]?.sats_per_visit ?? 0 };
+  const item = promos?.find((p) => p.inkind_item)?.inkind_item ?? null;
+  return { shop, program, topSats: promos?.[0]?.sats_per_visit ?? 0, item };
 }
 
 function Pill({ children, accent }: { children: string; accent?: boolean }) {
@@ -65,6 +66,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
     pills.push({ text: `Punch card: reward after ${v} visit${v === 1 ? "" : "s"}` });
   }
   if (data && data.topSats > 0) pills.push({ text: `Bring a friend, earn ${data.topSats.toLocaleString("en-US")} sats`, accent: true });
+  else if (data?.item) pills.push({ text: `Bring a friend, earn: ${data.item}`, accent: true });
   if (shop && pills.length === 0) pills.push({ text: "Check in, earn rewards you own" });
 
   return new ImageResponse(

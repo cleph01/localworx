@@ -105,10 +105,20 @@ export function ProgramForm({ businessId, current }: {
   );
 }
 
+type PayKind = "sats" | "inkind" | "both";
+const PAY_OPTIONS: [PayKind, string, string][] = [
+  ["inkind", "Something from my shop", "A meal, a haircut, a coffee. The promoter gets an IOU they can use or sell for sats."],
+  ["sats", "Sats", "Paid straight to the promoter's Lightning address. Quick and simple."],
+  ["both", "Both", "Sats per visit, plus an item."],
+];
+
 export function PromotionForm({ businessId }: { businessId: string }) {
   const { run, Msg, busy } = useAction();
   const [open, setOpen] = useState(false);
+  const [pay, setPay] = useState<PayKind>("inkind");
   if (!open) return <button className="btn-ghost mt-4 !py-2 text-sm" onClick={() => setOpen(true)}>New promotion</button>;
+  const withSats = pay !== "inkind";
+  const withItem = pay !== "sats";
   return (
     <form className="mt-4 space-y-3 border-t border-line pt-4" onSubmit={async (e) => {
       e.preventDefault();
@@ -118,14 +128,48 @@ export function PromotionForm({ businessId }: { businessId: string }) {
         title: String(f.get("title")),
         body: String(f.get("body") ?? ""),
         terms: String(f.get("terms") ?? "") || null,
-        sats_per_visit: Number(f.get("sats")),
+        sats_per_visit: withSats ? Number(f.get("sats")) : 0,
+        inkind_item: withItem ? String(f.get("item")) : null,
+        inkind_details: withItem ? String(f.get("item_details") ?? "") || null : null,
+        inkind_visits: withItem ? Number(f.get("item_visits")) : 1,
       }), "Promotion posted.");
       if (ok) setOpen(false);
     }}>
       <input name="title" required minLength={3} maxLength={120} placeholder="Bring a friend to Joe's" className="field" />
       <textarea name="body" rows={3} maxLength={4000} placeholder="What should promoters tell people?" className="field" />
-      <label className="block"><span className="label">Sats you pay the promoter per new visit</span>
-        <input name="sats" type="number" min={0} max={1000000} defaultValue={500} className="field" /></label>
+      <fieldset>
+        <legend className="label">How you pay promoters</legend>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {PAY_OPTIONS.map(([v, label, hint]) => (
+            <label key={v} className={`cursor-pointer rounded-xl border p-3 text-sm ${pay === v ? "border-orange bg-orange-light/40" : "border-line bg-white"}`}>
+              <span className="flex items-center gap-2 font-semibold">
+                <input type="radio" name="pay" value={v} checked={pay === v} onChange={() => setPay(v)} /> {label}
+              </span>
+              <span className="mt-1 block text-xs text-muted">{hint}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      {withItem && (
+        <div className="grid gap-3 sm:grid-cols-[1fr_9rem]">
+          <label className="block"><span className="label">What you give</span>
+            <input name="item" required minLength={2} maxLength={80} placeholder="Free haircut" className="field" /></label>
+          <label className="block"><span className="label">Every how many visits</span>
+            <input name="item_visits" type="number" min={1} max={100} required defaultValue={1} className="field" /></label>
+          <label className="block sm:col-span-2"><span className="label">Details (optional)</span>
+            <input name="item_details" maxLength={500} placeholder="Any cut, tip not included" className="field" /></label>
+        </div>
+      )}
+      {withSats && (
+        <label className="block"><span className="label">Sats you pay the promoter per visit they send</span>
+          <input name="sats" type="number" min={1} max={1000000} required defaultValue={500} className="field" /></label>
+      )}
+      {withItem && (
+        <p className="rounded-xl bg-paper-2 p-3 text-xs text-ink-2">
+          Each one is an IOU covered by your honor pledge. The promoter owns it: they can use it, give it away, or sell it on the
+          marketplace, so honor it for whoever brings it in.
+        </p>
+      )}
       <input name="terms" maxLength={2000} placeholder="Terms (optional)" className="field" />
       <Submit busy={busy} busyText="Posting…">Post promotion</Submit>
       <Msg />

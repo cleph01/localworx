@@ -95,13 +95,13 @@ const ROLES = [
   {
     who: "Promoters",
     title: "Get paid for the word of mouth you already give",
-    points: ["Claim a promotion from a shop you love", "Share your link with your people", "Earn sats for every visit you send"],
+    points: ["Claim a promotion from a shop you love", "Share your link with your people", "Earn sats or goods for every visit you send"],
     cta: ["/promotions", "See open promotions"],
   },
   {
     who: "Businesses",
     title: "Only pay for customers who walk in",
-    points: ["Set a reward in two minutes", "Hire local promoters, pay per verified visit", "See who your regulars really are"],
+    points: ["Set a reward in two minutes", "Hire local promoters, pay in goods or sats per verified visit", "See who your regulars really are"],
     cta: ["/business/new", "List your business"],
   },
 ] as const;
@@ -133,10 +133,10 @@ function Roles() {
 
 /* ───────────────────────────── How it works */
 const STEPS = [
-  ["A shop posts a promotion", "Joe's Coffee offers 500 sats for every new customer a promoter sends in."],
+  ["A shop posts a promotion", "Joe's Coffee offers a free latte for every 3 friends a promoter sends in. Or sats, if it'd rather."],
   ["A promoter spreads the word", "Maria shares her LocalWorx link with friends who'd love Joe's."],
   ["You check in at the counter", "Scan the rotating code by the register. Your phone confirms you're really there."],
-  ["Sats move, wallet to wallet", "Joe's pays Maria directly. Your punch card fills. The money stays in town."],
+  ["Value moves, neighbor to neighbor", "Maria gets a latte IOU she can drink or sell for sats (or sats, wallet to wallet). Your punch card fills. The value stays in town."],
 ];
 
 function HowItWorks() {
@@ -220,6 +220,7 @@ const FAQ = [
   ["Do I need Bitcoin to use LocalWorx?", "No. Checking in and earning rewards is free and needs no wallet. You only need a Lightning wallet to send or receive sats."],
   ["Is my location tracked?", "Only at the moment you check in, to confirm you're at the shop. We store that one point with your check-in and nothing else."],
   ["What does it cost?", "Members are free. A few things carry a small fee (in sats, or dollars by card) to keep bots out, and business pricing is being set with our pilot towns. Promoter payouts and tips go straight to the person earning them; LocalWorx never takes a cut. See About for the full breakdown."],
+  ["What if a shop doesn't honor a reward?", "Every shop pledges to honor its rewards and IOUs, for whoever holds them. Report a refusal from My rewards. If it isn't made right within 7 days, the shop's page shows an \"Unpaid IOU\" badge."],
   ["What if I lose my phone?", "Your account is your key. If you backed it up when you signed up, sign in on any device with it."],
 ];
 

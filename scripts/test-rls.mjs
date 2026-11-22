@@ -104,6 +104,18 @@ await check("mallory cannot add herself as staff", () => as("mallory", () => den
 await check("alice cannot add a second owner", () => as("alice", () => denied(() =>
   q(`insert into business_staff (business_id, profile_id, role) values ($1,$2,'owner')`, [biz, U.carol]))));
 
+console.log("\nHonor pledge");
+await check("alice cannot start a punch card before signing the honor pledge", () => as("alice", () => denied(() =>
+  q(`insert into reward_programs (business_id,name,visits_required) values ($1,'Free coffee',3)`, [biz]))));
+await check("alice cannot set the pledge date directly", () => as("alice", () => denied(() =>
+  q(`update businesses set honor_pledge_at=now() where id=$1`, [biz]))));
+await check("mallory cannot sign alice's pledge", () => as("mallory", () => denied(() =>
+  q(`select sign_honor_pledge($1)`, [biz]))));
+await check("alice (owner) signs the pledge", () => as("alice", async () => {
+  assert((await q(`select sign_honor_pledge($1) as at`, [biz])).rows[0].at, "no date");
+  assert((await q(`select has_pledged($1) as ok`, [biz])).rows[0].ok === true, "not pledged");
+}));
+
 console.log("\nCheck-ins and rewards");
 let program;
 await check("alice sets a 3-visit reward program", () => as("alice", async () => {
@@ -236,6 +248,81 @@ await check("mallory (never visited) cannot review; bob (visited) can", async ()
   await as("bob", () => q(`insert into business_reviews (business_id,reviewer_id,rating) values ($1,$2,5)`, [biz, U.bob]));
 });
 
+console.log("\nIn-kind promoter payouts (IOUs)");
+await check("a promotion that pays nothing is refused", () => as("alice", () => denied(() =>
+  q(`insert into promotions (business_id,title,sats_per_visit) values ($1,'Free exposure',0)`, [biz]))));
+let kindPromo, kindClaim, iou;
+await check("alice posts an in-kind promotion: a free haircut every 2 referred visits", () => as("alice", async () => {
+  kindPromo = (await q(`insert into promotions (business_id,title,inkind_item,inkind_visits) values ($1,'Send me regulars','Free haircut',2) returning id`, [biz])).rows[0].id;
+}));
+await as("carol", async () => {
+  kindClaim = (await q(`insert into promotion_claims (promotion_id,promoter_id) values ($1,$2) returning id`, [kindPromo, U.carol])).rows[0].id;
+});
+await as("alice", () => q(`update promotion_claims set status='approved' where id=$1`, [kindClaim]));
+const kindRef = (await q(`select referral_code from promotion_claims where id=$1`, [kindClaim])).rows[0].referral_code;
+await q(`update checkins set created_at = created_at - interval '1 day'`); // clear everyone's check-in gap
+await check("carol's own visit through her link earns her nothing", () => as("service", async () => {
+  const r = (await q(`select record_checkin($1,$2,41,-73.66,$3) as r`, [U.carol, biz, kindRef])).rows[0].r;
+  assert(r.ok && !r.promoter_reward_id, JSON.stringify(r));
+  const c = (await q(`select referral_code from checkins where id=$1`, [r.checkin_id])).rows[0];
+  assert(c.referral_code === null, "self-referral was credited");
+}));
+await check("1st referred visit: no IOU yet; 2nd: carol gets a 'Free haircut' IOU", () => as("service", async () => {
+  const r1 = (await q(`select record_checkin($1,$2,41,-73.66,$3) as r`, [U.bob, biz, kindRef])).rows[0].r;
+  assert(r1.ok && !r1.promoter_reward_id, JSON.stringify(r1));
+  const r2 = (await q(`select record_checkin($1,$2,41,-73.66,$3) as r`, [U.mallory, biz, kindRef])).rows[0].r;
+  assert(r2.ok && r2.promoter_reward_id, JSON.stringify(r2));
+  iou = r2.promoter_reward_id;
+  const row = (await q(`select kind, owner_id, title from rewards where id=$1`, [iou])).rows[0];
+  assert(row.kind === "promoter_payout" && row.owner_id === U.carol && row.title === "Free haircut", JSON.stringify(row));
+}));
+await check("a referral code from another shop's promotion is ignored", () => as("service", async () => {
+  await q(`update checkins set created_at = created_at - interval '1 day'`);
+  const r = (await q(`select record_checkin($1,$2,41,-73.66,'not-a-real-code') as r`, [U.bob, biz])).rows[0].r;
+  assert(r.ok && !r.promoter_reward_id, JSON.stringify(r));
+}));
+await check("carol sees her IOU and can sell it on the marketplace", () => as("carol", async () => {
+  assert((await q(`select id from rewards where id=$1`, [iou])).rows.length === 1, "hidden");
+  const l = (await q(`select list_reward($1, 5000) as id`, [iou])).rows[0].id;
+  await q(`select cancel_listing($1)`, [l]);
+}));
+
+console.log("\nHonor reports and the unpaid-IOU badge");
+let report;
+await check("mallory cannot report carol's IOU", () => as("mallory", () => denied(() =>
+  q(`select report_unhonored($1,'nope')`, [iou]))));
+await check("carol reports the shop refused her IOU; a second report on it is refused", () => as("carol", async () => {
+  report = (await q(`select report_unhonored($1,'They said the deal ended') as id`, [iou])).rows[0].id;
+  await denied(() => q(`select report_unhonored($1,'again')`, [iou]), /already reported/);
+}));
+await check("nobody writes honor reports directly", async () => {
+  await as("carol", () => denied(() => q(`insert into honor_reports (reward_id,business_id,reporter_id) values ($1,$2,$3)`, [iou, biz, U.carol])));
+  await as("alice", () => denied(() => q(`update honor_reports set resolved_at=now(), resolution='dismissed' where id=$1`, [report])));
+});
+await check("alice (staff) and carol see the report; mallory does not", async () => {
+  assert((await as("alice", () => q(`select id from honor_reports`))).rows.length === 1, "alice");
+  assert((await as("carol", () => q(`select id from honor_reports`))).rows.length === 1, "carol");
+  assert((await as("mallory", () => q(`select id from honor_reports`))).rows.length === 0, "mallory");
+});
+await check("no badge during the 7-day grace period", () => as("anon", async () => {
+  assert((await q(`select * from unhonored_businesses()`)).rows.length === 0, "badge too early");
+}));
+await check("alice cannot close the report, even by marking the IOU used", () => as("alice", async () => {
+  await denied(() => q(`select close_honor_report($1)`, [report]));
+  await q(`select redeem_reward($1)`, [iou]);
+  const r = (await q(`select resolved_at from honor_reports where id=$1`, [report])).rows[0];
+  assert(r.resolved_at === null, "redeeming closed the report");
+}));
+await check("after 7 days the shop shows the badge to everyone", async () => {
+  await q(`update honor_reports set created_at = now() - interval '8 days' where id=$1`, [report]);
+  const rows = (await as("anon", () => q(`select * from unhonored_businesses()`))).rows;
+  assert(rows.length === 1 && rows[0].business_id === biz && rows[0].open_reports === 1, JSON.stringify(rows));
+});
+await check("carol says it was made right: the badge goes away", async () => {
+  await as("carol", () => q(`select close_honor_report($1)`, [report]));
+  assert((await as("anon", () => q(`select * from unhonored_businesses()`))).rows.length === 0, "badge stayed");
+});
+
 console.log("\nCommunity posts, fees and tips");
 let draft, live, payment, tip;
 await as("service", async () => {
@@ -304,7 +391,7 @@ await check("anon can read the public tables the site shows", () => as("anon", a
   }
 }));
 await check("anon cannot read private tables", () => as("anon", async () => {
-  for (const t of ["checkins","sales","promotion_claims","promoter_payouts","business_staff"]) {
+  for (const t of ["checkins","sales","promotion_claims","promoter_payouts","business_staff","honor_reports"]) {
     await denied(() => q(`select 1 from ${t} limit 1`));
   }
 }));
