@@ -287,6 +287,78 @@ await check("carol sees her IOU and can sell it on the marketplace", () => as("c
   await q(`select cancel_listing($1)`, [l]);
 }));
 
+console.log("\nReferrals stick to the person");
+const gap = () => q(`update checkins set created_at = created_at - interval '1 day'`);
+const bobRef = () => q(`select claim_id, referred_at from referrals where member_id=$1 and business_id=$2`, [U.bob, biz]).then((r) => r.rows[0]);
+await check("bob's first visit with carol's link saved the referral on his account", async () => {
+  const r = await bobRef();
+  assert(r && r.claim_id === kindClaim, JSON.stringify(r));
+});
+await check("bob scans with no link (the app, another browser) and carol is still credited", () => as("service", async () => {
+  await gap();
+  const r = (await q(`select record_checkin($1,$2,41,-73.66,null) as r`, [U.bob, biz])).rows[0].r;
+  assert(r.ok && r.referred_by === U.carol, JSON.stringify(r));
+  const c = (await q(`select referral_code from checkins where id=$1`, [r.checkin_id])).rows[0];
+  assert(c.referral_code === kindRef, "check-in not tagged with carol's code");
+}));
+await check("re-sending the same cookie doesn't restart the 30 days", () => as("service", async () => {
+  await q(`update referrals set referred_at = now() - interval '10 days' where member_id=$1`, [U.bob]);
+  await gap();
+  await q(`select record_checkin($1,$2,41,-73.66,$3)`, [U.bob, biz, kindRef]);
+  const r = await bobRef();
+  assert(new Date(r.referred_at) < new Date(Date.now() - 9 * 864e5), "window restarted");
+}));
+await check("after 30 days, bob's visits stop crediting carol", () => as("service", async () => {
+  await q(`update referrals set referred_at = now() - interval '31 days' where member_id=$1`, [U.bob]);
+  await gap();
+  const r = (await q(`select record_checkin($1,$2,41,-73.66,null) as r`, [U.bob, biz])).rows[0].r;
+  assert(r.ok && !r.referred_by, JSON.stringify(r));
+}));
+await check("opening carol's link again restarts the 30 days", () => as("service", async () => {
+  assert((await q(`select record_referral($1,$2) as b`, [U.bob, kindRef])).rows[0].b === biz, "not recorded");
+  await gap();
+  const r = (await q(`select record_checkin($1,$2,41,-73.66,null) as r`, [U.bob, biz])).rows[0].r;
+  assert(r.referred_by === U.carol, JSON.stringify(r));
+}));
+await check("nobody can refer themselves", () => as("service", async () => {
+  assert((await q(`select record_referral($1,$2) as b`, [U.carol, kindRef])).rows[0].b === null, "self-referral saved");
+  assert((await q(`select 1 from referrals where member_id=$1`, [U.carol])).rows.length === 0, "row exists");
+}));
+let malloryClaim;
+await check("the newest promoter link wins", async () => {
+  await as("mallory", async () => {
+    malloryClaim = (await q(`insert into promotion_claims (promotion_id,promoter_id) values ($1,$2) returning id`, [kindPromo, U.mallory])).rows[0].id;
+  });
+  await as("alice", () => q(`update promotion_claims set status='approved' where id=$1`, [malloryClaim]));
+  const mRef = (await q(`select referral_code from promotion_claims where id=$1`, [malloryClaim])).rows[0].referral_code;
+  await as("service", () => q(`select record_referral($1,$2)`, [U.bob, mRef]));
+  assert((await bobRef()).claim_id === malloryClaim, "carol still credited");
+});
+await check("bob, his referring promoter and the shop see the referral; carol (replaced) does not", async () => {
+  for (const who of ["bob", "mallory", "alice"]) {
+    const n = await as(who, () => q(`select 1 from referrals where member_id=$1`, [U.bob]));
+    assert(n.rows.length === 1, `${who} can't see it`);
+  }
+  const n = await as("carol", () => q(`select 1 from referrals where member_id=$1`, [U.bob]));
+  assert(n.rows.length === 0, "carol can see it");
+});
+await check("members can't write referrals or call record_referral", () => as("bob", async () => {
+  await denied(() => q(`insert into referrals (member_id,business_id,claim_id) values ($1,$2,$3)`, [U.bob, biz, kindClaim]));
+  await denied(() => q(`update referrals set referred_at = now() where member_id=$1`, [U.bob]));
+  await denied(() => q(`select record_referral($1,$2)`, [U.bob, kindRef]));
+}));
+await as("service", () => q(`select record_referral($1,$2)`, [U.bob, kindRef])); // back to carol for the tests below
+await check("the shop page can name the promoter behind a link, only for that shop's codes", () => as("anon", async () => {
+  assert((await q(`select referrer_name($1,$2) as n`, [kindRef, biz])).rows[0].n === "carol", "no name");
+  assert((await q(`select referrer_name('not-a-real-code',$1) as n`, [biz])).rows[0].n === null, "named a fake code");
+}));
+await check("bob sees who referred him and until when; anon can't ask", async () => {
+  const r = (await as("bob", () => q(`select * from my_referral($1)`, [biz]))).rows[0];
+  assert(r && r.promoter_name === "carol" && new Date(r.counts_until) > new Date(Date.now() + 29 * 864e5), JSON.stringify(r));
+  await as("anon", () => denied(() => q(`select * from my_referral($1)`, [biz])));
+});
+
+
 console.log("\nHonor reports and the unpaid-IOU badge");
 let report;
 await check("mallory cannot report carol's IOU", () => as("mallory", () => denied(() =>
@@ -391,7 +463,7 @@ await check("anon can read the public tables the site shows", () => as("anon", a
   }
 }));
 await check("anon cannot read private tables", () => as("anon", async () => {
-  for (const t of ["checkins","sales","promotion_claims","promoter_payouts","business_staff","honor_reports"]) {
+  for (const t of ["checkins","sales","promotion_claims","promoter_payouts","business_staff","honor_reports","referrals"]) {
     await denied(() => q(`select 1 from ${t} limit 1`));
   }
 }));

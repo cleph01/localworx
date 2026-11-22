@@ -111,6 +111,8 @@ export const HELP: HelpSection[] = [
           "Browse Promotions and tap Promote this on a shop you'd happily recommend. The shop approves you.",
           "Once approved, you'll find your personal link under Promoting. Share it however you like.",
           "When someone opens your link and then checks in at that shop, the visit is credited to you, and the shop pays you what the promotion shows.",
+          "Your link counts for 30 days: every visit that person makes to the shop in that time is credited to you, whether they check in from the app, a different browser or another phone. If they open another promoter's link for the same shop, the newest link counts.",
+          "Tip: ask people to sign in when they open your link. That saves the referral to their account straight away, so nothing is lost if they later scan with a different app.",
           "Sats go straight to your Lightning address. Add one in Profile & wallet.",
           "Goods (a meal, a haircut) arrive as an IOU in My rewards, for example one free haircut every 3 visits you send. Use it yourself, give it away, or sell it on the Marketplace for sats.",
           "Your own visits through your own link don't count.",

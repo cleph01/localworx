@@ -1,6 +1,7 @@
 // Step 2 of sign-in: the device returns the challenge signed with its Nostr key.
 // We check the signature, then open a normal Supabase session for that pubkey.
 // The private key never reaches this server.
+import { cookies } from "next/headers";
 import { z } from "zod";
 import { createClient as createPlainClient } from "@supabase/supabase-js";
 import { checkAuthEvent, signedEvent } from "@localworx/shared";
@@ -78,5 +79,10 @@ export async function POST(req: Request) {
   const supabase = await createClient();
   const { error } = await supabase.auth.verifyOtp({ type: "magiclink", token_hash });
   if (error) return json({ error: "Could not open session" }, 500);
+
+  // Arrived through a promoter's link before signing in? Save it to the account, so the
+  // promoter is credited whichever device or app this member checks in with.
+  const ref = (await cookies()).get("lw_ref")?.value;
+  if (ref) await admin.rpc("record_referral", { p_profile: userId, p_code: ref, p_refresh: true });
   return json({ ok: true, user_id: userId, is_new: !existing });
 }

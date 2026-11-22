@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Container } from "@/components/ui";
@@ -47,6 +48,7 @@ export default async function BusinessPage({ params }: PageProps<"/b/[slug]">) {
     getUnhonored(supabase),
   ]);
   const flag = unhonored.get(biz.id);
+  const referral = await loadReferral(supabase, biz.id, me);
   const avg = reviews?.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : null;
   const myVisits = (visited as { count: number | null }).count ?? 0;
 
@@ -64,6 +66,7 @@ export default async function BusinessPage({ params }: PageProps<"/b/[slug]">) {
             <UnpaidIouBadge info={flag} detailed />
             {!flag && biz.honor_pledge_at && <PledgedNote />}
           </div>
+          {referral && <ReferralNote referral={referral} slug={slug} />}
           {biz.description && <p className="mt-6 max-w-2xl whitespace-pre-line text-ink-2">{biz.description}</p>}
           <div className="mt-6 flex flex-wrap gap-3 text-sm">
             {biz.website && <a className="btn-ghost" href={biz.website} target="_blank" rel="noreferrer">Website</a>}
@@ -141,5 +144,36 @@ export default async function BusinessPage({ params }: PageProps<"/b/[slug]">) {
         </aside>
       </div>
     </Container>
+  );
+}
+
+type Referral = { name: string; until: string | null };
+
+// Who sent this visitor here: the saved referral if signed in, else the link cookie.
+async function loadReferral(supabase: Awaited<ReturnType<typeof createClient>>, businessId: string, me: string | null): Promise<Referral | null> {
+  if (me) {
+    const { data } = await supabase.rpc("my_referral", { p_business: businessId });
+    const row = (data as { promoter_name: string; counts_until: string }[] | null)?.[0];
+    if (row) return { name: row.promoter_name, until: row.counts_until };
+  }
+  const code = (await cookies()).get("lw_ref")?.value;
+  if (!code) return null;
+  const { data: name } = await supabase.rpc("referrer_name", { p_code: code, p_business: businessId });
+  return typeof name === "string" ? { name, until: null } : null;
+}
+
+function ReferralNote({ referral, slug }: { referral: Referral; slug: string }) {
+  return (
+    <div className="mt-5 max-w-2xl rounded-xl border border-orange/40 bg-orange-light/30 p-4 text-sm text-ink-2">
+      <span className="font-semibold text-ink">{referral.name} sent you here.</span>{" "}
+      {referral.until ? (
+        <>Your check-ins here count for them until {new Date(referral.until).toLocaleDateString("en-US", { month: "short", day: "numeric" })}, from any device or the app.</>
+      ) : (
+        <>
+          <Link href={`/signin?next=/b/${slug}`} className="font-semibold underline underline-offset-2">Sign in</Link> before you visit so
+          they get credit, whichever phone or app you check in with.
+        </>
+      )}
+    </div>
   );
 }
