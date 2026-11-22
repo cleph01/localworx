@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui";
+import { contactEmail, contactNpub } from "@/lib/contact";
 
 export const metadata: Metadata = { title: "Founding partners" };
 
-const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
-const contactNpub = process.env.NEXT_PUBLIC_CONTACT_NPUB;
 
 export default function PartnersPage() {
   return (

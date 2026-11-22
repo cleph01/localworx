@@ -11,7 +11,7 @@ export function SiteFooter() {
           </p>
         </div>
         <FooterCol title="Use it" links={[["/directory", "Find local shops"], ["/community", "Community posts"], ["/business/new", "List your business"], ["/promotions", "Earn as a promoter"], ["/marketplace", "Rewards marketplace"]]} />
-        <FooterCol title="Learn" links={[["/about", "About & costs"], ["/help", "Help & FAQ"], ["/partners", "Founding partners"], ["https://github.com/cleph01/localworx", "Source code"]]} />
+        <FooterCol title="Learn" links={[["/about", "Why LocalWorx"], ["/white-paper", "White paper"], ["/help", "Help & FAQ"], ["/partners", "Founding partners"], ["https://github.com/cleph01/localworx", "Source code"]]} />
       </div>
       <p className="pb-8 text-center text-xs text-muted">© {new Date().getFullYear()} LocalWorx · GPLv3</p>
     </footer>

@@ -9,7 +9,8 @@
     "test": "turbo run test",
     "test:rls": "node scripts/test-rls.mjs",
     "check:env": "node scripts/check-public-env.mjs",
-    "db:migrate": "bash scripts/db-migrate.sh"
+    "db:migrate": "bash scripts/db-migrate.sh",
+    "sync:white-paper": "node scripts/sync-white-paper.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.17",

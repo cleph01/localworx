@@ -8,7 +8,7 @@ const NAV = [
   { href: "/community", label: "Community" },
   { href: "/promotions", label: "Promotions" },
   { href: "/marketplace", label: "Marketplace" },
-  { href: "/about", label: "About" },
+  { href: "/about", label: "Why LocalWorx" },
 ];
 
 async function currentProfileOrNull() {

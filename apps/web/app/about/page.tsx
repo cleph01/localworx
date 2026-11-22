@@ -4,7 +4,7 @@ import { FREE_POSTS_PER_DAY } from "@localworx/shared";
 import { publicFeeInfo } from "@/lib/fees";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "Why LocalWorx",
   description: "Why LocalWorx exists, what we believe, how Nostr, Bitcoin and local content fit together, and what it costs.",
 };
 
@@ -30,7 +30,7 @@ function Hero() {
     <section className="relative overflow-hidden">
       <div aria-hidden className="pointer-events-none absolute -top-40 left-[-10%] h-[480px] w-[480px] rounded-full bg-orange/15 blur-3xl" />
       <div className="mx-auto max-w-4xl px-4 pt-16 pb-16 sm:px-6 md:pt-24">
-        <p className="eyebrow">About LocalWorx</p>
+        <p className="eyebrow">Why LocalWorx</p>
         <h1 className="h-display mt-4 text-[2.4rem] leading-[1.08] sm:text-6xl">
           Value belongs to the people who create it, <em className="font-display text-orange-dark not-italic">not the platforms that harvest it.</em>
         </h1>

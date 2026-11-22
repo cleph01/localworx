@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { contactHref } from "@/lib/contact";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
@@ -10,6 +11,7 @@ import { HONOR_GRACE_DAYS, payoutLabel } from "@localworx/shared";
 export const metadata: Metadata = { title: "Manage" };
 
 const daysAgoIso = (days: number) => new Date(Date.now() - days * 864e5).toISOString();
+const disputeHref = contactHref("Disputing an IOU report");
 const daysSince = (iso: string) => Math.floor((Date.now() - new Date(iso).getTime()) / 864e5);
 
 export default async function ManagePage({ params, searchParams }: PageProps<"/business/[slug]/manage">) {
@@ -74,7 +76,8 @@ export default async function ManagePage({ params, searchParams }: PageProps<"/b
           <h2 className="h-display text-2xl">IOUs reported as not honored</h2>
           <p className="mt-1 text-sm text-ink-2">
             Make these right and the holder will close the report. A report still open after {HONOR_GRACE_DAYS} days puts an
-            &quot;Unpaid IOU&quot; badge on your page until it&apos;s closed. Think a report is false? Contact LocalWorx and we&apos;ll review it.
+            &quot;Unpaid IOU&quot; badge on your page until it&apos;s closed. Think a report is false?{" "}
+            {disputeHref ? <a href={disputeHref} className="font-medium underline underline-offset-2">Contact LocalWorx</a> : "Contact LocalWorx"} and we&apos;ll review it.
           </p>
           <ul className="mt-4 space-y-2">
             {reports.map((r) => {
