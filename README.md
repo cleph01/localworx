@@ -28,7 +28,7 @@ pnpm --filter @localworx/web dev -- -p 3020
 ```
 
 Copy `apps/web/.env.example` to `apps/web/.env.local` and fill in a Supabase project
-(apply `supabase/migrations/*.sql` first: put `DATABASE_URL` in `supabase/.env` and run `pnpm db:migrate`).
+(apply `supabase/migrations/*.sql` first: `MIGRATE_DATABASE_URL` in `apps/web/.env.local`, then `pnpm db:migrate`).
 
 ## How sign-in works
 

@@ -6,19 +6,18 @@
 #   pnpm db:migrate --baseline <ver>    mark migrations up to <ver> as already applied (one time,
 #                                       for ones pasted into the SQL editor before this script existed)
 #
-# Reads DATABASE_URL from the environment or supabase/.env (gitignored):
-#   DATABASE_URL=postgresql://postgres.<ref>:<password>@aws-0-us-east-1.pooler.supabase.com:5432/postgres
-# (Supabase dashboard > Connect > Session pooler.) Each migration runs in one transaction:
+# Reads DATABASE_URL from the environment, else MIGRATE_DATABASE_URL in apps/web/.env.local
+# (written by scripts/setup-env.sh; Supabase > Connect > Session pooler, password filled in). Each migration runs in one transaction:
 # if any statement fails, none of it is applied. Applied versions are recorded in
 # supabase_migrations.schema_migrations, the same table the Supabase CLI uses.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-if [[ -z "${DATABASE_URL:-}" && -f supabase/.env ]]; then
-  DATABASE_URL="$(grep -E '^DATABASE_URL=' supabase/.env | head -1 | cut -d= -f2- | sed -e 's/^"//' -e 's/"$//')"
+if [[ -z "${DATABASE_URL:-}" && -f apps/web/.env.local ]]; then
+  DATABASE_URL="$(grep -E '^MIGRATE_DATABASE_URL=' apps/web/.env.local | head -1 | cut -d= -f2- | sed -e 's/^"//' -e "s/^'//" -e 's/"$//' -e "s/'$//")"
 fi
 if [[ -z "${DATABASE_URL:-}" ]]; then
-  echo "No DATABASE_URL. Add it to supabase/.env (see the top of scripts/db-migrate.sh)." >&2
+  echo "No database URL. Run scripts/setup-env.sh, or set MIGRATE_DATABASE_URL in apps/web/.env.local." >&2
   exit 1
 fi
 command -v psql >/dev/null || { echo "psql not found (brew install libpq)" >&2; exit 1; }
