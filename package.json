@@ -8,7 +8,8 @@
     "check-types": "turbo run check-types",
     "test": "turbo run test",
     "test:rls": "node scripts/test-rls.mjs",
-    "check:env": "node scripts/check-public-env.mjs"
+    "check:env": "node scripts/check-public-env.mjs",
+    "db:migrate": "bash scripts/db-migrate.sh"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.17",
