@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   description:
     "LocalWorx pays neighbors in Bitcoin for bringing customers to Main Street. Check in at local shops, earn rewards you own, and get paid for spreading the word.",
   openGraph: { siteName: "LocalWorx", type: "website" },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
