@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Container } from "@/components/ui";
 import { ReviewForm } from "@/components/review-form";
 import { ClaimButton } from "@/components/claim-button";
-import { formatWait } from "@localworx/shared";
+import { formatWait, withTown } from "@localworx/shared";
 
 async function load(slug: string) {
   const supabase = await createClient();
@@ -19,7 +19,14 @@ async function load(slug: string) {
 
 export async function generateMetadata({ params }: PageProps<"/b/[slug]">): Promise<Metadata> {
   const { biz } = await load((await params).slug);
-  return { title: biz?.name ?? "Business" };
+  if (!biz) return { title: "Business" };
+  const title = withTown(biz.name, biz.city);
+  const category = (biz.categories as { name: string } | null)?.name;
+  const where = `${category ? `${category} in` : "In"} ${biz.city}, ${biz.state}`;
+  const blurb = biz.description?.trim();
+  const description =
+    `${where}. ${blurb ? (blurb.length > 140 ? `${blurb.slice(0, 137).trimEnd()}…` : blurb) : "Check in on LocalWorx to earn rewards and get paid for bringing friends."}`;
+  return { title, description, openGraph: { title, description }, twitter: { title, description } };
 }
 
 export default async function BusinessPage({ params }: PageProps<"/b/[slug]">) {

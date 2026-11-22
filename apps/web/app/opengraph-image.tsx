@@ -1,16 +1,16 @@
 // Link-preview image (texts, iMessage, social posts). Every page inherits it unless it
 // defines its own.
 import { ImageResponse } from "next/og";
-import { readFileSync } from "fs";
-import { join } from "path";
+import { DISPLAY, OG_SIZE, SANS, logoSrc, ogFonts } from "@/lib/og";
 
 export const runtime = "nodejs";
 export const alt = "LocalWorx — Build a stronger town, one paid shoutout at a time";
-export const size = { width: 1200, height: 630 };
+export const size = OG_SIZE;
 export const contentType = "image/png";
 
-export default function OGImage() {
-  const logo = `data:image/png;base64,${readFileSync(join(process.cwd(), "public/logo.png")).toString("base64")}`;
+export default async function OGImage() {
+  const logo = logoSrc();
+  const fonts = await ogFonts();
 
   return new ImageResponse(
     (
@@ -23,7 +23,7 @@ export default function OGImage() {
           alignItems: "center",
           justifyContent: "center",
           background: "#0b1f36",
-          fontFamily: "system-ui, -apple-system, sans-serif",
+          fontFamily: SANS,
           position: "relative",
           overflow: "hidden",
         }}
@@ -57,8 +57,9 @@ export default function OGImage() {
 
         <div
           style={{
-            fontSize: 52,
-            fontWeight: 700,
+            fontSize: 56,
+            fontFamily: DISPLAY,
+            fontWeight: 600,
             color: "#fbf7ef",
             textAlign: "center",
             letterSpacing: "-0.02em",
@@ -99,6 +100,6 @@ export default function OGImage() {
         </div>
       </div>
     ),
-    { ...size },
+    { ...size, fonts },
   );
 }
