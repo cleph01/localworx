@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps<"/b/[slug]">): Prom
   const blurb = biz.description?.trim();
   const description =
     `${where}. ${blurb ? (blurb.length > 140 ? `${blurb.slice(0, 137).trimEnd()}…` : blurb) : "Check in on LocalWorx to earn rewards and get paid for bringing friends."}`;
-  return { title, description, openGraph: { title, description }, twitter: { title, description } };
+  return { title, description, openGraph: { title, description }, twitter: { card: "summary_large_image", title, description } };
 }
 
 export default async function BusinessPage({ params }: PageProps<"/b/[slug]">) {
