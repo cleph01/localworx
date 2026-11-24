@@ -272,7 +272,7 @@ This isn't a pitch to get rich. It's a chance to prove the thesis in public: tha
 
 ## About the Author
 
-Charlie Montoya spent years in finance, earning his CFA and working in legal compliance for investment firms, watching from the inside how money moves away from Main Street. In 2016 he left to build things, teaching himself data analytics and software engineering. He studies cybersecurity and works in the trades, pulling cable and wiring smart homes.
+Charlie Montoya spent years in finance, earning his CFA charter in 2014 (since lapsed) and working in derivatives operations and documentation, liaising closely with legal, and watching from the inside how money moves away from Main Street. In 2016 he left to build things, teaching himself data analytics and software engineering. He studies cybersecurity and works in the trades, pulling cable and wiring smart homes.
 
 He built the first version of LocalWorx himself and is rebuilding it to production standard, with security designed in from day one. He grew up in Port Chester, NY, a town that once supplied lumber to a growing New York and munitions in wartime, and he believes towns like it can produce again.
 
